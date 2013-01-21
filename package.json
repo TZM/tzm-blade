@@ -1,0 +1,25 @@
+{
+	"author": "Norman Khine <norman@zmgc.net> (http://zmgc.net)",
+	"name": "zmgc",
+	"description": "",
+	"private": true,
+	"version": "0.0.1",
+	"homepage": "http://zmgc.net",
+	"repository": {
+	"type": "git",
+	"url": "git://github.com/TZM/zmgc.git"
+	},
+	"subdomain": "zmgc",
+	"engines": {
+		"node": " >=0.8.14"
+	},
+	"scripts": {
+		"start": "server.js"
+	},
+	"dependencies": {
+		"express" : "*",
+		"blade" : "*"
+	},
+	"devDependencies": {},
+	"optionalDependencies": {}
+}

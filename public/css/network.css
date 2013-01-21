@@ -1,0 +1,415 @@
+/*#tzm-network-popup {*/
+/*	left: auto !important;*/
+/*}*/
+
+#chapters_table {
+    float: left;
+    width: 48%;
+}
+.c_COL1, .c_COL2, .c_COL3, .c_COL4 {
+    float: left;
+    height: 200px;
+    width: 25%;
+}
+.c_COL1 div, .c_COL2 div, .c_COL3 div, .c_COL4 div {
+    margin-bottom: 2px;
+    margin-top: 1px;
+    text-align: left;
+    vertical-align: top;
+}
+#chapters_table h1 {
+    color: #484848;
+    font-size: 20px;
+    font-weight: 700;
+}
+.chapters_link {
+    color: #000000;
+    display: table-row-group;
+    font-family: 'Arial',sans-serif;
+    font-size: 11px;
+    height: 10px;
+    line-height: 11px;
+}
+.chapters_link:hover, .chapters:hover {
+    color: #9DEB04;
+    filter: none;
+    font-size: 11px;
+    opacity: 1;
+}
+.chapters {
+	background: url("../resources/flags.gif") no-repeat scroll 0 0 padding-box transparent;
+	display: block !important;
+	font-size: 100% !important;
+	height: 11px;
+	line-height: 100% !important;
+	margin: 0 5px 10px 0 !important;
+	opacity: 0.6;
+	padding-left: 16px !important;
+	white-space: nowrap;
+	width: 0;
+}
+.flag-margin {
+	display: block;
+	margin-left: 2px;
+	white-space: nowrap;
+}
+.c_argentina {
+    background-position: 0 -99px;
+}
+.c_argentina:hover {
+    background-position: -16px -99px;
+}
+.c_australia {
+    background-position: 0 -132px;
+}
+.c_australia:hover {
+    background-position: -16px -132px;
+}
+.c_austria {
+    background-position: 0 -121px;
+}
+.c_austria:hover {
+    background-position: -16px -121px;
+}
+.c_belgium {
+    background-position: 0 -209px;
+}
+.c_belgium:hover {
+    background-position: -16px -209px;
+}
+.c_brazil {
+    background-position: 0 -308px;
+}
+.c_brazil:hover {
+    background-position: -16px -308px;
+}
+.c_bulgaria {
+    background-position: 0 -231px;
+}
+.c_bulgaria:hover {
+    background-position: -16px -231px;
+}
+.c_canada {
+    background-position: 0 -385px;
+}
+.c_canada:hover {
+    background-position: -16px -385px;
+}
+.c_chile {
+    background-position: 0 -484px;
+}
+.c_chile:hover {
+    background-position: -16px -484px;
+}
+.c_china {
+    background-position: 0 -506px;
+}
+.c_china:hover {
+    background-position: -16px -506px;
+}
+.c_colombia {
+    background-position: 0 -518px;
+}
+.c_colombia:hover {
+    background-position: -16px -518px;
+}
+.c_costarica {
+    background-position: 0 -529px;
+}
+.c_costarica:hover {
+    background-position: -16px -529px;
+}
+.c_croatia {
+    background-position: 0 -407px;
+}
+.c_croatia:hover {
+    background-position: -16px -407px;
+}
+.c_czechrep {
+    background-position: 0 -484px;
+}
+.c_czechrep:hover {
+    background-position: -16px -484px;
+}
+.c_denmark {
+    background-position: 0 -627px;
+}
+.c_denmark:hover {
+    background-position: -16px -627px;
+}
+.c_dominican {
+    background-position: 0 -649px;
+}
+.c_dominican:hover {
+    background-position: -16px -649px;
+}
+.c_ecuador {
+    background-position: 0 -517px;
+}
+.c_ecuador:hover {
+    background-position: -16px -517px;
+}
+.c_finland {
+    background-position: 0 -781px;
+}
+.c_finland:hover {
+    background-position: -16px -781px;
+}
+.c_france {
+    background-position: 0 -836px;
+}
+.c_france:hover {
+    background-position: -16px -836px;
+}
+.c_gernamy {
+    background-position: 0 -605px;
+}
+.c_gernamy:hover {
+    background-position: -16px -605px;
+}
+.c_greece {
+    background-position: 0 -979px;
+}
+.c_greece:hover {
+    background-position: -16px -979px;
+}
+.c_guatemala {
+    background-position: 0 -1001px;
+}
+.c_guatemala:hover {
+    background-position: -16px -1001px;
+}
+.c_hungary {
+    background-position: 0 -1100px;
+}
+.c_hungary:hover {
+    background-position: -16px -1100px;
+}
+.c_india {
+    background-position: 0 -1144px;
+}
+.c_india:hover {
+    background-position: -16px -1144px;
+}
+.c_irleand {
+    background-position: 0 -1122px;
+}
+.c_irleand:hover {
+    background-position: -16px -1122px;
+}
+.c_israel {
+    background-position: 0 -1133px;
+}
+.c_israel:hover {
+    background-position: -16px -1133px;
+}
+.c_italy {
+    background-position: 0 -1199px;
+}
+.c_italy:hover {
+    background-position: -16px -1199px;
+}
+.c_kazakhstan {
+    background-position: 0 -1353px;
+}
+.c_kazakhstan:hover {
+    background-position: -16px -1353px;
+}
+.c_japan {
+    background-position: 0 -1232px;
+}
+.c_japan:hover {
+    background-position: -16px -1232px;
+}
+.c_lithuania {
+    background-position: 0 -1463px;
+}
+.c_lithuania:hover {
+    background-position: -16px -1463px;
+}
+.c_macedonia {
+    background-position: 0 -1552px;
+}
+.c_macedonia:hover {
+    background-position: -16px -1552px;
+}
+.c_malaysia {
+    background-position: 0 -1706px;
+}
+.c_malaysia:hover {
+    background-position: -16px -1706px;
+}
+.c_mexico {
+    background-position: 0 -1695px;
+}
+.c_mexico:hover {
+    background-position: -16px -1695px;
+}
+.c_mongolia {
+    background-position: 0 -1585px;
+}
+.c_mongolia:hover {
+    background-position: -16px -1585px;
+}
+.c_netherlands {
+    background-position: 0 -1794px;
+}
+.c_netherlands:hover {
+    background-position: -16px -1794px;
+}
+.c_newzealand {
+    background-position: 0 -1849px;
+}
+.c_newzealand:hover {
+    background-position: -16px -1849px;
+}
+.c_nicaragua {
+    background-position: 0 -1783px;
+}
+.c_nicaragua:hover {
+    background-position: -16px -1783px;
+}
+.c_norway {
+    background-position: 0 -1805px;
+}
+.c_norway:hover {
+    background-position: -16px -1805px;
+}
+.c_paraguay {
+    background-position: 0 -2014px;
+}
+.c_paraguay:hover {
+    background-position: -16px -2014px;
+}
+.c_peru {
+    background-position: 0 -1882px;
+}
+.c_peru:hover {
+    background-position: -16px -1882px;
+}
+.c_poland {
+    background-position: 0 -1937px;
+}
+.c_poland:hover {
+    background-position: -16px -1937px;
+}
+.c_philippines {
+    background-position: 0 -1915px;
+}
+.c_philippines:hover {
+    background-position: -16px -1915px;
+}
+.c_portugal {
+    background-position: 0 -1992px;
+}
+.c_portugal:hover {
+    background-position: -16px -1992px;
+}
+.c_romania {
+    background-position: 0 -2047px;
+}
+.c_romania:hover {
+    background-position: -16px -2047px;
+}
+.c_russia {
+    background-position: 0 -2069px;
+}
+.c_russia:hover {
+    background-position: -16px -2069px;
+}
+.c_serbia {
+    background-position: 0 -2058px;
+}
+.c_serbia:hover {
+    background-position: -16px -2058px;
+}
+.c_singapore {
+    background-position: 0 -2157px;
+}
+.c_singapore:hover {
+    background-position: -16px -2157px;
+}
+.c_slovakia {
+    background-position: 0 -2201px;
+}
+.c_slovakia:hover {
+    background-position: -16px -2201px;
+}
+.c_slovenia {
+    background-position: 0 -2179px;
+}
+.c_slovenia:hover {
+    background-position: -16px -2179px;
+}
+.c_southafrica {
+    background-position: 0 -2674px;
+}
+.c_southafrica:hover {
+    background-position: -16px -2674px;
+}
+.c_spain {
+    background-position: 0 -737px;
+}
+.c_spain:hover {
+    background-position: -16px -737px;
+}
+.c_sweden {
+    background-position: 0 -2146px;
+}
+.c_sweden:hover {
+    background-position: -16px -2146px;
+}
+.c_switzerland {
+    background-position: 0 -451px;
+}
+.c_switzerland:hover {
+    background-position: -16px -451px;
+}
+.c_thailand {
+    background-position: 0 -528px;
+}
+.c_thailand:hover {
+    background-position: -16px -528px;
+}
+.c_turkey {
+    background-position: 0 0;
+}
+.c_turkey:hover {
+    background-position: -16px 0;
+}
+.c_ukraine {
+    background-position: 0 -2487px;
+}
+.c_ukraine:hover {
+    background-position: -16px -2487px;
+}
+.c_unitedkingdom {
+    background-position: 0 -858px;
+}
+.c_unitedkingdom:hover {
+    background-position: -16px -858px;
+}
+.c_unitedstatesofamerica {
+    background-position: 0 -2509px;
+}
+.c_unitedstatesofamerica:hover {
+    background-position: -16px -2509px;
+}
+.c_venezuela {
+    background-position: 0 -2564px;
+}
+.c_venezuela:hover {
+    background-position: -16px -2564px;
+}
+.c_virgin {
+    background-position: 0 -2575px;
+}
+.c_virgin:hover {
+    background-position: -16px -2575px;
+}
+.c_uruguay {
+    background-position: 0 -2520px;
+}
+.c_uruguay:hover {
+    background-position: -16px -2520px;
+}

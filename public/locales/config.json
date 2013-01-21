@@ -1,0 +1,34 @@
+{
+	"de": {
+		"locale": "de",
+		"code": "de-DE"
+	},
+	"en": {
+		"locale": "en",
+		"code": "en-UK"
+	},
+	"fr": {
+		"locale": "fr",
+		"code": "fr-FR"
+	},
+	"jp": {
+		"locale": "jp",
+		"code": "jp-JP"
+	},
+	"pt": {
+		"locale": "pt",
+		"code": "pt-BR"
+	},
+	"rs": {
+		"locale": "rs",
+		"code": "rs-RS"
+	},
+	"ru": {
+		"locale": "ru",
+		"code": "ru-RU"
+	},
+	"us": {
+		"locale": "us",
+		"code": "en-US"
+	}
+}
