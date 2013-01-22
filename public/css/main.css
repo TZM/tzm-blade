@@ -233,7 +233,7 @@ header nav.top {
 /* LOGO
 /*******************************************************************************/
 header nav.top h1 {
-    background: url(/resources/tzm-logo-32.png) top left no-repeat;
+    background: url(../images/tzm-logo-32.png) top left no-repeat;
     width: 83px;
     height: 37px;
     margin-left: 12.5px;
@@ -339,7 +339,7 @@ header nav .user-menu, header nav .search {
 
 header nav .user-menu a.tooltip span, #search a.tooltip span {
     top: 38px;
-    background: url("/resources/tooltip-under.png") no-repeat center bottom;
+    background: url("../images/tooltip_under.png") no-repeat center bottom;
     line-height: 36px;
     margin-left: -18px;
 }
@@ -361,7 +361,7 @@ header nav .search-form input {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    background: url('/resources/search_icon.png') 5px 50% no-repeat white;
+    background: url('../images/search_icon.png') 5px 50% no-repeat white;
 }
 
 header nav .search-form input[type="search"] {
@@ -436,7 +436,7 @@ body aside#nav-container h3 {
 }
 
 body aside#nav-container {
-    background: url('../resources/nav-container.jpeg') left top repeat #4f4f50;
+    background: url('../images/nav-container.jpeg') left top repeat #4f4f50;
     width: 232px;
     height: 85%;
     overflow: auto;
@@ -458,7 +458,7 @@ body aside#nav-container {
 }
 
 #nav-container h3, #nav-container h4 {
-    background: url('../resources/nav-bkg.jpeg');
+    background: url('../images/nav-bkg.jpeg');
     border-left: 4px solid #5a7772;
     padding: 5px 8px 5px 10px;
     overflow: visible;
@@ -487,7 +487,7 @@ div[role="main"] .mainarticle #nav-toggle {
 }
 
 #nav-container ul {
-    background: url('../resources/nav-ul-bkg.jpeg') left top repeat #393939;
+    background: url('../images/nav-ul-bkg.jpeg') left top repeat #393939;
     border-left: 4px solid #5a7772;
 }
 
@@ -519,11 +519,11 @@ div[role="main"] .mainarticle #nav-toggle:hover {
 }
 
 div[role="main"] .mainarticle #nav-toggle {
-    background: url('../resources/nav-close.png') no-repeat;
+    background: url('../images/nav-close.png') no-repeat;
 }
 
 div[role="main"] .mainarticle #nav-toggle.active {
-    background: url('../resources/nav-open.png') no-repeat;
+    background: url('../images/nav-open.png') no-repeat;
 }
 
 /**************************************************************************
@@ -546,7 +546,7 @@ div[role="main"] .mainarticle #nav-toggle.active {
 }
 
 #nav-container span.menu-toggle, #nav-container span.menu-toggle:hover, #nav-container span.menu-toggle.open,#nav-container span.menu-toggle.open:hover {
-    background: url(../resources/nav-arrows-sprite.png) no-repeat;
+    background: url(../images/nav-arrows-sprite.png) no-repeat;
 }
 
 #nav-container span.menu-toggle {
@@ -632,7 +632,7 @@ div[role="main"] .mainarticle #nav-toggle.active {
 
 #footer li .dropup {
     padding-right: 40px;
-    background: url("/resources/arrow.png") no-repeat right 15px;
+    background: url("../images/arrow.png") no-repeat right 15px;
 }
 
 #footer li .footer_dropup {
@@ -875,43 +875,43 @@ div[role="main"] .mainarticle #nav-toggle.active {
 }
 
 #footer .calendar {
-    background: url("/resources/icons/calendar.png") no-repeat 0px 5px;
+    background: url("../images/icons/calendar.png") no-repeat 0px 5px;
 }
 
 #footer .note {
-    background: url("/resources/icons/note.png") no-repeat 0px 0px;
+    background: url("../images/icons/note.png") no-repeat 0px 0px;
 }
 
 #footer .archive {
-    background: url("/resources/icons/archive.png") no-repeat 0px 5px;
+    background: url("../images/icons/archive.png") no-repeat 0px 5px;
 }
 
 #footer .search {
-    background: url("/resources/icons/search.png") no-repeat 0px 5px;
+    background: url("../images/icons/search.png") no-repeat 0px 5px;
 }
 
 #footer .help {
-    background: url("/resources/icons/help.png") no-repeat 0px 5px;
+    background: url("../images/icons/help.png") no-repeat 0px 5px;
 }
 
 #footer .delete {
-    background: url("/resources/icons/delete.png") no-repeat 0px 5px;
+    background: url("../images/icons/delete.png") no-repeat 0px 5px;
 }
 
 #footer .favorite {
-    background: url("/resources/icons/favorite.png") no-repeat 0px 5px;
+    background: url("../images/icons/favorite.png") no-repeat 0px 5px;
 }
 
 #footer .lock {
-    background: url("/resources/icons/lock.png") no-repeat 0px 5px;
+    background: url("../images/icons/lock.png") no-repeat 0px 5px;
 }
 
 #footer .briefcase {
-    background: url("/resources/icons/briefcase.png") no-repeat 0px 5px;
+    background: url("../images/icons/briefcase.png") no-repeat 0px 5px;
 }
 
 #footer .user {
-    background: url("/resources/icons/user.png") no-repeat 0px 5px;
+    background: url("../images/icons/user.png") no-repeat 0px 5px;
 }
 
 #footer .imgshadow {
@@ -1029,7 +1029,7 @@ div[role="main"] .mainarticle #nav-toggle.active {
 
 #footer a.tooltip span {
     bottom: 30px;
-    background: url("/resources/tooltip.png") no-repeat center top;
+    background: url("../images/tooltip.png") no-repeat center top;
     line-height: 24px;
     margin-left: -24px;
 }
@@ -1041,7 +1041,7 @@ a#footer_trigger {
     right: 10px;
     width: 35px;
     height: 35px;
-    background: url("/resources/footer_button_up.png") right no-repeat #121212;
+    background: url("../images/footer_button_up.png") right no-repeat #121212;
     display: block;
     -moz-border-radius: 4px 4px 0px 0px;
     -webkit-border-radius: 4px 4px 0px 0px;
@@ -1056,7 +1056,7 @@ a.trigger_fixed {
 }
 
 a#footer_trigger.trigger_active {
-    background: url("/resources/footer_button_down.png") right no-repeat #121212;
+    background: url("../images/footer_button_down.png") right no-repeat #121212;
 }
 
 #footer li div.footer_dropup a {
