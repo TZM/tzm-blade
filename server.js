@@ -10,3 +10,4 @@ app.get('/', function(req, res, next) {
     res.render('index');
 });
 app.listen(29080);
+console.log('Server running at http://127.0.0.1:29080/');
