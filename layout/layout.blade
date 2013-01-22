@@ -14,6 +14,9 @@ html
         block body
         include "../views/projects.blade"
         include "../views/header.blade"
-        
+        div#page.page-i18n
+            p#notification
+            p(data-i18n="welcome.p1")
+            p(data-i18n="welcome.p2")
         include "../views/footer.blade"
         include "includes/scripts.blade"
