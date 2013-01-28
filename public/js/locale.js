@@ -40,6 +40,7 @@ jQuery(function($) {
     function setLanguage() {
         // save to use translation function as resources are fetched
         $(".tzm-i18n").i18n();
+        $(".project-select").i18n();
         $(".page-i18n").i18n();
         $(".menu").i18n();
         $(".user-menu").i18n();

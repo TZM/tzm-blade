@@ -1,11 +1,9 @@
 .project-select
-    - var items = {"projects": [{"title": "Media Project", "description": "The Media Project Site hosts and links to various audio/visual/literary expressions of TZM Members.", "image_path": "images/tzm-media-logo.png", href: "#"}, {"title": "Zeitgeist Day", "description": "This site becomes active annually to facilitate our “Zday” Global Event, which occurs in March of each year.", "image_path": "http://zdayglobal.org/templates/theme417/images/logo.png", href: "http://zdayglobal.org/"}, {"title": "Global Redesign Institute", "description": "Virtual interface “Think Tank” project using map/data models to express direct technical changes in line with TZM's train of thought.", "image_path": "images/tzm-media-logo.png", href: "http://www.globalredesigninstitute.org/"}, {"title": "Zeitgeist Movement Global Connect", "description": "Aims to create an on-line eco-system within which the ideas of Resource Based Economy can be galvanise into actions.", "image_path": "images/tzm-zmgc-logo.png", href: "http://zmgc.net"}, {"title": "Media Festival", "description": "", "image_path": "images/tzm-festival-logo.png", href: "http://zeitgeistmediafestival.org/"}]}
-
-    - var project = items.projects;
+    - var project = locals.settings.translation.projects;
     ul.constrain
         - for(var i in project)
             - var o = project[i];
             li
                 a(href=o.href title=o.title class="" tabindex="-1")
                     img(src=o.image_path, alt=o.title)
-                    em=o.description
+                    em(data-i18n="projects."+i+".description")=o.description
