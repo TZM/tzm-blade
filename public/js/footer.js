@@ -74,7 +74,7 @@ jQuery(function($) {
         }, function(err, html) {
             if(err) throw err;
                 console.log(html);
-                return html;
+                $('#page:first').empty().html(html);
         });
     });
   });
