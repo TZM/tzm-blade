@@ -64,7 +64,19 @@ jQuery(function($) {
   });
   $('.guide').live('click', function() {
     console.log('click on guide button');
-    $('#page:first').empty().load('../guide/guide.html');
+    blade.Runtime.loadTemplate("guide.blade", function(err, tmpl) {
+        tmpl({
+            'nav1': {
+                'Home': '/',
+                'About Us': '/about',
+                'Contact': '/contact'
+            }
+        }, function(err, html) {
+            if(err) throw err;
+                console.log(html);
+                return html;
+        });
+    });
   });
 });
 
