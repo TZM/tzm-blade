@@ -31,7 +31,9 @@ footer
                             - for(var i in countries)
                                 - var o = countries[i]
                                 li
-                                    a(href=o.link title=o.country class="" tabindex="-1")
+                                    - var countryClass = "chapters c_"+o.country.toLowerCase()
+                                    a(href=o.link title=o.country class=""+countryClass tabindex="-1")
+                                        span.flag-margin=o.country
                     .col_4
                         p.note
                             a(href="http://www.thezeitgeistmovement.com/" data-i18n="footer.official_sites.tzm_global" target="_blank")

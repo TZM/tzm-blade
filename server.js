@@ -41,14 +41,32 @@ function TZMNetwork(fileId) {
         });
     }
 }
+function dumpError(err) {
+  if (typeof err === 'object') {
+    if (err.message) {
+      console.log('\nMessage: ' + err.message)
+    }
+    if (err.stack) {
+      console.log('\nStacktrace:')
+      console.log('====================')
+      console.log(err.stack);
+    }
+  } else {
+    console.log('dumpError :: argument is not an object');
+  }
+}
 
 var app = express();
 app.use(blade.middleware(__dirname + '/views') ); //for client-side templates
 app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static(__dirname + '/public') ); //maybe we have some static files
 app.set('views', __dirname + '/views'); //tells Express where our views are stored
-app.set('translation', require(__dirname + '/public/locales/dev/translation.json'));
-app.set('chapters', require(__dirname + '/data/chapters.json'));
+try {
+    app.set('translation', require(__dirname + '/public/locales/dev/translation.json'));
+    app.set('chapters', require(__dirname + '/data/chapters.json'));
+} catch(err) {
+  dumpError(err);
+}
 app.set('view engine', 'blade'); //Yes! Blade works with Express out of the box!
 app.get('/', function(req, res, next) {
     TZMNetwork(TABLE_ID);

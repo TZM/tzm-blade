@@ -37,7 +37,7 @@
     opacity: 1;
 }
 .chapters {
-	background: url("../resources/flags.gif") no-repeat scroll 0 0 padding-box transparent;
+	background: url("../images/flags.gif") no-repeat scroll 0 0 padding-box transparent;
 	display: block !important;
 	font-size: 100% !important;
 	height: 11px;
