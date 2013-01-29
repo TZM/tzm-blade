@@ -21,6 +21,20 @@ var options = {
 function TZMNetwork(fileId) {
     if (fs.existsSync("data/chapters.json")) {
         // ... put code if "data/chapters.json" has changed!
+        options["path"] = GOOGLE_DRIVE_PATH;
+        var req = https.request(options, function(res) {
+          res.on('data', function(data) {
+              // get the last modified date
+              console.log(data);
+          }).on('end', function() {
+              console.log("we get the date and who modified it");
+          });
+        });
+        req.end();
+        
+        req.on('error', function(e) {
+          console.error(e);
+        });
         console.log('OK');
     } else {
         options["path"] = GOOGLE_PATH;
@@ -66,6 +80,8 @@ try {
     app.set('chapters', require(__dirname + '/data/chapters.json'));
 } catch(err) {
   dumpError(err);
+  console.log('there is no /data/chapters.json');
+  app.set('chapters', []);
 }
 app.set('view engine', 'blade'); //Yes! Blade works with Express out of the box!
 app.get('/', function(req, res, next) {

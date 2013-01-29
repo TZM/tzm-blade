@@ -23,13 +23,21 @@ footer
                                 - var row = chapters[i]
                                 - if (row[0] == 'Country')
                                     - countries.push({link:row[2],contact:row[3],country:row[4]})
-                                - else if (row[0] =='Region')
-                                    - console.log(row)
+                                // - else if (row[0] =='Region')
+                                //     - console.log('row')
                         - countries.sort(sortByKey('country'))
+                        // we want to put it the countries list in 4 columns
+                        - var list_length =  countries.length/4
+                        - console.log(list_length)
                         ol#chapters-links
+                            - var intCountryCount = 0
+                            - var intCurrentColumn = 0
                             - for(var i in countries)
                                 - var o = countries[i]
-                                li
+                                - if (i == list_length)
+                                    - intCountryCount = 0
+                                    - intCurrentColumn++
+                                li(class="column_"+intCurrentColumn)
                                     - var countryClass = "chapters c_"+o.country.toLowerCase()
                                     a(href=o.link title=o.country class=""+countryClass tabindex="-1")
                                         span.flag-margin=o.country
