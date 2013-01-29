@@ -4,50 +4,6 @@
 }
 */
 /* separate the list from surrounding elements */
-#chapters-links
-{
-  background: red;
-}
-
-#chapters-links ol
-{
-  margin: 0 0 1em 2em;
-  padding: 0;
-}
-
-#chapter-links ol li
-{
-  /* Stipulate the height of each item so that 
-  vertical return = items * height */
-
-  line-height: 1.2em;
-
-  /* Clear the default margins & padding 
-  so we can style the list from scratch */
-
-  margin: 0;
-  padding: 0;
-}
-
-/* If li position is left static, Internet 
-Explorer disables hyperlinks in the list 
-in all but the final column.
-
-This rule will be processed only by 
-Internet Explorer because only IE believes 
-that there’s a level above HTML: */
-
-* html ol li
-{
-	position: relative;
-}
-
-/* horizontal position of each column */
-
-#chapter-links ol li.column1 { margin-left: 0em; }
-#chapter-links ol li.column2 { margin-left: 10em; }
-#chapter-links ol li.column3 { margin-left: 20em; }
-
 .chapters_link {
     color: #000000;
     display: table-row-group;
