@@ -1,0 +1,2125 @@
+{
+ "kind": "fusiontables#sqlresponse",
+ "columns": [
+  "Type",
+  "Name",
+  "Link",
+  "Contact",
+  "Location",
+  "Icon"
+ ],
+ "rows": [
+  [
+   "Country",
+   "Portugal",
+   "http://www.zeitgeistportugal.org/",
+   "info@zeitgeistportugal.org",
+   "Portugal",
+   "1"
+  ],
+  [
+   "Region",
+   "Porto",
+   "http://porto.zeitgeistportugal.org",
+   "porto@zeitgeistportugal.org",
+   "Porto, Portugal",
+   "2"
+  ],
+  [
+   "Region",
+   "Lisboa",
+   "http://lisboa.zeitgeistportugal.org",
+   "lisboa@zeitgeistportugal.org",
+   "Lisbon, Portugal",
+   "2"
+  ],
+  [
+   "Country",
+   "България",
+   "http://thezeitgeistmovement.bg/",
+   "zgeistbg@gmail.com",
+   "Bulgaria",
+   "1"
+  ],
+  [
+   "Country",
+   "Spain",
+   "http://movimientozeitgeist.es/",
+   "info@movimientozeitgeist.es",
+   "Spain",
+   "1"
+  ],
+  [
+   "Country",
+   "Belgium",
+   "http://www.thezeitgeistmovement.be/",
+   "info@thezeitgeistmovement.be",
+   "Belgium",
+   "1"
+  ],
+  [
+   "Country",
+   "Argentina",
+   "http://www.zeitgeistargentina.com",
+   "comunicacion@zeitgeistargentina.com",
+   "Argentina",
+   "1"
+  ],
+  [
+   "Country",
+   "Mexico",
+   "http://www.zeitgeist.com.mx",
+   "contacto@zeitgeist.com.mx",
+   "Mexico",
+   "1"
+  ],
+  [
+   "Country",
+   "Denmark",
+   "http://thezeitgeistmovement.dk/",
+   "info@thezeitgeistmovement.dk",
+   "Denmark",
+   "1"
+  ],
+  [
+   "Country",
+   "Deutschland",
+   "http://www.zeitgeistmovement.de/",
+   "welcome@zeitgeistmovement.de",
+   "Germany",
+   "1"
+  ],
+  [
+   "Country",
+   "Italy",
+   "http://www.zeitgeistitalia.org/",
+   "staff@zeitgeistitalia.org",
+   "Italy",
+   "1"
+  ],
+  [
+   "Country",
+   "The Netherlands",
+   "http://www.zeitgeistbeweging.nl/",
+   "info@zeitgeistbeweging.nl",
+   "Netherlands",
+   "1"
+  ],
+  [
+   "Country",
+   "Paraguay",
+   "http://www.zeitgeistparaguay.org/",
+   "coordinacion@zeitgeistparaguay.com",
+   "Paraguay",
+   "1"
+  ],
+  [
+   "Country",
+   "Ecuador",
+   "http://www.zeigeistec.com",
+   "info@zeitgeistec.com",
+   "Ecuador",
+   "1"
+  ],
+  [
+   "Country",
+   "Brazil",
+   "http://movimentozeitgeist.com.br/",
+   "equipe@movimentozeitgeist.com.br",
+   "Brazil",
+   "1"
+  ],
+  [
+   "Country",
+   "Uruguay",
+   "http://site.zeitgeist.org.uy/site/",
+   "coordinadores@zeitgeist.org.uy",
+   "Uruguay",
+   "1"
+  ],
+  [
+   "Country",
+   "Costa Rica",
+   "http://www.zeitgeistcostarica.com",
+   "javier@zeitgeistcostarica.com ",
+   "Costa Rica",
+   "1"
+  ],
+  [
+   "Country",
+   "New Zealand",
+   "http://tzmnz.com/",
+   "admin@tzmnz.com",
+   "New Zealand",
+   "1"
+  ],
+  [
+   "Country",
+   "France",
+   "http://www.mouvement-zeitgeist.fr/",
+   "France@mouvement-zeitgeist.fr",
+   "France",
+   "1"
+  ],
+  [
+   "Country",
+   "Greece",
+   "http://www.tzm.gr",
+   "info@tzm.gr",
+   "Greece",
+   "1"
+  ],
+  [
+   "Country",
+   "Chile",
+   "http://www.zchile.cl",
+   "zchile@zchile.cl",
+   "Chile",
+   "1"
+  ],
+  [
+   "Country",
+   "Venezuela",
+   "http://www.zeitgeistvenezuela.org/",
+   "info@zeitgeistvenezuela.org",
+   "Venezuela",
+   "1"
+  ],
+  [
+   "Country",
+   "Norway",
+   "http://zeitgeistbevegelsen.no/",
+   "kontakt@zeitgeistbevegelsen.no",
+   "Norway",
+   "1"
+  ],
+  [
+   "Country",
+   "Sweden",
+   "http://zgm.se",
+   "info@zgm.se",
+   "Sweden",
+   "1"
+  ],
+  [
+   "Country",
+   "Switzerland",
+   "http://swisszeitgeistmovement.ch/",
+   "united@tszm.ch",
+   "Switzerland",
+   "1"
+  ],
+  [
+   "Country",
+   "Canada",
+   "http://www.zeitgeist-canada.com/",
+   "cliff@zeitgeist-canada.com",
+   "Canada",
+   "1"
+  ],
+  [
+   "Country",
+   "Australia",
+   "http://www.zeitgeistaustralia.org",
+   "contact@zeitgeistaustralia.org or sydney@zeitgeistaustralia.org or karin@zeitgeistaustralia.org",
+   "Australia",
+   "1"
+  ],
+  [
+   "Local",
+   "Sydney",
+   "http://www.zeitgeistaustralia.org/category/chapters/s/",
+   "ziggy.t@zeitgeistaustralia.org",
+   "Sydney, New South Wales, Australia",
+   "3"
+  ],
+  [
+   "Local",
+   "Melbourne",
+   "http://www.zeitgeistaustralia.org/category/chapters/melbourne-chapter/",
+   "sanjin.d@zeitgeistaustralia.org",
+   "Melbourne, Victoria, Australia",
+   "3"
+  ],
+  [
+   "Local",
+   "Adelaide",
+   "http://www.zeitgeistaustralia.org/category/chapters/adelaide/",
+   "michael.k@zeitgeistaustralia.org",
+   "Adelaide, South Australia, Australia",
+   "3"
+  ],
+  [
+   "Local",
+   "Perth",
+   "http://www.zeitgeistaustralia.org/category/chapters/perth/",
+   "emily.g@zeitgeistaustralia.org",
+   "Perth, Western Australia, Australia",
+   "3"
+  ],
+  [
+   "Local",
+   "Brisbane",
+   "http://www.zeitgeistaustralia.org/category/chapters/brisbane/",
+   "simon.c@zeitgeistaustralia.org",
+   "Brisbane, Queensland, Australia",
+   "3"
+  ],
+  [
+   "Region",
+   "Sunshine Coast",
+   "http://www.zeitgeistaustralia.org/category/chapters/sunshine-coast/",
+   "kathy.k@zeitgeistaustralia.org",
+   "Sunshine Coast, Queensland, Australia",
+   "2"
+  ],
+  [
+   "Region",
+   "Gold Coast",
+   "http://www.zeitgeistaustralia.org/category/chapters/gold-coast/",
+   "kurt.s@zeitgeistaustralia.org",
+   "Gold Coast, Queensland, Australia",
+   "2"
+  ],
+  [
+   "Region",
+   "Southern New South Wales",
+   "http://www.zeitgeistaustralia.org/category/chapters/southern-new-south-wales/",
+   "gabrielle.a@zeitgeistaustralia.org",
+   "Southern New South Wales, New South Wales, Australia",
+   "2"
+  ],
+  [
+   "Local",
+   "Canberra",
+   "http://www.zeitgeistaustralia.org/category/chapters/canberra/",
+   "grant.r@zeitgeistaustralia.org",
+   "Canberra, Australian Capital Territory, Australia",
+   "3"
+  ],
+  [
+   "Local",
+   "Newcastle",
+   "http://www.zeitgeistaustralia.org/category/chapters/newcastle/",
+   "karin@zeitgeistaustralia.org",
+   "Newcastle, New South Wales. Australia",
+   "3"
+  ],
+  [
+   "Region",
+   "Central Coast New South Wales",
+   "http://www.zeitgeistaustralia.org/category/chapters/central-coast/",
+   "nathaniel.h@zeitgeistaustralia.org",
+   "Central Coast, New South Wales, Australia",
+   "2"
+  ],
+  [
+   "Region",
+   "Far North Queensland",
+   "http://www.zeitgeistaustralia.org/category/chapters/far-north-qld/",
+   "karin@zeitgeistaustralia.org",
+   "Far North Queensland, Queensland, Australia",
+   "2"
+  ],
+  [
+   "Region",
+   "Northern Territory",
+   "http://www.zeitgeistaustralia.org/category/chapters/northern-territory/",
+   "karin@zeitgeistaustralia.org",
+   "Northern Territory, Australia",
+   "2"
+  ],
+  [
+   "Region",
+   "Tasmania",
+   "http://www.zeitgeistaustralia.org/category/chapters/tasmania/",
+   "karin@zeitgeistaustralia.org",
+   "Tasmania, Australia",
+   "2"
+  ],
+  [
+   "Country",
+   "Austria",
+   "http://zeitgeist-movement.at/",
+   "brightgeist@zeitgeist-movement.at",
+   "Austria",
+   "1"
+  ],
+  [
+   "Country",
+   "Czech Republic",
+   "http://zeitgeistmovement.cz/",
+   "Pending",
+   "Czech Republic",
+   "1"
+  ],
+  [
+   "Country",
+   "Дмитрий",
+   "http://thezeitgeistmovement.ru/",
+   "fox@thezeitgeistmovement.ru",
+   "Russian Federation",
+   "1"
+  ],
+  [
+   "Country",
+   "Slovakia",
+   "http://zeitgeistmovement.sk/",
+   "admin@zeitgeistmovement.sk",
+   "Slovakia",
+   "1"
+  ],
+  [
+   "Country",
+   "UK",
+   "http://www.thezeitgeistmovementuk.com/",
+   "zeitgeist-uk@thezeitgeistmovementuk.com",
+   "United Kingdom",
+   "1"
+  ],
+  [
+   "Country",
+   "Macedonia",
+   "http://zeitgeistmk.net/",
+   "Pending",
+   "Macedonia",
+   "1"
+  ],
+  [
+   "Country",
+   "Serbia",
+   "http://zeitgeistsrbija.org/",
+   "info@zeitgeistsrbija.org",
+   "Serbia",
+   "1"
+  ],
+  [
+   "Country",
+   "Singapore",
+   "http://tzmsg.org/",
+   "tzm.sg.coord@gmail.com",
+   "Singapore",
+   "1"
+  ],
+  [
+   "Country",
+   "Finland",
+   "http://www.zeitgeist.fi/",
+   "Pending",
+   "Finland",
+   "1"
+  ],
+  [
+   "Country",
+   "Poland",
+   "http://tzmpolska.org/",
+   "media@tzmpolska.org",
+   "Poland",
+   "1"
+  ],
+  [
+   "Country",
+   "South Africa",
+   "http://tzmsa.co.za/",
+   "thezeitgeistmovement.za@gmail.com",
+   "South Africa",
+   "1"
+  ],
+  [
+   "Country",
+   "Lithuania",
+   "http://www.zeitgeist.lt/",
+   "Pending",
+   "Lithuania",
+   "1"
+  ],
+  [
+   "Country",
+   "Peru",
+   "http://www.zeitgeistperu.com/",
+   "elespiritudeltiempoperu@gmail.com",
+   "Peru",
+   "1"
+  ],
+  [
+   "Local",
+   "TZM High Desert",
+   "http://zmhesperia.groupsite.com/main/summary",
+   "tzm_hesperia@zmca.org",
+   "Hesperia, CA",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Sacramento",
+   "http://tzmsacramento.groupsite.com",
+   "tzm_sacramento@zmca.org",
+   "Sacramento, CA",
+   "3"
+  ],
+  [
+   "Region",
+   "Alabama Chapter",
+   "http://chapters.thezeitgeistmovement.com/al/",
+   "contact via website form",
+   "Alabama, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Arizona Chapter",
+   "http://chapters.thezeitgeistmovement.com/az/",
+   "contact via website form",
+   "Arizona, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Arkansas Chapter",
+   "http://chapters.thezeitgeistmovement.com/ar/",
+   "contact via website form",
+   "Arkansas, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Connecticut Chapter",
+   "http://chapters.thezeitgeistmovement.com/ct",
+   "contact via website form",
+   "Connecticut, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Georgia Chapter",
+   "http://chapters.thezeitgeistmovement.com/ga/",
+   "contact via website form",
+   "Georgia, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Hawaii Chapter",
+   "http://chapters.thezeitgeistmovement.com/hi/",
+   "contact via website form",
+   "Hawaii, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Illinois Chapter",
+   "http://www.tzmillinois.com/",
+   "contact via website form",
+   "Illinois, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Iowa Chapter",
+   "http://chapters.thezeitgeistmovement.com/ia/",
+   "contact via website form",
+   "Iowa, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Kansas Chapter",
+   "http://chapters.thezeitgeistmovement.com/ks",
+   "contact via website form",
+   "Kansas, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Louisiana Chapter",
+   "http://www.lazeitgeist.com/",
+   "contact via website form",
+   "Louisiana, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Maine Chapter",
+   "http://chapters.thezeitgeistmovement.com/me/",
+   "contact via website form",
+   "Maine, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Maryland Chapter",
+   "http://chapters.thezeitgeistmovement.com/md/",
+   "contact via website form",
+   "Maryland, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Massachusetts Chapter",
+   "http://chapters.thezeitgeistmovement.com/ma",
+   "contact via website form",
+   "Massachusetts, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Michigan Chapter",
+   "http://www.zeitmi.com/",
+   "contact via website form",
+   "Michigan, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Minnesota Chapter",
+   "http://www.zeitgeistminnesota.org/",
+   "contact via website form",
+   "Minnesota, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Mississippi Chapter",
+   "http://chapters.thezeitgeistmovement.com/ms",
+   "contact via website form",
+   "Mississippi, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Missouri Chapter",
+   "http://chapters.thezeitgeistmovement.com/mo",
+   "contact via website form",
+   "Missouri, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Montana Chapter",
+   "http://chapters.thezeitgeistmovement.com/mt/",
+   "contact via website form",
+   "Montana, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Nebraska Chapter",
+   "http://www.zeitgeistnebraska.info/",
+   "contact via website form",
+   "Nebraska, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Nevada Chapter",
+   "http://chapters.thezeitgeistmovement.com/nv/",
+   "contact via website form",
+   "Nevada, US",
+   "2"
+  ],
+  [
+   "Region",
+   "New Hampshire Chapter",
+   "http://chapters.thezeitgeistmovement.com/nh/",
+   "contact via website form",
+   "New Hampshire, US",
+   "2"
+  ],
+  [
+   "Region",
+   "New Jersey Chapter",
+   "http://tzmnj.com/",
+   "contact via website form",
+   "New Jersey, US",
+   "2"
+  ],
+  [
+   "Region",
+   "New York Chapter",
+   "http://zeitgeist-ny.com/",
+   "contact via website form",
+   "New York, US",
+   "2"
+  ],
+  [
+   "Region",
+   "North Carolina Chapters",
+   "http://zeitgeist-nc.com/",
+   "contact via website form",
+   "North Carolina, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Ohio Chapters Chapters",
+   "http://chapters.thezeitgeistmovement.com/oh/",
+   "contact via website form",
+   "Ohio, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Oklahoma Chapters",
+   "http://chapters.thezeitgeistmovement.com/ok/",
+   "contact via website form",
+   "Oklahoma, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Oregon Chapters",
+   "http://chapters.thezeitgeistmovement.com/or/",
+   "contact via website form",
+   "Oregon, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Pennsylvania Chapter",
+   "http://zeitgeistmovementpa.ning.com/",
+   "contact via website form",
+   "Pennsylvania, US",
+   "2"
+  ],
+  [
+   "Region",
+   "South Carolina Chapter",
+   "http://chapters.thezeitgeistmovement.com/sc/",
+   "contact via website form",
+   "South Carolina, US",
+   "2"
+  ],
+  [
+   "Region",
+   "South Dakota Chapter",
+   "http://chapters.thezeitgeistmovement.com/sd/",
+   "contact via website form",
+   "South Dakota, US",
+   "2"
+  ],
+  [
+   "Region",
+   "West Virginia Chapter",
+   "http://chapters.thezeitgeistmovment.com/wv",
+   "contact via website form",
+   "West Virginia, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Wisconsin Chapter",
+   "http://zeitgeistwisconsin.com/",
+   "contact via website form",
+   "Wisconsin, US",
+   "2"
+  ],
+  [
+   "Region",
+   "Virgin Islands Chapter",
+   "http://tzmvirginislands.groupsite.com",
+   "contact via website form",
+   "Virgin Islands",
+   "2"
+  ],
+  [
+   "Region",
+   "ZMCA",
+   "http://www.zmca.org",
+   "contact@zmca.org",
+   "California, USA",
+   "2"
+  ],
+  [
+   "Local",
+   "Guayaquil",
+   "https://www.facebook.com/groups/guayas.zeitgeistec/",
+   "zeitgeistguayaquil@gmail.com",
+   "Guayaquil, Ecuador",
+   "3"
+  ],
+  [
+   "Local",
+   "Caracas",
+   "http://www.facebook.com/pages/Zeitgeist-Caracas/313614652023740",
+   "movimiento.zeitgeist.caracas@gmail.com",
+   "Caracas, Venezuela",
+   "3"
+  ],
+  [
+   "Local",
+   "Arica",
+   "https://www.facebook.com/MZarica",
+   "arica@zchile.cl",
+   "Arica Parinacota, Chile",
+   "2"
+  ],
+  [
+   "Country",
+   "Nicaragua",
+   "http://www.znicaragua.com",
+   "contacto@znicaragua.com",
+   "Nicaragua",
+   "1"
+  ],
+  [
+   "Local",
+   "TZM Los Angeles",
+   "http://tzmlaca.org/main/summary",
+   "tzm_losangeles@zmca.org",
+   "Los Angeles, CA",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM San Diego",
+   "http://zeitgeistsd.groupsite.com/main/summary",
+   "tzm_sandiego@zmca.org",
+   "San Diego, CA",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Humboldt County",
+   "http://tzmhumboldt.zmcachapters.org",
+   "tzm_humboldt@zmca.org",
+   "Humboldt County, CA",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Palm Springs",
+   "http://tzmpalmsprings.zmcachapters.org",
+   "tzm_palmsprings@zmca.org",
+   "Palm Springs, CA",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM San Jose",
+   "http://tzmsanjose.zmcachapters.org",
+   "tzm_sanjose@zmca.org",
+   "San Jose, CA",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM San Francisco",
+   "http://zmsf.groupsite.com/main/summary",
+   "tzm_sanfrancisco@zmca.org",
+   "San Francisco, CA",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Monterey",
+   "http://zmmonterey.groupsite.com/main/summary",
+   "tzm_monterey@zmca.org",
+   "Monterey, CA",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Fresno",
+   "http://tzmfresno.groupsite.com/main/summary",
+   "tzm_fresno@zmca.org",
+   "Fresno, CA",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Orange County",
+   "http://zmoc.groupsite.com/main/summary",
+   "tzm_oc@zmca.org",
+   "Orange County, CA",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Long Beach",
+   "http://zmlongbeach.ning.com",
+   "tzm_longbeach@zmca.org",
+   "Long Beach, CA",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Ventura County",
+   "http://zmvc.groupsite.com/main/summary",
+   "tzm_ventura@zmca.org",
+   "Ventura, CA",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Laguna Beach",
+   "http://zmoc.groupsite.com/main/summary",
+   "tzm_laguna@zmca.org",
+   "Laguna Beach, CA, USA",
+   "3"
+  ],
+  [
+   "Region",
+   "Alicante",
+   "http://zeitgeistalicante.blogspot.com.es/",
+   "movimiento-zeitgeist-alicante@googlegroups.com",
+   "Alicante, Spain",
+   "2"
+  ],
+  [
+   "Region",
+   "Ciudad Real",
+   "http://elmodelozeitgeist.blogspot.com.es/",
+   "ciudadreal@movimientozeitgeist.org movimiento-zeitgeist-ciudad-real@googlegroups.com",
+   "Ciudad Real, Spain",
+   "2"
+  ],
+  [
+   "Region",
+   "Granada",
+   "http://zeitgeistgranada.blogspot.com.es/",
+   "zeitgeistengranada@gmail.com movimiento-zeitgeist-granada@googlegroups.com",
+   "Granada, Spain",
+   "2"
+  ],
+  [
+   "Region",
+   "Madrid",
+   "http://zeitgeistmadrid.blogspot.com.es/",
+   "movimiento-zeitgeist-madrid@googlegroups.com",
+   "Madrid, Spain",
+   "2"
+  ],
+  [
+   "Region",
+   "Sevilla",
+   "http://movimientozeitgeistsevilla.wordpress.com/",
+   "sevilla-zeitgeist-movement@googlegroups.com",
+   "Seville, Spain",
+   "2"
+  ],
+  [
+   "Region",
+   "Valencia",
+   "http://zeitgeistvalencia.blogspot.com.es/",
+   "movimiento-zeitgeist-valencia@googlegroups.com",
+   "Valencia, Spain",
+   "2"
+  ],
+  [
+   "Region",
+   "Texas Chapter",
+   "http://texaszeitgeistmovement.org",
+   "contact via website form",
+   "Texas, US",
+   "2"
+  ],
+  [
+   "Regional",
+   "San José",
+   "https://www.facebook.com/MovimientoZeitgeistCostaRica",
+   "julian@zeitgeistcostarica.com",
+   "Costa Rica, San José",
+   "3"
+  ],
+  [
+   "Region",
+   "София",
+   "http://www.thezeitgeistmovement.bg",
+   "zgeistbg@gmail.com",
+   "Sofia, Bulgaria",
+   "2"
+  ],
+  [
+   "Region",
+   "Пловдив",
+   "http://www.thezeitgeistmovement.bg",
+   "zgeistbg@gmail.com",
+   "Plovdiv, Bulgaria",
+   "2"
+  ],
+  [
+   "Region",
+   "Варна",
+   "http://www.thezeitgeistmovement.bg",
+   "zgeistbg@gmail.com",
+   "Varna, Bulgaria",
+   "2"
+  ],
+  [
+   "Local",
+   "Κίνημα Zeitgeist - Τοπικό τμήμα Ηρακλείου",
+   "http://heraklio.tzm.gr/",
+   "heraklio@tzm.gr",
+   "Heraklion, Crete, Greece",
+   "3"
+  ],
+  [
+   "Local",
+   "Mar del Plata",
+   "http://www.zeitgeistmdp.com.ar",
+   "contacto@zeitgeistmdp.com.ar ",
+   "Argentina, Mar del Plata",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist C.A.B.A.",
+   "http://www.zeitgeistcaba.com.ar/",
+   "comunicacion@zeitgeistcaba.com.ar",
+   "Ciudad Autónoma de Buenos Aires, Buenos Aires, Argentina",
+   "3"
+  ],
+  [
+   "Local",
+   "Τμήμα Θεσσαλονίκης",
+   "http://www.zeitgeist-thessaloniki.com/",
+   "info@zeitgeist-thessaloniki.com",
+   "Thessaloniki, Macedonia, Greece",
+   "3"
+  ],
+  [
+   "Country",
+   "TZM USA",
+   "http://tzm-usa.org/",
+   "jen@thezeitgeistmovement.com",
+   "United States of America",
+   "1"
+  ],
+  [
+   "City",
+   "TZM Gothenburg",
+   "http://zgm.se/groups/goteborg/",
+   "goteborg@zgm.se",
+   "Gothenburg, Sweden",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Watford",
+   "http://www.facebook.com/groups/TZMWatford",
+   "Contact via Facebook Group",
+   "Watford, Herts, UK",
+   "3"
+  ],
+  [
+   "Region",
+   "Quintana Roo",
+   "http://www.facebook.com/ZeitgeistQRoo",
+   "quintana.roo@zeitgeist.com.mx",
+   "Mexico, Quintana Roo",
+   "2"
+  ],
+  [
+   "Local",
+   "Lincoln and Omaha",
+   "https://www.facebook.com/groups/zmnebraska/",
+   "contact via website form",
+   "Lincoln, NE, USA",
+   "3"
+  ],
+  [
+   "Region",
+   "Córdoba",
+   "http://www.mzcordoba.com.ar",
+   "contacto@mzcordoba.com.ar",
+   "Argentina, Córdoba",
+   "2"
+  ],
+  [
+   "Local",
+   "Correintes",
+   "http://www.zeitgeistcorrientes.com.ar/",
+   "contacto@zeitgeistcorrientes.com.ar",
+   "Corrientes, Corrientes, Argentina",
+   "3"
+  ],
+  [
+   "Region",
+   "Santiago",
+   "https://www.facebook.com/Movimiento.Zeitgeist.Region.Metropolitana",
+   "santiago@zchile.cl",
+   "Santiago, Metropolitana, Chile",
+   "2"
+  ],
+  [
+   "Region",
+   "Jalisco",
+   "http://www.zeitgeist-jalisco.com/",
+   "jalisco@zeitgeist.com.mx",
+   "Jalisco, Mexico",
+   "2"
+  ],
+  [
+   "Region",
+   "TZN Northern Ireland",
+   "http://www.facebook.com/groups/149350041744129/",
+   "zeitgeistmovement.ulster@gmail.com",
+   "N.Ireland, U.K.",
+   "2"
+  ],
+  [
+   "Region",
+   "Berlin",
+   "http://www.zeitgeistmovement-berlin.de/",
+   "zeitgeistmovementberlin@gmx.net / berlin@zeitgeistmovement.de",
+   "Berlin, Germany",
+   "2"
+  ],
+  [
+   "Local",
+   "Kiel",
+   "http://www.zeitgeistmovement-kiel.de/",
+   "http://zeitgeistmovement-kiel.de/kontakt.html / marius@zeitgeistmovement-kiel.de",
+   "Kiel, Germany",
+   "3"
+  ],
+  [
+   "Local",
+   "Frankfurt",
+   "http://www.zeitgeistmovement-frankfurt.de/",
+   "welcome@zeitgeistmovement-frankfurt.de",
+   "Frankfurt, Germany",
+   "3"
+  ],
+  [
+   "Local",
+   "Bremen",
+   "http://bremen.zeitgeistmovement.de/",
+   "bremen@zeitgeistmovement.de",
+   "Bremen, Germany",
+   "3"
+  ],
+  [
+   "Local",
+   "Dresden",
+   "http://zeitgeistmovement-sn.de",
+   "tzmchapterdresden@googlemail.com / rbe.withoutmoney@gmail.com",
+   "Dresden, Germany",
+   "3"
+  ],
+  [
+   "Local",
+   "Giessen",
+   "http://zeitgeistmovement-giessen.de/",
+   "http://zeitgeistmovement-giessen.de/main/kontakt.php / pate18@web.de",
+   "Giessen, Germany",
+   "3"
+  ],
+  [
+   "Local",
+   "Karlsruhe",
+   "http://zeitgeistmovement-karlsruhe.de/",
+   "http://zeitgeistmovement-karlsruhe.de/kontakt.html",
+   "Karlsruhe, Germany",
+   "3"
+  ],
+  [
+   "Local",
+   "Köln",
+   "http://köln.zeitgeist-movement.de/",
+   "http://köln.zeitgeist-movement.de/main/kontakt.php / felix.wohmann@web.de",
+   "Köln, Germany",
+   "3"
+  ],
+  [
+   "Local",
+   "Nürnberg",
+   "http://zeitgeistbewegung-nbg.de",
+   "http://zeitgeistbewegung-nbg.de/Chapter/index.php/kontakt",
+   "Nürnberg, Germany",
+   "3"
+  ],
+  [
+   "Local",
+   "Münster",
+   "http://zeitgeist-muenster.de/",
+   "info@zeitgeist-muenster.de",
+   "Münster, Germany",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Cardiff",
+   "http://www.facebook.com/groups/104282302969121",
+   "info@cardiff.tzmchapters.org",
+   "Cardiff, Wales, UK",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Hamilton",
+   "https://www.facebook.com/update_security_info.php?wizard=1#!/groups/zhamilton/",
+   "buss11@hotmail.com",
+   "Hamilton, Ontario",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Trois-Rivieres",
+   "http://zeitgeisttroisrivieres.ca/",
+   "admin@zeitgeisttroisrivieres.ca",
+   "Trois-Rivieres, Quebec",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Thunder Bay",
+   "http://www.facebook.com/groups/134727663262024/",
+   "a.brayshaw@gmail.com",
+   "Thunder Bay, Ontario",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Kelowna",
+   "http://zeitgeistkelowna.com/",
+   "rawbin_hood@shaw.ca",
+   "Kelowna, BC",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Belleville",
+   "https://www.facebook.com/groups/TZMBelleville/",
+   "mrpotter28@yahoo.com",
+   "Belleville, Ontario",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Truro",
+   "https://www.facebook.com/groups/148355896059/",
+   "trurochapter@gmail.com",
+   "Truro, Nova Scotia",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Halifax",
+   "https://www.facebook.com/groups/322296743654/",
+   "halifaxchapter@gmail.com",
+   "Halifax, Nova Scotia",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Toronto",
+   "http://www.zeitgeist-toronto.com",
+   "victor@zeitgeist-toronto.com",
+   "Toronto, Ontario",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Cornwall",
+   "https://www.facebook.com/groups/tzmtvpcornwallON/",
+   "lukasz.daw@gmail.com",
+   "Cornwall, Ontario",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Montreal",
+   "http://zmmontreal.com/",
+   "steve@gmail.com",
+   "Montreal, Quebec",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Vancouver",
+   "https://zeitgeistvancouver.com/",
+   "faber@zeitgeistvancouver.com",
+   "Vancouver, BC",
+   "3"
+  ],
+  [
+   "City",
+   "Groningen",
+   "http://afdelingen.zeitgeistbeweging.nl/groningen/",
+   "j.vdveen@zeitgeistbeweging.nl",
+   "Groningen, The Netherlands",
+   "3"
+  ],
+  [
+   "City",
+   "Amsterdam",
+   "http://afdelingen.zeitgeistbeweging.nl/amsterdam/",
+   "f.vanlang@zeitgeistbeweging.nl",
+   "Amsterdam, The Netherlands",
+   "3"
+  ],
+  [
+   "City",
+   "Rotterdam",
+   "http://afdelingen.zeitgeistbeweging.nl/rotterdam/",
+   "u.ertas@zeitgeistbeweging.nl",
+   "Rotterdam, The Netherlands",
+   "3"
+  ],
+  [
+   "City",
+   "The Hague",
+   "http://afdelingen.zeitgeistbeweging.nl/den-haag/",
+   "n.fluitman@zeitgeistbeweging.nl",
+   "The Hague, The Netherlands",
+   "3"
+  ],
+  [
+   "City",
+   "Nijmegen",
+   "http://afdelingen.zeitgeistbeweging.nl/nijmegen/",
+   "r.vandinteren@zeitgeistbeweging.nl",
+   "Nijmegen, The Netherlands",
+   "3"
+  ],
+  [
+   "Region",
+   "Twente",
+   "http://afdelingen.zeitgeistbeweging.nl/twente/",
+   "t.bruins.slot@zeitgeistbeweging.nl",
+   "Twente, The Netherlands",
+   "2"
+  ],
+  [
+   "City",
+   "Alkmaar",
+   "http://afdelingen.zeitgeistbeweging.nl/alkmaar/",
+   "n.dekok@zeitgeistbeweging.nl",
+   "Alkmaar, The Netherlands",
+   "3"
+  ],
+  [
+   "Region",
+   "Limburg",
+   "http://afdelingen.zeitgeistbeweging.nl/limburg/",
+   "s.doesborgh@zeitgeistbeweging.nl",
+   "Limburg, The Netherlands",
+   "2"
+  ],
+  [
+   "Region",
+   "Brabant",
+   "http://afdelingen.zeitgeistbeweging.nl/noord-brabant/",
+   "",
+   "Brabant, The Netherlands",
+   "2"
+  ],
+  [
+   "Country",
+   "Ireland",
+   "http://www.thezeitgeistmovement.ie/",
+   "Use website contact form",
+   "Ireland",
+   "1"
+  ],
+  [
+   "Country",
+   "TZM Philippines",
+   "http://tzmpilipinas.com/",
+   "See website contact section",
+   "Philippines",
+   "1"
+  ],
+  [
+   "Country",
+   "TZM India",
+   "http://www.tzmindia.com/",
+   "info@tzmindia.com",
+   "India",
+   "1"
+  ],
+  [
+   "Local",
+   "TZM Mumbai",
+   "http://mumbai.tzmindia.com",
+   "mumbai@tzmindia.com",
+   "Mumbai, Maharashtra, India",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Delhi",
+   "http://tzmdelhi.com",
+   "nsajan@gmail.com",
+   "New Delhi, Delhi, India",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Ahmedabad",
+   "http://ahmedabad.tzmindia.com",
+   "ahmedabad@tzmindia.com",
+   "Ahmedabad, Gujarat, India",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Nagpur",
+   "http://nagpur.thezeitgeistmovement.in/",
+   "nagpur@tzmindia.com",
+   "Nagpur, Maharashtra, India",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Thane",
+   "http://thane.thezeitgeistmovement.in/",
+   "athuvaidya25@gmail.com",
+   "Thane, Maharashtra, India",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Dhanbad",
+   "http://dhanbad.thezeitgeistmovement.in/",
+   "anirban.ani.dasgupta@gmail.com",
+   "Dhanbad, Jharkhand, India",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Ranchi",
+   "http://ranchi.thezeitgeistmovement.in/",
+   "anirban.ani.dasgupta@gmail.com",
+   "Ranchi, Jharkhand, India",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Jalandhar",
+   "http://jalandhar.tzmindia.com/",
+   "manishgupta21@gmail.com",
+   "Jalandhar, Punjab, India",
+   "3"
+  ],
+  [
+   "Local",
+   "TZM Kochi",
+   "http://kochi.tzmindia.com/home",
+   "kochi@tzmindia.com",
+   "Kochi, Kerala, India",
+   "3"
+  ],
+  [
+   "Regional",
+   "Alsace",
+   "http://alsace.mouvement-zeitgeist.fr",
+   "alsace@mouvement-zeitgeist.fr",
+   "Alsace, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Aquitaine",
+   "http://aquitaine.mouvement-zeitgeist.fr",
+   "aquitaine@mouvement-zeitgeist.fr",
+   "Aquitaine, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Auvergne",
+   "http://auvergne.mouvement-zeitgeist.fr",
+   "auvergne@mouvement-zeitgeist.fr",
+   "Auvergne, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Basse-Normandie",
+   "http://basse-normandie.mouvement-zeitgeist.fr",
+   "basse.normandie@mouvement-zeitgeist.fr",
+   "Basse-Normandie, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Bourgogne",
+   "http://bourgogne.mouvement-zeitgeist.fr",
+   "bourgogne@mouvement-zeitgeist.fr",
+   "Bourgogne, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Bretagne",
+   "http://bretagne.mouvement-zeitgeist.fr",
+   "bretagne@mouvement-zeitgeist.fr",
+   "Bretagne, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Centre",
+   "http://centre.mouvement-zeitgeist.fr",
+   "centre@mouvement-zeitgeist.fr",
+   "Centre, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Champagne-Ardenne",
+   "http://champagne-ardenne.mouvement-zeitgeist.fr",
+   "champagne.ardenne@mouvement-zeitgeist.fr",
+   "Champagne-Ardenne, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Corse",
+   "http://corse.mouvement-zeitgeist.fr",
+   "corse@mouvement-zeitgeist.fr",
+   "Corse, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Franche-Comté",
+   "http://franche-comte.mouvement-zeitgeist.fr",
+   "franche.comte@mouvement-zeitgeist.fr",
+   "Franche-Comté, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Guadeloupe",
+   "http://guadeloupe.mouvement-zeitgeist.fr",
+   "guadeloupe@mouvement-zeitgeist.fr",
+   "Guadeloupe",
+   "2"
+  ],
+  [
+   "Regional",
+   "Guyane",
+   "http://guyane.mouvement-zeitgeist.fr",
+   "guyane@mouvement-zeitgeist.fr",
+   "Guyane",
+   "2"
+  ],
+  [
+   "Regional",
+   "Haute-Normandie",
+   "http://haute-normandie.mouvement-zeitgeist.fr",
+   "haute.normandie@mouvement-zeitgeist.fr",
+   "Haute-Normandie, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Île-de-France",
+   "http://ile-de-france.mouvement-zeitgeist.fr",
+   "iledefrance@mouvement-zeitgeist.fr",
+   "Île de France, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Languedoc-Roussillon",
+   "http://languedoc-roussillon.mouvement-zeitgeist.fr",
+   "languedoc.roussillon@mouvement-zeitgeist.fr",
+   "Languedoc-Roussillon, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "La Réunion",
+   "http://la-reunion.mouvement-zeitgeist.fr",
+   "lareunion@mouvement-zeitgeist.fr",
+   "Île de la Réunion",
+   "2"
+  ],
+  [
+   "Regional",
+   "Limousin",
+   "http://limousin.mouvement-zeitgeist.fr",
+   "limousin@mouvement-zeitgeist.fr",
+   "Limousin, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Lorraine",
+   "http://lorraine.mouvement-zeitgeist.fr",
+   "lorraine@mouvement-zeitgeist.fr",
+   "Lorraine, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Martinique",
+   "http://martinique.mouvement-zeitgeist.fr",
+   "martinique@mouvement-zeitgeist.fr",
+   "Martinique, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Mayotte",
+   "http://mayotte.mouvement-zeitgeist.fr",
+   "mayotte@mouvement-zeitgeist.fr",
+   "Mayotte",
+   "2"
+  ],
+  [
+   "Regional",
+   "Midi-Pyrénées",
+   "http://midi-pyrenees.mouvement-zeitgeist.fr",
+   "midi.pyrenees@mouvement-zeitgeist.fr",
+   "Midi-Pyrénées, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Nord-Pas-de-Calais",
+   "http://nord-pas-de-calais.mouvement-zeitgeist.fr",
+   "nordpasdecalais@mouvement-zeitgeist.fr",
+   "Nord Pas de Calais, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Pays de la Loire",
+   "http://pays-de-la-loire.mouvement-zeitgeist.fr",
+   "paysdelaloire@mouvement-zeitgeist.fr",
+   "Pays de la Loire, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Picardie",
+   "http://picardie.mouvement-zeitgeist.fr",
+   "picardie@mouvement-zeitgeist.fr",
+   "Picardie, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Poitou-Charentes",
+   "http://poitou-charentes.mouvement-zeitgeist.fr",
+   "poitou.charentes@mouvement-zeitgeist.fr",
+   "Poitou-Charentes, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "P.A.C.A.",
+   "http://PACA.mouvement-zeitgeist.fr",
+   "paca@mouvement-zeitgeist.fr",
+   "Provence Alpes Côtes d'Azur, France",
+   "2"
+  ],
+  [
+   "Regional",
+   "Rhône-Alpes",
+   "http://rhone-alpes.mouvement-zeitgeist.fr",
+   "rhone.alpes@mouvement-zeitgeist.fr",
+   "Rhône-Alpes, France",
+   "2"
+  ],
+  [
+   "City",
+   "TZM Amravati",
+   "N/A",
+   "ajinkya.gohad@gmail.com",
+   "Amravati, Maharashtra, India",
+   "3"
+  ],
+  [
+   "Region",
+   "Zeitgeist Washington",
+   "http://chapters.thezeitgeistmovement.com/wa/index.php",
+   "info.zmwa@gmail.com",
+   "WA, USA",
+   "2"
+  ],
+  [
+   "Local",
+   "Zeitgeist Seattle",
+   "http://www.meetup.com/ZeitgeistSeattle/",
+   "contact via website forum",
+   "Seattle, WA, USA",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Bellingham",
+   "http://zeitgeistbellingham.groupsite.com",
+   "contact via website forum",
+   "Bellingham, WA, USA",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Spokane",
+   "http://zeitgeistspokane.groupsite.com",
+   "contact via website forum",
+   "Spokane, WA, USA",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Tri-Cities",
+   "http://zeitgeist-tricities.groupsite.com",
+   "contact via website forum",
+   "Kennewick, WA, USA",
+   "3"
+  ],
+  [
+   "Local",
+   "Zeitgeist Everett",
+   "http://zeitgeisteverett.groupsite.com",
+   "contact via website forum",
+   "Everett, WA, USA",
+   "3"
+  ],
+  [
+   "City",
+   "TZM Jabalpur",
+   "N/A",
+   "shreyagrawal7@gmail.com",
+   "Jabalpur, Madhya Pradesh, India",
+   "3"
+  ],
+  [
+   "Country",
+   "Scotland",
+   "https://www.facebook.com/groups/63966345114/",
+   "zeitgeistscotland@gmail.com",
+   "Scotland, UK",
+   "1"
+  ],
+  [
+   "Local",
+   "Alton",
+   "https://www.facebook.com/groups/127180994018784/",
+   "tzmalton@hotmail.co.uk",
+   "Alton, Hampshire, South East England",
+   "3"
+  ],
+  [
+   "Local",
+   "Barnstaple",
+   "https://www.facebook.com/groups/104885646263443/",
+   "contact via facebook group",
+   "Barnstaple, South West England",
+   "3"
+  ],
+  [
+   "Local",
+   "Bath",
+   "https://www.facebook.com/groups/148247045273828/",
+   "tzmbath@hotmail.com",
+   "Bath, South West England",
+   "3"
+  ],
+  [
+   "Local",
+   "Bedfordshire",
+   "https://www.facebook.com/groups/254764754566524/",
+   "contact via facebook group",
+   "Bedfordshire, East of England,",
+   "3"
+  ],
+  [
+   "Region",
+   "Birmingham/West Midlands",
+   "https://www.facebook.com/groups/TZMWM/",
+   "westmidlands@thezeitgeistmovementuk.com",
+   "West Midlands, England",
+   "2"
+  ],
+  [
+   "Local",
+   "Bournemouth",
+   "https://www.facebook.com/groups/196861413681895/permalink/445671268800907/",
+   "contact via facebook group",
+   "Bournemouth, South West England",
+   "3"
+  ],
+  [
+   "Local",
+   "Brighton & Hove",
+   "https://www.facebook.com/home.php?sk=group_192822824074499",
+   "mirroredwater@hotmail.com",
+   "Brighton & Hove, South East England",
+   "3"
+  ],
+  [
+   "Local",
+   "Brigwater",
+   "https://www.facebook.com/home.php?sk=group_200813043267927",
+   "zmuktv@live.co.uk",
+   "Bridgwater, United Kingdom",
+   "3"
+  ],
+  [
+   "Local",
+   "Bristol",
+   "https://www.facebook.com/groups/396518863738801/",
+   "tzmbristol@hotmail.com",
+   "Bristol, South West England",
+   "3"
+  ],
+  [
+   "Local",
+   "Cambridge",
+   "https://www.facebook.com/home.php?sk=group_183721925006835",
+   "contact via facebook group",
+   "Cambridge, East of England",
+   "3"
+  ],
+  [
+   "Local",
+   "Colchester",
+   "https://www.facebook.com/home.php?sk=group_163580887030884&ap=1",
+   "TZMcolchester@gmail.com",
+   "Colchester, East of England",
+   "3"
+  ],
+  [
+   "Region",
+   "East Midlands",
+   "https://www.facebook.com/groups/372698629463819",
+   "tzmeastmidlands@hotmail.co.uk",
+   "East Midlands, England",
+   "2"
+  ],
+  [
+   "Local",
+   "Glasgow",
+   "https://www.facebook.com/groups/317699129925/",
+   "contact via facebook group",
+   "Glasgow, Central Scotland",
+   "3"
+  ],
+  [
+   "Local",
+   "Liverpool",
+   "https://www.facebook.com/home.php?sk=group_181783878530748",
+   "tzmliverpoolchapter@gmail.com",
+   "Liverpool, North West England",
+   "3"
+  ],
+  [
+   "Region",
+   "London",
+   "http://thezeitgeistmovementlondon.org/",
+   "contact via website form",
+   "London, Greater London, England",
+   "2"
+  ],
+  [
+   "Local",
+   "Manchester",
+   "https://www.facebook.com/home.php?sk=group_185136781532858",
+   "contact via Facebook Group",
+   "Manchester, North West England",
+   "3"
+  ],
+  [
+   "Local",
+   "Maidstone",
+   "https://www.facebook.com/groups/264409036996279/",
+   "tzmmaidstone@hotmail.co.uk",
+   "Maidstone, South East England",
+   "3"
+  ],
+  [
+   "Local",
+   "Milton Keynes",
+   "https://www.facebook.com/groups/212654764847/",
+   "mktzm@hotmail.co.uk",
+   "Milton Keynes South East England",
+   "3"
+  ],
+  [
+   "Local",
+   "Newcastle",
+   "https://www.facebook.com/home.php?sk=group_203211399703803",
+   "jon@thezeitgeistmovementuk.com",
+   "Newcastle, North East England",
+   "3"
+  ],
+  [
+   "Region",
+   "North Wales",
+   "https://www.facebook.com/groups/159431394089800/",
+   "contact via facebook group",
+   "North Wales, Wales, UK",
+   "2"
+  ],
+  [
+   "Region",
+   "North West England",
+   "http://www.meetup.com/TZMNorthWestEngland/",
+   "tzmuknwe@hushmail.com",
+   "North West England",
+   "2"
+  ],
+  [
+   "Local",
+   "Norwich",
+   "http://www.facebook.com/groups/177933395594728/",
+   "tzmeastofengland@gmail.com",
+   "Norwich, East of England",
+   "3"
+  ],
+  [
+   "Local",
+   "Nottingham",
+   "https://www.facebook.com/groups/zeitgeistnottingham/",
+   "contact via facebook group",
+   "Nottingham, East Midlands England",
+   "3"
+  ],
+  [
+   "Local",
+   "Plymouth",
+   "https://www.facebook.com/groups/319986268015144/",
+   "contact via facebook group",
+   "Plymouth, South West England",
+   "3"
+  ],
+  [
+   "Local",
+   "Portsmouth",
+   "https://www.facebook.com/groups/236054136439516/",
+   "portsmouthzeitgeist@gmail.com",
+   "Portsmouth, South East England",
+   "3"
+  ],
+  [
+   "Local",
+   "Sheffield",
+   "http://www.tzmsheffield.co.uk/",
+   "info@tzmsheffield.co.uk",
+   "Sheffield, South Yorkshire, Yorkshire",
+   "3"
+  ],
+  [
+   "Local",
+   "Southampton",
+   "https://www.facebook.com/home.php?sk=group_155825007805115",
+   "tzmsouthampton@gmail.com",
+   "Southampton, South East England",
+   "3"
+  ],
+  [
+   "Local",
+   "Swansea",
+   "https://www.facebook.com/groups/248113275278803/",
+   "contact via facebook group",
+   "swansea, Wales, UK",
+   "3"
+  ],
+  [
+   "City",
+   "TZM Pune",
+   "N/A",
+   "kharkar.amruta@gmail.com",
+   "Pune, Maharashtra, India",
+   "3"
+  ],
+  [
+   "City",
+   "TZM Hyderabad",
+   "N/A",
+   "vijaykumar.newgen@gmail.com",
+   "Hyderabad, Andhra Pradesh, India",
+   "3"
+  ],
+  [
+   "City",
+   "Bangalore",
+   "",
+   "manishgupta21@gmail.com",
+   "Bangalore, Karnataka, India",
+   "3"
+  ],
+  [
+   "Local",
+   "Nuevo León",
+   "http://www.facebook.com/pages/Movimiento-Zeitgeist-Nuevo-León/220404991326455",
+   " nuevo.leon@zeitgeist.com.mx ",
+   "Monterrey, Nuevo León, Mexico",
+   "3"
+  ],
+  [
+   "Local",
+   "Villahermosa",
+   "http://www.facebook.com/pages/Zeitgeist-Villahermosa/230331900422142",
+   "at--o@hotmail.com",
+   "Villahermosa,Tabasco, Mexico",
+   "3"
+  ],
+  [
+   "Country",
+   "Guatemala",
+   "http://www.zeitgeistguatemala.com",
+   "contacto@zeitgeistguatemala.com",
+   "Guatemala",
+   "1"
+  ],
+  [
+   "Local",
+   "Tijuana",
+   "http://www.facebook.com/zeitgeist.tijuana",
+   "Zeitgeist.Tijuana@gmail.com",
+   "Tijuana, Mexico",
+   "3"
+  ],
+  [
+   "Country",
+   "TZM Israel",
+   "http://www.izm.org.il/",
+   "info@izm.org.il",
+   "Israel",
+   "1"
+  ],
+  [
+   "Country",
+   "TZM China",
+   "http://www.zmcn.org/",
+   "tzm.in.china@gmail.com",
+   "China",
+   "1"
+  ],
+  [
+   "Local",
+   "Los Valles del Tuy",
+   "http://www.facebook.com/mzlosvallesdeltuy",
+   "juanalcinazam@gmail.com",
+   "Los Valles del Tuy, Venezuela",
+   "3"
+  ],
+  [
+   "Country",
+   "TZM Kazakhstan",
+   "http://thezeitgeistmovement.kz/",
+   "See the website contact form",
+   "Kazakhstan",
+   "1"
+  ],
+  [
+   "Regional",
+   "Mato Grosso do Sul",
+   "http://movimentozeitgeist.com.br/",
+   "rodrigo.nsh@gmail.com",
+   "Mato Grosso do Sul, Brazil",
+   "2"
+  ],
+  [
+   "Regional",
+   "Rio de Janeiro",
+   "http://movimentozeitgeist.com.br/",
+   "thapdiniz@gmail.com",
+   "Rio de Janeiro, Brazil",
+   "2"
+  ],
+  [
+   "Regional",
+   "Minas Gerais",
+   "http://movimentozeitgeist.com.br/",
+   "dafne@movimentozeitgeist.com.br",
+   "Minas Gerais, Brazil",
+   "2"
+  ],
+  [
+   "Country",
+   "Bolivia",
+   "http://www.zbolivia.org",
+   "contacto@zbolivia.org",
+   "Bolivia",
+   "1"
+  ],
+  [
+   "Region",
+   "Barcelona",
+   "",
+   "movimiento-zeitgeist-barcelona@googlegroups.com",
+   "Barcelona, Spain",
+   "2"
+  ],
+  [
+   "Region",
+   "South Yorkshire",
+   "https://www.facebook.com/groups/tzm.southyorkshire/",
+   "info@tzmsouthyorkshire.co.uk",
+   "South Yorkshire, Yorkshire, UK",
+   "2"
+  ],
+  [
+   "Local",
+   "Peterborough",
+   "http://tzmpeterborough.co.uk/",
+   "info@tzmpeterborough.co.uk",
+   "Peterborough, East of England",
+   "3"
+  ],
+  [
+   "Local ",
+   "Capítulo de Florianópolis ",
+   "http://sc.movimentozeitgeist.com.br/ ",
+   "sc@mzbr.com.br ",
+   "Florianopolis, Santa Catarina, Brazil ",
+   "3"
+  ],
+  [
+   "Region",
+   "Yorkshire",
+   "https://www.facebook.com/groups/tzm.yorkshire/",
+   "info@tzmyorkshire.co.uk",
+   "Yorkshire, England",
+   "2"
+  ],
+  [
+   "Local",
+   "Zeitgeist Tacoma",
+   "http://zeitgeisttacoma.groupsite.com",
+   "contact via website forum",
+   "Tacoma, WA, USA",
+   "3"
+  ],
+  [
+   "Region",
+   "South Yorkshire",
+   "https://www.facebook.com/groups/tzm.southyorkshire/",
+   "info@tzmsouthyorkshire.co.uk",
+   "West Yorkshire, Yorkshire, UK",
+   "2"
+  ],
+  [
+   "Local",
+   "Tucson Chapter",
+   "http://www.arizonazeitgeist.com/",
+   "contact via website form",
+   "Tucson, Arizona, US",
+   "3"
+  ],
+  [
+   "Country",
+   "TZM Malaysia",
+   "http://www.zeitgeistmalaysia.com",
+   "contact@zeitgeistmalaysia.com",
+   "Malaysia",
+   "1"
+  ],
+  [
+   "Country",
+   "TZM Turkey",
+   "http://www.zeitgeistturkiye.com/",
+   "Use site contact form",
+   "Turkey",
+   "1"
+  ],
+  [
+   "Country",
+   "TZM Ukraine",
+   "http://www.thezeitgeistmovement.org.ua/",
+   "info@thezeitgeistmovement.org.ua",
+   "Ukraine",
+   "1"
+  ]
+ ]
+}

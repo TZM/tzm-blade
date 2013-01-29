@@ -3,3 +3,11 @@
         - for(var i in nav1)
             li
                 a(href=nav1[i])= i
+
+- var x = 12;
+function test(foo)
+    h1=foo
+    - if(x)
+        p=x
+#example
+    call test("Header")

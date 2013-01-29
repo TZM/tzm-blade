@@ -1,15 +1,15 @@
 header
     nav.fullwidth.clearfix.top
-        - var menu = {'projects': '#','map': '#','calendar': '#', 'forums': '#', 'guide': '#'}
+        - var menu = locals.settings.translation.menu;
             ul.menu
                 - for(var i in menu)
                     li
-                        a(href=menu[i] data-i18n="menu."+i class=""+i)= i
-        - var user_menu = {'gravatar': '#', 'profile': '#', 'login': '#', 'logout': '#', 'contact': '#', 'help': '#'}
+                        a(href="#" data-i18n="menu."+i class=""+i)= i
+        - var user_menu = locals.settings.translation.user;
             ul.user-menu
                 - for(var i in user_menu)
                     li
-                        a(href=user_menu[i] class="tooltip")
+                        a(href="#" class="tooltip")
                             img(src='../images/'+i+'.png', alt="")
                             span(data-i18n="user."+i)= i
                 li.search-form

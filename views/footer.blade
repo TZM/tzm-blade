@@ -10,14 +10,21 @@ footer
                         h5(data-i18n="footer.chapters")
                     .col_4
                         h5(data-i18n="footer.official_sites.official_sites")
-                    .col_2
-                        ul.chapters-col-0
-                    .col_2
-                        ul.chapters-col-1
-                    .col_2
-                        ul.chapters-col-2
-                    .col_2
-                        ul.chapters-col-3
+                    // we load the chapters.json file
+                    .col_8
+                        - function sortByKey(key){return function(a,b){if (a[key] < b[key])return -1;if (a[key] > b[key])return 1;return 0;}}
+                        - var chapters = locals.settings.chapters.rows;
+                            - var countries = [];
+                            - for(var i in chapters)
+                                - var row = chapters[i];
+                                - if (row[0] == 'Country'){countries.push({link:row[2],contact:row[3],country:row[4]});}else if (row[0] =='Region'){console.log(row);}
+                        - countries.sort(sortByKey('country'));
+                        - console.log(countries);
+                        ul
+                            - for(var i in countries);
+                                - var o = countries[i];
+                                li
+                                    a(href=o.link title=o.country class="" tabindex="-1")
                     .col_4
                         p.note
                             a(href="http://www.thezeitgeistmovement.com/" data-i18n="footer.official_sites.tzm_global" target="_blank")
