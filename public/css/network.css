@@ -1,27 +1,53 @@
 /*#tzm-network-popup {*/
-/*	left: auto !important;*/
-/*}*/
+/* left: auto !important;*/
+/*
+}
+*/
+/* separate the list from surrounding elements */
+#chapters-links
+{
+  background: red;
+}
 
-#chapters_table {
-    float: left;
-    width: 48%;
+#chapters-links ol
+{
+  margin: 0 0 1em 2em;
+  padding: 0;
 }
-.c_COL1, .c_COL2, .c_COL3, .c_COL4 {
-    float: left;
-    height: 200px;
-    width: 25%;
+
+#chapter-links ol li
+{
+  /* Stipulate the height of each item so that 
+  vertical return = items * height */
+
+  line-height: 1.2em;
+
+  /* Clear the default margins & padding 
+  so we can style the list from scratch */
+
+  margin: 0;
+  padding: 0;
 }
-.c_COL1 div, .c_COL2 div, .c_COL3 div, .c_COL4 div {
-    margin-bottom: 2px;
-    margin-top: 1px;
-    text-align: left;
-    vertical-align: top;
+
+/* If li position is left static, Internet 
+Explorer disables hyperlinks in the list 
+in all but the final column.
+
+This rule will be processed only by 
+Internet Explorer because only IE believes 
+that there’s a level above HTML: */
+
+* html ol li
+{
+	position: relative;
 }
-#chapters_table h1 {
-    color: #484848;
-    font-size: 20px;
-    font-weight: 700;
-}
+
+/* horizontal position of each column */
+
+#chapter-links ol li.column1 { margin-left: 0em; }
+#chapter-links ol li.column2 { margin-left: 10em; }
+#chapter-links ol li.column3 { margin-left: 20em; }
+
 .chapters_link {
     color: #000000;
     display: table-row-group;
@@ -37,21 +63,21 @@
     opacity: 1;
 }
 .chapters {
-	background: url("../images/flags.gif") no-repeat scroll 0 0 padding-box transparent;
-	display: block !important;
-	font-size: 100% !important;
-	height: 11px;
-	line-height: 100% !important;
-	margin: 0 5px 10px 0 !important;
-	opacity: 0.6;
-	padding-left: 16px !important;
-	white-space: nowrap;
-	width: 0;
+    background: url("../images/flags.gif") no-repeat scroll 0 0 padding-box transparent;
+    display: block !important;
+    font-size: 100% !important;
+    height: 11px;
+    line-height: 100% !important;
+    margin: 0 5px 10px 0 !important;
+    opacity: 0.6;
+    padding-left: 16px !important;
+    white-space: nowrap;
+    width: 0;
 }
 .flag-margin {
-	display: block;
-	margin-left: 2px;
-	white-space: nowrap;
+    display: block;
+    margin-left: 2px;
+    white-space: nowrap;
 }
 .c_argentina {
     background-position: 0 -99px;
