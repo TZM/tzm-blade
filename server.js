@@ -2,7 +2,11 @@ var blade = require('blade')
     ,express = require('express')
     ,http = require('http')
     ,https = require('https')
-    ,fs = require('fs'),json;
+    ,fs = require('fs')
+    ,nowjs = require('now')
+    ,City = require('geoip').City,json;
+
+var city = new City('data/GeoLiteCity.dat' );
 
 var GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
@@ -74,6 +78,8 @@ var app = express();
 app.use(blade.middleware(__dirname + '/views') ); //for client-side templates
 app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static(__dirname + '/public') ); //maybe we have some static files
+//app.use(blade.middleware(__dirname + '/views') ); //for client-side templates
+app.use(express.static(__dirname + "/public") ); //maybe we have some static files
 app.set('views', __dirname + '/views'); //tells Express where our views are stored
 try {
     app.set('translation', require(__dirname + '/public/locales/dev/translation.json'));
@@ -88,5 +94,17 @@ app.get('/', function(req, res, next) {
     TZMNetwork(TABLE_ID);
     res.render('index');
 });
+app.get( '/map', function( req, res, next ) { 
+    var ip = ( req.connection.remoteAddress !== "127.0.0.1" )?
+    req.connection.remoteAddress: "72.196.192.58";
+    city.lookup( ip, function( err, loc ) { 
+        if ( err ) { 
+            loc = {};
+        }
+        res.render( 'map', { loc: loc } );
+    });
+});
+
+app.locals.pretty=true;
 app.listen(29080);
 console.log('Server running at http://127.0.0.1:29080/');
