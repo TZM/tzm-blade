@@ -17,24 +17,29 @@ var options = {
     ,port: 443
     ,method: 'GET'
 };
- 
+
 function TZMNetwork(fileId) {
-    options["path"] = GOOGLE_PATH;
-
-    var file = fs.createWriteStream("data/chapters.json");
-    var req = https.request(options, function(res) {
-      res.on('data', function(data) {
-          file.write(data);
-      }).on('end', function() {
-          file.end();
-          console.log("chapters.json created");
-      });
-    });
-    req.end();
-
-    req.on('error', function(e) {
-      console.error(e);
-    });
+    if (fs.existsSync("data/chapters.json")) {
+        // ... put code if "data/chapters.json" has changed!
+        console.log('OK');
+    } else {
+        options["path"] = GOOGLE_PATH;
+        
+        var file = fs.createWriteStream("data/chapters.json");
+        var req = https.request(options, function(res) {
+          res.on('data', function(data) {
+              file.write(data);
+          }).on('end', function() {
+              file.end();
+              console.log("chapters.json created");
+          });
+        });
+        req.end();
+        
+        req.on('error', function(e) {
+          console.error(e);
+        });
+    }
 }
 
 var app = express();

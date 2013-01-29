@@ -1,8 +1,8 @@
 .project-select
-    - var project = locals.settings.translation.projects;
+    - var project = locals.settings.translation.projects
     ul.constrain
         - for(var i in project)
-            - var o = project[i];
+            - var o = project[i]
             li
                 a(href=o.href title=o.title class="" tabindex="-1")
                     img(src=o.image_path, alt=o.title)
