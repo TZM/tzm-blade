@@ -22,43 +22,60 @@ var options = {
     ,method: 'GET'
 };
 
+var lastModifiedDate = '';
+
+TZMNetwork(TABLE_ID);
+
 function TZMNetwork(fileId) {
     if (fs.existsSync("data/chapters.json")) {
-        // ... put code if "data/chapters.json" has changed!
+        // node.js is asynchronous and callback doesn't fire until later (next).
+        var x = '';
         options["path"] = GOOGLE_DRIVE_PATH;
         var req = https.request(options, function(res) {
-          res.on('data', function(data) {
-              // get the last modified date
-              console.log(data);
-          }).on('end', function() {
-              console.log("we get the date and who modified it");
-          });
+          res.on('data', function(d) {
+              x += d.toString();
+              //console.log(d.toString());
+          }).on('end', next);
         });
         req.end();
         
         req.on('error', function(e) {
           console.error(e);
         });
+        
+        function next() {
+            var l = JSON.parse(x);
+            var modifiedDate = l.modifiedDate.toString();
+            if (!lastModifiedDate === modifiedDate) {
+                console.log('chapters.json is out of date');
+                getChapters();
+            }
+            lastModifiedDate = l.modifiedDate.toString();
+        }
         console.log('OK');
     } else {
-        options["path"] = GOOGLE_PATH;
-        
-        var file = fs.createWriteStream("data/chapters.json");
-        var req = https.request(options, function(res) {
-          res.on('data', function(data) {
-              file.write(data);
-          }).on('end', function() {
-              file.end();
-              console.log("chapters.json created");
-          });
-        });
-        req.end();
-        
-        req.on('error', function(e) {
-          console.error(e);
-        });
+        getChapters();
     }
 }
+
+function getChapters() {
+    options["path"] = GOOGLE_PATH;
+    var file = fs.createWriteStream("data/chapters.json");
+    var req = https.request(options, function(res) {
+      res.on('data', function(data) {
+          file.write(data);
+      }).on('end', function() {
+          file.end();
+          console.log("chapters.json created");
+      });
+    });
+    req.end();
+    
+    req.on('error', function(e) {
+      console.error(e);
+    });
+}
+
 function dumpError(err) {
   if (typeof err === 'object') {
     if (err.message) {
@@ -92,8 +109,10 @@ try {
 app.set('view engine', 'blade'); //Yes! Blade works with Express out of the box!
 app.get('/', function(req, res, next) {
     TZMNetwork(TABLE_ID);
+    console.log(lastModifiedDate);
     res.render('index');
 });
+
 app.get( '/map', function( req, res, next ) { 
     var ip = ( req.connection.remoteAddress !== "127.0.0.1" )?
     req.connection.remoteAddress: "72.196.192.58";

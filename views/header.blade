@@ -4,6 +4,9 @@ header
             ul.menu
                 - for(var i in menu)
                     li
+                        // - if (i === 'map')
+                        //     a(href=""+i data-i18n="menu."+i class=""+i)= i
+                        // - else
                         a(href="#" data-i18n="menu."+i class=""+i)= i
         - var user_menu = locals.settings.translation.user;
             ul.user-menu
