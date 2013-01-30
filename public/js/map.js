@@ -39,6 +39,7 @@ function ZmgcClient() {
         .data(json.features) // bind these to the features array in json
         .enter().append("path") // if not enough elements create a new path
         .attr("d", self.projection) // transform the supplied jason geo path to svg
+        .attr("class", "country")
         .on("mouseover", function(d) {
           d3.select(this).style("fill", "#6C0").append("svg:title").text(d.properties.name);
         }).on("mouseout", function(d) {
