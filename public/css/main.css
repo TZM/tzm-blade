@@ -595,6 +595,11 @@ svg path.country {
     font: 96% "Helvetica Neue",Arial,Helvetica,sans-serif;
 }
 
+
+.tzmlist {
+   column-count: 4;
+   column-gap: 30px;
+}
 /**************************************************************************
 * Footer
 * ***********************************************************************/

@@ -1,3 +1,18 @@
+- function sortByKey(key)
+    - return function(a,b)
+        - if (a[key] < b[key]) return -1
+        - if (a[key] > b[key]) return 1
+        - return 0
+- var chapters = locals.settings.chapters.rows
+    - var countries = [];
+    - for(var i in chapters)
+        - var row = chapters[i]
+        - if (row[0] == 'Country')
+            - countries.push({link:row[2],contact:row[3],country:row[4]})
+        // - else if (row[0] =='Region')
+        //     - console.log('row')
+- countries.sort(sortByKey('country'))
+// - console.log(countries)
 footer
     ul#footer.fullwidth.footer-i18n
         li#footer_home
@@ -5,57 +20,35 @@ footer
                 img(src="/images/phx-logo-30x34.png" alt="Home")
         li
             a.dropup(href="#" data-i18n="footer.network")
-                #tzm-network-popup.footer_dropup.drop12columns
-                    .col_8
-                        h5(data-i18n="footer.chapters")
-                    .col_4
-                        h5(data-i18n="footer.official_sites.official_sites")
-                    // we load the chapters.json file
-                    .col_8
-                        - function sortByKey(key)
-                            - return function(a,b)
-                                - if (a[key] < b[key]) return -1
-                                - if (a[key] > b[key]) return 1
-                                - return 0
-                        - var chapters = locals.settings.chapters.rows
-                            - var countries = [];
-                            - for(var i in chapters)
-                                - var row = chapters[i]
-                                - if (row[0] == 'Country')
-                                    - countries.push({link:row[2],contact:row[3],country:row[4]})
-                                // - else if (row[0] =='Region')
-                                //     - console.log('row')
-                        - countries.sort(sortByKey('country'))
-                        // we want to put it the countries list in 4 columns
-                        - var list_length =  countries.length/4
-                        - console.log(list_length)
-                        ol#chapters-links
-                            - var intCountryCount = 0
-                            - var intCurrentColumn = 0
-                            - for(var i in countries)
-                                - var o = countries[i]
-                                - if (i == list_length)
-                                    - intCountryCount = 0
-                                    - intCurrentColumn++
-                                li(class="column_"+intCurrentColumn)
-                                    - var countryClass = "chapters c_"+o.country.toLowerCase()
+            #tzm-network-popup.footer_dropup.drop12columns
+                .col_8
+                    h5(data-i18n="footer.chapters")
+                .col_4
+                    h5(data-i18n="footer.official_sites.official_sites")
+                // we load the chapters.json file
+                .col_8.tzmlist
+                    p.invisible fixme!!!
+                    ol#chapters-links
+                        - for(var i in countries)
+                            - var o = countries[i]
+                            li
+                                - var countryClass = "chapters c_"+o.country.toLowerCase()
                                     a(href=o.link title=o.country class=""+countryClass tabindex="-1")
                                         span.flag-margin=o.country
-                    .col_4
-                        p.note
-                            a(href="http://www.thezeitgeistmovement.com/" data-i18n="footer.official_sites.tzm_global" target="_blank")
-                        p.note
-                            a(href="http://zeitgeistmediaproject.com/" data-i18n="footer.official_sites.zeitgeist_media_project" target="_blank")
-                        p.note
-                            a(href="http://www.blogtalkradio.com/zmglobal" data-i18n="footer.official_sites.tzm_global_radio" target="_blank")
-                        p.note
-                            a(href="http://www.zeitnews.org/" data-i18n="footer.official_sites.zeitnews" target="_blank")
-                        p.note
-                            a(href="http://blog.thezeitgeistmovement.com/" data-i18n="footer.official_sites.blog" target="_blank")
-                        p.note
-                            a(href="http://www.zbnlive.com/" data-i18n="footer.official_sites.zeitgeist_brodcasting_network" target="_blank")
-                        p.note
-                            a(href="http://www.blogtalkradio.com/v-radio" data-i18n="footer.official_sites.v_radio" target="_blank")
-                    .clear
+                .col_4
+                    p.note
+                        a(href="http://www.thezeitgeistmovement.com/" data-i18n="footer.official_sites.tzm_global" target="_blank")
+                    p.note
+                        a(href="http://zeitgeistmediaproject.com/" data-i18n="footer.official_sites.zeitgeist_media_project" target="_blank")
+                    p.note
+                        a(href="http://www.blogtalkradio.com/zmglobal" data-i18n="footer.official_sites.tzm_global_radio" target="_blank")
+                    p.note
+                        a(href="http://www.zeitnews.org/" data-i18n="footer.official_sites.zeitnews" target="_blank")
+                    p.note
+                        a(href="http://blog.thezeitgeistmovement.com/" data-i18n="footer.official_sites.blog" target="_blank")
+                    p.note
+                        a(href="http://www.zbnlive.com/" data-i18n="footer.official_sites.zeitgeist_brodcasting_network" target="_blank")
+                    p.note
+                        a(href="http://www.blogtalkradio.com/v-radio" data-i18n="footer.official_sites.v_radio" target="_blank")
     // Trigger Button
     a#footer_trigger.trigger_active(href="#")

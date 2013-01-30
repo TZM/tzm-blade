@@ -6,7 +6,6 @@
 /* separate the list from surrounding elements */
 .chapters_link {
     color: #000000;
-    display: table-row-group;
     font-family: 'Arial',sans-serif;
     font-size: 11px;
     height: 10px;
