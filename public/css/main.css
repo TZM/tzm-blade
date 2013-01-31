@@ -125,6 +125,11 @@ a.tooltip:hover span {
     display: block;
 }
 
+.tzmlist {
+   column-count: 4;
+   column-gap: 30px;
+}
+
 /*******************************************************************************/
 /* Clearfix
 /*******************************************************************************/
@@ -290,42 +295,6 @@ header nav .menu li a:hover {
 header nav .menu li.in-path a {
     background: #fff;
     color: #333;
-}
-
-.language-menu {
-    position: relative;
-}
-
-#language-menu {
-    background-color: #FFFFFF;
-    display: none;
-    height: auto;
-    padding: 10px;
-    position: absolute;
-    right: 0;
-    top: 40px;
-    width: 447px;
-}
-
-.language-list {
-    float: left;
-    height: auto;
-    width: auto;
-}
-
-#language-menu a {
-    background-color: #FFFFFF;
-    color: #000000;
-    float: left;
-    font-size: 85%;
-    height: auto;
-    margin: 5px;
-    padding: 5px;
-    width: auto;
-}
-
-#language-menu a:hover, #language-menu a.selected-language {
-    background-color: #CCCCCC;
 }
 
 /*******************************************************************************/
@@ -595,11 +564,6 @@ svg path.country {
     font: 96% "Helvetica Neue",Arial,Helvetica,sans-serif;
 }
 
-
-.tzmlist {
-   column-count: 4;
-   column-gap: 30px;
-}
 /**************************************************************************
 * Footer
 * ***********************************************************************/
@@ -1089,16 +1053,41 @@ a#footer_trigger.trigger_active {
 /*******************************************************************************/
 /* Language
 /*******************************************************************************/
-
-#footer .language select {
-    line-height: 1.5em;
-    border-bottom: 1px solid #ccc;
-    float: left;
-    display: inline;
+header  #language-menu {
+    background-color: #FFFFFF;
+    display: none;
+    height: auto;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 400px;
 }
 
-#footer .language select option {
-    width: 25%;
+header #language-menu ul {
+    padding-left: 70px;
+    white-space: nowrap;
+}
+
+header #language-menu ul li {
+    float: left;
+    list-style-position: outside;
+    list-style-type: none;
+    margin: 5px;
+    padding: 5px;
+}
+
+header #language-menu a {
+    float: left;
+    font-size: 85%;
+    height: auto;
+    width: auto;
+}
+
+header #language-menu a:hover, header #language-menu a.selected-language {
+    background-color: #CCCCCC;
+}
+header .language-menu {
+    position: relative;
 }
 
 @media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}

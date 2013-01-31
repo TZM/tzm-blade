@@ -6,3 +6,10 @@ We use [IETF language tag](http://en.wikipedia.org/wiki/IETF_language_tag) to sp
 [Creating localizable web applications](https://developer.mozilla.org/en-US/docs/Web_Localizability/Creating_localizable_web_applications)
 
 #How to extract all the template html content and generate the JSON file for a specific localization.
+
+#Libraries to consider
+
+[https://github.com/papandreou/node-cldr/](https://github.com/papandreou/node-cldr/)
+[http://translationproject.org/html/welcome.html](http://translationproject.org/html/welcome.html)
+
+

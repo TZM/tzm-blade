@@ -24,7 +24,13 @@ header
                     a(href="" class="tooltip")
                         img(src='../images/language_icon.png', alt="")
                         span(data-i18n="menu.language")
-                    div#language-menu
+                - var langFile = locals.settings.languages
+                #language-menu
+                    ul
+                        - for(var i in langFile)
+                            - var o = langFile[i]
+                            li
+                                a(id="lang-"+o.locale data-i18n="language."+o.locale)
         // logo
         h1
             a(href="/" class="tzm-i18n" data-i18n="tzm")

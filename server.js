@@ -22,6 +22,8 @@ var options = {
     ,method: 'GET'
 };
 
+var fileID = 'translation.json'
+
 var lastModifiedDate = '';
 
 TZMNetwork(TABLE_ID);
@@ -99,6 +101,7 @@ app.use(express.static(__dirname + '/public') ); //maybe we have some static fil
 app.use(express.static(__dirname + "/public") ); //maybe we have some static files
 app.set('views', __dirname + '/views'); //tells Express where our views are stored
 try {
+    app.set('languages', require(__dirname + '/public/locales/config.json'));
     app.set('translation', require(__dirname + '/public/locales/dev/translation.json'));
     app.set('chapters', require(__dirname + '/data/chapters.json'));
 } catch(err) {

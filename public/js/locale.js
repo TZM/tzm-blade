@@ -16,27 +16,6 @@ jQuery(function($) {
         language = (language_complete[0]);
     }
 
-    //Build the language selector.
-    $.getJSON("../locales/config.json", function(objData) {
-        var arrHtml = [];
-        var strClass;
-
-        $.each(objData, function(strKey, objLanguage) {
-            strClass = (language == objLanguage.locale) ? " class=\"selected-language\"" : ""; //Make sure the language selector has the correct language selected on initial page load.
-            arrHtml.push("<a id=\"lang-" + objLanguage.locale + "\" data-i18n=\"language." + objLanguage.locale + "\"" + strClass + "></a>");
-        });
-
-        $("<div>", {
-            'class': 'language-list',
-            html: arrHtml.join('')
-        }).appendTo('#language-menu');
-
-        $("li.language-menu").live("click", function() {
-            $("#language-menu").toggle();
-            return false;
-        });
-    });
-
     function setLanguage() {
         // save to use translation function as resources are fetched
         $(".tzm-i18n").i18n();
@@ -55,6 +34,10 @@ jQuery(function($) {
     }, setLanguage);
 
     // language selector
+    $("li.language-menu").live("click", function() {
+        $("#language-menu").toggle();
+        return false;
+    });
     $("#language-menu a").live("click", function() {
         var booReload = false; // TRUE = reload the page; FALSE = do not reload the page
         var $this = $(this);

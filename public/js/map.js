@@ -20,31 +20,66 @@ function ZmgcClient() {
     };
 
     this.drawMap = function() {
+        var cw = 1024;
+        var ch = 768;
       var data;
       var width = $("#map").width();
 
       // Most parts of D3 don"t know anything about SVG—only DOM.
       self.svg = d3.select("#map").append("svg:svg")
-          .attr("width", "100%")
-          .attr("height", "87%")
-          .attr("viewBox", "0 0 1024 768");
-      self.map = d3.geo.equirectangular()
-          .scale(width)
-          .translate([500, 400]);
-      self.projection = d3.geo.path().projection(self.map);
+        .attr({
+            class:"svg", 
+            width:"100%", 
+            height:"92%"
+        })
+        .attr("viewBox", "0, 0, " + [cw, ch])
+        .append("g")
+            .attr("transform", "translate(" + [0, 0] + ")");
+      
+      //circle
+      self.svg.append("circle")
+        .attr({
+          cx: cw/2,
+          cy: ch/2,
+          r: 350,
+          fill: "#DDD9C5",
+          "stroke-width": 0
+        });
 
+      self.svg.append("g")
+        .attr("id", "countries");
+
+      self.svg.append("g")
+        .attr("id", "points");
+        
+      self.map = d3.geo.equirectangular()
+          .scale(225)
+          .translate([cw/2, ch/2]);
+      
+      self.projection = d3.geo.path().projection(self.map);
+      
+      self.countriesGroup = self.svg.select("#countries");
       // Load data from .json file
       d3.json("../world-countries.json", function(json) {
-        self.svg.selectAll("path") // select all the current path nodes
-        .data(json.features) // bind these to the features array in json
-        .enter().append("path") // if not enough elements create a new path
-        .attr("d", self.projection) // transform the supplied jason geo path to svg
-        .attr("class", "country")
-        .on("mouseover", function(d) {
-          d3.select(this).style("fill", "#6C0").append("svg:title").text(d.properties.name);
-        }).on("mouseout", function(d) {
-          d3.select(this).style("fill", "#000000");
-        })
+          self.countriesGroup.selectAll("path") // select all the current path nodes
+          .data(json.features) // bind these to the features array in json
+          .enter().append("path") // if not enough elements create a new path
+          .attr("d", self.projection) // transform the supplied jason geo path to svg
+          .attr("id", function(d) {
+              return d.properties.name;
+          })
+          .classed("country", true)
+          .attr("class", "country")
+          .on("mouseover", function(d) {
+              d3.select(this)
+                .style("fill", "#6C0")
+                .append("svg:title")
+                .text(d.properties.name);
+          }).on("mouseout", function(d) {
+              d3.select(this)
+                .style("fill", "#000000");
+          })
+          self.countriesGroup.select("#Antarctica").remove();
       });
     }
 
