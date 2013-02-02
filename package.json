@@ -7,7 +7,7 @@
 	"homepage": "http://zmgc.net",
 	"repository": {
 	"type": "git",
-	"url": "git://github.com/TZM/zmgc.git"
+	"url": "git://github.com/TZM/tzm-blade.git"
 	},
 	"subdomain": "zmgc",
 	"engines": {

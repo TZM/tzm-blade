@@ -4,97 +4,138 @@ function ZmgcClient() {
         return new arguments.callee(arguments);
     }
     var self = this;
+    var cw = 100,
+        ch = 260;
 
     this.init = function( initialLocation ) {
         now.receiveLocation = function(message) {
             self.drawMarker(message);
         };
-        if ($('#map').length > 0) {
-            console.log('we have a map id');
             self.drawMap();
-            self.loadMembers();
-        }
         if ( initialLocation ) { 
             self.drawMarker( initialLocation );
         }
     };
 
-    this.drawMap = function() {
-        var cw = 1024;
-        var ch = 768;
-      var data;
-      var width = $("#map").width();
-
-      // Most parts of D3 don"t know anything about SVG—only DOM.
-      self.svg = d3.select("#map").append("svg:svg")
+    this.drawSVG = function(x, y, k) {
+        // Most parts of D3 don"t know anything about SVG—only DOM.
+        var width = $("#map").width();
+        self.svg = d3.select("#map").append("svg:svg")
         .attr({
             class:"svg", 
             width:"100%", 
             height:"92%"
         })
-        .attr("viewBox", "0, 0, " + [cw, ch])
-        .append("g")
-            .attr("transform", "translate(" + [0, 0] + ")");
-      
-      //circle
-      self.svg.append("circle")
-        .attr({
-          cx: cw/2,
-          cy: ch/2,
-          r: 350,
-          fill: "#DDD9C5",
-          "stroke-width": 0
+        .attr("viewBox", "0 0 " + cw + "  "+ ch);
+
+        self.map = d3.geo.equirectangular().translate([50, 100]) 
+              .scale(80) 
+              .rotate([-8, 0]) 
+              .center([0, 37.7750]);
+
+        self.projection = d3.geo.path().projection(self.map);
+        self.svg.on("click", function() {
+           var p = d3.mouse(this);                                                                     
+           console.log(p+" "+self.map.invert(p));                                                          
+           self.map.center(self.map.invert(p));
+           self.svg.selectAll("path").attr("d", path);                                                      
+
         });
+    }
 
-      self.svg.append("g")
-        .attr("id", "countries");
+    this.drawMap = function() {
+        var x = 0,
+            y = 0,
+            k = 120;
+        self.drawSVG(x, y, k);
+        //self.map.translate([50, 150]);
+        //self.svg.attr("viewBox", "0 0 " + cw + "  "+ ch);
+        self.svg.append("g")
+            .attr("id", "countries");
 
-      self.svg.append("g")
-        .attr("id", "points");
-        
-      self.map = d3.geo.equirectangular()
-          .scale(225)
-          .translate([cw/2, ch/2]);
-      
-      self.projection = d3.geo.path().projection(self.map);
-      
-      self.countriesGroup = self.svg.select("#countries");
-      // Load data from .json file
-      d3.json("../world-countries.json", function(json) {
-          self.countriesGroup.selectAll("path") // select all the current path nodes
-          .data(json.features) // bind these to the features array in json
-          .enter().append("path") // if not enough elements create a new path
-          .attr("d", self.projection) // transform the supplied jason geo path to svg
-          .attr("id", function(d) {
-              return d.properties.name;
-          })
-          .classed("country", true)
-          .attr("class", "country")
-          .on("mouseover", function(d) {
-              d3.select(this)
+        self.svg.on("click", function() {
+            var p = d3.mouse(this);                                                                     
+            console.log(p+" "+self.map.invert(p));                                                          
+            self.map.center(self.map.invert(p));
+            // self.svg.selectAll("path").attr("d", path);                                                      
+
+        });
+        self.countriesGroup = self.svg.select("#countries");
+        // Load data from .json file
+        d3.json("../topo/world.json", function(error, topology) {
+            self.countriesGroup.selectAll("path") // select all the current path nodes
+                .data(topojson.object(topology, topology.objects.countries).geometries)
+            .enter().append("path") // if not enough elements create a new path
+            .attr("d", self.projection) // transform the supplied jason geo path to svg
+            .attr("id", function(d) {
+                return d.properties.name;
+            })
+            .classed("country", true)
+            .attr("class", "country")
+            .on("mouseover", function(d) {
+                d3.select(this)
                 .style("fill", "#6C0")
                 .append("svg:title")
                 .text(d.properties.name);
-          }).on("mouseout", function(d) {
-              d3.select(this)
+            })
+            .on("mouseout", function(d) {
+                d3.select(this)
                 .style("fill", "#000000");
-          })
-          self.countriesGroup.select("#Antarctica").remove();
-      });
+            })
+            self.countriesGroup.select("#Antarctica").remove();
+        });
+        self.loadMembers();
     }
 
+    this.clickCountry = function(d) {
+        var x = 0,
+            y = 0,
+            k = 150;
+        //d3.select("#map").remove();
+        self.drawSVG(x, y, k);
+        self.map.translate([50, 150]);
+        self.svg.attr("viewBox", "0 0 " + cw/2 + "  "+ ch);
+        //self.map.translate([cw, ch]);
+        self.svg.append("g")
+            .attr("id", "country");
+        self.svg.append("g")
+            .attr("id", "points");
+        self.regionsGroup = self.svg.select("#country");
+        d3.json("../json/"+d.id+"_adm1.json", function(json) {
+            console.log(json.features);
+            self.regionsGroup.selectAll("path")
+            .data(json.features)
+            .enter().append("path")
+            .attr("d", self.projection)
+            .attr("id", function(d) {
+                return d.properties.name;
+            })
+            .classed("country", true)
+            .attr("class", "country")
+            .on("mouseover", function(d) {
+                d3.select(this)
+                .style("fill", "#6C0")
+                .append("svg:title")
+                .text(d.properties.name);
+            })
+            .on("mouseout", function(d) {
+                d3.select(this)
+                .style("fill", "#000000");
+            })
+            .on("click", function(d) {
+                console.log('clicked on country')
+            });
+        });
+        //self.loadMembers();
+    }
+    
     this.loadMembers = function () {
         // Load data from .json file on page refresh
         var data = [{ city: 'Centreville',
               longitude: -77.46070098876953,
               latitude: 38.81589889526367,
               ip: '72.196.192.58',
-              timestamp: 1342997755637 },
-          { city: 'Leeds',
-              longitude: -1.583299994468689,
-              latitude: 53.79999923706055,
-              ip: '86.160.103.204',
-              timestamp: 1343029940099 }];
+              timestamp: 1342997755637 }];
         for ( var i in data ) { 
                 this.drawMarker( data[i] ) ;
             }
@@ -127,45 +168,15 @@ function ZmgcClient() {
             .attr("transform", "translate(" + x + "," + y + ")scale(0.035)")
         });
 
-        $(member.node).hover(console.log('hover'));
-
         var cityName = self.svg.append("svg:text");
             cityName.text(function(d) { return city; })
             cityName.attr("x", x)
             cityName.attr("dy", y + 12)
             cityName.attr('text-anchor', 'middle')
-            cityName.attr("class", "city")
+            cityName.attr("class", "city-name")
+            cityName.style("fill", "red")
             cityName.transition().delay(4000)
             .style("opacity", "0");
-
-        //var hoverFunc = function () {
-        //  member.attr({fill:"#ff9"});
-        //  $(cityName.node).fadeIn("fast");
-        //$(subtitle.node).fadeIn("fast");
-        //};
-        //var hideFunc = function () {
-        //  member.attr({fill:"red"});
-        //  $(cityName.node).fadeOut("slow");
-        //  //$(subtitle.node).fadeOut("slow");
-        //};
-        //
-        //$(member.node).hover(hoverFunc, hideFunc);
-
-        //member.animate(2000, "elastic", function () {
-        //  $(cityName.node).fadeOut(5000);
-        //  //$(subtitle.node).fadeOut(5000);
-        //});
-    }
-    this.enlargeMarker = function mouseover(d) {
-        this.parentNode.appendChild(this);
-        d3.select(this).transition()
-        .duration(750)
-        .attr("transform", "translate(480,480)scale(23)rotate(180)")
-        .transition()
-        .delay(1500)
-        .attr("transform", "translate(240,240)scale(10)")
-        .style("fill-opacity", 10)
-        //.remove();
     }
     // Initialise
     this.init();

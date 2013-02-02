@@ -12,4 +12,6 @@ We use [IETF language tag](http://en.wikipedia.org/wiki/IETF_language_tag) to sp
 [https://github.com/papandreou/node-cldr/](https://github.com/papandreou/node-cldr/)
 [http://translationproject.org/html/welcome.html](http://translationproject.org/html/welcome.html)
 
+[http://unicode.org/Public/cldr/latest/core.zip](http://unicode.org/Public/cldr/latest/core.zip)
+
 
