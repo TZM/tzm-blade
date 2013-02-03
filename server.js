@@ -97,8 +97,9 @@ var app = express();
 app.use(blade.middleware(__dirname + '/views') ); //for client-side templates
 app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static(__dirname + '/public') ); //maybe we have some static files
+
 //app.use(blade.middleware(__dirname + '/views') ); //for client-side templates
-app.use(express.static(__dirname + "/public") ); //maybe we have some static files
+app.use(express.static(__dirname + "/nowjs") );
 app.set('views', __dirname + '/views'); //tells Express where our views are stored
 try {
     app.set('languages', require(__dirname + '/public/locales/config.json'));
@@ -128,5 +129,6 @@ app.get( '/map', function( req, res, next ) {
 });
 
 app.locals.pretty=true;
-app.listen(29080);
+var server = app.listen(29080);
+var everyone = nowjs.initialize(server);
 console.log('Server running at http://127.0.0.1:29080/');

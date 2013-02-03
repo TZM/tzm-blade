@@ -57,7 +57,7 @@ jQuery(function($) {
       slide = false;
     }
   });
-  $('.map').live('click', function() {
+  $('.map').on('click', function() {
     console.log('click on map button');
     //$('#page:first').empty().load('map.html');
     //ZmgcClient();
@@ -70,7 +70,7 @@ jQuery(function($) {
         });
     });
   });
-  $('.guide').live('click', function() {
+  $('.guide').on('click', function() {
     console.log('click on guide button');
     blade.Runtime.loadTemplate("guide.blade", function(err, tmpl) {
         tmpl({

@@ -34,11 +34,11 @@ jQuery(function($) {
     }, setLanguage);
 
     // language selector
-    $("li.language-menu").live("click", function() {
+    $("li.language-menu").on("click", function() {
         $("#language-menu").toggle();
         return false;
     });
-    $("#language-menu a").live("click", function() {
+    $("#language-menu a").on("click", function() {
         var booReload = false; // TRUE = reload the page; FALSE = do not reload the page
         var $this = $(this);
         var value = $this.attr("id");
