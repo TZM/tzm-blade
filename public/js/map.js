@@ -7,14 +7,12 @@ function mapClient() {
     var cw = 100,
         ch = 260;
 
-    this.init = function( initialLocation ) {
+    this.init = function() {
         now.receiveLocation = function(message) {
+            console.log('where is now!');
             self.drawMarker(message);
         };
             self.drawMap();
-        if ( initialLocation ) { 
-            self.drawMarker( initialLocation );
-        }
     };
 
     this.drawSVG = function(x, y, k) {

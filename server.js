@@ -111,21 +111,52 @@ try {
   app.set('chapters', []);
 }
 app.set('view engine', 'blade'); //Yes! Blade works with Express out of the box!
+
 app.get('/', function(req, res, next) {
     TZMNetwork(TABLE_ID);
     console.log(lastModifiedDate);
     res.render('index');
 });
 
-app.get( '/map', function( req, res, next ) { 
-    var ip = ( req.connection.remoteAddress !== "127.0.0.1" )?
-    req.connection.remoteAddress: "72.196.192.58";
-    city.lookup( ip, function( err, loc ) { 
-        if ( err ) { 
-            loc = {};
+app.get('/stat/1.gif', function( req, res, next ) {
+    var time = +new Date();
+    var origin;
+    res.writeHead(200, {'Content-Type': 'image/gif'});
+    origin = /\/(.*)\.gif/.exec(req.url);
+    console.log(origin);
+    if (origin) {
+        var ip = req.headers['x-real-ip'];
+        if (ip === null || ip === "127.0.0.1") {
+            ip = "82.246.239.187";
         }
-        res.render( 'map', { loc: loc } );
-    });
+        city.lookup(ip, function(err, location) {
+            var obj;
+            console.log( err );
+            if ( !err && location ) {
+                obj = {
+                    city: location.city
+                    ,longitude: location.longitude
+                    ,latitude: location.latitude
+                    ,ip: ip
+                    ,timestamp: time
+                };
+            } else { 
+                console.log( 'server fake location' );
+                obj ={ 
+                    city: 'Bexleyheath',
+                    longitude: 0.15000000596046448,
+                    latitude: 51.45000076293945,
+                    ip: '86.173.61.119',
+                    timestamp: 1343054092459 
+                };
+            }
+            everyone.now.receiveLocation(obj);
+            console.log(obj);
+        });
+    console.log(origin[1], req.connection.remoteAddress, req.headers['user-agent']);
+    } else {
+        console.log( 'fixme no origin' );
+    }
 });
 
 app.locals.pretty=true;
