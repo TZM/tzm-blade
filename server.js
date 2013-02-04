@@ -94,6 +94,7 @@ function dumpError(err) {
 }
 
 var app = express();
+app.enable('trust proxy') // client ip address
 app.use(blade.middleware(__dirname + '/views') ); //for client-side templates
 app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static(__dirname + '/public') ); //maybe we have some static files
@@ -123,7 +124,6 @@ app.get('/stat/1.gif', function( req, res, next ) {
     var origin;
     res.writeHead(200, {'Content-Type': 'image/gif'});
     origin = /\/(.*)\.gif/.exec(req.url);
-    console.log(origin);
     if (origin) {
         var ip = req.headers['x-real-ip'];
         if (ip === null || ip === "127.0.0.1") {
@@ -131,7 +131,6 @@ app.get('/stat/1.gif', function( req, res, next ) {
         }
         city.lookup(ip, function(err, location) {
             var obj;
-            console.log( err );
             if ( !err && location ) {
                 obj = {
                     city: location.city
@@ -158,6 +157,39 @@ app.get('/stat/1.gif', function( req, res, next ) {
         console.log( 'fixme no origin' );
     }
 });
+
+//app.get('/stat/1.gif', function( req, res ) {
+//    var time = +new Date();
+//    var origin;
+//    res.writeHead(200, {'Content-Type': 'image/gif'});
+//    origin = /\/(.*)\.gif/.exec(req.url);
+//    console.log(origin);
+//    if (origin) {
+//        var ip = req.ip;
+//        if (ip === null || ip === "127.0.0.1") {
+//            ip = "82.246.239.187";
+//        }
+//        location = geoip.lookup(ip);
+//        console.log(location);
+//        var obj;
+//        console.log(location.city);
+//        console.log(location.ll[1]);
+//        console.log(location.ll[0]);
+//        obj = {
+//            city: location.city
+//            ,longitude: location.ll[1]
+//            ,latitude: location.ll[0]
+//            ,ip: ip
+//            ,timestamp: time
+//        };
+//        console.log(obj);
+//    everyone.now.receiveLocation(obj);
+//    } else {
+//        console.log( 'fixme no origin' );
+//    }
+//});
+
+
 
 app.locals.pretty=true;
 var server = app.listen(29080);

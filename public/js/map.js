@@ -9,7 +9,7 @@ function mapClient() {
 
     this.init = function() {
         now.receiveLocation = function(message) {
-            console.log('where is now!');
+            console.log(message);
             self.drawMarker(message);
         };
             self.drawMap();

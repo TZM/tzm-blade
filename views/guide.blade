@@ -1,23 +1,7 @@
-#nav1
-    ul
-        - for(var i in nav1)
-            li
-                a(href=nav1[i])= i
-
-- var x = 12;
-function test(foo)
-    h1=foo
-    - if(x)
-        p=x
-
-#example
-    call test("Header")
-    
-// div
-//     input(type="button" value="Click Me")
-//         {click}
-//             clicks++;
-// - var plural = clicks == 1 ? "" : "s"
-// p You clicked the button #{clicks} time#{plural}
-img(src='/stat/1.gif', alt="")
-
+script(type="text/javascript" src="/blade/plugins/liveui.js")
+div
+    input(type="button" value="Click Me")
+        {click}
+            clicks++;
+    - var plural = clicks == 1 ? "" : "s"
+    p You clicked the button #{clicks} time#{plural}
