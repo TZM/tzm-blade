@@ -4,3 +4,5 @@ var model = new blade.Model({
 });
 //Render the view, passing the model along
 $("body").render("guide", model);
+
+

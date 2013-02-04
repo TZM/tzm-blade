@@ -40,6 +40,22 @@
         ,"zeitgeist-movement-global-connect": {"title": "Zeitgeist Movement Global Connect", "description": "Aims to create an on-line eco-system within which the ideas of Resource Based Economy can be galvanise into actions.", "image_path": "images/tzm-zmgc-logo.png", "href": "http://zmgc.net"}
         ,"media-festival": {"title": "Media Festival", "description": "", "image_path": "images/tzm-festival-logo.png", "href": "http://zeitgeistmediafestival.org/"}
   }
+  ,"guide": {
+    "sections": {
+        "the-basics": {"title": "The Basics",
+                        "contents": [{"title": "Introduction",
+                                        "content": {"p1": "", "p2": "", "p3": ""}}
+                                    ,{"title": "A Chapter in the Zeitgeist Movement",
+                                        "content": {"p1": "", "p2": "", "p3": ""}}
+                                    ]
+                        }
+        ,"setting-up-a-national-chapter": {"title": "Setting up a National Chapter",
+                        "contents": [{"title": "Gathering Volunteers & Social Media",
+                                        "content": {"p1": "", "p2": "", "p3": ""}}
+                                    ]
+                        }
+    }
+  }
   ,"footer": {
     "chapters": "National Chapters"
         ,"official_sites": {

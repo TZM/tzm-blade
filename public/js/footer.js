@@ -62,8 +62,7 @@ jQuery(function($) {
     //$('#page:first').empty().load('map.html');
     //ZmgcClient();
     blade.Runtime.loadTemplate("map.blade", function(err, tmpl) {
-        tmpl({
-        }, function(err, html) {
+        tmpl({}, function(err, html) {
             if(err) throw err;
                 console.log(html);
                 $('#page:first').empty().html(html);
@@ -74,11 +73,22 @@ jQuery(function($) {
     console.log('click on guide button');
     blade.Runtime.loadTemplate("guide.blade", function(err, tmpl) {
         tmpl({
-            'nav1': {
-                'Home': '/',
-                'About Us': '/about',
-                'Contact': '/contact'
-            }
+            "guide": {
+                "sections": {
+                    "the-basics": {"title": "The Basics",
+                                    "contents": [{"title": "Introduction",
+                                                    "content": {"p1": "", "p2": "", "p3": ""}}
+                                                ,{"title": "A Chapter in the Zeitgeist Movement",
+                                                    "content": {"p1": "", "p2": "", "p3": ""}}
+                                                ]
+                                    }
+                    ,"setting-up-a-national-chapter": {"title": "Setting up a National Chapter",
+                                    "contents": [{"title": "Gathering Volunteers & Social Media",
+                                                    "content": {"p1": "", "p2": "", "p3": ""}}
+                                                ]
+                                    }
+                }
+              }
         }, function(err, html) {
             if(err) throw err;
                 console.log(html);

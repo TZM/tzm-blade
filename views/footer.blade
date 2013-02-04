@@ -10,7 +10,7 @@
         - if (row[0] == 'Country')
             - countries.push({link:row[2],contact:row[3],country:row[4]})
 - countries.sort(sortByKey('country'))
-
+- var guide = locals.settings.translation.guide
 footer
     ul#footer.fullwidth.footer-i18n
         li#footer_home

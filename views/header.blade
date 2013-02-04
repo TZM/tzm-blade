@@ -1,6 +1,6 @@
 header
     nav.fullwidth.clearfix.top
-        - var menu = locals.settings.translation.menu;
+        - var menu = locals.settings.translation.menu
             ul.menu
                 - for(var i in menu)
                     li
@@ -8,7 +8,7 @@ header
                         //     a(href=""+i data-i18n="menu."+i class=""+i)= i
                         // - else
                         a(href="#" data-i18n="menu."+i class=""+i)= i
-        - var user_menu = locals.settings.translation.user;
+        - var user_menu = locals.settings.translation.user
             ul.user-menu
                 - for(var i in user_menu)
                     li
