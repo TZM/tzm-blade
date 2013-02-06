@@ -25,6 +25,7 @@ jQuery(function($) {
         $(".user-menu").i18n();
         $(".search-form").i18n();
         $(".footer-i18n").i18n();
+        //$("#guide_section").i18n();
         $("#language-menu").hide();
     }
 

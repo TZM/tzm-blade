@@ -19,7 +19,7 @@
 	"dependencies": {
 		"express" : "*",
 		"now": "git://github.com/nkhine/now.git",
-		"geoip" : "*",
+		"i18next": ">=1.5.16",
 		"blade" : "*"
 	},
 	"devDependencies": {},

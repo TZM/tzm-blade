@@ -1,1 +1,20 @@
-include "menu.blade"
+script(type="text/javascript" src="js/menu.js")
+- var items = guide.sections
+span= i18n.lng()
+// span= t('menu')
+strong
+    aside#nav-container(role="complementary")
+        nav#primary-nav.overview(role="nav")
+            - for(var i in items)
+                h3.section
+                    span.menu-toggle
+                    span(data-content=""+i, data-i18n="guides.sections."+i+".title")=items[i].title
+                ul
+                    - var contents = items[i].contents
+                    - for(var c in contents)
+                        li
+                            a.nav-link(href="#" data-content=""+c)=contents[c].title
+    div(role="main")
+        article.mainarticle
+            #nav-toggle
+            .content

@@ -1,0 +1,6 @@
+- i18n.init($("#guide_section"));
+#guide_section
+    - var i = sections.section
+    - var c = sections.subsection
+    h5(data-i18n="guide.sections."+i+".title")=i
+    h4(data-i18n="guide.sections."+i+".contents.title")=c
