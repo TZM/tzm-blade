@@ -8,7 +8,7 @@ strong
             - for(var i in items)
                 h3.section
                     span.menu-toggle
-                    span(data-content=""+i, data-i18n="guides.sections."+i+".title")=items[i].title
+                    span(data-content=""+i)=t("guides.sections."+i+".title")
                 ul
                     - var contents = items[i].contents
                     - for(var c in contents)

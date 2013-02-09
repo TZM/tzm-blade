@@ -1,5 +1,6 @@
 var blade = require('blade')
     ,express = require('express')
+    ,app = express()
     ,http = require('http')
     ,https = require('https')
     ,fs = require('fs')
@@ -94,29 +95,35 @@ function dumpError(err) {
 }
 
 i18n.init({
-  ignoreRoutes: ['images/', 'public/', 'css/', 'js/']
+    ignoreRoutes: ['images/', 'public/', 'css/', 'js/'],
+    useCookie: true,
+    saveMissing: true,
+    debug: true
 });
-
-var app = express();
-app.enable('trust proxy'); // client ip address
-app.use(i18n.handle);
-app.use(blade.middleware(__dirname + '/views') ); //for client-side templates
-app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
-app.use(express.static(__dirname + '/public') ); //maybe we have some static files
-
-//app.use(blade.middleware(__dirname + '/views') ); //for client-side templates
-app.use(express.static(__dirname + "/nowjs") );
-app.set('views', __dirname + '/views'); //tells Express where our views are stored
-try {
-    app.set('languages', require(__dirname + '/public/locales/config.json'));
-    app.set('translation', require(__dirname + '/public/locales/dev/translation.json'));
-    app.set('chapters', require(__dirname + '/data/chapters.json'));
-} catch(err) {
-  dumpError(err);
-  console.log('there is no /data/chapters.json');
-  app.set('chapters', []);
-}
-app.set('view engine', 'blade'); //Yes! Blade works with Express out of the box!
+// Configuration
+app.configure(function() {
+    app.enable('trust proxy'); // client ip address
+    app.use(express.bodyParser());
+    app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
+    app.use(express.static(__dirname + '/public') ); //maybe we have some static files
+    app.use(express.static(__dirname + "/nowjs") );
+    app.use(i18n.handle); // have i18n befor app.router
+    app.use(blade.middleware(__dirname + '/views') ); //for client-side templates
+    
+    app.use(app.router);
+    app.set('view engine', 'blade'); //Yes! Blade works with Express out of the box!
+    //app.set('views', __dirname);
+    app.set('views', __dirname + '/views'); //tells Express where our views are stored
+    try {
+        app.set('languages', require(__dirname + '/locales/config.json'));
+        app.set('translation', require(__dirname + '/locales/dev/translation.json'));
+        app.set('chapters', require(__dirname + '/data/chapters.json'));
+    } catch(err) {
+      dumpError(err);
+      console.log('there is no /data/chapters.json');
+      app.set('chapters', []);
+    }
+});
 
 app.get('/', function(req, res, next) {
     TZMNetwork(TABLE_ID);

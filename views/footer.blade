@@ -12,17 +12,17 @@
 - countries.sort(sortByKey('country'))
 - var guide = locals.settings.translation.guide
 footer
-    ul#footer.fullwidth.footer-i18n
+    ul#footer.fullwidth
         li#footer_home
             a(href="/")
                 img(src="/images/phx-logo-30x34.png" alt="Home")
         li
-            a.dropup(href="#" data-i18n="footer.network")
+            a.dropup(href="#")= t("footer.network")
             #tzm-network-popup.footer_dropup.drop12columns
                 .col_8
-                    h5(data-i18n="footer.chapters")
+                    h5=t("footer.chapters")
                 .col_4
-                    h5(data-i18n="footer.official_sites.official_sites")
+                    h5=t("footer.official_sites.official_sites")
                 // we load the chapters.json file
                 .col_8.tzmlist
                     p.invisible fixme!!!
@@ -35,18 +35,18 @@ footer
                                         span.flag-margin=o.country
                 .col_4
                     p.note
-                        a(href="http://www.thezeitgeistmovement.com/" data-i18n="footer.official_sites.tzm_global" target="_blank")
+                        a(href="http://www.thezeitgeistmovement.com/" target="_blank")= t("footer.official_sites.tzm_global")
                     p.note
-                        a(href="http://zeitgeistmediaproject.com/" data-i18n="footer.official_sites.zeitgeist_media_project" target="_blank")
+                        a(href="http://zeitgeistmediaproject.com/" target="_blank")= t("footer.official_sites.zeitgeist_media_project")
                     p.note
-                        a(href="http://www.blogtalkradio.com/zmglobal" data-i18n="footer.official_sites.tzm_global_radio" target="_blank")
+                        a(href="http://www.blogtalkradio.com/zmglobal" target="_blank")=t("footer.official_sites.tzm_global_radio")
                     p.note
-                        a(href="http://www.zeitnews.org/" data-i18n="footer.official_sites.zeitnews" target="_blank")
+                        a(href="http://www.zeitnews.org/" target="_blank")=t("footer.official_sites.zeitnews")
                     p.note
-                        a(href="http://blog.thezeitgeistmovement.com/" data-i18n="footer.official_sites.blog" target="_blank")
+                        a(href="http://blog.thezeitgeistmovement.com/" target="_blank")=t("footer.official_sites.blog")
                     p.note
-                        a(href="http://www.zbnlive.com/" data-i18n="footer.official_sites.zeitgeist_brodcasting_network" target="_blank")
+                        a(href="http://www.zbnlive.com/" target="_blank")=t("footer.official_sites.zeitgeist_brodcasting_network")
                     p.note
-                        a(href="http://www.blogtalkradio.com/v-radio" data-i18n="footer.official_sites.v_radio" target="_blank")
+                        a(href="http://www.blogtalkradio.com/v-radio" target="_blank")=t("footer.official_sites.v_radio")
     // Trigger Button
     a#footer_trigger.trigger_active(href="#")

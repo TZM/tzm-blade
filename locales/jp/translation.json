@@ -1,0 +1,29 @@
+{
+  "tzm": "Chapters - Zeitgeist Movement"
+  ,"menu": {
+    "projects": "Projects"
+    ,"map": "Map"
+    ,"calendar": "Calendar"
+    ,"forums": "Forums"
+    ,"more": "More »"
+  }
+  ,"search": {
+    "advanced": "Advanced"
+    ,"search": "Search"
+  }
+  ,"user": {
+    "gravatar": "Gravatar"
+    ,"profile": "Profile"
+    ,"login": "Login"
+    ,"logout": "Log out"
+    ,"contact": "Contact"
+    ,"help": "Help"
+  }
+  ,"footer": {
+    "network": "TZM Network"
+    ,"tools": "Tools"
+    ,"documentations": "Documentations"
+    ,"faq": "F.A.Q"
+    ,"twitter": "Twitter"
+  }
+}
