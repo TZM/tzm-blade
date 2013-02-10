@@ -7,14 +7,14 @@ header
                         // - if (i === 'map')
                         //     a(href=""+i class=""+i)= t("menu."+i)
                         // - else
-                        a(href="#" class=""+i)= t("menu."+i)
+                        a(href="#" class=""+i data-i18n="menu."+i)= t("menu."+i)
         - var user_menu = locals.settings.translation.user
             ul.user-menu
                 - for(var i in user_menu)
                     li
                         a(href="#" class="tooltip")
                             img(src='../images/'+i+'.png', alt="")
-                            span= t("user."+i)
+                            span(data-i18n="user."+i)= t("user."+i)
                 li.search-form
                     form(method="post" action="#")
                         div.placeholder-field
@@ -31,7 +31,7 @@ header
                         - for(var i in langFile)
                             - var o = langFile[i]
                             li
-                                a(id=""+o.code)=t("language."+o.locale)
+                                a(id=""+o.code data-i18n="language."+o.locale)=t("language."+o.locale)
         // logo
         h1
             a(href="/" class="tzm-i18n")= t("tzm")

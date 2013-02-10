@@ -43,15 +43,9 @@ jQuery(function($) {
     }, 300);
     $("#footer_trigger").toggleClass("trigger_active");
     if (slide == false) {
-      if ($.browser.opera) {
-        $('html').animate({
-          scrollTop: scrollPos + 'px'
-        }, 300);
-      } else {
         $('html, body').animate({
           scrollTop: scrollPos + 'px'
         }, 300);
-      }
       slide = true;
     } else {
       slide = false;
@@ -69,31 +63,26 @@ jQuery(function($) {
         });
     });
   });
+
   $('.guide').on('click', function() {
-    console.log('click on guide button');
-    blade.Runtime.loadTemplate("guide.blade", function(err, tmpl) {
-        tmpl({
-            "guide": {
-                "sections": {
-                    "the-basics": {"title": "The Basics",
-                                    "contents": [{"title": "Introduction",
-                                                    "content": {"p1": "", "p2": "", "p3": ""}}
-                                                ,{"title": "A Chapter in the Zeitgeist Movement",
-                                                    "content": {"p1": "", "p2": "", "p3": ""}}
-                                                ]
-                                    }
-                    ,"setting-up-a-national-chapter": {"title": "Setting up a National Chapter",
-                                    "contents": [{"title": "Gathering Volunteers & Social Media",
-                                                    "content": {"p1": "", "p2": "", "p3": ""}}
-                                                ]
-                                    }
-                }
-              }
-        }, function(err, html) {
-            if(err) throw err;
-                console.log(html);
-                $('#page:first').empty().html(html);
-        });
+    $.ajax({
+        url: '/locales/dev/translation.json',
+        dataType: 'json',
+        cache: false,
+        success: function(data){
+            var guide = data.guide;
+            blade.Runtime.loadTemplate("guide.blade", function(err, tmpl) {
+                tmpl({
+                    "guide": {
+                        "sections": guide.sections
+                      }
+                }, function(err, html) {
+                    if(err) throw err;
+                        console.log(html);
+                        $('#page:first').empty().html(html);
+                });
+            });
+        }
     });
   });
 });
