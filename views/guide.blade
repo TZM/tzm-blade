@@ -1,6 +1,6 @@
 script(type="text/javascript" src="js/menu.js")
 - var items = guide.sections
-span= i18n.lng()
+// span= i18n.lng()
 // span= t('menu')
 strong
     aside#nav-container(role="complementary")
@@ -8,7 +8,7 @@ strong
             - for(var i in items)
                 h3.section
                     span.menu-toggle
-                    span(data-content=""+i)=t("guides.sections."+i+".title")
+                    span(data-content=""+i, data-i18n="guides.sections."+i+".title")=i18n.t(items[i].title)
                 ul
                     - var contents = items[i].contents
                     - for(var c in contents)

@@ -465,15 +465,13 @@ nav ul, nav ol {
 * Navigation Toggle button
 * ***********************************************************************/
 div[role="main"] .mainarticle #nav-toggle {
-    width: 38px;
-    height: 38px;
-    background-position: 130px 0;
-    background-color: #515356;
+    width: 37px;
+    height: 37px;
     position: fixed;
-    top: 8.8em;
+    top: 40%;
     margin-left: 230px;
     display: block;
-    border-radius: 23px;
+    border-radius: 25px;
     border: 4px solid #eaeaea;
     cursor: pointer;
     z-index: -1;

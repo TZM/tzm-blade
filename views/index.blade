@@ -1,10 +1,2 @@
 include "../layout/layout.blade"
 render title("Homepage")
-h3 you can switch lng via ?setLng='lngTag'
-a#en(href='/?setLng=en-US') en-US
-| &nbsp;
-a#de(href='/?setLng=de-DE') de-DE
-| &nbsp;
-a#de(href='/?setLng=fr-FR') fr-FR
-h3 i18n used in template via express app.helper
-span= t('menu.projects') + ' '

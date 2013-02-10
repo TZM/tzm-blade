@@ -15,14 +15,6 @@
     "advanced": "Avançado"
     ,"search": "Search"
   }
-  ,"user": {
-    "gravatar": "Gravatar"
-    ,"profile": "Perfil"
-    ,"login": "Login"
-    ,"logout": "Sair"
-    ,"contact": "Contato"
-    ,"help": "Help"
-  }
   ,"footer": {
     "network": "TZM Network"
     ,"tools": "Tools"

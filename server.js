@@ -96,6 +96,7 @@ function dumpError(err) {
 
 i18n.init({
     ignoreRoutes: ['images/', 'public/', 'css/', 'js/'],
+    resSetPath: 'locales/__lng__/translation.json',
     useCookie: true,
     saveMissing: true,
     debug: true
@@ -107,6 +108,7 @@ app.configure(function() {
     app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
     app.use(express.static(__dirname + '/public') ); //maybe we have some static files
     app.use(express.static(__dirname + "/nowjs") );
+    app.use("/locales", express.static(__dirname + '/locales'));
     app.use(i18n.handle); // have i18n befor app.router
     app.use(blade.middleware(__dirname + '/views') ); //for client-side templates
     

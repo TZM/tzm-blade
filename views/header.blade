@@ -20,17 +20,18 @@ header
                         div.placeholder-field
                             input(type="text" name="search_text" class="search-input")
                             input(type="submit" class="button submit-button" value="search")
+
                 li.language-menu
                     a(href="" class="tooltip")
                         img(src='../images/language_icon.png', alt="")
-                        span= t("menu.language")
+                        span= "Language"
                 - var langFile = locals.settings.languages
                 #language-menu
                     ul
                         - for(var i in langFile)
                             - var o = langFile[i]
                             li
-                                a(id="lang-"+o.locale)=t("language."+o.locale)
+                                a(id=""+o.code)=t("language."+o.locale)
         // logo
         h1
             a(href="/" class="tzm-i18n")= t("tzm")

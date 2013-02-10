@@ -16,8 +16,8 @@ function ZmgcMenu() {
         $( ".content" ).removeClass("open");
       } else {
         leftNavToggle.addClass( "active" );
-        leftNavToggle.css( "marginLeft", -15 );
-        $( "#nav-container" ).css( "marginLeft", -245 );
+        leftNavToggle.css( "marginLeft", -5 );
+        $( "#nav-container" ).css( "marginLeft", -235 );
         $( ".content" ).toggleClass("open");
       }
     });

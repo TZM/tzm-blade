@@ -1,12 +1,15 @@
 {
   "tzm": "Chapters - Zeitgeist Movement"
+  ,"welcome": {
+    "p1":"The Zeitgeist Movement is an explicitly non-violent, global sustainability advocacy group currently working in over 1000 Regional Chapters across 70 countries."
+    ,"p2":"The basic structure of The Movement consists of Chapters, Teams, Projects & Events. Overall, the Chapters are essentially what define the Movement and each Chapter works to not only spread awareness about the roots of our social problems today but also to express the logical, scientific solutions and methods we have at our disposal to update and correct the current social system and create a truly responsible, sustainable, peaceful, global society."
+  }
   ,"menu": {
     "projects": "Projects"
     ,"map": "Map"
     ,"calendar": "Calendar"
     ,"forums": "Forums"
     ,"more": "More »"
-		,"language": "Language"
   }
   ,"search": {
     "advanced": "Advanced"
