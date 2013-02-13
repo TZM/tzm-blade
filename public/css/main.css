@@ -550,13 +550,17 @@ div[role="main"] .mainarticle #nav-toggle.active {
 div[role="main"] .mainarticle .content {
 /* initially this is 232px from the left*/
 margin-left: 240px;
-border: 4px solid #f99d33;
+padding: 10px 0px 0px 38px;
 }
 
 div[role="main"] .mainarticle .content.open {
 /* initially this is 232px from the left*/
 margin-left: 20px;
-border: 4px solid #f99d33;
+}
+
+div[role="main"] .mainarticle .content .guide_section h5 {
+/* initially this is 232px from the left*/
+font-size: 117%;
 }
 
 /*******************************************************************************/
