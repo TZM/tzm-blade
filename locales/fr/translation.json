@@ -46,6 +46,18 @@
     }
   }
   ,"footer": {
-    "network": "TZM Network"
+    "chapters": "Branches Internationales"
+        ,"official_sites": {
+            "official_sites": "Branches Internationales"
+            ,"tzm_global": "TZM Global"
+            ,"zeitgeist_media_project": "Zeitgeist Media Project"
+            ,"tzm_global_radio": "TZM Global Radio"
+            ,"zeitnews": "ZeitNews"
+            ,"blog": "The Zeitgeist Movement Blog"
+            ,"zeitgeist_brodcasting_network": "Zeitgeist Brodcasting Network"
+            ,"v_radio": "V-Radio"
+        }
+    ,"network": "TZM Reseaux"
+    
   }
 }

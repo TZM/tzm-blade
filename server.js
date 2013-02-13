@@ -208,6 +208,7 @@ i18n.registerAppHelper(app)
     .serveClientScript(app)
     .serveDynamicResources(app)
     .serveMissingKeyRoute(app);
+
 var server = app.listen(29080);
 var everyone = nowjs.initialize(server);
 console.log('Server running at http://127.0.0.1:29080/');

@@ -19,16 +19,14 @@ jQuery(function($) {
         // save to use translation function as resources are fetched
         $("#page").i18n();
         $(".tzm-i18n").i18n();
-        //$(".project-select").i18n();
+        $(".project-select").i18n();
         $(".menu").i18n();
         $(".user-menu").i18n();
-        //$(".page-i18n").i18n();
         //$(".search-form").i18n();
-        //$(".footer-i18n").i18n();
+        $("#footer").i18n();
         //$(".section").i18n();
-        //$(".contents").i18n();
-        //$("#language-menu").hide();
-        // translate page
+        //$(".sub-section").i18n();
+        $("#language-menu").hide();
     }
 
     i18n.init({

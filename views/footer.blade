@@ -17,12 +17,12 @@ footer
             a(href="/")
                 img(src="/images/phx-logo-30x34.png" alt="Home")
         li
-            a.dropup(href="#")= t("footer.network")
+            a.dropup(href="#" data-i18n="footer.network")=i18n.t("footer.network")
             #tzm-network-popup.footer_dropup.drop12columns
                 .col_8
-                    h5=t("footer.chapters")
+                    h5(data-i18n="footer.chapters")=i18n.t("footer.chapters")
                 .col_4
-                    h5=t("footer.official_sites.official_sites")
+                    h5(data-i18n="footer.official_sites.official_sites")=i18n.t("footer.official_sites.official_sites")
                 // we load the chapters.json file
                 .col_8.tzmlist
                     p.invisible fixme!!!

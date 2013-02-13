@@ -7,9 +7,10 @@ strong
                 h3.section
                     span.menu-toggle
                     span(data-content=""+i data-i18n="guide.sections."+i+".title")=i18n.t("guide.sections."+i+".title")
-                ul.contents
+                ul.sub-section
                     - var contents = items[i].contents
                     - for(var c in contents)
+                        -console.log(i18n.t("guide.sections."+i+".contents.title"));
                         li
                             a.nav-link(href="#" data-content=""+c data-i18n="guide.sections."+i+".contents.title")=i18n.t("guide.sections."+i+".contents.title")
     div(role="main")
