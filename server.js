@@ -128,8 +128,8 @@ app.configure(function() {
 });
 
 app.get('/', function(req, res, next) {
-    TZMNetwork(TABLE_ID);
-    console.log(lastModifiedDate);
+    //TZMNetwork(TABLE_ID);
+    //console.log(lastModifiedDate);
     res.render('index');
 });
 
