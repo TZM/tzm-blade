@@ -9,7 +9,14 @@ jQuery(function($) {
       $( "body" ).css( "marginTop", 0 );
     } else {
       projectToggle.addClass( "active" );
+      // if on Guide page, we need to close the #nav-container
+      if ($( "#nav-toggle" ).hasClass( "" )) {
+          $( "#nav-toggle" ).addClass( "active" ).css( "marginLeft", -5 );
+          $( "#nav-container" ).css( "marginLeft", -235 );
+          $( ".content" ).toggleClass("open");
+      }
       $( "body" ).css( "marginTop", 150 );
+      
     }
   });
 
@@ -56,6 +63,19 @@ jQuery(function($) {
     //$('#page:first').empty().load('map.html');
     //ZmgcClient();
     blade.Runtime.loadTemplate("map.blade", function(err, tmpl) {
+        tmpl({}, function(err, html) {
+            if(err) throw err;
+                console.log(html);
+                $('#page:first').empty().html(html);
+        });
+    });
+  });
+  
+  $('.forums').on('click', function() {
+    console.log('click on forums button');
+    //$('#page:first').empty().load('map.html');
+    //ZmgcClient();
+    blade.Runtime.loadTemplate("forums.blade", function(err, tmpl) {
         tmpl({}, function(err, html) {
             if(err) throw err;
                 console.log(html);

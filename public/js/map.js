@@ -175,6 +175,26 @@ function mapClient() {
             cityName.style("fill", "red")
             cityName.transition().delay(4000)
             .style("opacity", "0");
+
+        //console.log($(member.node));
+        //var hoverFunc = function () {
+        //    console.log('hoverFunc');
+        //    //person.attr({
+        //    //    fill: 'white'
+        //    //});
+        //    //$(title.node).fadeIn('fast');
+        //    //$(subtitle.node).fadeIn('fast');
+        //};
+        //
+        //var hideFunc = function () {
+        //    console.log('hideFunc');
+        //    //person.attr({
+        //    //    fill: '#ff9'
+        //    //});
+        //    //$(title.node).fadeOut('slow');
+        //    //$(subtitle.node).fadeOut('slow');
+        //};
+        //$(member.node).hover(hoverFunc, hideFunc);
     }
     // Initialise
     this.init();

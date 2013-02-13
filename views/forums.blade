@@ -1,0 +1,10 @@
+script(type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js")
+
+- function TicketsViewModel(){this.tickets = [{ name: "Economy", price: 199.95 },{ name: "Business", price: 449.22 },{ name: "FIrst Class", price: 1199.99 }];this.chosenTicket = ko.observable();this.resetTicket = function() { this.chosenTicket(null) }}
+- ko.applyBindings(new TicketsViewModel());
+
+select(data-bind="options: tickets, optionsCaption: 'Choose...', optionsText: 'name...', value: chosenTicket")
+button(data-bind="enable: chosenTicket, click: resetTicket")='Clear'
+p(data-bind="with: chosenTicket")='You have chosen'
+    b(data-bind="text: name")
+    span(data-bind="text: price")
