@@ -19,14 +19,15 @@ jQuery(function($) {
         // save to use translation function as resources are fetched
         $("#page").i18n();
         $(".tzm-i18n").i18n();
-        $(".project-select").i18n();
-        $(".page-i18n").i18n();
+        //$(".project-select").i18n();
         $(".menu").i18n();
         $(".user-menu").i18n();
-        $(".search-form").i18n();
-        $(".footer-i18n").i18n();
-        $(".section").i18n();
-        $("#language-menu").hide();
+        //$(".page-i18n").i18n();
+        //$(".search-form").i18n();
+        //$(".footer-i18n").i18n();
+        //$(".section").i18n();
+        //$(".contents").i18n();
+        //$("#language-menu").hide();
         // translate page
     }
 
@@ -41,13 +42,9 @@ jQuery(function($) {
        return false;
    });
     $("#language-menu a").on("click", function() {
-        var lang = i18n.lng();
-        console.log(lang);
-        
         var windowReload = false; // TRUE = reload the page; FALSE = do not reload the page
         var $this = $(this);
         var value = $this.attr("id");
-        console.log(value);
         var arrValueParts = value.split("-");
         var language = arrValueParts[0];
 

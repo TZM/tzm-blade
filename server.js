@@ -114,7 +114,6 @@ app.configure(function() {
     
     app.use(app.router);
     app.set('view engine', 'blade'); //Yes! Blade works with Express out of the box!
-    //app.set('views', __dirname);
     app.set('views', __dirname + '/views'); //tells Express where our views are stored
     try {
         app.set('languages', require(__dirname + '/locales/config.json'));
