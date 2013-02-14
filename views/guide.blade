@@ -8,11 +8,10 @@ strong
                     span.menu-toggle
                     span(data-content=""+i data-i18n="guide.sections."+i+".title")=i18n.t("guide.sections."+i+".title")
                 ul.sub-section
-                    - var contents = items[i].contents
-                    - for(var c in contents)
-                        -console.log(i18n.t("guide.sections."+i+".contents.title"));
+                    - var content = i18n.t("guide.sections."+i+".contents", { returnObjectTrees: true });
+                    - for(var c in content)
                         li
-                            a.nav-link(href="#" data-content=""+c data-i18n="guide.sections."+i+".contents.title")=i18n.t("guide.sections."+i+".contents.title")
+                            a.nav-link(href="#" data-content=""+c data-i18n="guide.sections."+i+".contents.title")=i18n.t(content[c].title)
     div(role="main")
         article.mainarticle
             #nav-toggle
