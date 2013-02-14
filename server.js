@@ -4,7 +4,6 @@ var blade = require('blade')
     ,http = require('http')
     ,https = require('https')
     ,fs = require('fs')
-    ,i18n = require("i18next")
     ,nowjs = require('now'),json;
 
 //var city = new City('data/GeoLiteCity.dat' );
@@ -79,28 +78,6 @@ function getChapters() {
     });
 }
 
-function dumpError(err) {
-  if (typeof err === 'object') {
-    if (err.message) {
-      console.log('\nMessage: ' + err.message)
-    }
-    if (err.stack) {
-      console.log('\nStacktrace:')
-      console.log('====================')
-      console.log(err.stack);
-    }
-  } else {
-    console.log('dumpError :: argument is not an object');
-  }
-}
-
-i18n.init({
-    ignoreRoutes: ['images/', 'public/', 'css/', 'js/'],
-    resSetPath: 'locales/__lng__/translation.json',
-    useCookie: true,
-    saveMissing: true,
-    debug: true
-});
 // Configuration
 app.configure(function() {
     app.enable('trust proxy'); // client ip address
@@ -109,20 +86,17 @@ app.configure(function() {
     app.use(express.static(__dirname + '/public') ); //maybe we have some static files
     app.use(express.static(__dirname + "/nowjs") );
     app.use("/locales", express.static(__dirname + '/locales'));
-    app.use(i18n.handle); // have i18n befor app.router
     app.use(blade.middleware(__dirname + '/views') ); //for client-side templates
-    
     app.use(app.router);
     app.set('view engine', 'blade'); //Yes! Blade works with Express out of the box!
     app.set('views', __dirname + '/views'); //tells Express where our views are stored
     try {
-        app.set('languages', require(__dirname + '/locales/config.json'));
-        app.set('translation', require(__dirname + '/locales/dev/translation.json'));
         app.set('chapters', require(__dirname + '/data/chapters.json'));
     } catch(err) {
-      dumpError(err);
-      console.log('there is no /data/chapters.json');
-      app.set('chapters', []);
+        require('./config/utils');
+        dumpError(err);
+        console.log('there is no /data/chapters.json');
+        app.set('chapters', []);
     }
 });
 
@@ -204,11 +178,10 @@ app.get('/', function(req, res, next) {
 
 app.locals.pretty=true;
 
-i18n.registerAppHelper(app)
-    .serveClientScript(app)
-    .serveDynamicResources(app)
-    .serveMissingKeyRoute(app);
+//i18n
+require('./config/i18n')(app)
 
-var server = app.listen(29080);
+var port = process.env.VCAP_APP_PORT
+var server = app.listen(port || 29080);
 var everyone = nowjs.initialize(server);
-console.log('Server running at http://127.0.0.1:29080/');
+console.log('Server running at http://127.0.0.1:'+ port + '/');

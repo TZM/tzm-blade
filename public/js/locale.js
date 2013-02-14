@@ -22,7 +22,7 @@ jQuery(function($) {
         $(".project-select").i18n();
         $(".menu").i18n();
         $(".user-menu").i18n();
-        $(".nav-link").i18n();
+        //$(".nav-link").i18n();
         //$(".search-form").i18n();
         $("#footer").i18n();
         //$(".section").i18n();
