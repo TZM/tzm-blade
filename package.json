@@ -1,27 +1,38 @@
 {
-	"author": "Norman Khine <norman@zmgc.net> (http://zmgc.net)",
-	"name": "zmgc",
-	"description": "",
-	"private": true,
-	"version": "0.0.1",
-	"homepage": "http://zmgc.net",
-	"repository": {
-	"type": "git",
-	"url": "git://github.com/TZM/tzm-blade.git"
-	},
-	"subdomain": "zmgc",
-	"engines": {
-		"node": " >=0.8.14"
-	},
-	"scripts": {
-		"start": "server.js"
-	},
-	"dependencies": {
-		"express" : "*",
-		"now": "git://github.com/nkhine/now.git",
-		"i18next": ">=1.5.16",
-		"blade" : "*"
-	},
-	"devDependencies": {},
-	"optionalDependencies": {}
+  "author": "Norman Khine <norman@zmgc.net> (http://zmgc.net)",
+  "name": "zmgc",
+  "description": "[Node.js](http://nodejs.org/)",
+  "private": true,
+  "version": "0.0.1",
+  "homepage": "http://zmgc.net",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/TZM/tzm-blade.git"
+  },
+  "subdomain": "zmgc",
+  "engines": {
+    "node": " >=0.8.14"
+  },
+  "scripts": {
+    "start": "server.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "now": "git://github.com/nkhine/now.git",
+    "i18next": ">=1.5.16",
+    "blade": "*"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "zmgc",
+    "zeitgeist",
+    "global",
+    "connect"
+  ],
+  "license": "BSD"
 }
