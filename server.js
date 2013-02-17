@@ -93,9 +93,8 @@ app.configure(function() {
     try {
         app.set('chapters', require(__dirname + '/data/chapters.json'));
     } catch(err) {
-        require('./config/utils');
-        dumpError(err);
         console.log('there is no /data/chapters.json');
+        console.log(err);
         app.set('chapters', []);
     }
 });

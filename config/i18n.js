@@ -20,9 +20,8 @@ module.exports = function (app) {
             app.set('languages', require('../locales/config.json'));
             app.set('translation', require('../locales/dev/translation.json'));
         } catch(err) {
-            require('./config/utils')
-            dumpError(err);
             console.log('there is no /locales/config.json');
+            console.log(err);
             app.set('languages', []);
             app.set('translation', []);
         }
