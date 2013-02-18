@@ -1,23 +1,26 @@
+include "../layout/layout.blade"
 script(type="text/javascript" src="js/menu.js")
-- var items = guide.sections
-strong
-    aside#nav-container(role="complementary")
-        nav#primary-nav.overview(role="nav")
-            - for(var i in items)
-                h3.section
-                    span.menu-toggle
-                    span(data-content=""+i data-i18n="guide.sections."+i+".title")=i18n.t("guide.sections."+i+".title")
-                ul.sub-section
-                    - var content = i18n.t("guide.sections."+i+".contents", { returnObjectTrees: true });
-                    - for(var c in content)
-                        li
-                            a.nav-link(href="#" data-content=""+c data-i18n="guide.sections."+i+".contents.title")=i18n.t(content[c].title)
-    div(role="main")
-        article.mainarticle
-            #nav-toggle
-            .content
-                p! The purpose of this guide is to assist and facilitate the creation and development of any kind of Chapter within <em>The Zeitgeist Movement</em>.
-                    |
-                        Topics include, but are not limited to: 
-                        organizing a core group; organizing local events and projects; 
-                        setting up communication mediums; how to deal with “noise” in the chapter, etc.
+replace block page
+    - var items = locals.settings.translation.guide.sections
+    strong
+        aside#nav-container(role="complementary")
+            nav#primary-nav.overview(role="nav")
+                - for(var i in items)
+                    h3.section
+                        span.menu-toggle
+                        span(data-content=""+i data-i18n="guide.sections."+i+".title")=i18n.t("guide.sections."+i+".title")
+                    ul.sub-section
+                        - var content = i18n.t("guide.sections."+i+".contents", { returnObjectTrees: true });
+                        - for(var c in content)
+                            - var section_title = i18n.t(content[c].title)
+                            li
+                                a.nav-link(href="#" data-bind=""+c data-content=""+section_title data-i18n="guide.sections."+i+".contents.title")=i18n.t(content[c].title)
+        div(role="main")
+            article.mainarticle
+                #nav-toggle
+                .content
+                    p! The purpose of this guide is to assist and facilitate the creation and development of any kind of Chapter within <em>The Zeitgeist Movement</em>.
+                        |
+                            Topics include, but are not limited to: 
+                            organizing a core group; organizing local events and projects; 
+                            setting up communication mediums; how to deal with “noise” in the chapter, etc.

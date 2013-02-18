@@ -7,7 +7,7 @@ header
                         // - if (i === 'map')
                         //     a(href=""+i class=""+i)= t("menu."+i)
                         // - else
-                        a(href="#" class=""+i data-i18n="menu."+i)= t("menu."+i)
+                        a(href="/"+i class=""+i data-i18n="menu."+i)= t("menu."+i)
         - var user_menu = locals.settings.translation.user
             ul.user-menu
                 - for(var i in user_menu)

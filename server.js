@@ -1,6 +1,9 @@
 var blade = require('blade')
     ,express = require('express')
     ,app = express()
+    ,i18n = require("i18next")
+    ,map = require('./routes/map')
+    ,guide = require('./routes/guide')
     ,http = require('http')
     ,https = require('https')
     ,fs = require('fs')
@@ -78,10 +81,20 @@ function getChapters() {
     });
 }
 
+i18n.init({
+    detectLngQS: 'lang'
+    ,resSetPath: './locales/__lng__/translation.json'
+    ,ignoreRoutes: ['images/', 'public/', 'css/', 'js/']
+    ,extension:'.json'
+    ,saveMissing: true
+    ,debug: true
+});
+
 // Configuration
 app.configure(function() {
     app.enable('trust proxy'); // client ip address
     app.use(express.bodyParser());
+    app.use(i18n.handle);
     app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
     app.use(express.static(__dirname + '/public') ); //maybe we have some static files
     app.use(express.static(__dirname + "/nowjs") );
@@ -92,18 +105,28 @@ app.configure(function() {
     app.set('views', __dirname + '/views'); //tells Express where our views are stored
     try {
         app.set('chapters', require(__dirname + '/data/chapters.json'));
+        app.set('languages', require(__dirname + '/locales/config.json'));
+        app.set('translation', require(__dirname + '/locales/dev/translation.json'));
     } catch(err) {
-        console.log('there is no /data/chapters.json');
         console.log(err);
         app.set('chapters', []);
+        app.set('languages', []);
+        app.set('translation', []);
     }
 });
 
+i18n.registerAppHelper(app);
+
+// Routes
 app.get('/', function(req, res, next) {
     TZMNetwork(TABLE_ID);
     console.log(lastModifiedDate);
     res.render('index');
 });
+
+// Map
+app.get('/map', map.list);
+app.get('/guide', guide.list);
 
 //app.get('/stat/1.gif', function( req, res, next ) {
 //    var time = +new Date();
@@ -178,7 +201,7 @@ app.get('/', function(req, res, next) {
 app.locals.pretty=true;
 
 //i18n
-require('./config/i18n')(app)
+//require('./config/i18n')(app)
 
 var port = process.env.VCAP_APP_PORT
 var server = app.listen(port || 29080);

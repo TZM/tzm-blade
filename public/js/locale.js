@@ -17,24 +17,24 @@ jQuery(function($) {
 
     function setLanguage() {
         // save to use translation function as resources are fetched
-        $("#page").i18n();
-        $(".tzm-i18n").i18n();
+        $(".welcome").i18n();
+        //$(".tzm-i18n").i18n();
         $(".project-select").i18n();
         $(".menu").i18n();
         $(".user-menu").i18n();
-        $(".nav-link").i18n();
-        //$(".search-form").i18n();
+        //$(".nav-link").i18n();
+        ////$(".guide_section").i18n();
         $("#footer").i18n();
-        //$(".section").i18n();
+        ////$(".section").i18n();
         //$(".sub-section").i18n();
         $("#language-menu").hide();
     }
-
-    i18n.init({
-        lng: language,
-        debug: true,
-        //dynamicLoad: true
-    }, setLanguage);
+    //
+    //i18n.init({
+    //    lng: language,
+    //    debug: true,
+    //    //dynamicLoad: true
+    //}, setLanguage);
 
    // language selector
    $("li.language-menu").on("click", function() {
@@ -49,12 +49,14 @@ jQuery(function($) {
         var language = arrValueParts[0];
 
         if (windowReload) {
-            window.location.href = "/index.html?setLng=" + language;
+            window.location.href = "/?lang=" + language;
         } else {
-            i18n.init({
-                lng: language,
-                debug: true
-            }, setLanguage);
+            console.log(language);
+            i18n.setLng(language, setLanguage)
+            //i18n.init({
+            //    lng: language,
+            //    debug: true
+            //}, setLanguage);
         }
 
         $("#language-menu a").removeClass("selected-language");

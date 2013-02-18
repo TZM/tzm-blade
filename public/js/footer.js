@@ -58,53 +58,7 @@ jQuery(function($) {
       slide = false;
     }
   });
-  $('.map').on('click', function() {
-    console.log('click on map button');
-    //$('#page:first').empty().load('map.html');
-    //ZmgcClient();
-    blade.Runtime.loadTemplate("map.blade", function(err, tmpl) {
-        tmpl({}, function(err, html) {
-            if(err) throw err;
-                console.log(html);
-                $('#page:first').empty().html(html);
-        });
-    });
-  });
-  
-  $('.forums').on('click', function() {
-    console.log('click on forums button');
-    //$('#page:first').empty().load('map.html');
-    //ZmgcClient();
-    blade.Runtime.loadTemplate("forums.blade", function(err, tmpl) {
-        tmpl({}, function(err, html) {
-            if(err) throw err;
-                console.log(html);
-                $('#page:first').empty().html(html);
-        });
-    });
-  });
 
-  $('.guide').on('click', function() {
-    $.ajax({
-        url: '/locales/dev/translation.json',
-        dataType: 'json',
-        cache: false,
-        success: function(data){
-            var guide = data.guide;
-            blade.Runtime.loadTemplate("guide.blade", function(err, tmpl) {
-                tmpl({
-                    "guide": {
-                        "sections": guide.sections
-                      }
-                }, function(err, html) {
-                    if(err) throw err;
-                        console.log(html);
-                        $('#page:first').empty().html(html);
-                });
-            });
-        }
-    });
-  });
 });
 
 

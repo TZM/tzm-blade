@@ -16,8 +16,8 @@ function ZmgcMenu() {
         $( ".content" ).removeClass("open");
       } else {
         leftNavToggle.addClass( "active" );
-        leftNavToggle.css( "marginLeft", -5 );
-        $( "#nav-container" ).css( "marginLeft", -235 );
+        leftNavToggle.css( "marginLeft", -15 );
+        $( "#nav-container" ).css( "marginLeft", -245 );
         $( ".content" ).toggleClass("open");
       }
     });
@@ -37,7 +37,7 @@ function ZmgcMenu() {
       event.preventDefault();
       var $this = $(this);
       var section =  $this.closest('ul').prev('h3').find('span[data-content]').data('content');
-      var subSection = $this.attr("data-content");
+      var subSection = $this.attr("data-bind");
       // we can now genrate the section content and push this into the tmpl.
       blade.Runtime.loadTemplate("guide_section.blade", function(err, tmpl) {
           tmpl({
@@ -47,11 +47,19 @@ function ZmgcMenu() {
                   }
           }, function(err, html) {
               if(err) throw err;
-                  console.log(html);
                   $('.mainarticle > .content').empty().html(html);
+                  var page = "./guide/page"+subSection+".blade";
+                  blade.Runtime.loadTemplate(page, function(err, tmpl) {
+                      tmpl({}, function(err, html) {
+                          if(err) throw err;
+                            console.log(html);
+                            $('.guide_content').empty().html(html);
+                      });
+                });
           });
       });
   });
+
   // Initialise
   this.init();
 };
