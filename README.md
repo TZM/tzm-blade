@@ -18,4 +18,11 @@ After installing node.js, open terminal and navigate to your sandboxes folder
     Server running at http://127.0.0.1:29080/
     
 Now you can navigate to http://127.0.0.1:29080/ and see the website.
+
+#Deployment
+
+The application can be deployed anywhere where you have Nodejs installed, meaning that you can run this on your local machine and setup P2P; For now, this application is running on AppFog at zero cost, as AppFog provides you with a decent enough server to run this application.
+
+To deploy on AppFog, you will need to first create an account and then setup your machine to talk to AppFog, see the [Documentation](https://docs.appfog.com/getting-started/af-cli)
+
     

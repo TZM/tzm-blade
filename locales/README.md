@@ -7,6 +7,8 @@ We use [IETF language tag](http://en.wikipedia.org/wiki/IETF_language_tag) to sp
 
 #How to extract all the template html content and generate the JSON file for a specific localization.
 
+i18next-conv converts files from gettext (.mo/.po) to i18next's json format and vice versa. This will allow the translation team to use tools such as [POEdit](http://www.poedit.net/) and then convert this to JSON to use within this application.
+
 #Libraries to consider
 
 [https://github.com/papandreou/node-cldr/](https://github.com/papandreou/node-cldr/)
