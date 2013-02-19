@@ -8,17 +8,18 @@ replace block page
                 - for(var i in items)
                     h3.section
                         span.menu-toggle
-                        span(data-content=""+i data-i18n="guide.sections."+i+".title")=i18n.t("guide.sections."+i+".title")
+                        span(data-content=""+i data-i18n="guide.sections."+i+".title")=t("guide.sections."+i+".title")
                     ul.sub-section
-                        - var content = i18n.t("guide.sections."+i+".contents", { returnObjectTrees: true });
+                        - var content = t("guide.sections."+i+".contents", { returnObjectTrees: true });
                         - for(var c in content)
-                            - var section_title = i18n.t(content[c].title)
+                            - var section_title = t(content[c].title)
                             li
-                                a.nav-link(href="#" data-bind=""+c data-content=""+section_title data-i18n="guide.sections."+i+".contents.title")=i18n.t(content[c].title)
+                                a.nav-link(href="#" data-bind=""+c data-content=""+section_title data-i18n="guide.sections."+i+".contents.title")=t(content[c].title)
         div(role="main")
             article.mainarticle
                 #nav-toggle
                 .content
+                    .guide_navigation
                     p! The purpose of this guide is to assist and facilitate the creation and development of any kind of Chapter within <em>The Zeitgeist Movement</em>.
                         |
                             Topics include, but are not limited to: 

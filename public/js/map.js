@@ -32,13 +32,7 @@ function mapClient() {
               .center([0, 37.7750]);
 
         self.projection = d3.geo.path().projection(self.map);
-        self.svg.on("click", function() {
-           var p = d3.mouse(this);                                                                     
-           console.log(p+" "+self.map.invert(p));                                                          
-           self.map.center(self.map.invert(p));
-           self.svg.selectAll("path").attr("d", path);                                                      
 
-        });
     }
 
     this.drawMap = function() {
@@ -51,13 +45,6 @@ function mapClient() {
         self.svg.append("g")
             .attr("id", "countries");
 
-        self.svg.on("click", function() {
-            var p = d3.mouse(this);                                                                     
-            console.log(p+" "+self.map.invert(p));                                                          
-            self.map.center(self.map.invert(p));
-            // self.svg.selectAll("path").attr("d", path);                                                      
-
-        });
         self.countriesGroup = self.svg.select("#countries");
         // Load data from .json file
         d3.json("../topo/world.json", function(error, topology) {
@@ -80,6 +67,13 @@ function mapClient() {
                 d3.select(this)
                 .style("fill", "#000000");
             })
+            .on("click", function(d) {
+                console.log('clicked on country')
+                var p = d3.mouse(this);
+                console.log(p+" "+self.map.invert(p));
+                //Load the country SVG and center it on the template
+                self.map.center(self.map.invert(p));
+            });
             self.countriesGroup.select("#Antarctica").remove();
         });
         self.loadMembers();
@@ -122,6 +116,9 @@ function mapClient() {
             })
             .on("click", function(d) {
                 console.log('clicked on country')
+                var p = d3.mouse(this);                                                                     
+                console.log(p+" "+self.map.invert(p));                                                          
+                self.map.center(self.map.invert(p));
             });
         });
         //self.loadMembers();

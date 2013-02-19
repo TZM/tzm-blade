@@ -26,6 +26,7 @@ function ZmgcMenu() {
   this.leftMenuToggle = function () {
     $('#nav-container').on('click', '.section', function( event ) {
         event.preventDefault();
+        $('a.nav-link.active').removeClass('active');
         var $shortcut = $(this).next();
         $('#nav-container ul.active').not($shortcut).removeClass('active');
         $shortcut.andSelf().toggleClass('active').find(".menu-toggle").toggleClass("open");
@@ -36,6 +37,9 @@ function ZmgcMenu() {
   $('a.nav-link').on('click', function( event ) {
       event.preventDefault();
       var $this = $(this);
+      var $shortcut = $(this).next();
+      $('a.nav-link.active').not($shortcut).removeClass('active');
+      $shortcut.andSelf().toggleClass('active');
       var section =  $this.closest('ul').prev('h3').find('span[data-content]').data('content');
       var subSection = $this.attr("data-bind");
       // we can now genrate the section content and push this into the tmpl.

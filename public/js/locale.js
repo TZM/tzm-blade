@@ -15,26 +15,18 @@ jQuery(function($) {
         language = (language_complete[0]);
     }
 
-    function setLanguage() {
-        // save to use translation function as resources are fetched
-        $(".welcome").i18n();
-        //$(".tzm-i18n").i18n();
-        $(".project-select").i18n();
-        $(".menu").i18n();
-        $(".user-menu").i18n();
-        //$(".nav-link").i18n();
-        ////$(".guide_section").i18n();
-        $("#footer").i18n();
-        ////$(".section").i18n();
-        //$(".sub-section").i18n();
-        $("#language-menu").hide();
-    }
-    //
-    //i18n.init({
-    //    lng: language,
-    //    debug: true,
-    //    //dynamicLoad: true
-    //}, setLanguage);
+    //function setLanguage() {
+    //    // save to use translation function as resources are fetched
+    //    $(".welcome").i18n();
+    //    //$(".tzm-i18n").i18n();
+    //    $(".project-select").i18n();
+    //    $(".menu").i18n();
+    //    $(".user-menu").i18n();
+    //    $("#footer").i18n();
+    //    $(".section").i18n();
+    //    $(".sub-section").i18n();
+    //    $("#language-menu").hide();
+    //}
 
    // language selector
    $("li.language-menu").on("click", function() {
@@ -52,10 +44,11 @@ jQuery(function($) {
             window.location.href = "/?lang=" + language;
         } else {
             console.log(language);
-            i18n.setLng(language, setLanguage)
+            i18n.setLng(language, location.reload());
             //i18n.init({
-            //    lng: language,
-            //    debug: true
+            //    lng:language
+            //    ,debug:true
+            //    //,dynamicLoad:true
             //}, setLanguage);
         }
 
