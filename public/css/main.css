@@ -593,10 +593,26 @@ svg path.country {
     z-index: 10;
 }
 
-.city {
-    font: 96% "Helvetica Neue",Arial,Helvetica,sans-serif;
+svg > text > .city-name {
+    font-size: 77%;
 }
-
+#tooltip {
+    background: #4F4F4F;
+    border: 1px solid #2C2929;
+    border-radius: 6px;
+    color: #FAFAFA;
+    font-size: 14px;
+    padding: 6px;
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+    min-height: 15px;
+    min-width: 100px;
+}
+#LegendLabel{
+    font-size: 20px;
+    font-weight: bold;
+}
 /**************************************************************************
 * Footer
 * ***********************************************************************/

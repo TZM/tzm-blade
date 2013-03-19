@@ -25,4 +25,6 @@ The application can be deployed anywhere where you have Nodejs installed, meanin
 
 To deploy on AppFog, you will need to first create an account and then setup your machine to talk to AppFog, see the [Documentation](https://docs.appfog.com/getting-started/af-cli)
 
+#Monetary System to be put on trial for Crimes against society and earthlings.
+Put a motion at the Hague and see how far it will go, similar to what Iran is doing with the film ARGO, where and similar to the YouGov poll where the 1,684 british adults want Tony Blaire must-be-tried-for-war-crimes
     

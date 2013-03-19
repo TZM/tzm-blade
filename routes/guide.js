@@ -1,3 +1,3 @@
-exports.list = function(req, res, next){
+exports.blade = function(req, res, next){
     res.render('guide.blade');
 };

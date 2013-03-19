@@ -65,7 +65,7 @@ function ZmgcMenu() {
   });
 
   // Initialise
-  this.init();
+  self.init();
 };
 
 var ZmgcMenu;

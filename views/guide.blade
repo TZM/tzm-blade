@@ -9,11 +9,13 @@ replace block page
                     h3.section
                         span.menu-toggle
                         span(data-content=""+i data-i18n="guide.sections."+i+".title")=t("guide.sections."+i+".title")
-                    ul.sub-section
-                        - var content = t("guide.sections."+i+".contents", { returnObjectTrees: true });
+                    ul
+                        - var content = t("guide.sections."+i+".contents", { returnObjectTrees: true })
                         - for(var c in content)
                             - var section_title = t(content[c].title)
-                            li
+                            - console.log(content[c])
+                            li.sub-section
+                                - console.log('sub-section')
                                 a.nav-link(href="#" data-bind=""+c data-content=""+section_title data-i18n="guide.sections."+i+".contents.title")=t(content[c].title)
         div(role="main")
             article.mainarticle

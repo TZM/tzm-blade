@@ -1,5 +1,9 @@
 include "../layout/layout.blade"
 replace block page
     #map
-    script( type="text/javascript", src="js/vendor/topojson.v0.min.js")
+        #zoom_level(style="visibility: visible")
+            button#zoom_out.btn="Zoom Out"
+                i.icon-minus
+        #LegendLabel
+    script( type="text/javascript", src="js/vendor/d3/topojson.v0.min.js")
     script( type="text/javascript", src="js/map.js")

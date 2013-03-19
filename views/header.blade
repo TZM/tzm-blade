@@ -14,7 +14,7 @@ header
                     li
                         a(href="#" class="tooltip")
                             img(src='../images/'+i+'.png', alt="")
-                            span(data-i18n="user."+i)= t("user."+i)
+                            span(data-i18n="user."+i)=t("user."+i)
                 li.search-form
                     form(method="post" action="#")
                         div.placeholder-field
@@ -24,7 +24,7 @@ header
                 li.language-menu
                     a(href="" class="tooltip")
                         img(src='../images/language_icon.png', alt="")
-                        span= "Language"
+                        span="Language"
                 - var langFile = locals.settings.languages
                 #language-menu
                     ul

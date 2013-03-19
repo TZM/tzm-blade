@@ -1,0 +1,6 @@
+div
+  input(type="button" value="Click Me")
+    {click}
+    - clicks++;
+    - var plural = clicks == 1 ? "" : "s"
+p You clicked the button #{clicks} time#{plural}

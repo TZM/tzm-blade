@@ -3,6 +3,7 @@ var blade = require('blade')
     ,app = express()
     ,i18n = require("i18next")
     ,map = require('./routes/map')
+    ,menu = require('./routes/menu')
     ,guide = require('./routes/guide')
     ,http = require('http')
     ,https = require('https')
@@ -10,6 +11,7 @@ var blade = require('blade')
     ,nowjs = require('now'),json;
 
 //var city = new City('data/GeoLiteCity.dat' );
+//console.log(cldr.extractTerritoryDisplayNames('fr'));
 
 var GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
@@ -87,7 +89,7 @@ i18n.init({
     ,ignoreRoutes: ['images/', 'public/', 'css/', 'js/']
     ,extension:'.json'
     ,saveMissing: true
-    ,debug: true
+    ,debug: false
 });
 
 // Configuration
@@ -98,6 +100,10 @@ app.configure(function() {
     app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
     app.use(express.static(__dirname + '/public') ); //maybe we have some static files
     app.use(express.static(__dirname + "/nowjs") );
+    app.use(function(req, res, next){
+      res.locals._ = require('underscore');
+      next();
+    });
     app.use("/locales", express.static(__dirname + '/locales'));
     app.use(blade.middleware(__dirname + '/views') ); //for client-side templates
     app.use(app.router);
@@ -124,9 +130,9 @@ app.get('/', function(req, res, next) {
     res.render('index');
 });
 
-// Map
-app.get('/map', map.list);
-app.get('/guide', guide.list);
+app.get('/map', map.blade);
+app.get('/menu', menu.blade);
+app.get('/guide', guide.blade);
 
 //app.get('/stat/1.gif', function( req, res, next ) {
 //    var time = +new Date();
