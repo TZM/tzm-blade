@@ -8,12 +8,30 @@ function mapClient() {
     var ZMGC = {}
 
     ZMGC.DATA_PATH = '../topo/'
+    ZMGC.centered = undefined
 
+    this.onResize = function() {
+        var width = $("#map").parent().width()
+        self.svg.attr({ 
+            width:width, 
+            height:"90%"
+        })
+        console.log(width)
+    }
+    
     this.fileExists = function(url) {
         var http = new XMLHttpRequest()
         http.open('HEAD', url, false)
         http.send()
         return http.status!=404
+    }
+    
+    this.getBBox = function(selection) {
+        // get the DOM element from a D3 selection
+        // you could also use "this" inside .each()
+        var element = selection.node()
+            // use the native SVG interface to get the bounding box
+        return element.getBBox()
     }
 
     this.getCentroid = function(selection) {
@@ -44,9 +62,9 @@ function mapClient() {
         if (this.admin_level === 0) {
             display_string = 'World'
         } else if (this.admin_level === 1) {
-            display_string = TAOA.index_continent.properties.CONTINENT
+            display_string = ZMGC.index_continent.properties.CONTINENT
         } else if (this.admin_level === 2) {
-            display_string = TAOA.index_country.properties.NAME
+            display_string = ZMGC.index_country.properties.NAME
         }
 
         self.LegendLabel = d3.select("svg").append("svg:text")
@@ -62,9 +80,9 @@ function mapClient() {
         d3.select('#LegendLabel')
             .text(function() {
                 var display_string
-                if (TAOA.admin_level === 0) {
+                if (ZMGC.admin_level === 0) {
                     display_string = index.properties.CONTINENT
-                } else if (TAOA.admin_level === 3) {
+                } else if (ZMGC.admin_level === 3) {
                     display_string = index.properties.Name
                 } else {
                     display_string = index.properties.NAME
@@ -118,18 +136,18 @@ function mapClient() {
             .duration(500)
             .style("opacity", 1)
     }
-    
+
     this.deactivateTooltip = function() {
         "use strict"
         self.tooltip.transition()
             .duration(500)
             .style("opacity", -1)
     }
-    
+
     this.drawSVG = function(cw, ch) {
         // Most parts of D3 don"t know anything about SVG—only DOM.
         console.log(cw, ch)
-        var width = $("#map").width()
+        //var width = $("#map").width()
         self.svg = d3.select("#map").append("svg:svg")
         .attr({
             class:"svg", 
@@ -137,7 +155,7 @@ function mapClient() {
             height:"90%"
         })
         .attr("viewBox", "0 0 " + cw + "  "+ ch)
-        .attr("perserveAspectRatio", "xMinYMid")
+        .attr("perserveAspectRatio", "xMinYMin meet")
         //d3.selectAll("tooltip").remove()
         //self.tooltip = self.drawTooltip()
 
@@ -145,22 +163,26 @@ function mapClient() {
 
     this.drawMap = function(p,cw,ch,t,s,r,c) {
         // remove the root SVG element
-        d3.select("#map").selectAll("svg g").remove()
+        console.log(c)
+        d3.select("#map").selectAll("svg").remove()
         // create the root SVG element
         self.drawSVG(cw, ch)
         self.projection = p
-            .scale(s)
-            .translate(t)
+            //.scale(s)
+            //.translate(t)
+            .center(c)
+        console.log(c)
         self.path = d3.geo.path().projection(self.projection)
         // self.loadMembers()
     }
 
     this.drawWorld = function(){
+        d3.select("#zoom_level").style("visibility", "hidden")
         var p = d3.geo.equirectangular()
-            ,cw = 10
-            ,ch = 400
-            ,t = [0, 200]
-            ,s = 120
+            ,cw = 1000
+            ,ch = 600
+            ,t = [0, 0]
+            ,s = 170
             ,r = [-8, 0]
             ,c = [0, 37.7750]
         
@@ -197,14 +219,19 @@ function mapClient() {
                 //self.deactivateTooltip()
             })
             .on("click", function(d) {
-                c = self.getCentroid(d3.select(this))
-                //centroid = this.centroid(d);
-                console.log(c)
+                b = self.getBBox(d3.select(this));
+                console.log(b);
+                c = self.getCentroid(d3.select(this));
+                console.log (c);
                 //w = d3.select(this).width()
                 //var p = d3.mouse(this)
                 //var c = self.map.invert(p)
                 //Load the country SVG and center it on the template
                 //self.map.center(self.map.invert(p))
+                //var area = path.area(d);
+                //console.log(area)
+                ZMGC.index_country = this.__data__
+                //console.log(this.__data__)
                 self.clickCountry(d, c)
                 
             })
@@ -212,6 +239,8 @@ function mapClient() {
         })
     }
     this.clickCountry = function(d, c) {
+        console.log(ZMGC.index_country.id)
+        console.log("ZMGC.index_country")
         "use strict"
         var adm1_key = d.id+"_adm1"
         var adm1_path = ZMGC.DATA_PATH+d.id+"_adm1.json"
@@ -231,6 +260,14 @@ function mapClient() {
             //    ch = 180
             //var t=[100,100],s=250,r=[0,0]
             //self.drawMap(cw,ch,t,s,r,c)
+            var p = d3.geo.equirectangular()
+                ,cw = 1000
+                ,ch = 600
+                ,t = [0, 0]
+                ,s = 2000
+                ,r = [0, 0]
+                ,c = [0, 37.7750]
+            self.drawMap(p,cw,ch,t,s,r,c)
             self.svg.append("g")
                 .attr("id", "country")
             self.regionsGroup = self.svg.select("#country")
@@ -265,6 +302,11 @@ function mapClient() {
                     self.map.center(self.map.invert(p))
                 })
             })
+            d3.select("#zoom_level")
+                .style("visibility", "visible")
+                .on("click", function(d) {
+                    self.drawWorld()
+                })
         }
         //self.loadMembers()
     }
@@ -346,4 +388,5 @@ var mapClient
 
 jQuery(function() {
   mapClient = new mapClient()
+  $(window).bind("load resize", mapClient.onResize)
 })

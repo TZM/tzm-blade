@@ -20,7 +20,7 @@
     "express": "*",
     "now": "git://github.com/nkhine/now.git",
     "i18next": ">=1.5.16",
-    "blade": "*",
+    "blade": "git://github.com/bminer/node-blade.git",
     "d3": ">=3.0.6",
     "cldr": "*",
     "underscore": "*"
