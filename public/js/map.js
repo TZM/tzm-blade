@@ -4,21 +4,10 @@ function mapClient() {
         return new arguments.callee(arguments)
     }
     var self = this
-    var admin_level = 0
-    var ZMGC = {}
+    var width = 960,
+      height = 500,
+      centered, data
 
-    ZMGC.DATA_PATH = '../topo/'
-    ZMGC.centered = undefined
-
-    this.onResize = function() {
-        var width = $("#map").parent().width()
-        self.svg.attr({ 
-            width:width, 
-            height:"90%"
-        })
-        console.log(width)
-    }
-    
     this.fileExists = function(url) {
         var http = new XMLHttpRequest()
         http.open('HEAD', url, false)
@@ -45,12 +34,12 @@ function mapClient() {
     }
 
     this.init = function() {
-        now.receiveLocation = function(message) {
-            console.log(message)
-            // FIXME only push markers depending on the country/adm1 level
-            self.drawMarker(message)
-        }
-            self.drawWorld()
+        //now.receiveLocation = function(message) {
+        //    console.log(message)
+        //    // FIXME only push markers depending on the country/adm1 level
+        //    self.drawMarker(message)
+        //}
+            self.drawMap()
     }
 
     self.tooltip = undefined
@@ -144,173 +133,144 @@ function mapClient() {
             .style("opacity", -1)
     }
 
-    this.drawSVG = function(cw, ch) {
-        // Most parts of D3 don"t know anything about SVG—only DOM.
-        console.log(cw, ch)
-        //var width = $("#map").width()
-        self.svg = d3.select("#map").append("svg:svg")
-        .attr({
-            class:"svg", 
-            width:"100%", 
-            height:"90%"
-        })
-        .attr("viewBox", "0 0 " + cw + "  "+ ch)
-        .attr("perserveAspectRatio", "xMinYMin meet")
-        //d3.selectAll("tooltip").remove()
-        //self.tooltip = self.drawTooltip()
+    // Map code
+    this.drawMap = function() {
+      "use strict"
+      var map = d3.geo.equirectangular().scale(150)
+      self.path = d3.geo.path().projection(map)
 
-    }
+      self.svg = d3.select("#map").append("svg")
+        .attr("width", "100%")
+        .attr("height", "89%")
+        .attr("viewBox", "0 0 " + width + "  "+ height)
+        .attr("preserveAspectRatio", "xMidYMid")
 
-    this.drawMap = function(p,cw,ch,t,s,r,c) {
-        // remove the root SVG element
-        console.log(c)
-        d3.select("#map").selectAll("svg").remove()
-        // create the root SVG element
-        self.drawSVG(cw, ch)
-        self.projection = p
-            //.scale(s)
-            //.translate(t)
-            .center(c)
-        console.log(c)
-        self.path = d3.geo.path().projection(self.projection)
-        // self.loadMembers()
-    }
+      // Add a transparent rect so that zoomMap works if user clicks on SVG
+      self.svg.append("rect")
+        .attr("class", "background")
+        .attr("width", width)
+        .attr("height", height)
+        .on("click", self.zoomMap)
 
-    this.drawWorld = function(){
-        d3.select("#zoom_level").style("visibility", "hidden")
-        var p = d3.geo.equirectangular()
-            ,cw = 1000
-            ,ch = 600
-            ,t = [0, 0]
-            ,s = 170
-            ,r = [-8, 0]
-            ,c = [0, 37.7750]
-        
-        self.drawMap(p,cw,ch,t,s,r,c)
-        
-        // Add the countries id g element
-        self.svg.append("g")
-            .attr("id", "countries")
-
-        self.countriesGroup = self.svg.select("#countries")
-        //console.log(ZMGC.WORLD)
-        // Load data from .json file
-        d3.json(ZMGC.DATA_PATH + "world.json", function(error, topology) {
-            self.countriesGroup.selectAll("path") // select all the current path nodes
-                .data(topojson.object(topology, topology.objects.countries).geometries)
-                .enter().append("path") // if not enough elements create a new path
-                .attr("d", self.path) // transform the supplied jason geo path to svg
-                .attr("id", function(d) {
+      // Add g element to load country paths
+      self.g = self.svg.append("g")
+        .attr("id", "countries")
+      // Load topojson data
+      d3.json("./topo/world.json", function(topology) {
+        self.g.selectAll("path")
+        //.data(topology.features)
+        .data(topojson.object(topology, topology.objects.countries).geometries)
+          .enter().append("path")
+          .attr("d", self.path)
+          .attr("id", function(d) {
             return d.properties.name
+          })
+          //.attr("class", data ? self.quantize : null)
+          .on("mouseover", function(d) {
+            d3.select(this)
+            .style("fill", "orange")
+            .append("svg:title")
+            .text(d.properties.name)
+            //self.activateTooltip(d.properties.name)
+          })
+          .on("mouseout", function(d) {
+            d3.select(this)
+            .style("fill", "#aaa")
+            //self.deactivateTooltip()
+          })
+          .on("click", self.zoomMap)
+          // Remove Antarctica
+          self.g.select("#Antarctica").remove()
+        })
+    } // end drawMap
+
+    this.zoomMap = function(d) {
+      "use strict"
+      var x, y, k
+
+      if (d && centered !== d) {
+        var centroid = self.path.centroid(d)
+        x = centroid[0]
+        y = centroid[1]
+        k = 2
+        centered = d
+        self.loadCountry(d, x, y, k)
+      } else {
+        // zoom out, this happens when user clicks on the same country
+        x = width / 2
+        y = height / 2
+        k = 1
+        self.centered = null
+        // as we zoom out we want to remove the country layer
+        self.svg.selectAll("#country").remove()
+      }
+
+      self.g.selectAll("path")
+        .classed("active", centered && function(d) { return d === centered })
+
+      self.g.transition()
+        .duration(1000)
+        .delay(100)
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+        .style("stroke-width", 0.5 / k + "px")
+
+    } // end zoom function
+
+    this.loadCountry = function(d, x, y, k) {
+      "use strict"
+      // we remove the country
+      self.svg.selectAll("#country").remove()
+      // load country json file
+      var adm1_key = d.id+"_adm1"
+      var adm1_path = "./topo/"+d.id+"_adm1.json"
+
+      // check to see if country file exists
+      if (!self.fileExists(adm1_path)) {
+        console.log("We couldn't find that country!")
+      } else {
+        console.log("Load country overlay")
+        var country = self.svg.append("g").attr("id", "country")
+
+        self.countryGroup = self.svg.select("#country")
+        d3.json(adm1_path, function(error, topology) {
+          var regions = topology.objects
+          for(var adm1_key in regions) { 
+            var o = regions[adm1_key]
+          }
+          self.countryGroup.selectAll("path")
+            .data(topojson.object(topology, o).geometries)
+            .enter().append("path")
+            .attr("d", self.path)
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+            .attr("id", function(d) {
+              return d.properties.NAME_1
             })
             .classed("country", true)
             .attr("class", "country")
+            .style("stroke-width", 1.5 / k + "px")
             .on("mouseover", function(d) {
-                //console.log(d.properties.name)
-                d3.select(this)
-                .style("fill", "#6C0")
-                .append("svg:title")
-                .text(d.properties.name)
-                //self.activateTooltip(d.properties.name)
+              d3.select(this)
+              .style("fill", "#6C0")
+              .append("svg:title")
+              .text(d.properties.NAME_1)
             })
             .on("mouseout", function(d) {
-                d3.select(this)
-                .style("fill", "#000000")
-                //self.deactivateTooltip()
+              d3.select(this)
+              .style("fill", "#000000")
             })
             .on("click", function(d) {
-                b = self.getBBox(d3.select(this));
-                console.log(b);
-                c = self.getCentroid(d3.select(this));
-                console.log (c);
-                //w = d3.select(this).width()
-                //var p = d3.mouse(this)
-                //var c = self.map.invert(p)
-                //Load the country SVG and center it on the template
-                //self.map.center(self.map.invert(p))
-                //var area = path.area(d);
-                //console.log(area)
-                ZMGC.index_country = this.__data__
-                //console.log(this.__data__)
-                self.clickCountry(d, c)
-                
+              console.log('clicked on country')
+              self.loadProjects()
             })
-            self.countriesGroup.select("#Antarctica").remove()
-        })
+          })
+        } // end else
     }
-    this.clickCountry = function(d, c) {
-        console.log(ZMGC.index_country.id)
-        console.log("ZMGC.index_country")
-        "use strict"
-        var adm1_key = d.id+"_adm1"
-        var adm1_path = ZMGC.DATA_PATH+d.id+"_adm1.json"
-        
-        if (!self.fileExists(adm1_path)) {
-            console.log("We couldn't find that country!")
-            return;
-        } else {
-            var time_for_remove = 500,
-                time_for_zoom = 900
-            d3.select("#map").selectAll("svg g")
-                .style("opacity", 1)
-                .transition().duration((time_for_remove + time_for_zoom)/2)
-                .style("opacity", 0)
-                .remove()
-            //var cw = 50,
-            //    ch = 180
-            //var t=[100,100],s=250,r=[0,0]
-            //self.drawMap(cw,ch,t,s,r,c)
-            var p = d3.geo.equirectangular()
-                ,cw = 1000
-                ,ch = 600
-                ,t = [0, 0]
-                ,s = 2000
-                ,r = [0, 0]
-                ,c = [0, 37.7750]
-            self.drawMap(p,cw,ch,t,s,r,c)
-            self.svg.append("g")
-                .attr("id", "country")
-            self.regionsGroup = self.svg.select("#country")
-            d3.json(adm1_path, function(error, topology) {
-                var regions = topology.objects
-                for(var adm1_key in regions) { 
-                    var o = regions[adm1_key]
-                }
-                self.regionsGroup.selectAll("path")
-                .data(topojson.object(topology, o).geometries)
-                .enter().append("path")
-                .attr("d", self.path)
-                .attr("id", function(d) {
-                    return d.properties.NAME_1
-                })
-                .classed("country", true)
-                .attr("class", "country")
-                .on("mouseover", function(d) {
-                    d3.select(this)
-                    .style("fill", "#6C0")
-                    .append("svg:title")
-                    .text(d.properties.NAME_1)
-                })
-                .on("mouseout", function(d) {
-                    d3.select(this)
-                    .style("fill", "#000000")
-                })
-                .on("click", function(d) {
-                    console.log('clicked on country')
-                    var p = d3.mouse(this)                                                                     
-                    console.log(p+" "+self.map.invert(p))                                                          
-                    self.map.center(self.map.invert(p))
-                })
-            })
-            d3.select("#zoom_level")
-                .style("visibility", "visible")
-                .on("click", function(d) {
-                    self.drawWorld()
-                })
-        }
-        //self.loadMembers()
-    }
-    
+
+    this.loadProjects = function() {
+      console.log('loadProjects')
+
+    } // end loadProjects
+
     this.loadMembers = function () {
         // Load data from .json file on page refresh
         var data = [{ city: 'Centreville',
