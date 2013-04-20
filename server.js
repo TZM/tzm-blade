@@ -15,8 +15,10 @@ var blade = require('blade')
 
 var GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
-//var TABLE_ID = "1epTUiUlv5NQK5x4sgdy1K47ACDTpHH60hbng1qw";
-var TABLE_ID ="1obpi0bmSDILX1cIQcVRNi1lUkm2K5xBFztmRFiM"
+
+//https://www.google.com/fusiontables/DataSource?docid=1epTUiUlv5NQK5x4sgdy1K47ACDTpHH60hbng1qw
+var TABLE_ID = "1epTUiUlv5NQK5x4sgdy1K47ACDTpHH60hbng1qw";
+//var TABLE_ID ="1obpi0bmSDILX1cIQcVRNi1lUkm2K5xBFztmRFiM"
 
 var GOOGLE_PATH = "/fusiontables/v1/query?sql=SELECT%20*%20FROM%20"+TABLE_ID+"&key="+GOOGLE_API_KEY;
 var GOOGLE_DRIVE_PATH = "/drive/v2/files/"+TABLE_ID+"?key="+GOOGLE_API_KEY;
@@ -31,39 +33,40 @@ var fileID = 'translation.json'
 
 var lastModifiedDate = '';
 
-TZMNetwork(TABLE_ID);
-
-function TZMNetwork(fileId) {
-    if (fs.existsSync("data/chapters.json")) {
-        // node.js is asynchronous and callback doesn't fire until later (next).
-        var x = '';
-        options["path"] = GOOGLE_DRIVE_PATH;
-        var req = https.request(options, function(res) {
-          res.on('data', function(d) {
-              x += d.toString();
-              //console.log(d.toString());
-          }).on('end', next);
-        });
-        req.end();
-        
-        req.on('error', function(e) {
-          console.error(e);
-        });
-        
-        function next() {
-            var l = JSON.parse(x);
-            var modifiedDate = l.modifiedDate.toString();
-            if (!lastModifiedDate === modifiedDate) {
-                console.log('chapters.json is out of date');
-                getChapters();
-            }
-            lastModifiedDate = l.modifiedDate.toString();
-        }
-        console.log('OK');
-    } else {
-        getChapters();
-    }
-}
+//TZMNetwork(TABLE_ID);
+//
+//function TZMNetwork(fileId) {
+//    if (fs.existsSync("data/chapters.json")) {
+//        // node.js is asynchronous and callback doesn't fire until later (next).
+//        var x = '';
+//        options["path"] = GOOGLE_DRIVE_PATH;
+//        var req = https.request(options, function(res) {
+//          res.on('data', function(d) {
+//              x += d.toString();
+//              console.log(d.toString());
+//          }).on('end', next);
+//        });
+//        req.end();
+//        
+//        req.on('error', function(e) {
+//          console.error(e);
+//        });
+//        
+//        function next() {
+//            var l = JSON.parse(x);
+//            console.log(l);
+//            var modifiedDate = l.modifiedDate.toString();
+//            if (!lastModifiedDate === modifiedDate) {
+//                console.log('chapters.json is out of date');
+//                getChapters();
+//            }
+//            lastModifiedDate = l.modifiedDate.toString();
+//        }
+//        console.log('OK');
+//    } else {
+//        getChapters();
+//    }
+//}
 
 function getChapters() {
     options["path"] = GOOGLE_PATH;
@@ -121,12 +124,20 @@ app.configure(function() {
     }
 });
 
+app.configure('development', function () {
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+
+app.configure('production', function () {
+    app.use(express.errorHandler());
+});
+
 i18n.registerAppHelper(app);
 
 // Routes
 app.get('/', function(req, res, next) {
-    TZMNetwork(TABLE_ID);
-    console.log(lastModifiedDate);
+    //TZMNetwork(TABLE_ID);
+    //console.log(lastModifiedDate);
     res.render('index');
 });
 

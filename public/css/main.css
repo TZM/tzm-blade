@@ -639,6 +639,18 @@ svg > text > .city-name {
 #countries .active {
   fill: orange;
 }
+
+path.group-icon {
+    fill: #000;
+}
+
+path.projects-icon {
+    fill: #000;
+}
+
+path.skill-share-icon {
+    fill: #000;
+}
 /**************************************************************************
 * Footer
 * ***********************************************************************/
