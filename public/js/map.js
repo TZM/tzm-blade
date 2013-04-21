@@ -44,6 +44,14 @@ function mapClient() {
         //    self.drawMarker(message)
         //}
             self.drawMap()
+        //
+        //var color_legend = d3.select("#color-legend-svg")
+        //  .append("svg:svg")
+        //  .attr("width", 225)
+        //  .attr("height", 180);
+        //color_legend.append("svg:rect")
+        //  .attr("width", 80)
+        //  .attr("height", 160)
     }
 
     self.tooltip = undefined
