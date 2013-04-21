@@ -5,6 +5,7 @@ var blade = require('blade')
     ,map = require('./routes/map')
     ,menu = require('./routes/menu')
     ,guide = require('./routes/guide')
+    ,isMobile = require('./middlewere/isMobile')
     ,http = require('http')
     ,https = require('https')
     ,fs = require('fs')
@@ -101,8 +102,8 @@ app.configure(function() {
     app.use(express.bodyParser());
     app.use(i18n.handle);
     app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
-    app.use(express.static(__dirname + '/public') ); //maybe we have some static files
-    app.use(express.static(__dirname + "/nowjs") );
+    app.use(express.static(__dirname + '/public') ); // Mount the public on the URL space
+    app.use(express.static(__dirname + "/nowjs") ); // Mount the nowjs on the URL space
     app.use(function(req, res, next){
       res.locals._ = require('underscore');
       next();
@@ -136,8 +137,6 @@ i18n.registerAppHelper(app);
 
 // Routes
 app.get('/', function(req, res, next) {
-    //TZMNetwork(TABLE_ID);
-    //console.log(lastModifiedDate);
     res.render('index');
 });
 

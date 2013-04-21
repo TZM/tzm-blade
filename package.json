@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "express": "*",
+    "ua-parser-js": ">=0.6",
     "now": "git://github.com/nkhine/now.git",
     "i18next": ">=1.5.16",
     "blade": "git://github.com/bminer/node-blade.git",
