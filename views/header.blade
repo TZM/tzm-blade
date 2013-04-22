@@ -8,7 +8,7 @@ header
             a(href="/" class="brand")
                 img(src="/images/tzm-logo-32.png")
                 //span(class="tzm-i18n")=t("tzm")
-            .nav-collapse.collapse(style="height: 0px;")
+            .nav-collapse.collapse
                 ul.nav
                     - var menu = locals.settings.translation.menu
                     - for(var i in menu)
@@ -19,15 +19,11 @@ header
                         - else
                             li
                                 a(href="/"+i class=""+i data-i18n="menu."+i)= t("menu."+i)
-                //search
-                //form.navbar-search.pull-left(method="post" action="#")
-                //    input.search-query(type="text" placeholder="Search")
-                //    input(type="submit" class="button submit-button" value="search")
                 //login / user menu
                 ul.nav.pull-right
                     li.divider-vertical
                     li.dropdown
-                        a.dropdown-toggle(href="#" role="button" class="dropdown-toggle" data-toggle="dropdown")
+                        a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
                             span.icon-signin
                             span="Connexion"
                             b.caret

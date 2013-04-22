@@ -62,8 +62,3 @@ jQuery(function($) {
   });
 
 });
-
-
-//function loadPage(evt){
-//
-//}

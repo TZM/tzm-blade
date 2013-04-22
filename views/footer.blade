@@ -1,5 +1,3 @@
-script(type="text/javascript" src="js/vendor/css3-multi-column.js")
-script(type="text/javascript" src="js/footer.js")
 - function sortByKey(key)
     - return function(a,b)
         - if (a[key] < b[key]) return -1
@@ -14,52 +12,68 @@ script(type="text/javascript" src="js/footer.js")
 - countries.sort(sortByKey('country'))
 - var guide = locals.settings.translation.guide
 footer
-    ul#footer.fullwidth
-        li#footer_home
-            a(href="/")
+    .navbar.navbar-inverse.navbar-fixed-bottom
+        .navbar-inner
+            a(href="/" class="brand")
                 img(src="/images/phx-logo-30x34.png" alt="Home")
-        li
-            a.dropup(href="#" data-i18n="footer.network")=i18n.t("footer.network")
-            #tzm-network-popup.footer_dropup.drop12columns
-                .col_8
-                    h5(data-i18n="footer.chapters")=i18n.t("footer.chapters")
-                .col_4
-                    h5(data-i18n="footer.official_sites.official_sites")=i18n.t("footer.official_sites.official_sites")
-                // we load the chapters.json file
-                .col_8.tzmlist
-                    p.invisible fixme!!!
-                    ol#chapters-links
-                        - for(var i in countries)
-                            - var o = countries[i]
-                            li
-                                - var countryClass = "chapters c_"+o.country.toLowerCase()
-                                    a(href=o.link title=o.country class=""+countryClass tabindex="-1")
-                                        span.flag-margin=o.country
-                .col_4
-                    p.note
-                        a(href="http://www.thezeitgeistmovement.com/" target="_blank")= t("footer.official_sites.tzm_global")
-                    p.note
-                        a(href="http://zeitgeistmediaproject.com/" target="_blank")= t("footer.official_sites.zeitgeist_media_project")
-                    p.note
-                        a(href="http://www.blogtalkradio.com/zmglobal" target="_blank")=t("footer.official_sites.tzm_global_radio")
-                    p.note
-                        a(href="http://www.zeitnews.org/" target="_blank")=t("footer.official_sites.zeitnews")
-                    p.note
-                        a(href="http://blog.thezeitgeistmovement.com/" target="_blank")=t("footer.official_sites.blog")
-                    p.note
-                        a(href="http://www.zbnlive.com/" target="_blank")=t("footer.official_sites.zeitgeist_brodcasting_network")
-                    p.note
-                        a(href="http://www.blogtalkradio.com/v-radio" target="_blank")=t("footer.official_sites.v_radio")
-    // Trigger Button
-    a#footer_trigger.trigger_active(href="#")
-    
-    // TODO Create Bootstrap navigation
-    //footer
-    //    .container
-    //        .btn-group.dropup
-    //            button.btn="Dropup"
-    //                button.btn.dropdown-toggle(data-toggle="dropdown")
-    //                    span.caret
-    //            ul.dropdown-menu.pull-right
-    //                li="dddds dsdsds"
-    //            li="ssdsdqs qsddqd"
+            .nav-collapse.collapse
+                ul.nav
+                    li.dropdown
+                        a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
+                            span.icon-fire
+                            span(data-i18n="footer.network")=i18n.t("footer.network")
+                            b.caret
+                        .dropdown-menu.well
+                            .row
+                                .span12
+                                    .row
+                                        .span8
+                                            h5(data-i18n="footer.chapters")=i18n.t("footer.chapters")
+                                            .chapters-network-list
+                                                ol#chapters-links
+                                                    - for(var i in countries)
+                                                        - var o = countries[i]
+                                                        li
+                                                            - var countryClass = "chapters c_"+o.country.toLowerCase().replace(/ /g,"_")
+                                                                a(href=o.link title=o.country class=""+countryClass tabindex="-1")
+                                                                    span.flag-margin=o.country
+                                        .span4
+                                            h5(data-i18n="footer.official_sites.official_sites")=i18n.t("footer.official_sites.official_sites")
+                                            p.note
+                                                a(href="http://www.thezeitgeistmovement.com/" target="_blank")= t("footer.official_sites.tzm_global")
+                                            p.note
+                                                a(href="http://zeitgeistmediaproject.com/" target="_blank")= t("footer.official_sites.zeitgeist_media_project")
+                                            p.note
+                                                a(href="http://www.blogtalkradio.com/zmglobal" target="_blank")=t("footer.official_sites.tzm_global_radio")
+                                            p.note
+                                                a(href="http://www.zeitnews.org/" target="_blank")=t("footer.official_sites.zeitnews")
+                                            p.note
+                                                a(href="http://blog.thezeitgeistmovement.com/" target="_blank")=t("footer.official_sites.blog")
+                                            p.note
+                                                a(href="http://www.zbnlive.com/" target="_blank")=t("footer.official_sites.zeitgeist_brodcasting_network")
+                                            p.note
+                                                a(href="http://www.blogtalkradio.com/v-radio" target="_blank")=t("footer.official_sites.v_radio")
+
+                // Langauages select menu
+                ul.nav.pull-right
+                    li.divider-vertical
+                    li.dropdown
+                        a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
+                            span.icon-flag
+                            span="Langauges"
+                            b.caret
+                        .dropdown-menu.well.pull-right
+                            - var langFile = locals.settings.languages
+                            #language-menu
+                                ul
+                                    - for(var i in langFile)
+                                        - var o = langFile[i]
+                                        li
+                                            a(id=""+o.code data-i18n="language."+o.locale)=t("language."+o.locale)
+                //search
+                form.navbar-search.pull-right(method="post" action="#")
+                    input.search-query(type="text" placeholder="Search")
+                    input(type="submit" class="button submit-button" value="search")
+//    // Trigger Button
+//    a#footer_trigger.trigger_active(href="#")
+//
