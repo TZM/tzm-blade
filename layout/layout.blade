@@ -9,10 +9,11 @@ html
     body
         //[if lt IE 7]> <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p> <![endif]
         block body
-        include "../views/projects.blade"
-        include "../views/header.blade"
-        div#page
-            block page
+        #wrap
+            include "../views/projects.blade"
+            include "../views/header.blade"
+            #page
+                block page
         include "../views/footer.blade"
         include "includes/foot.blade"
         

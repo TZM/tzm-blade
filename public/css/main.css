@@ -11,8 +11,9 @@ html,body,body div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,ad
     margin: 0;
     padding: 0;
 }
-body {
+html, body {
     height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
 }
 body,input,select,textarea {
     line-height: 1;
@@ -23,6 +24,36 @@ body {
     z-index: 0;
     background: #f0f0f0;
     overflow-y: auto;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+    height: 60px;
+}
+#footer {
+    background-color: #f5f5f5;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+    #footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 
 .hide {
