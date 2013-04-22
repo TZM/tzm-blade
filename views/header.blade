@@ -19,19 +19,44 @@ header
                         - else
                             li
                                 a(href="/"+i class=""+i data-i18n="menu."+i)= t("menu."+i)
-                //div.pull-right
-                //    ul.nav
-                //        - var user_menu = locals.settings.translation.user
-                //        - for(var i in user_menu)
-                //            li
-                //                a(href="#")
-                //                    img(src='../images/'+i+'.png', alt="")
-                //                    span(data-i18n="user."+i)=t("user."+i)
-                //        //li.search-form
-                //        //    form(method="post" action="#")
-                //        //        div.placeholder-field
-                //        //            input(type="text" name="search_text" class="search-input")
-                //        //            input(type="submit" class="button submit-button" value="search")
+                //search
+                //form.navbar-search.pull-left(method="post" action="#")
+                //    input.search-query(type="text" placeholder="Search")
+                //    input(type="submit" class="button submit-button" value="search")
+                //login / user menu
+                ul.nav.pull-right
+                    li.divider-vertical
+                    li.dropdown
+                        a.dropdown-toggle(href="#" role="button" class="dropdown-toggle" data-toggle="dropdown")
+                            span.icon-signin
+                            span="Connexion"
+                            b.caret
+                        .dropdown-menu.well.pull-right
+                            form#form_login_user.auth-at-dropdown(method="post" action="#")
+                                fieldset
+                                    .control-group
+                                        label.control-label(for="l_username")="Username or Email"
+                                        .controls
+                                        input.input-xlarge.focused.required(id="l_username" name="username" type="text" value="")
+                                    .control-group
+                                        label.control-label(for="l_username")="Password"
+                                        .controls
+                                        input.input-xlarge.focused.required(id="l_password" name="password" type="password" value="")
+                                    .control-group.row-fluid
+                                        label.checkbox.span7
+                                            input#remember_me(name="remember_me" value="on" type="checkbox")
+                                            span="Remember me"
+                                        .span5
+                                            button.btn.btn-primary.btn-small.btn-login(type="submit")="Login"
+                                        .control-group
+                                            a(href="#")="Forgot your password"
+                //ul.nav.pull-right
+                //    - var user_menu = locals.settings.translation.user
+                //    - for(var i in user_menu)
+                //        li
+                //            a(href="#")
+                //                //img(src='../images/'+i+'.png', alt="")
+                //                span(data-i18n="user."+i)=t("user."+i)
                     //
                     //li.language-menu
                     //    a(href="" class="tooltip")

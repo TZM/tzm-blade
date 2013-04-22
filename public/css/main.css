@@ -213,28 +213,23 @@ a.tooltip:hover span {
 /*******************************************************************************/
 /* Search
 /*******************************************************************************/
-header .nav .search-form input {
-    font-size: 100%;
-    width: 150px;
-    padding: 5px 2px 5px 25px;
-    border: 1px solid #DDD;
-    border-top-color: #CCC;
-    border-bottom-color: #EAEAEA;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    background: url('../images/search_icon.png') 5px 50% no-repeat white;
+.navbar-inverse .navbar-search .search-query {
+    background-color: #fff;
 }
 
-header .nav .search-form input[type="search"] {
-    padding: 10px 0 0 0;
-}
+/* .navbar-search input[type="text"] {
+/*     width: 150px;
+/*     padding: 5px 2px 5px 25px;
+/*     border: 1px solid #DDD;
+/*     border-top-color: #CCC;
+/*     border-bottom-color: #EAEAEA;
+/*     -webkit-border-radius: 3px;
+/*     -moz-border-radius: 3px;
+/*     border-radius: 3px;
+/*     background: url('../images/search_icon.png') 5px 50% no-repeat white;
+/* } */
 
-header .nav .search-form .placeholder-field {
-    left: 25px;
-}
-
-header .nav .search-form .submit-button {
+.navbar-search input[type="submit"] {
     display: none;
 }
 
