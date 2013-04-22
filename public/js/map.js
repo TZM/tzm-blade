@@ -210,7 +210,7 @@ function mapClient() {
 
       self.svg = d3.select("#map").append("svg")
         .attr("width", "100%")
-        .attr("height", "89%")
+        .attr("height", "88%")
         .attr("viewBox", "0 0 " + width + "  "+ height)
         .attr("preserveAspectRatio", "xMidYMid")
 

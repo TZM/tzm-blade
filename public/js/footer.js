@@ -7,6 +7,7 @@ jQuery(function($) {
     if ( projectToggle.hasClass( "active" ) ) {
       projectToggle.removeClass( "active" );
       $( "body" ).css( "marginTop", 0 );
+      $( "#page" ).css( "padding-top", 30 );
     } else {
       projectToggle.addClass( "active" );
       // if on Guide page, we need to close the #nav-container
@@ -15,7 +16,8 @@ jQuery(function($) {
           $( "#nav-container" ).css( "marginLeft", -235 );
           $( ".content" ).toggleClass("open");
       }
-      $( "body" ).css( "marginTop", 150 );
+      $( "body" ).css( "marginTop", 191 );
+      $( "#page" ).css( "padding-top", 10 );
       
     }
   });
