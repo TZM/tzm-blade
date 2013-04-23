@@ -16,7 +16,11 @@ footer
         .navbar-inner
             a(href="/" class="brand")
                 img(src="/images/phx-logo-30x34.png" alt="Home")
-            .nav-collapse.collapse
+            button.btn.btn-navbar.collapsed(type="button" data-toggle="collapse" data-target="#footer-nav-collapse")
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+            #footer-nav-collapse.nav-collapse.collapse
                 ul.nav
                     li.dropdown
                         a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
@@ -54,13 +58,33 @@ footer
                                             p.note
                                                 a(href="http://www.blogtalkradio.com/v-radio" target="_blank")=t("footer.official_sites.v_radio")
 
+                // Tools, Docs and F.A.Q links
+                ul.nav
+                    li.divider-vertical
+                    li.dropdown
+                        a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
+                            span.icon-wrench
+                            span="Tools"
+                            b.caret
+                    li.divider-vertical
+                    li.dropdown
+                        a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
+                            span.icon-folder-open
+                            span="Documentation"
+                            b.caret
+                    li.divider-vertical
+                    li.dropdown
+                        a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
+                            span.icon-eye-open
+                            span="F.A.Q."
+                            b.caret
                 // Langauages select menu
                 ul.nav.pull-right
                     li.divider-vertical
                     li.dropdown
                         a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
                             span.icon-flag
-                            span="Langauges"
+                            span="Langues"
                             b.caret
                         .dropdown-menu.well.pull-right
                             - var langFile = locals.settings.languages
@@ -72,8 +96,11 @@ footer
                                             a(id=""+o.code data-i18n="language."+o.locale)=t("language."+o.locale)
                 //search
                 form.navbar-search.pull-right(method="post" action="#")
-                    input.search-query(type="text" placeholder="Search")
-                    input(type="submit" class="button submit-button" value="search")
+                    .input-prepend
+                        span.add-on
+                            i.icon-search
+                        input.search-query(type="text" placeholder="Search")
+                        input(type="submit" class="button submit-button" value="search")
 //    // Trigger Button
 //    a#footer_trigger.trigger_active(href="#")
 //

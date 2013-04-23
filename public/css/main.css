@@ -1,7 +1,10 @@
 @charset "utf-8";
 @import "./vendor/bootstrap/bootstrap.min.css";
 @import "./vendor/bootstrap/bootstrap-responsive.min.css";
-@import "./vendor/font-awesome.css";
+@import "./vendor/font-awesome.min.css";
+@import "./vendor/font-awesome-corp.css";
+@import "./vendor/font-awesome-social.css";
+@import "./vendor/famfam/cus-icons.css";
 
 html,body,body div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,figure,footer,header,hgroup,menu,nav,section,time,mark,audio,video {
     border: 0;
@@ -144,8 +147,20 @@ body {
 /*******************************************************************************/
 .navbar-inverse .navbar-search .search-query {
     background-color: #fff;
+    border: solid 1px rgba(150, 150, 150, 0.08);
 }
 
+.navbar-search .search-query {
+    -webkit-border-radius: 2px;
+    -webkit-border-top-left-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    -moz-border-radius: 2px;
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-bottomleft: 1px;
+    border-radius: 2px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
 /* .navbar-search input[type="text"] {
 /*     width: 150px;
 /*     padding: 5px 2px 5px 25px;
@@ -509,6 +524,5 @@ a#footer_trigger.trigger_active {
 #footer li div.footer_dropup a:hover {
     color: #536987;
 }
-
 
 @media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}

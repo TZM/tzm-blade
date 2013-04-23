@@ -44,7 +44,7 @@ jQuery(function($) {
             window.location.href = "/?lang=" + language;
         } else {
             console.log(language);
-            //i18n.setLng(language, location.reload());
+            i18n.setLng(language, location.reload());
             i18n.init({
                 lng:language
                 ,debug:true

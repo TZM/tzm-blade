@@ -1,14 +1,14 @@
 header
     .navbar.navbar-inverse.navbar-fixed-top
         .navbar-inner
-            button.btn.btn-navbar.collapsed(type="button" data-toggle="collapse" data-target=".nav-collapse")
+            button.btn.btn-navbar.collapsed(type="button" data-toggle="collapse" data-target="#navbar-nav-collapse")
                 span.icon-bar
                 span.icon-bar
                 span.icon-bar
             a(href="/" class="brand")
                 img(src="/images/tzm-logo-32.png")
                 //span(class="tzm-i18n")=t("tzm")
-            .nav-collapse.collapse
+            #navbar-nav-collapse.nav-collapse.collapse
                 ul.nav
                     - var menu = locals.settings.translation.menu
                     - for(var i in menu)
@@ -28,24 +28,91 @@ header
                             span="Connexion"
                             b.caret
                         .dropdown-menu.well.pull-right
-                            form#form_login_user.auth-at-dropdown(method="post" action="#")
-                                fieldset
-                                    .control-group
-                                        label.control-label(for="l_username")="Username or Email"
-                                        .controls
-                                        input.input-xlarge.focused.required(id="l_username" name="username" type="text" value="")
-                                    .control-group
-                                        label.control-label(for="l_username")="Password"
-                                        .controls
-                                        input.input-xlarge.focused.required(id="l_password" name="password" type="password" value="")
-                                    .control-group.row-fluid
-                                        label.checkbox.span7
-                                            input#remember_me(name="remember_me" value="on" type="checkbox")
-                                            span="Remember me"
-                                        .span5
-                                            button.btn.btn-primary.btn-small.btn-login(type="submit")="Login"
-                                        .control-group
-                                            a(href="#")="Forgot your password"
+                            span=("Sign-in or Create New Account")
+                            hr
+                            .row
+                                .span4
+                                    .span1
+                                        //Github
+                                        a.btn(href="#" role="button")
+                                            i.icon-github-alt.icon-large
+                                            //span="Sign in with Github"
+                                    .span1
+                                        //Google
+                                        a.btn.btn-danger(href="#" role="button")
+                                            i.icon-google-plus-sign.icon-large
+                                            //span="Sign in with Google+"
+                                    .span1
+                                        //Twitter
+                                        a.btn.btn-info(href="#" role="button")
+                                            i.icon-twitter-sign.icon-large
+                                            //span="Sign in with Twitter"
+                            .row
+                                .span4
+                                    .span1
+                                        //LinkedIn
+                                        a.btn.btn-info(href="#" role="button")
+                                            i.icon-comment.icon-linkedin-sign.icon-large
+                                            //span="Sign in with LinkedIn"
+                                    .span1
+                                        //Facebook
+                                        a.btn.btn-success(href="#" role="button")
+                                            i.icon-facebook-sign.icon-large
+                                            //span="Sign in with Facebook"
+                                    .span1
+                                        //Yahoo
+                                        a.btn.btn-primary(href="#" role="button")
+                                            i.icon-yahoo.icon-large
+                                            //span="Sign in with Yahoo"
+                            .row
+                                .span4
+                                    button.btn.btn-block.btn-primary(type="button")=".. or Register"
+                                hr
+                            .row
+                                .span3
+                                    
+                                    //
+                                    //<form>
+                                    //        <div class="control-group">
+                                    //          <div class="controls">
+                                    //            <div class="input-prepend">
+                                    //              <span class="add-on"><i class="icon-envelope"></i></span>
+                                    //              <input class="span2" id="inputIcon" type="text" placeholder="Email address">
+                                    //            </div>
+                                    //          </div>
+                                    //        </div>
+                                    //        <div class="control-group">
+                                    //          <div class="controls">
+                                    //            <div class="input-prepend">
+                                    //              <span class="add-on"><i class="icon-key"></i></span>
+                                    //              <input class="span2" id="inputIcon2" type="text" placeholder="Password">
+                                    //            </div>
+                                    //          </div>
+                                    //        </div>
+                                    //      </form>
+                                    //
+                                    form#form_login_user.auth-at-dropdown(method="post" action="#")
+                                        fieldset
+                                            .control-group
+                                                .controls
+                                                    .input-prepend
+                                                        .add-on
+                                                            i.icon-envelope
+                                                        input.input-xlarge.focused.required(id="l_username" name="username" type="text" value="" placeholder="Username or email address")
+                                            .control-group
+                                                .controls
+                                                    .input-prepend
+                                                        .add-on
+                                                            i.icon-key
+                                                        input.input-xlarge.focused.required(id="l_password" name="password" type="password" value="" placeholder="Password")
+                                            .control-group.row-fluid
+                                                label.checkbox.span7
+                                                    input#remember_me(name="remember_me" value="on" type="checkbox")
+                                                    span="Remember me"
+                                                .span5
+                                                    button.btn.btn-primary.btn-small.btn-login(type="submit")="Login"
+                                                .control-group
+                                                    a(href="#")="Forgot your password"
                 //ul.nav.pull-right
                 //    - var user_menu = locals.settings.translation.user
                 //    - for(var i in user_menu)
