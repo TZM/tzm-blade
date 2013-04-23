@@ -28,8 +28,7 @@ header
                             span="Connexion"
                             b.caret
                         .dropdown-menu.well.pull-right
-                            span=("Sign-in or Create New Account")
-                            hr
+                            span=("Federated login")
                             .row
                                 .span4
                                     .span1
@@ -65,32 +64,8 @@ header
                                             i.icon-yahoo.icon-large
                                             //span="Sign in with Yahoo"
                             .row
-                                .span4
-                                    button.btn.btn-block.btn-primary(type="button")=".. or Register"
-                                hr
-                            .row
-                                .span3
-                                    
-                                    //
-                                    //<form>
-                                    //        <div class="control-group">
-                                    //          <div class="controls">
-                                    //            <div class="input-prepend">
-                                    //              <span class="add-on"><i class="icon-envelope"></i></span>
-                                    //              <input class="span2" id="inputIcon" type="text" placeholder="Email address">
-                                    //            </div>
-                                    //          </div>
-                                    //        </div>
-                                    //        <div class="control-group">
-                                    //          <div class="controls">
-                                    //            <div class="input-prepend">
-                                    //              <span class="add-on"><i class="icon-key"></i></span>
-                                    //              <input class="span2" id="inputIcon2" type="text" placeholder="Password">
-                                    //            </div>
-                                    //          </div>
-                                    //        </div>
-                                    //      </form>
-                                    //
+                                .span=("or Sign in")
+                                .span3.offset1
                                     form#form_login_user.auth-at-dropdown(method="post" action="#")
                                         fieldset
                                             .control-group
@@ -110,9 +85,14 @@ header
                                                     input#remember_me(name="remember_me" value="on" type="checkbox")
                                                     span="Remember me"
                                                 .span5
-                                                    button.btn.btn-primary.btn-small.btn-login(type="submit")="Login"
+                                                    button.btn.btn-block.btn-primary.btn-small.btn-login(type="submit")="Login"
                                                 .control-group
                                                     a(href="#")="Forgot your password"
+                            span=("Create New Account")
+                            .row
+                                .span3
+                                    button.btn.btn-block.btn-primary(type="button")="Register"
+                            
                 //ul.nav.pull-right
                 //    - var user_menu = locals.settings.translation.user
                 //    - for(var i in user_menu)
