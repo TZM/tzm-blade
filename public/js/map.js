@@ -10,7 +10,7 @@ function mapClient() {
     var self = this
     var width = 960,
       height = 500,
-      centered, data
+      centered, data, country
 
     this.fileExists = function(url) {
         var http = new XMLHttpRequest()
@@ -232,7 +232,7 @@ function mapClient() {
           .enter().append("path")
           .attr("d", self.path)
           .attr("id", function(d) {
-            return d.properties.name
+            return d.properties.name.replace(/ /g,"_")
           })
           //.attr("class", data ? self.quantize : null)
           .on("mouseover", function(d) {
@@ -247,7 +247,13 @@ function mapClient() {
             .style("fill", "#aaa")
             //self.deactivateTooltip()
           })
-          .on("click", self.zoomMap)
+          .on("click", function(d) {
+            var b = self.getBBox(d3.select(this))
+            self.svg.selectAll("#"+self.country).style("opacity", 1)
+            self.country = d.properties.name.replace(/ /g,"_")
+            self.svg.selectAll("#"+self.country).style("opacity", 0)
+            self.zoomMap(d, b)
+          })
           // Remove Antarctica
           self.g.select("#Antarctica").remove()
         })
@@ -255,15 +261,21 @@ function mapClient() {
       self.drawIcons()
     } // end drawMap
 
-    this.zoomMap = function(d) {
+    this.zoomMap = function(d, b) {
       "use strict"
+      // get the ratio of the ViewBox height in relation to the country bbox height
+      var ratio = b.height / height
       var x, y, k
-
       if (d && centered !== d) {
         var centroid = self.path.centroid(d)
         x = centroid[0]
         y = centroid[1]
-        k = 2
+        // FRANCE exception
+        if (d.id !== "FRA") {
+          k = 1/ratio - 1
+        } else {
+          k = 1/ratio + 2
+        }
         centered = d
         self.loadCountry(d, x, y, k)
       } else {
@@ -273,18 +285,21 @@ function mapClient() {
         k = 1
         self.centered = null
         // as we zoom out we want to remove the country layer
+        self.svg.selectAll("#"+self.country).style("opacity", 1)
         self.svg.selectAll("#country").remove()
       }
-
+      //select all the countries paths
       self.g.selectAll("path")
-        .classed("active", centered && function(d) { return d === centered })
+        .classed("active", centered && function(d) {
+            return d === centered
+            })
 
       self.g.transition()
         .duration(1000)
         .delay(100)
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
         .style("stroke-width", 0.5 / k + "px")
-
+      
     } // end zoom function
 
     this.loadCountry = function(d, x, y, k) {
@@ -294,14 +309,13 @@ function mapClient() {
       // load country json file
       var adm1_key = d.id+"_adm1"
       var adm1_path = "./topo/"+d.id+"_adm1.json"
-
       // check to see if country file exists
       if (!self.fileExists(adm1_path)) {
+        self.svg.selectAll("#"+self.country).style("opacity", 1)
         console.log("We couldn't find that country!")
       } else {
         console.log("Load country overlay")
         var country = self.svg.append("g").attr("id", "country")
-
         self.countryGroup = self.svg.select("#country")
         d3.json(adm1_path, function(error, topology) {
           var regions = topology.objects
