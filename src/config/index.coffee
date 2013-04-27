@@ -2,6 +2,20 @@
 # Sets application config parameters depending on `env` name
 exports.setEnvironment = (env) ->
   console.log "set app environment: #{env}"
+
+  exports.SOCIAL =
+    facebook:
+      id: process.env.FACEBOOK_ID
+      secret: process.env.FACEBOOK_SECRET
+      callback: process.env.FACEBOOK_CALLBACK
+    twitter:
+      consumerKey: process.env.TWITTER_KEY
+      consumerSecret: process.env.TWITTER_SECRET
+      callback: process.env.TWITTER_CALLBACK
+    google:
+      returnURL: process.env.GOOGLE_RETURN_URL
+      realm: process.env.GOOGLE_REALM
+
   switch(env)
     when "development"
       exports.DEBUG_LOG = true

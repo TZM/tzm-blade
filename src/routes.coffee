@@ -6,30 +6,38 @@
 
 module.exports = (app) ->
   #   - _/_ -> controllers/index/index method
-  app.all '/', (req, res, next) ->
-    routeMvc('index', 'index', req, res, next)
+  app.all "/", (req, res, next) ->
+    routeMvc("index", "index", req, res, next)
+
+  #   - _/_ -> controllers/map/map method
+  app.all "/map", (req, res, next) ->
+    routeMvc("map", "map", req, res, next)
+
+  #   - _/_ -> controllers/guide/guide method
+  app.all "/guide", (req, res, next) ->
+    routeMvc("guide", "guide", req, res, next)
 
   #   - _/**:controller**_  -> controllers/***:controller***/index method
-  app.all '/:controller', (req, res, next) ->
-    routeMvc(req.params.controller, 'index', req, res, next)
+  app.all "/:controller", (req, res, next) ->
+    routeMvc(req.params.controller, "index", req, res, next)
 
   #   - _/**:controller**/**:method**_ -> controllers/***:controller***/***:method*** method
-  app.all '/:controller/:method', (req, res, next) ->
+  app.all "/:controller/:method", (req, res, next) ->
     routeMvc(req.params.controller, req.params.method, req, res, next)
 
   #   - _/**:controller**/**:method**/**:id**_ -> controllers/***:controller***/***:method*** method with ***:id*** param passed
-  app.all '/:controller/:method/:id', (req, res, next) ->
+  app.all "/:controller/:method/:id", (req, res, next) ->
     routeMvc(req.params.controller, req.params.method, req, res, next)
 
   # If all else failed, show 404 page
-  app.all '/*', (req, res) ->
+  app.all "/*", (req, res) ->
     console.warn "error 404: ", req.url
     res.statusCode = 404
-    res.render '404', 404
+    res.render "404", 404
 
 # render the page based on controller name, method and id
 routeMvc = (controllerName, methodName, req, res, next) ->
-  controllerName = 'index' if not controllerName?
+  controllerName = "index" if not controllerName?
   controller = null
   try
     controller = require "./controllers/" + controllerName
@@ -38,9 +46,9 @@ routeMvc = (controllerName, methodName, req, res, next) ->
     next()
     return
   data = null
-  if typeof controller[methodName] is 'function'
+  if typeof controller[methodName] is "function"
     actionMethod = controller[methodName].bind controller
     actionMethod req, res, next
   else
-    console.warn 'method not found: ' + methodName
+    console.warn "method not found: " + methodName
     next()

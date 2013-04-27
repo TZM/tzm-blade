@@ -11,6 +11,6 @@
 
   everyone = nowjs.initialize(server);
 
-  console.log('Server running at http://127.0.0.1:' + port + '/');
+  console.log("Server running at http://127.0.0.1: " + port + "\nPress CTRL-C to stop server.");
 
 }).call(this);
