@@ -1,3 +1,5 @@
 node_modules
 npm-shrinkwrap.json
 public/js/map2.js
+.app
+server.old.js
