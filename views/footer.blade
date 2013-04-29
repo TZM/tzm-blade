@@ -25,14 +25,14 @@ footer
                     li.dropdown
                         a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
                             span.icon-fire
-                            span(data-i18n="footer.network")=i18n.t("footer.network")
+                            span!=t("ns.layout:footer.network")
                             b.caret
                         .dropdown-menu.well
                             .row
                                 .span12
                                     .row
                                         .span8
-                                            h5(data-i18n="footer.chapters")=i18n.t("footer.chapters")
+                                            h5!=t("ns.common:chapters.international")
                                             .chapters-network-list
                                                 ol#chapters-links
                                                     - for(var i in countries)
@@ -42,21 +42,21 @@ footer
                                                                 a(href=o.link title=o.country class=""+countryClass tabindex="-1")
                                                                     span.flag-margin=o.country
                                         .span4
-                                            h5(data-i18n="footer.official_sites.official_sites")=i18n.t("footer.official_sites.official_sites")
+                                            h5!=t("ns.common:official_sites.title")
                                             p.note
-                                                a(href="http://www.thezeitgeistmovement.com/" target="_blank")= t("footer.official_sites.tzm_global")
+                                                a(href="http://www.thezeitgeistmovement.com/" target="_blank")!= t("ns.common:official_sites.tzm_global")
                                             p.note
-                                                a(href="http://zeitgeistmediaproject.com/" target="_blank")= t("footer.official_sites.zeitgeist_media_project")
+                                                a(href="http://zeitgeistmediaproject.com/" target="_blank")!= t("ns.common:official_sites.zeitgeist_media_project")
                                             p.note
-                                                a(href="http://www.blogtalkradio.com/zmglobal" target="_blank")=t("footer.official_sites.tzm_global_radio")
+                                                a(href="http://www.blogtalkradio.com/zmglobal" target="_blank")!=t("ns.common:official_sites.tzm_global_radio")
                                             p.note
-                                                a(href="http://www.zeitnews.org/" target="_blank")=t("footer.official_sites.zeitnews")
+                                                a(href="http://www.zeitnews.org/" target="_blank")!=t("ns.common:official_sites.zeitnews")
                                             p.note
-                                                a(href="http://blog.thezeitgeistmovement.com/" target="_blank")=t("footer.official_sites.blog")
+                                                a(href="http://blog.thezeitgeistmovement.com/" target="_blank")!=t("ns.common:official_sites.blog")
                                             p.note
-                                                a(href="http://www.zbnlive.com/" target="_blank")=t("footer.official_sites.zeitgeist_brodcasting_network")
+                                                a(href="http://www.zbnlive.com/" target="_blank")!=t("ns.common:official_sites.zeitgeist_brodcasting_network")
                                             p.note
-                                                a(href="http://www.blogtalkradio.com/v-radio" target="_blank")=t("footer.official_sites.v_radio")
+                                                a(href="http://www.blogtalkradio.com/v-radio" target="_blank")!=t("ns.common:official_sites.v_radio")
 
                 // Tools, Docs and F.A.Q links
                 ul.nav

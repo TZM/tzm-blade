@@ -29,20 +29,33 @@ app.configure "production", "development", "testing", ->
 #else
 #  console.log("If you are running in production, you may want to modify the mongoose connect path")
 
+#i18n.configure =
+#  detectLngQS: "lang"
+#  ,resSetPath: "./locales/__lng__/translation.json"
+#  ,ignoreRoutes: ["images/", "public/", "css/", "js/"]
+#  ,locales:['de', 'en', 'fr', 'pt']
+#  ,extension:".json"
+#  ,saveMissing: true
+#  ,debug: false
+  
 # i18next init
 i18n.init
   detectLngQS: "lang"
-  ,resSetPath: "./locales/__lng__/translation.json"
+  ,ns: { namespaces: ['ns.common', 'ns.layout'], defaultNs: 'ns.common'}
+  #,resSetPath: "./locales/__lng__/translation.json"
+  ,resSetPath: "./locales/__lng__/new.__ns__.json"
   ,ignoreRoutes: ["images/", "public/", "css/", "js/"]
+  #,locales:['de', 'en', 'fr', 'pt']
   ,extension:".json"
-  ,saveMissing: true
-  ,debug: false
+  #,saveMissing: true
+  #,sendMissingTo: 'all'
+  ,debug: true
 
 
 #### View initialization 
 # Add Connect Assets.
 app.use assets()
-
+#app.use i18n.init
 # Set the public folder as static assets.
 app.use express.static(process.cwd() + "/public")
 app.use express.favicon(process.cwd() + "/public/images/favicon.ico")
@@ -50,7 +63,7 @@ app.use express.favicon(process.cwd() + "/public/images/favicon.ico")
 app.use express.static(process.cwd() + "/nowjs")
 app.use express.static(process.cwd() + "/locales")
 
-# Set View Engine and tell Express where our views are stored
+# Set Blade View Engine and tell Express where our views are stored
 app.set "view engine", "blade"
 app.set "views", process.cwd() + "/views"
 
@@ -75,7 +88,9 @@ app.use blade.middleware(process.cwd() + "/views")
 app.use app.router
 
 #### Finalization
+# Register i18next AppHelper so we can use the translate function in template
 i18n.registerAppHelper(app)
+
 # Initialize routes
 routes = require "./routes"
 app.locals.pretty=true

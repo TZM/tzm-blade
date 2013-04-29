@@ -1,0 +1,55 @@
+{
+  "tzm": "Chapters - Zeitgeist Movement"
+  ,"welcome": [
+    "<p>The Zeitgeist Movement is an explicitly non-violent, global sustainability advocacy group currently working in over 1000 Regional Chapters across 70 countries.</p>"
+    ,"<p>The basic structure of The Movement consists of Chapters, Teams, Projects & Events. Overall, the Chapters are essentially what define the Movement and each Chapter works to not only spread awareness about the roots of our social problems today but also to express the logical, scientific solutions and methods we have at our disposal to update and correct the current social system and create a truly responsible, sustainable, peaceful, global society.</p>"
+  ]
+  ,"projects": {
+    "media-project": {
+        "title": "Media Project"
+        ,"description": ""
+    }
+    ,"zeitgesit-day": {
+        "title": "Zeitgeist Day"
+        ,"description": "This site becomes active annually to facilitate our “Zday” Global Event, which occurs in March of each year."
+    }
+    ,"global-redesign-institute": {
+    "title": "Global Redesign Institute"
+    ,"description": "Virtual interface “Think Tank” project using map/data models to express direct technical changes in line with TZM's train of thought."
+    }
+    ,"zeitgeist-movement-global-connect": {
+      "title": "Zeitgeist Movement Global Connect"
+      ,"description": "Aims to create an on-line eco-system within which the ideas of Resource Based Economy can be galvanise into actions."
+    }
+    ,"media-festival": {
+      "title": "Media Festival"
+      ,"description": ""
+    }
+  }
+  ,"language_list": {
+    "de": "Deutsche"
+    ,"en": "English - UK"
+    ,"fr": "Français"
+    ,"jp": "日本語"
+    ,"pt": "Brasileiro"
+    ,"rs": "Србин"
+    ,"ru": "Русский"
+    ,"us": "English - US"
+  }
+  ,"official_sites": {
+    "title": "Official Sites"
+    ,"tzm_global": "TZM Global"
+    ,"zeitgeist_media_project": "Zeitgeist Media Project"
+    ,"tzm_global_radio": "TZM Global Radio"
+    ,"zeitnews": "ZeitNews"
+    ,"blog": "The Zeitgeist Movement Blog"
+    ,"zeitgeist_brodcasting_network": "Zeitgeist Brodcasting Network"
+    ,"v_radio": "V-Radio"
+  }
+  ,"chapters": {
+    "international": "International Chapters"
+    ,"country": "Country Chapters"
+    ,"regional": "Regional Chapters"
+    ,"local": "Local Chapters"
+  }
+}

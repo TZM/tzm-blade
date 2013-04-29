@@ -15,10 +15,10 @@ header
                         - if (i === 'projects')
                             // FIXME class active does not toggle
                             li
-                                a(href=""+i class=""+i data-i18n="menu."+i)= t("menu."+i)
+                                a(href=""+i class=""+i data-i18n="menu."+i)= i18n.t("menu."+i)
                         - else
                             li
-                                a(href="/"+i class=""+i data-i18n="menu."+i)= t("menu."+i)
+                                a(href="/"+i class=""+i data-i18n="menu."+i)= i18n.t("menu."+i)
                 //login / user menu
                 ul.nav.pull-right
                     li.divider-vertical
