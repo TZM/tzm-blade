@@ -14,10 +14,10 @@ After installing node.js, open terminal and navigate to your sandboxes folder
     npm http GET https://registry.npmjs.org/express
     npm http GET https://registry.npmjs.org/blade
     ....
-    ☺ node server.js
-    Server running at http://127.0.0.1:29080/
+    ☺ cake dev
+    Server running at http://127.0.0.1:9080/
     
-Now you can navigate to http://127.0.0.1:29080/ and see the website.
+Now you can navigate to http://127.0.0.1:9080/ and see the website.
 
 #Deployment
 

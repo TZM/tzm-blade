@@ -47,9 +47,9 @@
     ,"v_radio": "V-Radio"
   }
   ,"chapters": {
-    "international-chapters": "International Chapters"
-    ,"country-chapters": "Country Chapters"
-    ,"regional-chapters": "Regional Chapters"
-    ,"local-chapters": "Local Chapters"
+    "international": "International Chapters"
+    ,"country": "Country Chapters"
+    ,"regional": "Regional Chapters"
+    ,"local": "Local Chapters"
   }
 }
