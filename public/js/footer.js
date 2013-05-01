@@ -1,4 +1,4 @@
-jQuery(function($) {
+$(function($) {
 
   // project toggle
   var projectToggle = $( ".projects" ).on( "click", function( event ) {
@@ -33,6 +33,12 @@ jQuery(function($) {
     $( "body" ).css( "marginTop", 0 );
   });
   
+  //don't close login form
+  $(".forgot-password").click(function(e){
+  //do something
+  console.log("click")
+  e.preventDefault();
+  });
   // open login form
   $('#login').click(function (e) {
     console.log('click on login');

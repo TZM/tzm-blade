@@ -43,25 +43,25 @@ function ZmgcMenu() {
       var section =  $this.closest('ul').prev('h3').find('span[data-content]').data('content');
       var subSection = $this.attr("data-bind");
       // we can now genrate the section content and push this into the tmpl.
-      blade.Runtime.loadTemplate("guide_section.blade", function(err, tmpl) {
-          tmpl({
-              'sections': {
-                      'section': section,
-                      'subsection': subSection
-                  }
-          }, function(err, html) {
-              if(err) throw err;
-                  $('.mainarticle > .content').empty().html(html);
-                  var page = "./guide/page"+subSection+".blade";
-                  blade.Runtime.loadTemplate(page, function(err, tmpl) {
-                      tmpl({}, function(err, html) {
-                          if(err) throw err;
-                            console.log(html);
-                            $('.guide_content').empty().html(html);
-                      });
-                });
-          });
-      });
+      //blade.Runtime.loadTemplate("guide_section.blade", function(err, tmpl) {
+      //    tmpl({
+      //        'sections': {
+      //                'section': section,
+      //                'subsection': subSection
+      //            }
+      //    }, function(err, html) {
+      //        if(err) throw err;
+      //            $('.mainarticle > .content').empty().html(html);
+      //            var page = "./guide/page"+subSection+".blade";
+      //            blade.Runtime.loadTemplate(page, function(err, tmpl) {
+      //                tmpl({}, function(err, html) {
+      //                    if(err) throw err;
+      //                      console.log(html);
+      //                      $('.guide_content').empty().html(html);
+      //                });
+      //          });
+      //    });
+      //});
   });
 
   // Initialise

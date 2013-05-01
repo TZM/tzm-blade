@@ -1,4 +1,5 @@
 node_modules
+buildAssets/
 npm-shrinkwrap.json
 public/js/map2.js
 .app

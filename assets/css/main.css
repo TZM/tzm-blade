@@ -1,10 +1,10 @@
 @charset "utf-8";
-@import "./vendor/bootstrap/bootstrap.min.css";
-@import "./vendor/bootstrap/bootstrap-responsive.min.css";
-@import "./vendor/font-awesome.min.css";
-@import "./vendor/font-awesome-corp.css";
-@import "./vendor/font-awesome-social.css";
-@import "./vendor/famfam/cus-icons.css";
+@import "/css/vendor/bootstrap/bootstrap.min.css";
+@import "/css/vendor/bootstrap/bootstrap-responsive.min.css";
+@import "/css/vendor/font-awesome.min.css";
+@import "/css/vendor/font-awesome-corp.css";
+@import "/css/vendor/font-awesome-social.css";
+@import "/css/vendor/famfam/cus-icons.css";
 
 html,body,body div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,figure,footer,header,hgroup,menu,nav,section,time,mark,audio,video {
     border: 0;

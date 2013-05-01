@@ -15,17 +15,17 @@ header
                         - if (i === 'projects')
                             // FIXME class active does not toggle
                             li
-                                a(href=""+i class=""+i data-i18n="menu."+i)= i18n.t("menu."+i)
+                                a(href=""+i class=""+i data-i18n="menu."+i)!=t("ns.layout:menu."+i)
                         - else
                             li
-                                a(href="/"+i class=""+i data-i18n="menu."+i)= i18n.t("menu."+i)
+                                a(href="/"+i class=""+i data-i18n="menu."+i)!=t("ns.layout:menu."+i)
                 //login / user menu
                 ul.nav.pull-right
                     li.divider-vertical
                     li.dropdown
                         a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
                             span.icon-signin
-                            span="Connexion"
+                            span!=t("ns.layout:user.login")
                             b.caret
                         .dropdown-menu.well.pull-right
                             span=("Federated login")
@@ -87,28 +87,8 @@ header
                                                 .span5
                                                     button.btn.btn-block.btn-primary.btn-small.btn-login(type="submit")="Login"
                                                 .control-group
-                                                    a(href="#")="Forgot your password"
+                                                    a.forgot-password(href="#")="Forgot your password"
                             span=("Create New Account")
                             .row
                                 .span3
                                     button.btn.btn-block.btn-primary(type="button")="Register"
-                            
-                //ul.nav.pull-right
-                //    - var user_menu = locals.settings.translation.user
-                //    - for(var i in user_menu)
-                //        li
-                //            a(href="#")
-                //                //img(src='../images/'+i+'.png', alt="")
-                //                span(data-i18n="user."+i)=t("user."+i)
-                    //
-                    //li.language-menu
-                    //    a(href="" class="tooltip")
-                    //        img(src='../images/language_icon.png', alt="")
-                    //        span="Language"
-                    //- var langFile = locals.settings.languages
-                    //#language-menu
-                    //    ul
-                    //        - for(var i in langFile)
-                    //            - var o = langFile[i]
-                    //            li
-                    //                a(id=""+o.code data-i18n="language."+o.locale)=t("language."+o.locale)

@@ -5,5 +5,7 @@ replace block page
             button#zoom_out.btn="Zoom Out"
                 i.icon-minus
         #LegendLabel
-    script( type="text/javascript", src="js/vendor/d3/topojson.v0.min.js")
-    script( type="text/javascript", src="js/map.js")
+    script( type="text/javascript", src="/js/vendor/d3/d3.v3.min.js")
+    script( type="text/javascript", src="/js/vendor/d3/topojson.v0.min.js")
+    - var mapJsPath = jsUrl("/js/map.js")
+    script( type="text/javascript", data-main="#{mapJsPath}", src="#{mapJsPath}")

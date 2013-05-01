@@ -1,5 +1,7 @@
 express = require "express"
+gzippo = require "gzippo"
 assets = require "connect-assets"
+jsPaths = require "connect-assets-jspaths"
 stylus = require "stylus"
 blade = require "blade"
 #mongoose = require "mongoose"
@@ -42,7 +44,6 @@ app.configure "production", "development", "testing", ->
 i18n.init
   detectLngQS: "lang"
   ,ns: { namespaces: ['ns.common', 'ns.layout'], defaultNs: 'ns.common'}
-  #,resSetPath: "./locales/__lng__/translation.json"
   ,resSetPath: "./locales/__lng__/new.__ns__.json"
   ,ignoreRoutes: ["images/", "public/", "css/", "js/"]
   #,locales:['de', 'en', 'fr', 'pt']
@@ -54,14 +55,18 @@ i18n.init
 
 #### View initialization 
 # Add Connect Assets.
-app.use assets()
+app.use assets(build : true)
+jsPaths assets, console.log
 #app.use i18n.init
 # Set the public folder as static assets.
-app.use express.static(process.cwd() + "/public")
+app.use gzippo.staticGzip(process.cwd() + "/assets")
+app.use gzippo.staticGzip(process.cwd() + "/public")
 app.use express.favicon(process.cwd() + "/public/images/favicon.ico")
+app.use express.logger('dev')
 # Set the nowjs folder as static assets and locales for i18next
-app.use express.static(process.cwd() + "/nowjs")
-app.use express.static(process.cwd() + "/locales")
+app.use gzippo.staticGzip(process.cwd() + "/nowjs")
+app.use gzippo.staticGzip(process.cwd() + "/locales")
+app.use gzippo.staticGzip(process.cwd() + "/data/topo")
 
 # Set Blade View Engine and tell Express where our views are stored
 app.set "view engine", "blade"

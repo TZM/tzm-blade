@@ -15,7 +15,7 @@
   },
   "scripts": {
     "install": "node node_modules/coffee-script/bin/cake build",
-    "start": "server.js",
+    "start": "node server.js",
     "test": "jasmine-node ./tests/tests.js"
   },
   "dependencies": {
@@ -31,7 +31,8 @@
     "wrench": "~1.4.4",
     "which": "~1.0.5",
     "supervisor": "~0.5.2",
-    "connect-assets": "~2.4.1"
+    "connect-assets": "~2.4.1",
+    "connect-assets-jspaths": "0.0.9"
   },
   "devDependencies": {
     "coffee-script": ">=1.6.2",
