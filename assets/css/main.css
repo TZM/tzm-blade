@@ -29,26 +29,6 @@ body {
     overflow-y: auto;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-/* Wrapper for page content to push down footer */
-#wrap {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    /* Negative indent footer by it's height */
-    margin: 0 auto -60px;
-}
-
-/* Set the fixed height of the footer here */
-#push,
-#footer {
-    height: 60px;
-}
-#footer {
-    background-color: #f5f5f5;
-}
-
 /* Lastly, apply responsive CSS fixes as necessary */
 @media (max-width: 767px) {
     #footer {
@@ -143,7 +123,7 @@ body {
 }
 
 /*******************************************************************************/
-/* Search
+/* Search */
 /*******************************************************************************/
 .navbar-inverse .navbar-search .search-query {
     background-color: #fff;
@@ -161,54 +141,17 @@ body {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
 }
-/* .navbar-search input[type="text"] {
-/*     width: 150px;
-/*     padding: 5px 2px 5px 25px;
-/*     border: 1px solid #DDD;
-/*     border-top-color: #CCC;
-/*     border-bottom-color: #EAEAEA;
-/*     -webkit-border-radius: 3px;
-/*     -moz-border-radius: 3px;
-/*     border-radius: 3px;
-/*     background: url('../images/search_icon.png') 5px 50% no-repeat white;
-/* } */
 
 .navbar-search input[type="submit"] {
     display: none;
 }
 
 /*******************************************************************************/
-/* Login Form
-/*******************************************************************************/
-.tab-content {
-  overflow: auto;
-}
-.tab-content > .tab-pane {
-  display: none;
-}
-
-.tab-content > .active {
-  display: block;
-}
-
-#user-login-register-form {
-    position: relative;
-    float: right;
-    width: 225px;
-    top: 40px;
-    right:10%;
-    padding: 5px none;
-    z-index: 1000;
-    border: 1px solid #ccc;
-}
-
-/*******************************************************************************/
-/* PAGE
+/* PAGE */
 /*******************************************************************************/
 #page {
     height: auto;
     overflow: none;
-    /**padding-bottom:50px; adjust depending on the footer height plus 15px **/
     padding: 38px 25px 10px;
 }
 
@@ -218,7 +161,7 @@ body {
 }
 
 /*******************************************************************************/
-/* Left Navigation Menu
+/* Left Navigation Menu */
 /*******************************************************************************/
 #nav-container {
     color: #eaeaea;
@@ -293,9 +236,9 @@ nav ul, nav ol {
     color: #000;
 }
 
-/**************************************************************************
-* Navigation Toggle button
-* ***********************************************************************/
+/**************************************************************************/
+/* Navigation Toggle button */
+/* ***********************************************************************/
 div[role="main"] .mainarticle #nav-toggle {
     width: 37px;
     height: 37px;
@@ -322,9 +265,9 @@ div[role="main"] .mainarticle #nav-toggle.active {
     background: url('../images/nav-open.png') no-repeat;
 }
 
-/**************************************************************************
-* Left navigation menu items
-* ***********************************************************************/
+/**************************************************************************/
+/* Left navigation menu items */
+/* ***********************************************************************/
 #nav-container h3, #nav-container h4 {
     cursor: pointer;
 }
@@ -376,9 +319,9 @@ div[role="main"] .mainarticle #nav-toggle.active {
 #nav-container ul:not(.active) {
     display: none;
 }
-/**************************************************************************
-* Guide page css
-* ***********************************************************************/
+/**************************************************************************/
+/* Guide page css */
+/* ***********************************************************************/
 div[role="main"] .mainarticle .content {
 /* initially this is 232px from the left*/
 margin-left: 240px;
@@ -415,7 +358,7 @@ div[role="main"] .mainarticle .content .guide_navigation:hover {
     border: 4px solid #f99d33;
 }
 /*******************************************************************************/
-/* Map
+/* Map */
 /*******************************************************************************/
 svg path.country {
     z-index: -1;
@@ -482,47 +425,6 @@ path.projects-icon {
 
 path.skill-share-icon {
     fill: #000;
-}
-/**************************************************************************
-* Footer
-* ***********************************************************************/
-.chapters-network-list {
-    -webkit-column-count:4;
-       -moz-column-count:4;
-            column-count:4;
-}
-
-a#footer_trigger {
-    position: fixed;
-    z-index: 2;
-    bottom: 0px;
-    right: 10px;
-    width: 35px;
-    height: 35px;
-    background: url("../images/footer_button_up.png") right no-repeat #121212;
-    display: block;
-    -moz-border-radius: 4px 4px 0px 0px;
-    -webkit-border-radius: 4px 4px 0px 0px;
-    border-radius: 4px 4px 0px 0px;
-    z-index: 2;
-}
-
-a.trigger_fixed {
-    margin: 0 auto;
-    left: 50%;
-    margin-left: 447px;
-}
-
-a#footer_trigger.trigger_active {
-    background: url("../images/footer_button_down.png") right no-repeat #121212;
-}
-
-#footer li div.footer_dropup a {
-    color: #6a82a3;
-}
-
-#footer li div.footer_dropup a:hover {
-    color: #536987;
 }
 
 @media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}
