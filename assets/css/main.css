@@ -384,9 +384,16 @@ svg > text > .city-name {
     min-height: 15px;
     min-width: 100px;
 }
+.LegendLabel{
+    background: #4F4F4F;
+    position: relative;
+    bottom: 300px;
+}
+
 #LegendLabel{
-    font-size: 20px;
+    font-size: 12px;
     font-weight: bold;
+    
 }
 
 .Blues .q0-9{fill:rgb(247,251,255)}
