@@ -434,4 +434,10 @@ path.skill-share-icon {
     fill: #000;
 }
 
+.chapters-network-list {
+    -webkit-column-count:4;
+       -moz-column-count:4;
+            column-count:4;
+}
+
 @media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}

@@ -2,7 +2,7 @@ express = require "express"
 gzippo = require "gzippo"
 assets = require "connect-assets"
 jsPaths = require "connect-assets-jspaths"
-stylus = require "stylus"
+#stylus = require "stylus"
 blade = require "blade"
 #mongoose = require "mongoose"
 i18n = require "i18next"
@@ -61,7 +61,7 @@ jsPaths assets, console.log
 # Set the public folder as static assets.
 app.use gzippo.staticGzip(process.cwd() + "/assets")
 app.use gzippo.staticGzip(process.cwd() + "/public")
-app.use express.favicon(process.cwd() + "/public/images/favicon.ico")
+app.use express.favicon(process.cwd() + "/images/favicon.ico")
 app.use express.logger('dev')
 # Set the nowjs folder as static assets and locales for i18next
 app.use gzippo.staticGzip(process.cwd() + "/nowjs")
@@ -87,19 +87,18 @@ catch e
 
 # [Body parser middleware](http://www.senchalabs.org/connect/middleware-bodyParser.html) parses JSON or XML bodies into `req.body` object
 app.use express.bodyParser()
-
 app.use i18n.handle
 app.use blade.middleware(process.cwd() + "/views")
+
+# Initialize routes
+routes = require "./routes"
+routes(app)
 app.use app.router
 
 #### Finalization
 # Register i18next AppHelper so we can use the translate function in template
 i18n.registerAppHelper(app)
-
-# Initialize routes
-routes = require "./routes"
 app.locals.pretty=true
-routes(app)
 
 # Export application object
 module.exports = app

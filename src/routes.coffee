@@ -3,19 +3,21 @@
 #
 # GET, POST, PUT, DELETE methods are going to the same controller methods - we dont care.
 # We are using method names to determine controller actions for clearness.
+urls = [
+  "map"
+  "guide"
+]
 
 module.exports = (app) ->
   #   - _/_ -> controllers/index/index method
   app.all "/", (req, res, next) ->
     routeMvc("index", "index", req, res, next)
 
-  #   - _/_ -> controllers/map/map method
-  app.all "/map", (req, res, next) ->
-    routeMvc("map", "map", req, res, next)
-
-  #   - _/_ -> controllers/guide/guide method
-  app.all "/guide", (req, res, next) ->
-    routeMvc("guide", "guide", req, res, next)
+  for url in urls
+    do (url) ->
+      app.all "/#{url}", (req, res, next) ->
+        res.render "#{url}"
+        routeMvc("#{url}", "#{url}", req, res, next)
 
   #   - _/**:controller**_  -> controllers/***:controller***/index method
   app.all "/:controller", (req, res, next) ->
@@ -32,8 +34,10 @@ module.exports = (app) ->
   # If all else failed, show 404 page
   app.all "/*", (req, res) ->
     console.warn "error 404: ", req.url
-    res.statusCode = 404
-    res.render "404", 404
+    res.render '404',
+        status: 404
+    #res.statusCode = 404
+    #res.render "404", 404
 
 # render the page based on controller name, method and id
 routeMvc = (controllerName, methodName, req, res, next) ->
