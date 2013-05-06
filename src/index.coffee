@@ -10,6 +10,7 @@ http = require "http"
 https = require "https"
 fs = require "fs"
 json = ""
+{Recaptcha} = require 'recaptcha'
 
 #### Application initialization
 # Create app instance.
@@ -43,7 +44,7 @@ app.configure "production", "development", "testing", ->
 # i18next init
 i18n.init
   detectLngQS: "lang"
-  ,ns: { namespaces: ['ns.common', 'ns.layout'], defaultNs: 'ns.common'}
+  ,ns: { namespaces: ['ns.common', 'ns.layout', 'ns.forms'], defaultNs: 'ns.common'}
   ,resSetPath: "./locales/__lng__/new.__ns__.json"
   ,ignoreRoutes: ["images/", "public/", "css/", "js/"]
   #,locales:['de', 'en', 'fr', 'pt']

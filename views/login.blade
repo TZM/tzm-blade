@@ -1,0 +1,31 @@
+include "../layout/layout.blade"
+replace block page
+  .tabbable.well.tabs-left
+    ul.nav.nav-tabs.user-login-register-form
+      li
+        a(href="#login" data-toggle="tab")=t("ns.forms:button.login")
+      li
+        a(href="#register" data-toggle="tab")=t("ns.forms:button.register")
+      li
+        a(href="#reset-password" data-toggle="tab")=t("ns.forms:button.reset-password")
+
+    .tab-content
+      #login.tab-pane.fade.in
+        .tabbable
+          ul.nav.nav-tabs.user-login-form
+            li
+              a(href="#federated-login" data-toggle="tab")=t("ns.forms:button.federated-login")
+            li
+              a(href="#login-form" data-toggle="tab")=t("ns.forms:button.login")
+
+          .tab-content
+            #federated-login.tab-pane.fade.in
+              include "forms/federated-form.blade"
+            #login-form.tab-pane.fade.in
+              include "forms/login-form.blade"
+      
+      #register.tab-pane.fade.in
+        span=t("ns.forms:button.register")
+        include "forms/registration-form.blade"
+      #reset-password.tab-pane.fade.in
+        p="Reset password"

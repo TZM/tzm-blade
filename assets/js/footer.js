@@ -36,16 +36,20 @@ $(function($) {
   //don't close login form
   $(".forgot-password").click(function(e){
   //do something
-  console.log("click")
-  e.preventDefault();
-  });
-  // open login form
-  $('#login').click(function (e) {
-    console.log('click on login');
-    $('#user-login-register-form').toggleClass( "show" ).load('/users/login.html');
-    e.stopPropagation();
+  console.log("click XXX")
+  //e.preventDefault();
   });
 
+  $('.user-login-register-form').click(function (e) {
+      e.preventDefault(); $(this).tab('show');
+  });
+  $('.user-login-register-form a:last').tab('show');
+  
+  $('.user-login-form').click(function (e) {
+      e.preventDefault(); $(this).tab('show');
+  });
+  $('.user-login-form a:first').tab('show');
+  
   // footer navigation
   var slide = false;
   var height = $('#footer').height();

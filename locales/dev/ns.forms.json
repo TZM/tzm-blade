@@ -1,0 +1,11 @@
+{
+  "button": {
+    "login": "Login"
+    ,"register": "Register"
+    ,"federated-login": "Federated Login"
+    ,"reset-password": "Reset password"
+    ,"remember-me": "Check this box if you don't have a password or you forgot it."
+    ,"create-new-account": "Create New Account"
+    ,"sign-in": "Sign in"
+  }
+}
