@@ -15,17 +15,18 @@ LOCK_TIME = 2 * 60 * 60 * 1000
 TOKEN_TIME = 24 * 60 * 60 * 1000
 
 exports.mongoose = mongoose
-
-# Database connect
-db_conn_uri = process.env.MONGOHQ_URL or "mongodb://username:password@localhost:00000/db_"
 mongo_options = db:
   safe: true
 
-mongoose.connect db_conn_uri, mongo_options, (err, res) ->
-  if err
-    console.log "ERROR connecting to: " + db_conn_uri + ". " + err
-  else
-    console.log "Successfully connected to: " + db_conn_uri
+config = require "./config"
+# Connecting to dexies database on mongodb
+boundServices = if process.env.VCAP_SERVICES then JSON.parse(process.env.VCAP_SERVICES) else null
+mongoose_connect = null
+unless boundServices
+  mongoose_connect = mongoose.connect("mongodb://#{config.DB_USER}:#{config.DB_PASS}@#{config.DB_HOST}:#{config.DB_PORT}/#{config.DB_NAME}")
+else
+  credentials = boundServices["mongodb-1.8"][0]["credentials"]
+  mongoose_connect = mongoose.connect("mongodb://" + credentials["username"] + ":" + credentials["password"] + "@" + credentials["hostname"] + ":" + credentials["port"] + "/" + credentials["db"])
 
 # Database schema
 Schema = mongoose.Schema

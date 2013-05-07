@@ -25,12 +25,7 @@ config = require "./config"
 app.configure "production", "development", "testing", ->
   config.setEnvironment app.settings.env
 
-# db_config = "mongodb://#{config.DB_USER}:#{config.DB_PASS}@#{config.DB_HOST}:#{config.DB_PORT}/#{config.DB_NAME}"
-# mongoose.connect db_config
-#if app.settings.env != "production"
-#  mongoose.connect "mongodb://localhost/example"
-#else
-#  console.log("If you are running in production, you may want to modify the mongoose connect path")
+
 
 #i18n.configure =
 #  detectLngQS: "lang"
@@ -93,6 +88,7 @@ app.use blade.middleware(process.cwd() + "/views")
 
 # Initialize routes
 routes = require "./routes"
+
 routes(app)
 app.use app.router
 

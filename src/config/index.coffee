@@ -22,9 +22,9 @@ exports.setEnvironment = (env) ->
       exports.DEBUG_WARN = true
       exports.DEBUG_ERROR = true
       exports.DEBUG_CLIENT = true
-      #exports.DB_HOST = 'localhost'
-      #exports.DB_PORT = "3306"
-      #exports.DB_NAME = 'mvc_example'
+      exports.DB_HOST = 'localhost'
+      exports.DB_PORT = "27017"
+      exports.DB_NAME = 'zmgc'
       #exports.DB_USER = 'root'
       #exports.DB_PASS = 'root'
 
