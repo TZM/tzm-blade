@@ -1,4 +1,5 @@
 express = require "express"
+csrf = express.csrf()
 gzippo = require "gzippo"
 assets = require "connect-assets"
 jsPaths = require "connect-assets-jspaths"
@@ -10,7 +11,7 @@ http = require "http"
 https = require "https"
 fs = require "fs"
 json = ""
-{Recaptcha} = require 'recaptcha'
+##{Recaptcha} = require 'recaptcha'
 
 #### Application initialization
 # Create app instance.
@@ -57,7 +58,7 @@ jsPaths assets, console.log
 # Set the public folder as static assets.
 app.use gzippo.staticGzip(process.cwd() + "/assets")
 app.use gzippo.staticGzip(process.cwd() + "/public")
-app.use express.favicon(process.cwd() + "/images/favicon.ico")
+app.use express.favicon(process.cwd() + "/assets/images/favicon.ico")
 app.use express.logger('dev')
 # Set the nowjs folder as static assets and locales for i18next
 app.use gzippo.staticGzip(process.cwd() + "/nowjs")
@@ -83,6 +84,18 @@ catch e
 
 # [Body parser middleware](http://www.senchalabs.org/connect/middleware-bodyParser.html) parses JSON or XML bodies into `req.body` object
 app.use express.bodyParser()
+app.use express.methodOverride()
+app.use express.cookieParser()
+app.use express.session
+  # You should probably add some sort of store
+  # Use connect-mongo or connect-redis
+  secret: 'this is your call, buddy'
+app.use (req, res, next) ->
+  # Only use CSRF if user is logged in
+  if req.session.userId
+    csrf req, res, next
+  else
+    next()
 app.use i18n.handle
 app.use blade.middleware(process.cwd() + "/views")
 
@@ -91,6 +104,8 @@ routes = require "./routes"
 
 routes(app)
 app.use app.router
+#app.use require('./routes/user').middleware
+#app.use '/api/v1', require('./routes/api').middleware
 
 #### Finalization
 # Register i18next AppHelper so we can use the translate function in template

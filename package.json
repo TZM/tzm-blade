@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "express": "*",
+    "mongoose": "*",
+    "bcrypt": "*",
     "ua-parser-js": ">=0.6",
     "now": "git://github.com/nkhine/now.git",
     "i18next": ">=1.5.16",

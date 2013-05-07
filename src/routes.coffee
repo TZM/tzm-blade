@@ -3,11 +3,11 @@
 #
 # GET, POST, PUT, DELETE methods are going to the same controller methods - we dont care.
 # We are using method names to determine controller actions for clearness.
+
 urls = [
     "guide"
     "login"
     "map"
-    "captcha"
 ]
 
 module.exports = (app) ->
@@ -38,8 +38,6 @@ module.exports = (app) ->
     console.warn "error 404: ", req.url
     res.render '404',
         status: 404
-    #res.statusCode = 404
-    #res.render "404", 404
 
 # render the page based on controller name, method and id
 routeMvc = (controllerName, methodName, req, res, next) ->
@@ -56,5 +54,5 @@ routeMvc = (controllerName, methodName, req, res, next) ->
     actionMethod = controller[methodName].bind controller
     actionMethod req, res, next
   else
-    console.warn "method not found: " + methodName
+    console.warn "method not found: XXX" + methodName
     next()

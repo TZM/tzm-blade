@@ -16,23 +16,32 @@ TOKEN_TIME = 24 * 60 * 60 * 1000
 
 exports.mongoose = mongoose
 mongo_options = db:
-  safe: true
+    safe: true
 
-config = require "./config"
-# Connecting to dexies database on mongodb
+config = require "../config/index"
+# Connecting to database on mongodb
 boundServices = if process.env.VCAP_SERVICES then JSON.parse(process.env.VCAP_SERVICES) else null
-mongoose_connect = null
+db_config = null
 unless boundServices
-  mongoose_connect = mongoose.connect("mongodb://#{config.DB_USER}:#{config.DB_PASS}@#{config.DB_HOST}:#{config.DB_PORT}/#{config.DB_NAME}")
+    if config.DB_USER and config.DB_PASS
+        db_config = "mongodb://#{config.DB_USER}:#{config.DB_PASS}@#{config.DB_HOST}:#{config.DB_PORT}/#{config.DB_NAME}"
+    else
+        db_config = "mongodb://#{config.DB_HOST}:#{config.DB_PORT}/#{config.DB_NAME}"
 else
-  credentials = boundServices["mongodb-1.8"][0]["credentials"]
-  mongoose_connect = mongoose.connect("mongodb://" + credentials["username"] + ":" + credentials["password"] + "@" + credentials["hostname"] + ":" + credentials["port"] + "/" + credentials["db"])
+    credentials = boundServices["mongodb-1.8"][0]["credentials"]
+    db_config = "mongodb://" + credentials["username"] + ":" + credentials["password"] + "@" + credentials["hostname"] + ":" + credentials["port"] + "/" + credentials["db"]
+
+mongoose.connect db_config, mongo_options, (err, res) ->
+    if err
+        console.log "ERROR connecting to: " + db_config + ". " + err
+    else
+        console.log "Successfully connected to: " + db_config
 
 # Database schema
 Schema = mongoose.Schema
 
 # User schema
-userSchema = new Schema(
+AccountSchema = new Schema(
   email:
     type: String
     required: true
@@ -73,13 +82,13 @@ userSchema.statics.failedLogin =
   TOKEN_UNMATCH: 4
   TOKEN_EXPIRES: 5
 
-userSchema.virtual("isLocked").get ->
+AccountSchema.virtual("isLocked").get ->
   # check for a future lockUntil timestamp
   !!(@lockUntil and @lockUntil > Date.now())
 
 
 # Bcrypt middleware
-userSchema.pre "save", (next) ->
+AccountSchema.pre "save", (next) ->
   user = this
   # only hash the password if it has been modified (or is new)
   return next()  unless user.isModified("password")
@@ -102,12 +111,12 @@ userSchema.pre "save", (next) ->
         next()
 
 # Password verfication
-userSchema.methods.comparePassword = (candidatePassword, cb) ->
+AccountSchema.methods.comparePassword = (candidatePassword, cb) ->
   bcrypt.compare candidatePassword, @password, (err, isMatch) ->
     return cb(err)  if err
     cb null, isMatch
 
-userSchema.methods.incLoginAttempts = (cb) ->
+AccountSchema.methods.incLoginAttempts = (cb) ->
   
   #if we have a previous lock that has expired, restart at 1
   if @lockUntil and @lockUntil < Date.now()
@@ -123,14 +132,13 @@ userSchema.methods.incLoginAttempts = (cb) ->
   updates = $inc:
     loginAttempts: 1
 
-  
   # lock the account if we've reached max attempts and it's not locked already
   updates.$set = lockUntil: Date.now() + LOCK_TIME  if @loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS and not @isLocked
   @update updates, cb
 
 # Static methods
 # Register new user
-userSchema.statics.register = (user, cb) ->
+AccountSchema.statics.register = (user, cb) ->
   self = new this(user)
   @findOne
     email: user.email
@@ -142,7 +150,7 @@ userSchema.statics.register = (user, cb) ->
       cb null, self
 
 # Activate new user
-userSchema.statics.activate = (token, cb) ->
+AccountSchema.statics.activate = (token, cb) ->
   @findOne
     tokenString: token
     active: false
@@ -162,4 +170,4 @@ userSchema.statics.activate = (token, cb) ->
       cb "User token doesn't exist or user account is already active."
 
 # Export user model
-exports.User = mongoose.model("User", userSchema)
+exports.Account = mongoose.model("Account", AccountSchema)
