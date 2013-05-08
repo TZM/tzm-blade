@@ -1,15 +1,14 @@
 "use strict"
 # Connecting to database on mongodb
-config = require "../config"
+config = require "../config/index"
 logger = require("./logger")
 mongoose = require("mongoose")
 mongoose.set "debug", true
 
-logCategory = "Mongo Connection"
+logCategory = "DATABASE Connection"
 
-mongo = initialize: (callback) ->
+dbconnect = initialize: (callback) ->
   self = this
-  logger.debug "Initializing Database Connection", LogCategory
   mongo_options = db:
       safe: true
 
@@ -24,27 +23,18 @@ mongo = initialize: (callback) ->
       credentials = boundServices["mongodb-1.8"][0]["credentials"]
       db_config = "mongodb://" + credentials["username"] + ":" + credentials["password"] + "@" + credentials["hostname"] + ":" + credentials["port"] + "/" + credentials["db"]
 
-  #mongoose.connect db_config, mongo_options, (err, res) ->
-  #    if err
-  #        console.log "ERROR connecting to: " + db_config + ". " + err
-  #    else
-  #        console.log "Successfully connected to: " + db_config
-          
   mongoose.connect db_config, mongo_options
   db = self.db = mongoose.connection
+
   db.on "error", (error) ->
-    logger.debug "ERROR XXX connecting to: ", logCategory
-    console.log "ERROR connecting to: " + db_config + ". " + error
+    logger.error "ERROR connecting to: " + db_config, logCategory
     callback error, null
 
-  #db.on "connected", ->
-  #  logger.info "Successfully XXX connected to: " + db_config, logCategory
-  #  console.log "Successfully connected to: " + db_config
-  #  callback true, db
-  #
-  #db.on "disconnected", ->
-  #  logger.info "Disconnected XXX from the MongoDB database: " + db_config, logCategory
-  #  console.log "Disconnected from the MongoDB database: " + db_config
+  db.on "connected", ->
+    logger.info "SUCCESSFULLY connected to: " + db_config, logCategory
+    callback true, db
 
+  db.on "disconnected", ->
+    logger.info "DISCONNECTED from the database: " + db_config, logCategory
 
-exports = module.exports = mongo
+exports = module.exports = dbconnect

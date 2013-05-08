@@ -12,20 +12,14 @@ https = require "https"
 fs = require "fs"
 json = ""
 ##{Recaptcha} = require 'recaptcha'
+
 logger = require "./utils/logger"
-dbconnect = require "./utils/mongo"
+# Initialize logger
+logger.configure()
+
+dbconnection = require "./utils/dbconnect"
+
 #### Application initialization
-
-
-#dbconnect.initialize (result) ->
-#  "use strict"
-#  logger.info "XXX"
-#  if result
-#    logger.info "Connection Successful to MongoDB Host", "Mongo"
-#  else
-#    logger.error "Unable to connect to db. Error " + result + ". ", "Mongo"
-#    #process.exit 1
-
 # Create app instance.
 app = express()
 # Define Port
@@ -38,6 +32,16 @@ logCategory = "Server"
 
 app.configure "production", "development", "testing", ->
   config.setEnvironment app.settings.env
+
+console.log(app)
+# Database connection
+dbconnection.initialize (result) ->
+  "use strict"
+  if result
+    logger.info "Database initialized", logCategory
+  else
+    logger.error "Database not initialized " + result + ". ", logCategory
+    process.exit 1
 
 # i18next init
 i18n.init(config.I18N)
