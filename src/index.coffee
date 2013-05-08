@@ -12,47 +12,40 @@ https = require "https"
 fs = require "fs"
 json = ""
 ##{Recaptcha} = require 'recaptcha'
-
+logger = require "./utils/logger"
+dbconnect = require "./utils/mongo"
 #### Application initialization
+
+
+#dbconnect.initialize (result) ->
+#  "use strict"
+#  logger.info "XXX"
+#  if result
+#    logger.info "Connection Successful to MongoDB Host", "Mongo"
+#  else
+#    logger.error "Unable to connect to db. Error " + result + ". ", "Mongo"
+#    #process.exit 1
+
 # Create app instance.
 app = express()
-
 # Define Port
 app.port = process.env.PORT or process.env.VMC_APP_PORT or process.env.VCAP_APP_PORT or 3000
 
-
 # Config module exports has `setEnvironment` function that sets app settings depending on environment.
 config = require "./config"
+
+logCategory = "Server"
+
 app.configure "production", "development", "testing", ->
   config.setEnvironment app.settings.env
 
-
-
-#i18n.configure =
-#  detectLngQS: "lang"
-#  ,resSetPath: "./locales/__lng__/translation.json"
-#  ,ignoreRoutes: ["images/", "public/", "css/", "js/"]
-#  ,locales:['de', 'en', 'fr', 'pt']
-#  ,extension:".json"
-#  ,saveMissing: true
-#  ,debug: false
-  
 # i18next init
-i18n.init
-  detectLngQS: "lang"
-  ,ns: { namespaces: ['ns.common', 'ns.layout', 'ns.forms'], defaultNs: 'ns.common'}
-  ,resSetPath: "./locales/__lng__/new.__ns__.json"
-  ,ignoreRoutes: ["images/", "public/", "css/", "js/"]
-  #,locales:['de', 'en', 'fr', 'pt']
-  ,extension:".json"
-  #,saveMissing: true
-  #,sendMissingTo: 'all'
-  ,debug: true
-
+i18n.init(config.I18N)
 
 #### View initialization 
 # Add Connect Assets.
 app.use assets(build : true)
+logger.info "Loading assets...", logCategory
 jsPaths assets, console.log
 #app.use i18n.init
 # Set the public folder as static assets.

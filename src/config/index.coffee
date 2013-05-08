@@ -1,7 +1,20 @@
 #### Config file
 # Sets application config parameters depending on `env` name
+logger = require "../utils/logger"
+logCategory = "Server"
 exports.setEnvironment = (env) ->
-  console.log "set app environment: #{env}"
+  logger.info "Set app environment: #{env}", logCategory
+
+  exports.I18N =
+    detectLngQS: "lang"
+    ,ns: { namespaces: ['ns.common', 'ns.layout', 'ns.forms'], defaultNs: 'ns.common'}
+    ,resSetPath: "./locales/__lng__/new.__ns__.json"
+    ,ignoreRoutes: ["images/", "public/", "css/", "js/"]
+    #,locales:['de', 'en', 'fr', 'pt']
+    ,extension:".json"
+    #,saveMissing: true
+    #,sendMissingTo: 'all'
+    ,debug: true
 
   exports.SOCIAL =
     facebook:
@@ -40,4 +53,4 @@ exports.setEnvironment = (env) ->
       exports.DEBUG_ERROR = true
       exports.DEBUG_CLIENT = false
     else
-      console.log "environment #{env} not found"
+      logger.info "Environment #{env} not found", logCategory

@@ -6,7 +6,7 @@
 
 urls = [
     "guide"
-    "login"
+    "user/login"
     "map"
 ]
 
@@ -54,5 +54,5 @@ routeMvc = (controllerName, methodName, req, res, next) ->
     actionMethod = controller[methodName].bind controller
     actionMethod req, res, next
   else
-    console.warn "method not found: XXX" + methodName
+    console.warn "method not found: " + methodName
     next()

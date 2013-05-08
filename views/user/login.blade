@@ -1,4 +1,4 @@
-include "../layout/layout.blade"
+include "../../layout/layout.blade"
 replace block page
   .tabbable.well.tabs-left
     ul.nav.nav-tabs.user-login-register-form
@@ -20,12 +20,12 @@ replace block page
 
           .tab-content
             #federated-login.tab-pane.fade.in
-              include "forms/federated-form.blade"
+              include "../forms/federated-form.blade"
             #login-form.tab-pane.fade.in
-              include "forms/login-form.blade"
+              include "../forms/login-form.blade"
       
       #register.tab-pane.fade.in
         span=t("ns.forms:button.register")
-        include "forms/registration-form.blade"
+        include "../forms/registration-form.blade"
       #reset-password.tab-pane.fade.in
         p="Reset password"
