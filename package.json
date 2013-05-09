@@ -56,5 +56,8 @@
     "global",
     "connect"
   ],
+  "bugs": {
+      "url": "https://github.com/TZM/tzm-blade/issues"
+  },
   "license": "BSD"
 }
