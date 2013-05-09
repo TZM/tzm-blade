@@ -154,4 +154,6 @@ accountSchema.statics.activate = (token, cb) ->
       cb "Account token doesn't exist or is already active."
 
 # Export user model
-exports.account = mongoose.model("account", accountSchema)
+Account = mongoose.model("Account", accountSchema)
+exports = module.exports = Account
+

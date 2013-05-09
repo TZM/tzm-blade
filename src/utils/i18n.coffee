@@ -1,11 +1,10 @@
-"use strict"
 path = require("path")
 fs = require("fs")
 _ = require("underscore")
 logger = require "./logger"
 logCategory = "i18next"
 
-locales = initialize: (callback) ->
+Locales = initialize: (callback) ->
   logger.debug "Folder: "
   #self = this
   #localesDIR = '../../locales'
@@ -13,4 +12,4 @@ locales = initialize: (callback) ->
   #_.each localesDIR, (folder) ->
   #  logger.debug "Folder: " + logCategory
 
-exports = module.exports = locales
+exports = module.exports = Locales

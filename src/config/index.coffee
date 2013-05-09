@@ -29,6 +29,11 @@ exports.setEnvironment = (env) ->
       returnURL: process.env.GOOGLE_RETURN_URL
       realm: process.env.GOOGLE_REALM
 
+  exports.SMTP =
+      GMAIL:
+        id: process.env.SMTP_USER
+        passwd: process.env.SMTP_PASSWD
+
   switch(env)
     when "development"
       exports.DEBUG_LOG = true

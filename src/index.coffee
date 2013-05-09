@@ -109,5 +109,7 @@ app.use app.router
 i18n.registerAppHelper(app)
 app.locals.pretty=true
 
+console.log(app)
+
 # Export application object
 module.exports = app

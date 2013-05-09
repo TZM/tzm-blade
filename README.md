@@ -4,6 +4,31 @@
 
 [Blade HTML Compiler](https://github.com/bminer/node-blade)
 
+#Setup
+
+Before running this application we will need to setup couple of environmental settings, in order not to add any private data within the code.
+
+Here is a list, that is currently used add these to your .zschrc or .bashrc :
+
+    |-------------------------------------------------------------------|
+    |Provider  |  Developer API Keys  |AuthID Providers    |SMTP Access |
+    |-------------------------------------------------------------------|
+    |Google    |  GOOGLE_API_KEY      |GG_APP_ID           |SMTP_USER   |
+    |          |                      |GG_APP_SEC          |SMTP_PASSWD |
+    |Facebook  |  FB_APP_ID           |*                   |            |
+    |          |  FB_APP_SEC          |*                   |            |
+    |Twitter   |                      |TT_APP_ID           |            |
+    |          |                      |TT_APP_SEC          |            |
+    |Yahoo     |                      |YH_APP_ID           |            |
+    |          |                      |YH_APP_SEC          |            |
+    |LinkedIn  |                      |LI_APP_ID           |            |
+    |          |                      |LI_APP_SEC          |            |
+    |Github    |                      |GITHUB_ID           |            |
+    |          |                      |GITHUB_SEC          |            |
+    |Trello    |  TRELLO_ID           |                    |            |
+    |          |  TRELLO_SECRET       |                    |            |
+    |-------------------------------------------------------------------|
+
 #Installation
 
 After installing node.js, open terminal and navigate to your sandboxes folder
@@ -35,7 +60,6 @@ To deploy on AppFog, you will need to first create an account and then setup you
     ☺ npm start
     Server running at http://127.0.0.1:9080/
 
-
 #Development
 
 To run locally for development use:
@@ -47,6 +71,7 @@ To run locally for development use:
 
     DEBUG: Running node-supervisor with
     ....
+
 #Warning
 
 This application is still a work in progress and is not ready for use yet.
@@ -64,4 +89,22 @@ This application is still a work in progress and is not ready for use yet.
 * /test/lib       : All models libraries test files (managed by Mocha)
 * /test/models    : All Express models test files (managed by Mocha)
 * /views          : Blade views / pages
-    
+
+#Stats
+
+    ☺ cloc --exclude-dir=.app,buildAssets,data,public/css/font,public/css/fonts,public/css/vendor,public/js/vendor .
+        88 text files.
+        78 unique files.
+        4740 files ignored.
+
+        http://cloc.sourceforge.net v 1.56  T=1.0 s (39.0 files/s, 4317.0 lines/s)
+        -------------------------------------------------------------------------------
+        Language                     files          blank        comment           code
+        -------------------------------------------------------------------------------
+        CSS                              4            162            213           1804
+        Javascript                      12            128            269            725
+        CoffeeScript                    22            143            178            676
+        Bourne Shell                     1              0              0             19
+        -------------------------------------------------------------------------------
+        SUM:                            39            433            660           3224
+        ------------------------------------------------------------------------------- 

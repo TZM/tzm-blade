@@ -1,4 +1,4 @@
-"use strict"
+
 # Connecting to database on mongodb
 config = require "../config/index"
 logger = require("./logger")
