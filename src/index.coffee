@@ -33,7 +33,7 @@ logCategory = "Server"
 app.configure "production", "development", "testing", ->
   config.setEnvironment app.settings.env
 
-console.log(app)
+#console.log(app)
 # Database connection
 dbconnection.initialize (result) ->
   "use strict"
@@ -108,8 +108,6 @@ app.use app.router
 # Register i18next AppHelper so we can use the translate function in template
 i18n.registerAppHelper(app)
 app.locals.pretty=true
-
-console.log(app)
 
 # Export application object
 module.exports = app

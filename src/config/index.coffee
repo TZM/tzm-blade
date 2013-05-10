@@ -1,7 +1,7 @@
 #### Config file
 # Sets application config parameters depending on `env` name
 logger = require "../utils/logger"
-logCategory = "Server"
+logCategory = "Server config"
 exports.setEnvironment = (env) ->
   logger.info "Set app environment: #{env}", logCategory
 

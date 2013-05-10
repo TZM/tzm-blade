@@ -13,7 +13,8 @@ module.exports =
     user = new User req.body
     user.save (err, user) ->
       if not err
-        res.send user
+        res.render "index"
+        #res.send user
         res.statusCode = 201
       else
         res.send err
