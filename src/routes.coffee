@@ -4,22 +4,10 @@
 # GET, POST, PUT, DELETE methods are going to the same controller methods - we dont care.
 # We are using method names to determine controller actions for clearness.
 
-urls = [
-    "guide"
-    "user/login"
-    "map"
-]
-
 module.exports = (app) ->
   #   - _/_ -> controllers/index/index method
   app.all "/", (req, res, next) ->
     routeMvc("index", "index", req, res, next)
-
-  for url in urls
-    do (url) ->
-      app.all "/#{url}", (req, res, next) ->
-        res.render "#{url}"
-        routeMvc("#{url}", "#{url}", req, res, next)
 
   #   - _/**:controller**_  -> controllers/***:controller***/index method
   app.all "/:controller", (req, res, next) ->

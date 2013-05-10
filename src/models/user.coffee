@@ -19,8 +19,8 @@ exports.mongoose = mongoose
 # Database schema
 Schema = mongoose.Schema
 
-# Account schema
-accountSchema = new Schema(
+# User schema
+UserSchema = new Schema(
   email:
     type: String
     required: true
@@ -58,7 +58,7 @@ accountSchema = new Schema(
 
 # expose enum on the model, and provide an internal convenience reference
 # TODO: replace the error message with this enum, then show messages from views
-accountSchema.statics.failedLogin =
+UserSchema.statics.failedLogin =
   NOT_FOUND: 0
   PASSWORD_INCORRECT: 1
   MAX_ATTEMPTS: 2
@@ -66,41 +66,41 @@ accountSchema.statics.failedLogin =
   TOKEN_UNMATCH: 4
   TOKEN_EXPIRES: 5
 
-accountSchema.virtual("isLocked").get ->
+UserSchema.virtual("isLocked").get ->
   # check for a future lockUntil timestamp
   !!(@lockUntil and @lockUntil > Date.now())
 
 
 # Bcrypt middleware
-accountSchema.pre "save", (next) ->
+UserSchema.pre "save", (next) ->
   user = this
   # only hash the password if it has been modified (or is new)
-  return next()  unless account.isModified("password")
+  return next()  unless user.isModified("password")
   
   # generate a salt
   bcrypt.genSalt SALT_WORK_FACTOR, (err, salt) ->
     return next(err)  if err
     
     # hash the password along with our new salt
-    bcrypt.hash account.password, salt, (err, hash) ->
+    bcrypt.hash user.password, salt, (err, hash) ->
       return next(err)  if err
       
       # override the cleartext password with the hashed one
-      account.password = hash
+      user.password = hash
       
       # update token
       crypto.randomBytes 32, (ex, buf) ->
-        account.tokenString = buf.toString("hex")
-        account.tokenExpires = Date.now() + TOKEN_TIME
+        user.tokenString = buf.toString("hex")
+        user.tokenExpires = Date.now() + TOKEN_TIME
         next()
 
 # Password verfication
-accountSchema.methods.comparePassword = (accountPassword, cb) ->
-  bcrypt.compare accountPassword, @password, (err, isMatch) ->
+UserSchema.methods.comparePassword = (userPassword, cb) ->
+  bcrypt.compare userPassword, @password, (err, isMatch) ->
     return cb(err)  if err
     cb null, isMatch
 
-accountSchema.methods.incLoginAttempts = (cb) ->
+UserSchema.methods.incLoginAttempts = (cb) ->
   
   #if we have a previous lock that has expired, restart at 1
   if @lockUntil and @lockUntil < Date.now()
@@ -116,44 +116,44 @@ accountSchema.methods.incLoginAttempts = (cb) ->
   updates = $inc:
     loginAttempts: 1
 
-  # lock the account if we've reached max attempts and it's not locked already
+  # lock the user if we've reached max attempts and it's not locked already
   updates.$set = lockUntil: Date.now() + LOCK_TIME  if @loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS and not @isLocked
   @update updates, cb
 
 # Static methods
-# Register new account
-accountSchema.statics.register = (user, cb) ->
-  self = new this(account)
+# Register new user
+UserSchema.statics.register = (user, cb) ->
+  self = new this(user)
   @findOne
     email: user.email
-  , (err, existingAccount) ->
+  , (err, existingUser) ->
     return cb(err)  if err
-    return cb("Account already exists: " + account.email)  if existingUser
+    return cb("User already exists: " + user.email)  if existingUser
     self.save (err) ->
       return cb(err)  if err
       cb null, self
 
-# Activate new account
-accountSchema.statics.activate = (token, cb) ->
+# Activate new user
+UserSchema.statics.activate = (token, cb) ->
   @findOne
     tokenString: token
     active: false
-  , (err, existingAccount) ->
+  , (err, existingUser) ->
     return cb(err)  if err
-    if existingAccount
-      if existingAccount.tokenExpires > Date.now()
-        existingAccount.update
+    if existingUser
+      if existingUser.tokenExpires > Date.now()
+        existingUser.update
           $set:
             active: true
         , cb
       
       # return cb(null, existingUser);
       else
-        cb "Account token has expired."
+        cb "User token has expired."
     else
-      cb "Account token doesn't exist or is already active."
+      cb "User token doesn't exist or is already active."
 
 # Export user model
-Account = mongoose.model("Account", accountSchema)
-exports = module.exports = Account
+User = mongoose.model("User", UserSchema)
+exports = module.exports = User
 
