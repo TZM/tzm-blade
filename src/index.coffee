@@ -1,23 +1,19 @@
 express = require "express"
+RedisStore = require("connect-redis")(express)
+redis = require("redis").createClient()
 csrf = express.csrf()
 gzippo = require "gzippo"
 assets = require "connect-assets"
 jsPaths = require "connect-assets-jspaths"
-#stylus = require "stylus"
+redis = require("redis").createClient()
 blade = require "blade"
-#mongoose = require "mongoose"
 i18n = require "i18next"
 http = require "http"
-https = require "https"
 fs = require "fs"
 json = ""
-##{Recaptcha} = require 'recaptcha'
-
 logger = require "./utils/logger"
 # Initialize logger
 logger.configure()
-
-dbconnection = require "./utils/dbconnect"
 
 #### Application initialization
 # Create app instance.
@@ -30,18 +26,34 @@ config = require "./config"
 
 logCategory = "Server"
 
-app.configure "production", "development", "testing", ->
+app.configure "development", "testing", "staging", "production", ->
   config.setEnvironment app.settings.env
 
-#console.log(app)
 # Database connection
-dbconnection.initialize (result) ->
-  "use strict"
+dbconnection = require "./utils/dbconnect"
+dbconnection.init (result) ->
   if result
     logger.info "Database initialized", logCategory
   else
     logger.error "Database not initialized " + result + ". ", logCategory
     process.exit 1
+
+# Redis session stores
+options =
+  hosts: [new RedisStore(
+    host: "127.0.0.1"
+    port: 6379
+    maxAge: 86400000 * 30 # 30 days
+  ), new RedisStore(
+    host: "127.0.0.1"
+    port: 63791
+    maxAge: 86400000 * 30 # 30 days
+  )]
+  session_secret: "f2e5a67d388ff2090dj7Q2nC53pF"
+  cookie:
+    maxAge: 86400000 * 1 # 30 days
+
+multipleRedisSessions = require("connect-multi-redis")(app, express.session)
 
 # i18next init
 i18n.init(config.I18N)
@@ -82,11 +94,14 @@ catch e
 # [Body parser middleware](http://www.senchalabs.org/connect/middleware-bodyParser.html) parses JSON or XML bodies into `req.body` object
 app.use express.bodyParser()
 app.use express.methodOverride()
-app.use express.cookieParser()
-app.use express.session
-  # You should probably add some sort of store
-  # Use connect-mongo or connect-redis
-  secret: 'this is your call, buddy'
+app.use express.cookieParser('90dj7Q2nC53pFj2b0fa81a3f663fd64')
+app.use multipleRedisSessions(options)
+app.use express.session(
+  secret: 'f2e5a67d388ff2090dj7Q2nC53pF'
+  store: options.hosts[0]
+  cookie:
+    maxAge: 86400000 * 30     # 90 days
+)
 app.use (req, res, next) ->
   # Only use CSRF if user is logged in
   if req.session.userId
@@ -95,6 +110,21 @@ app.use (req, res, next) ->
     next()
 app.use i18n.handle
 app.use blade.middleware(process.cwd() + "/views")
+
+app.use (req, res, next) ->
+  res.locals.currentUser = req.session.user
+  res.locals.currentHost = req.header("host")
+  res.locals.currentUrl = req.url
+  #res.locals.currentLocale = "/" + i18n.lng()
+  #res.locals.isMobile = true
+  ##  if image assets are language dependent, save them in folders assets/images/en/, assets/images/fr
+  #    
+  #if i18n.lng() is "en"
+  #  res.locals.currentImageDir = ""
+  #else
+  #  res.locals.currentImageDir = "/" + i18n.lng()
+  next()
+
 
 # Initialize routes
 routes = require "./routes"

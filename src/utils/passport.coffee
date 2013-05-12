@@ -1,34 +1,33 @@
-"use strict"
 mongoose = require("mongoose")
 LocalStrategy = require("passport-local").Strategy
 bcrypt = require("bcrypt")
-account = mongoose.model("Account")
+User = mongoose.model("User")
 module.exports = (passport) ->
   
   # serialize sessions
-  passport.serializeUser (account, done) ->
-    done null, contributor.id
+  passport.serializeUser (user, done) ->
+    done null, user.id
 
   passport.deserializeUser (id, done) ->
-    Account.findOne
+    User.findOne
       _id: id
-    , (err, contributor) ->
-      done err, contributor
+    , (err, user) ->
+      done err, user
 
   # use a local strategy
   passport.use new LocalStrategy(
     usernameField: "email"
     passwordField: "password"
   , (email, password, done) ->
-    Account.getAuthenticated email, password, (err, account, reason) ->
+    User.getAuthenticated email, password, (err, user, reason) ->
       return done(err)  if err
-      return done(null, account)  if account
+      return done(null, user)  if user
       if reason is 2
         done null, false,
-          message: "Account Locked Too Many Failed Attempts."
+          message: "User account locked too many failed attempts!"
 
       else
         done null, false,
-          message: "Invalid email or password."
+          message: "Invalid email or password!"
 
   )

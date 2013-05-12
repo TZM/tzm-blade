@@ -1,4 +1,4 @@
-User = require '../models/user'
+User = require '../models/user/user'
 
 # User model's CRUD controller.
 module.exports = 
@@ -7,19 +7,22 @@ module.exports =
   index: (req, res) ->
     User.find {}, (err, users) ->
       res.send users
-      
+
   # Creates new user with data from `req.body`
   create: (req, res) ->
     user = new User req.body
     user.save (err, user) ->
       if not err
-        res.render "index"
+        # check if user email exists
+        # email user verification token
+        console.log "EMAIL " + user.email
+        res.render "user/create"
         #res.send user
         res.statusCode = 201
       else
         res.send err
         res.statusCode = 500
-        
+
   # Gets user by id
   get: (req, res) ->
     User.findById req.params.id, (err, user) ->

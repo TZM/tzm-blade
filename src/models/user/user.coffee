@@ -76,7 +76,6 @@ UserSchema.pre "save", (next) ->
   user = this
   # only hash the password if it has been modified (or is new)
   return next()  unless user.isModified("password")
-  
   # generate a salt
   bcrypt.genSalt SALT_WORK_FACTOR, (err, salt) ->
     return next(err)  if err
@@ -124,6 +123,7 @@ UserSchema.methods.incLoginAttempts = (cb) ->
 # Register new user
 UserSchema.statics.register = (user, cb) ->
   self = new this(user)
+  console.log "HERE"
   @findOne
     email: user.email
   , (err, existingUser) ->

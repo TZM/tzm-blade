@@ -1,6 +1,6 @@
 .row
     .span3
-        form#form_login_user.auth-at-dropdown(method="post" action="#")
+        form#form_login_user.auth-at-dropdown(method="post" action="/user/create")
             fieldset
                 .control-group
                     .controls
@@ -19,10 +19,4 @@
                         input#remember_me(name="remember_me" value="on" type="checkbox")
                         span=t("ns.forms:button.remember-me")
                     .span5
-                        button.btn.btn-block.btn-primary.btn-small.btn-login(type="submit")=t("ns.forms:button.login")
-                    .control-group
-                        a.reset-password(href="/login")=t("ns.forms:button.reset-password")
-span=t("ns.forms:button.create-new-account")
-.row
-    .span3
-        button.btn.btn-block.btn-primary(type="button")=t("ns.forms:button.register")
+                        button.btn.btn-block.btn-primary.btn-small(type="submit")=t("ns.forms:button.register")
