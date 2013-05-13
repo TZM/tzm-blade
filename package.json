@@ -44,7 +44,8 @@
     "validator": "~1.1.1",
     "connect-redis": "~1.4.5",
     "connect-multi-redis": "~0.2.0",
-    "redis": "~0.8.3"
+    "redis": "~0.8.3",
+    "express-mongoose": "~0.1.0"
   },
   "devDependencies": {
     "coffee-script": ">=1.6.2",

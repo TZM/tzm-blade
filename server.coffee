@@ -1,4 +1,4 @@
-app = require "./.app"
+app = require("./.app")()
 nowjs = require "now"
 port = app.port
 server = app.listen(port || 29080)

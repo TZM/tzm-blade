@@ -15,7 +15,7 @@ module.exports = (app) ->
   app.all "/", (req, res, next) ->
     routeMvc("index", "index", req, res, next)
 
-  fs.readdirSync(__dirname + "../controllers").forEach (file) ->
+  fs.readdirSync(process.cwd() + "/.app/controllers").forEach (file) ->
     controller = file.split(".")[0]
     app.all "/#{controller}", (req, res, next) ->
       routeMvc("#{controller}", "#{controller}", req, res, next)
@@ -43,7 +43,7 @@ routeMvc = (controllerName, methodName, req, res, next) ->
   controllerName = "index" if not controllerName?
   controller = null
   try
-    controller = require "./controllers/" + controllerName
+    controller = require "../controllers/" + controllerName
   catch e
     console.warn "controller not found: " + controllerName, e
     next()
