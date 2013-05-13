@@ -2,13 +2,13 @@
 (function() {
   var app, everyone, nowjs, port, server;
 
-  app = require("./.app")();
+  app = require("./.app/")();
 
   nowjs = require("now");
 
-  port = app.port;
+  port = process.env.PORT || process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || 3000;
 
-  server = app.listen(port || 29080);
+  server = app.listen(port);
 
   everyone = nowjs.initialize(server);
 

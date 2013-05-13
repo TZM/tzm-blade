@@ -86,4 +86,7 @@ module.exports = (app) ->
     .use(i18n.handle)
     .use(blade.middleware(process.cwd() + "/views"))
 
+  # Save reference to database connection
+  #app.configure ->
+  #  app.set("db", )
   app

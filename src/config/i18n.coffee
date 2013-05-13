@@ -1,5 +1,5 @@
 module.exports = (app) ->
-
+  
   app.i18n =
     detectLngQS: "lang"
     ,ns: { namespaces: ['ns.common', 'ns.layout', 'ns.forms'], defaultNs: 'ns.common'}

@@ -1,36 +1,37 @@
-#Load external dependencies
-express = require "express"
-stylus = require "stylus"
-mongoose = require "mongoose"
+#Load dependencies
+express = require("express")
+stylus = require("stylus")
+mongoose = require("mongoose")
 i18next = require "i18next"
 
-#Load local dependencies
-models = require "./config/models"
-i18n = require "./config/i18n"
-config = require "./config/config"
-routes = require "./config/routes"
-environments = require "./config/environments"
-#errors = require "./config/errors"
-#hooks = require "./config/hooks"
+models = require("./config/models")
+i18n = require("./config/i18n")
+config = require("./config/config")
+routes = require("./config/routes")
+environments = require("./config/environments")
+#errors = require("./errors")
+#hooks = require("./hooks")
 
-#Load logger
 logger = require "./utils/logger"
-logCategory = "APP"
+logCategory = "APP config"
+
+#  Create Server
+app = express()
 
 #Exports
 module.exports = ->
   
-  #  Create Server
-  app = express()
-  
   #  Load Environmental Settings
-  environments app
+  #environments app
   
   #  Load Mongoose Models
   models app
   
   # Load i18next config
   i18n app
+  # Init i18next
+  i18next.init(app.i18n)
+  i18next.registerAppHelper(app)
   #  Load Expressjs config
   config app
   
@@ -42,6 +43,4 @@ module.exports = ->
   
   #  Load hooks
   #hooks app
-  console.log app.i18n
-  logger.info "App initialized", logCategory
   app
