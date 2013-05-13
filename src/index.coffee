@@ -13,11 +13,13 @@ environments = require("./config/environments")
 #hooks = require("./hooks")
 
 logger = require "./utils/logger"
+# Initialize logger
+logger.configure()
 logCategory = "APP config"
 
 #  Create Server
 app = express()
-
+logger.info "---- App server created ----", logCategory
 #Exports
 module.exports = ->
   
@@ -44,3 +46,5 @@ module.exports = ->
   #  Load hooks
   #hooks app
   app
+
+logger.info "---- Modules loaded into namespace ----", logCategory

@@ -6,11 +6,19 @@
 
   nowjs = require("now");
 
+  if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = "local";
+  }
+
   port = process.env.PORT || process.env.VMC_APP_PORT || process.env.VCAP_APP_PORT || 3000;
 
   server = app.listen(port);
 
   everyone = nowjs.initialize(server);
+
+  console.log(app.settings.env);
+
+  console.log(app.settings);
 
   console.log("Server running at http://127.0.0.1: " + port + "\nPress CTRL-C to stop server.");
 

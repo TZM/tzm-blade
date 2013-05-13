@@ -32,6 +32,14 @@ module.exports = (app) ->
   app.all "/:controller/:method/:id", (req, res, next) ->
     routeMvc(req.params.controller, req.params.method, req, res, next)
 
+  # Robots.txt
+  app.all '/robots.txt', (req, res) ->
+    res.set 'Content-Type', 'text/plain'
+    if app.settings.env == 'production'
+      res.send 'User-agent: *\nDisallow: /signin\nDisallow: /signup\nDisallow: /signout\nSitemap: /sitemap.xml'
+    else
+      res.send 'User-agent: *\nDisallow: /'
+
   # If all else failed, show 404 page
   app.all "/*", (req, res) ->
     console.warn "error 404: ", req.url
