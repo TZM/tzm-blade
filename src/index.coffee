@@ -77,8 +77,7 @@ app.use gzippo.staticGzip(process.cwd() + "/data/topo")
 # Set Blade View Engine and tell Express where our views are stored
 app.set "view engine", "blade"
 app.set "views", process.cwd() + "/views"
-
-
+#
 try
   app.set "chapters", require(process.cwd() + "/data/chapters.json")
   app.set "languages", require(process.cwd() + "/locales/config.json")
@@ -90,7 +89,6 @@ catch e
   app.set "translation", []
   next()
   return
-
 # [Body parser middleware](http://www.senchalabs.org/connect/middleware-bodyParser.html) parses JSON or XML bodies into `req.body` object
 app.use express.bodyParser()
 app.use express.methodOverride()
@@ -124,7 +122,6 @@ app.use (req, res, next) ->
   #else
   #  res.locals.currentImageDir = "/" + i18n.lng()
   next()
-
 
 # Initialize routes
 routes = require "./routes"

@@ -14,8 +14,6 @@ LOCK_TIME = 2 * 60 * 60 * 1000
 # token alive time is 24 hours
 TOKEN_TIME = 24 * 60 * 60 * 1000
 
-exports.mongoose = mongoose
-
 # Database schema
 Schema = mongoose.Schema
 
@@ -152,8 +150,4 @@ UserSchema.statics.activate = (token, cb) ->
         cb "User token has expired."
     else
       cb "User token doesn't exist or is already active."
-
-# Export user model
-User = mongoose.model("User", UserSchema)
-exports = module.exports = User
 

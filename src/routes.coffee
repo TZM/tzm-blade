@@ -3,15 +3,19 @@
 #
 # GET, POST, PUT, DELETE methods are going to the same controller methods - we dont care.
 # We are using method names to determine controller actions for clearness.
-_ = require('underscore')
+
 fs = require 'fs'
 
 module.exports = (app) ->
+  
+  #  Load database and pass it down to the controllers
+  db = app.set("db")
+  
   #   - _/_ -> controllers/index/index method
   app.all "/", (req, res, next) ->
     routeMvc("index", "index", req, res, next)
 
-  fs.readdirSync(__dirname + "/controllers").forEach (file) ->
+  fs.readdirSync(__dirname + "../controllers").forEach (file) ->
     controller = file.split(".")[0]
     app.all "/#{controller}", (req, res, next) ->
       routeMvc("#{controller}", "#{controller}", req, res, next)
