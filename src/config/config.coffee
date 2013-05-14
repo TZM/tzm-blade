@@ -3,6 +3,7 @@ express = require "express"
 csrf = express.csrf()
 assets = require "connect-assets"
 jsPaths = require "connect-assets-jspaths"
+flash = require "connect-flash"
 blade = require "blade"
 i18n = require "i18next"
 logger = require "../utils/logger"
@@ -84,6 +85,7 @@ module.exports = (app) ->
         csrf req, res, next
       else
         next()
+    .use(flash())
     .use(i18n.handle)
     .use(blade.middleware(process.cwd() + "/views"))
 
