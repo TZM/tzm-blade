@@ -1,5 +1,4 @@
 #Load dependencies
-minify = require "express-minify"
 express = require "express"
 csrf = express.csrf()
 assets = require "connect-assets"
@@ -34,7 +33,6 @@ module.exports = (app) ->
       jsPaths assets, console.log
       @use(express.favicon(process.cwd() + "/assets/images/favicon.ico", {maxAge:maxAges}))
       .use(express.compress())
-      .use(minify())
       .use(express.static(process.cwd() + "/assets", {maxAge:maxAges}))
       .use(express.static(process.cwd() + "/public", {maxAge:maxAges}))
       .use(express.static(process.cwd() + "/nowjs", {maxAge:maxAges}))
