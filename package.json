@@ -36,7 +36,6 @@
     "connect-assets": "~2.4.1",
     "connect-assets-jspaths": "0.0.9",
     "less": "~1.3.3",
-    "gzippo": "~0.2.0",
     "stylus": "~0.32.1",
     "winston": "~0.7.1",
     "nodemailer": "~0.4.1",
@@ -45,7 +44,8 @@
     "connect-redis": "~1.4.5",
     "connect-multi-redis": "~0.2.0",
     "redis": "~0.8.3",
-    "express-mongoose": "~0.1.0"
+    "express-mongoose": "~0.1.0",
+    "express-minify": "0.0.4"
   },
   "devDependencies": {
     "coffee-script": ">=1.6.2",

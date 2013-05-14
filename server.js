@@ -18,7 +18,6 @@
 
   console.log(app.settings.env);
 
-  console.log(app.settings);
 
   console.log("Server running at http://127.0.0.1: " + port + "\nPress CTRL-C to stop server.");
 
