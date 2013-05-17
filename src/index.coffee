@@ -24,7 +24,7 @@ logger.info "---- App server created ----", logCategory
 module.exports = ->
   
   #  Load Environmental Settings
-  #environments app
+  environments app
   
   #  Load Mongoose Models
   models app

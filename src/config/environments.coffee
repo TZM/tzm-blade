@@ -29,50 +29,14 @@ module.exports = (app) ->
     @set("host", "localhost")
     .set("port", port)
     .set("ENV", "local")
-    .set(DEBUG_LOG = true)           
-    .set(DEBUG_WARN = true)
-    .set(DEBUG_ERROR = true)
-    .set(DEBUG_CLIENT = true)
-    .set(DB_URL = DB_URL)
+    .set("DEBUG_LOG", true)           
+    .set("DEBUG_WARN", true)
+    .set("DEBUG_ERROR", true)
+    .set("DEBUG_CLIENT", true)
+    .set("DB_URL", DB_URL)
 
   app.configure "production", ->
 
     @set("host", "chapter.zmgc.net").set("port", port).set "ENV", "production"
-  
-  app
-  
 
-#Set the current environment to true in the env object
-#exports.setEnvironment = (env) ->
-#  logger.info "Set app environment: #{env}", logCategory
-#
-#  switch(env)
-#    when "development"
-#      exports.DEBUG_LOG = true
-#      exports.DEBUG_WARN = true
-#      exports.DEBUG_ERROR = true
-#      exports.DEBUG_CLIENT = true
-#      exports.DB_URL = DB_URL
-#
-#    when "testing"
-#      exports.DEBUG_LOG = true
-#      exports.DEBUG_WARN = true
-#      exports.DEBUG_ERROR = true
-#      exports.DEBUG_CLIENT = true
-#      exports.DB_URL = DB_URL
-#
-#    when "staging"
-#      exports.DEBUG_LOG = true
-#      exports.DEBUG_WARN = true
-#      exports.DEBUG_ERROR = true
-#      exports.DEBUG_CLIENT = true
-#      exports.DB_URL = DB_URL
-#
-#    when "production"
-#      exports.DEBUG_LOG = false
-#      exports.DEBUG_WARN = false
-#      exports.DEBUG_ERROR = true
-#      exports.DEBUG_CLIENT = false
-#      exports.DB_URL = DB_URL
-#    else
-#      logger.info "Environment #{env} not found", logCategory
+  app
