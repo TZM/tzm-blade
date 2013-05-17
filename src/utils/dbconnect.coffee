@@ -1,17 +1,18 @@
 
 # Connecting to database on mongodb
-config = require "../config/index"
+config = require "../config/environments"
 logger = require("./logger")
 mongoose = require("mongoose")
 mongoose.set "debug", true
 
 logCategory = "DATABASE Connection"
 
+
 db_connect_mongo = init: (callback) ->
   self = this
   mongo_options = db:
       safe: true
-  db_url = config.DB_URL
+  db_url =  app.get("DB_URL") 
   mongoose.connect db_url, mongo_options
   db = self.db_mongo = mongoose.connection
 

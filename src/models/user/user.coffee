@@ -151,3 +151,5 @@ UserSchema.statics.activate = (token, cb) ->
     else
       cb "User token doesn't exist or is already active."
 
+module.exports = mongoose.model 'User', UserSchema
+

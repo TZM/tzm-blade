@@ -49,4 +49,9 @@ module.exports =
       else
         res.send err
         res.statusCode = 500
+        
+  # Login user
+  login: (req, res) ->
+     console.log (_csrf: req.session._csrf)
+     res.render "user/login", _csrf: req.session._csrf
       

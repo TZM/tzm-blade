@@ -11,7 +11,7 @@ routes = require("./config/routes")
 environments = require("./config/environments")
 #errors = require("./errors")
 #hooks = require("./hooks")
-
+dbconnection = require "./utils/dbconnect"
 logger = require "./utils/logger"
 # Initialize logger
 logger.configure()
@@ -25,7 +25,7 @@ module.exports = ->
   
   #  Load Environmental Settings
   environments app
-  
+
   #  Load Mongoose Models
   models app
   
@@ -48,3 +48,12 @@ module.exports = ->
   app
 
 logger.info "---- Modules loaded into namespace ----", logCategory
+console.log "---- ZZZZZ ----  "
+# Connect to database
+dbconnection.init (result) ->
+  "use strict"
+  if result
+    logger.info "Database initialized", logCategory
+  else
+    logger.error "Database not initialized " + result + ". ", logCategory
+    process.exit 1
