@@ -53,7 +53,7 @@ routeMvc = (controllerName, methodName, req, res, next) ->
   try
     controller = require "../controllers/" + controllerName
   catch e
-    console.warn "controller not found: " + controllerName, e
+    console.warn "controller not found:  " + controllerName, e
     next()
     return
   data = null

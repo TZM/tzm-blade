@@ -45,7 +45,8 @@
     "connect-multi-redis": "~0.2.0",
     "redis": "~0.8.3",
     "express-mongoose": "~0.1.0",
-    "connect-flash": "~0.1.1"
+    "connect-flash": "~0.1.1",
+    "base64url": "0.0.4"
   },
   "devDependencies": {
     "coffee-script": ">=1.6.2",

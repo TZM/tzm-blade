@@ -7,6 +7,7 @@
 mongoose = require "mongoose"
 bcrypt = require "bcrypt"
 crypto = require "crypto"
+base64url = require "base64url"
 SALT_WORK_FACTOR = 10
 # default to a max of 5 attempts, result in a 2 hour lock
 MAX_LOGIN_ATTEMPTS = 5
@@ -16,6 +17,18 @@ TOKEN_TIME = 24 * 60 * 60 * 1000
 
 # Database schema
 Schema = mongoose.Schema
+
+# User Groups schema
+#UserGroupSchema = new Schema(
+#  name:
+#    type: String
+#    required: true
+#    index:
+#      unique: true
+#    default: "guest"
+#  group: 
+#    type: "ObjectId"
+#)
 
 # User schema
 UserSchema = new Schema(
@@ -34,6 +47,7 @@ UserSchema = new Schema(
     require: true
     default: false
 
+  #groups: [UserGroupSchema]
   groups: # [guest, member, reviewer, admin]
     type: String
     enum: ["guest", "member", "reviewers", "admin"]
@@ -86,8 +100,8 @@ UserSchema.pre "save", (next) ->
       user.password = hash
       
       # update token
-      crypto.randomBytes 32, (ex, buf) ->
-        user.tokenString = buf.toString("hex")
+      crypto.randomBytes 48, (ex, buf) ->
+        user.tokenString = base64url(buf)
         user.tokenExpires = Date.now() + TOKEN_TIME
         next()
 
@@ -121,12 +135,11 @@ UserSchema.methods.incLoginAttempts = (cb) ->
 # Register new user
 UserSchema.statics.register = (user, cb) ->
   self = new this(user)
-  console.log "HERE"
   @findOne
     email: user.email
   , (err, existingUser) ->
     return cb(err)  if err
-    return cb("User already exists: " + user.email)  if existingUser
+    return cb("user-exists: " + user.email)  if existingUser
     self.save (err) ->
       return cb(err)  if err
       cb null, self
@@ -143,13 +156,12 @@ UserSchema.statics.activate = (token, cb) ->
         existingUser.update
           $set:
             active: true
+            groups: "member"
         , cb
-      
-      # return cb(null, existingUser);
       else
-        cb "User token has expired."
+        cb "token-expired"
     else
-      cb "User token doesn't exist or is already active."
+      cb "token-expired-or-user-active"
 
 module.exports = mongoose.model 'User', UserSchema
 
