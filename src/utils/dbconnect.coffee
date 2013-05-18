@@ -7,7 +7,7 @@ mongoose.set "debug", true
 logCategory = "DATABASE Connection"
 DB_HOST = "localhost"
 DB_PORT = "27017"
-DB_NAME = "zmgc"
+DB_NAME = "zmgc-mongo"
 DB_URL = null
 DB_USER = null
 DB_PASS = null
