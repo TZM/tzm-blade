@@ -1,31 +1,32 @@
-#Load dependencies
+#Load external dependencies
 express = require("express")
 stylus = require("stylus")
 mongoose = require("mongoose")
 i18next = require "i18next"
 
+#Load local dependencies
 models = require("./config/models")
 i18n = require("./config/i18n")
 config = require("./config/config")
 routes = require("./config/routes")
-environments = require("./config/environments")
-#errors = require("./errors")
-#hooks = require("./hooks")
+
+#Load database dependencies
 dbconnection = require "./utils/dbconnect"
+
+#Load logger
 logger = require "./utils/logger"
+
 # Initialize logger
 logger.configure()
 logCategory = "APP config"
 
-#  Create Server
-app = express()
 logger.info "---- App server created ----", logCategory
+
 #Exports
 module.exports = ->
+  #  Create Server
+  app = express()
   
-  #  Load Environmental Settings
-  environments app
-
   #  Load Mongoose Models
   models app
   
@@ -40,20 +41,10 @@ module.exports = ->
   #  Load routes config
   routes app
   
-  #  Load error routes + pages
-  #errors app
-  
-  #  Load hooks
-  #hooks app
   app
 
 logger.info "---- Modules loaded into namespace ----", logCategory
-console.log "---- ZZZZZ ----  "
 # Connect to database
 dbconnection.init (result) ->
-  "use strict"
   if result
     logger.info "Database initialized", logCategory
-  else
-    logger.error "Database not initialized " + result + ". ", logCategory
-    process.exit 1
