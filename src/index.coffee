@@ -10,9 +10,6 @@ i18n = require("./config/i18n")
 config = require("./config/config")
 routes = require("./config/routes")
 
-#Load database dependencies
-dbconnection = require "./utils/dbconnect"
-
 #Load logger
 logger = require "./utils/logger"
 
@@ -20,12 +17,21 @@ logger = require "./utils/logger"
 logger.configure()
 logCategory = "APP config"
 
+#  Create Server
+app = express()
 logger.info "---- App server created ----", logCategory
+# Define Port
+app.port = process.env.PORT or process.env.VMC_APP_PORT or process.env.VCAP_APP_PORT or 3000
+logger.info "---- Server running on port: " + app.port, logCategory
+
+# Connect to database
+dbconnection = require "./utils/dbconnect"
+dbconnection.init (result) ->
+  if result
+    logger.info "Database initialized: " + result, logCategory
 
 #Exports
 module.exports = ->
-  #  Create Server
-  app = express()
   
   #  Load Mongoose Models
   models app
@@ -44,7 +50,3 @@ module.exports = ->
   app
 
 logger.info "---- Modules loaded into namespace ----", logCategory
-# Connect to database
-dbconnection.init (result) ->
-  if result
-    logger.info "Database initialized", logCategory
