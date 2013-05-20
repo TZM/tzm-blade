@@ -8,6 +8,11 @@ mongoose = require "mongoose"
 bcrypt = require "bcrypt"
 crypto = require "crypto"
 base64url = require "base64url"
+sanitize = require("validator").sanitize
+validator = require("../../utils/validation").validator()
+validation = require("../../utils/validation")
+messages = require "../../utils/messages"
+
 SALT_WORK_FACTOR = 10
 # default to a max of 5 attempts, result in a 2 hour lock
 MAX_LOGIN_ATTEMPTS = 5
@@ -135,14 +140,99 @@ UserSchema.methods.incLoginAttempts = (cb) ->
 # Register new user
 UserSchema.statics.register = (user, cb) ->
   self = new this(user)
-  @findOne
-    email: user.email
-  , (err, existingUser) ->
-    return cb(err)  if err
-    return cb("user-exists: " + user.email)  if existingUser
-    self.save (err) ->
+  user.email = sanitize(user.email.toLowerCase().trim()).xss()
+  validator.check(user.email, messages.VALIDATE_EMAIL).isEmail()
+  errors = validator.getErrors()
+  if errors.length
+    errorString = errors.join("<br>")
+    return cb(errorString)
+    console.log "Registration form failed with " + errors
+    #go to the signup page
+    return cb(errorString, null)
+  else
+    @findOne
+      email: user.email
+    , (err, existingUser) ->
       return cb(err)  if err
-      cb null, self
+      return cb("user-exists")  if existingUser
+      self.save (err) ->
+        return cb(err) if err
+        cb null, self
+
+#UserSchema.statics.register = (email, cb) ->
+#  console.log "======="
+#  console.log email
+#  console.log "======="
+#  # check the validity of the input
+#  #validator.check(user.first, messages.VALIDATE_FIRST_NAME).notEmpty()
+#  #validator.check(user.last, messages.VALIDATE_LAST_NAME).notEmpty()
+#  validator.check(email, messages.VALIDATE_EMAIL).isEmail()
+#  #validator.check(user.password, messages.VALIDATE_PASSWORD).len 6, 128
+#  errors = validator.getErrors()
+#  console.log errors
+  #if user.email
+  #  validation.disposableEmail user.email.trim(), (err, disposable) ->
+  #    errors.push messages.DISPOSABLE_EMAIL  if err or disposable
+  #
+  #if errors.length
+  #  errorString = errors.join("<br>")
+  #  return cb(errorString)
+  #  logger.info "Registration form failed with " + errors
+  #  
+  #  #go to the signup page
+  #  return cb(errorString, null)
+  #
+  ## validate if an account for the email already exists
+  #exports.findUserByEmail user.email, (err, existingUser) ->
+  #  console.log user.email
+  #  # if user exists validate if active or not and notify user
+  #  if existingUser isnt null
+  #    logger.info "registerUser - User:" + user.email + " already exists"
+  #    if existingUser.active
+  #      
+  #      #go to the login page
+  #      cb messages.USER_REGISTERED_AND_ACTIVE, null
+  #    else
+  #      
+  #      #go to the resent activation link
+  #      cb messages.USER_REGISTERED_NOT_ACTIVE, null
+  #  else
+  #    
+  #    # create a new user ready to save.
+  #    newUser = new User()
+  #    newUser.email = sanitize(user.email.toLowerCase().trim()).xss()
+  #    
+  #    newUser.password = sanitize(user.password.trim()).xss()
+  #    newUser.auth.activationKey = uuid()
+  #    
+  #    # Save the new user and pass the cb.
+  #    newUser.save (err) ->
+  #      if err
+  #        logger.error err
+  #        return cb(messages.DATABASE_USER_NOT_SAVED, null)
+  #      console.log "EMAIL newUser " + newUser.email
+  #      ## email user
+  #      #options =
+  #      #  template: "validation"
+  #      #  from: "Global Chapter Administration <gca@zmgc.net>"
+  #      #  subject: "Email validation"
+  #      #
+  #      #data =
+  #      #  email: newUser.email
+  #      #  activationLink: config.domain + "/user/activate/" + newUser.auth.activationKey
+  #      #
+  #      #emailer.send options, data, (err, response) ->
+  #      #  
+  #      #  #TODO: what should happen if this email fails???
+  #      #  logger.error "activation mail failed with " + err  if err
+  #      #
+  #      #
+  #      ## throw new Error(err);
+  #      #
+  #      ## do not wait for mail cb to proceed. Can take a few seconds
+  #      cb null, newUser
+
+
 
 # Activate new user
 UserSchema.statics.activate = (token, cb) ->

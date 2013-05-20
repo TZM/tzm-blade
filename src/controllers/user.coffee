@@ -1,4 +1,8 @@
 User = require "../models/user/user"
+sanitize = require("validator").sanitize
+validator = require("../utils/validation").validator()
+validation = require("../utils/validation")
+messages = require "../utils/messages"
 
 # User model's CRUD controller.
 module.exports = 
@@ -13,6 +17,7 @@ module.exports =
   create: (req, res) ->
     # FIXME - have a better error page
     user = new User req.body
+
     user.save (err, user) ->
       if not err
         # check if user email exists
