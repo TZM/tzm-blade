@@ -5,26 +5,28 @@ mongoose = require("mongoose")
 i18next = require "i18next"
 
 #Load local dependencies
-models = require("./config/models")
-i18n = require("./config/i18n")
-config = require("./config/config")
-routes = require("./config/routes")
+config = require "./config/config"
+models = require "./config/models"
+i18n = require "./config/i18n"
+apps = require "./config/apps"
+routes = require "./config/routes"
 
-#Load logger
+#Load and intitialize logger
 logger = require "./utils/logger"
-
-# Initialize logger
 logger.configure()
 logCategory = "APP config"
 
-#  Create Server
+# Create server and set environment
 app = express()
-logger.info "---- App server created ----", logCategory
-# Define Port
-app.port = process.env.PORT or process.env.VMC_APP_PORT or process.env.VCAP_APP_PORT or 3000
-logger.info "---- Server running on port: " + app.port, logCategory
+app.configure "production", "development", "test", ->
+  config.setEnvironment app.settings.env
+logger.info "--- App server created and local env set to: "+app.settings.env+" ---", logCategory
 
-# Connect to database
+#Define Port
+app.port = config.PORT
+logger.info "--- Server running on port: "+app.port+" ---", logCategory
+
+#Connect to database
 dbconnection = require "./utils/dbconnect"
 dbconnection.init (result) ->
   if result
@@ -42,11 +44,11 @@ module.exports = ->
   i18next.init(app.i18n)
   i18next.registerAppHelper(app)
   #  Load Expressjs config
-  config app
+  apps app
   
   #  Load routes config
   routes app
   
   app
 
-logger.info "---- Modules loaded into namespace ----", logCategory
+logger.info "--- Modules loaded into namespace ---", logCategory
