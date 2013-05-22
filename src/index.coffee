@@ -21,7 +21,7 @@ logCategory = "APP config"
 app = express()
 app.configure "production", "development", "test", ->
   config.setEnvironment app.settings.env
-console.log app.settings.env
+
 logger.info "--- App server created and local env set to: "+app.settings.env+" ---", logCategory
 
 #Define Port

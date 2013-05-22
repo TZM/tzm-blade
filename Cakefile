@@ -29,6 +29,7 @@ build = (callback) ->
 
 # mocha test
 test = (callback) ->
+  process.env["NODE_ENV"] = "test"
   options = [
     '--globals'
     'hasCert,res'
@@ -43,7 +44,7 @@ test = (callback) ->
     './server'
   ]
   try
-    cmd = which.sync 'mocha' 
+    cmd = which.sync 'mocha'
     spec = spawn cmd, options
     spec.stdout.pipe process.stdout 
     spec.stderr.pipe process.stderr
@@ -52,7 +53,11 @@ test = (callback) ->
     log err.message, red
     log 'Mocha is not installed - try npm install mocha -g', red
 
-task 'docs', 'Generate annotated source code with Docco', ->
+#
+task 'apidoc', 'generate API documentation', ->
+  exec "./node_modules/coffeedoc/bin/coffeedoc -o docs html src"
+  
+task 'docs', 'Generate annotated source code with Doccco-Husky', ->
   files = wrench.readdirSyncRecursive("src")
   files = ("src/#{file}" for file in files when /\.coffee$/.test file)
   log files

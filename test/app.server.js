@@ -1,11 +1,11 @@
-var app = require("../.app/")
+var app = require("../.app/")()
   , should = require('should')
   , express = require('express')
   , RedisStore = require("connect-redis")(express);
 
 describe('app', function(){
   it('should expose app settings', function(done){
-    var obj = app.settings.env;
+    var obj = app.settings;
     obj.should.have.property('env', 'test');
     done();
   });

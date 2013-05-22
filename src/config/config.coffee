@@ -2,7 +2,6 @@
 # Sets application config parameters depending on `env` name
 
 exports.setEnvironment = (env) ->
-  console.log "set app environment: #{env}"
   db = require("./db")
   # General settings
   exports.SMTP =
