@@ -26,13 +26,13 @@ exports.setEnvironment = (env) ->
         hostname: "localhost"
         host: "127.0.0.1"
 
-    when "testing"
+    when "test"
       exports.PORT = process.env.PORT or 3000
       exports.DEBUG_LOG = true
       exports.DEBUG_WARN = true
       exports.DEBUG_ERROR = true
       exports.DEBUG_CLIENT = true
-      exports.REDIS_DB = settings.redis
+      exports.REDIS_DB = db.redis
       exports.MONGO_DB_URL = db.mongo.MONGO_DB_URL
 
     when "production"
@@ -41,8 +41,11 @@ exports.setEnvironment = (env) ->
       exports.DEBUG_WARN = false
       exports.DEBUG_ERROR = true
       exports.DEBUG_CLIENT = false
-      exports.REDIS_DB = settings.redis
+      exports.REDIS_DB = db.redis
       exports.MONGO_DB_URL = db.mongo.MONGO_DB_URL
+      exports.APP =
+        name: "ZMGC"
+        hostname: "chapter.zmgc.net"
     else
       console.log "environment #{env} not found"
 

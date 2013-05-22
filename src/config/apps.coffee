@@ -8,6 +8,7 @@ RedisStore = require("connect-redis")(express)
 blade = require "blade"
 i18n = require "i18next"
 logger = require "../utils/logger"
+passport = require "passport"
 
 logCategory = "CONFIGURE"
 maxAges = 86400000 * 30
@@ -87,22 +88,34 @@ module.exports = (app) ->
     .use(express.cookieParser('90dj7Q2nC53pFj2b0fa81a3f663fd64'))
     .use(multipleRedisSessions(options))
     .use(express.session(
+      key: 'zmgc-connect.sid'
       store: options.hosts[0]
       secret: 'f2e5a67d388ff2090dj7Q2nC53pF'
       cookie:
         maxAge: 86400000 * 30     # 90 days
     ))
-    .use (req, res, next) ->
-      # Only use CSRF if user is logged in
-      if req.session.userId
-        csrf req, res, next
-      else
-        next()
+    #csrf protection
+    #.use (req, res, next) ->
+    #  # Only use CSRF if user is logged in
+    #  if req.session.userId
+    #    csrf req, res, next
+    #  else
+    #    next()
     .use(flash())
     .use(i18n.handle)
     .use(blade.middleware(process.cwd() + "/views"))
+    #.use(passport.initialize())
+    #.use(passport.session())
+    .use(express.csrf())
+    #Configure dynamic helpers
+    .use (req, res, next) ->
+      formData = req.session.formData or {}
+      delete req.session.formData
+      res.locals
+        #for use in templates
+        appName: config.APP.name
+        # needed for csrf support
+        token: req.session._csrf
+      next()
 
-  # Save reference to database connection
-  #app.configure ->
-  #  app.set("db", )
   app

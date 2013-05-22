@@ -14,6 +14,7 @@ db_connect_mongo = init: (callback) ->
   self = this
   mongo_options = db:
       safe: true
+      #auto_reconnect: true
   mongoose.connect DB_URL, mongo_options
   db = self.db_mongo = mongoose.connection
 
@@ -21,9 +22,9 @@ db_connect_mongo = init: (callback) ->
     logger.error "ERROR connecting to: " + DB_URL, logCategory
     callback error, null
 
-  db.on "connected", ->
+  db.on "connected",  ->
     logger.info "SUCCESSFULLY connected to: " + DB_URL, logCategory
-    callback true, db
+    callback null, db
 
   db.on "disconnected", ->
     logger.info "DISCONNECTED from the database: " + DB_URL, logCategory

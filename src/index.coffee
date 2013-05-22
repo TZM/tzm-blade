@@ -1,8 +1,9 @@
 #Load external dependencies
-express = require("express")
-stylus = require("stylus")
-mongoose = require("mongoose")
+express = require "express"
+stylus = require "stylus"
+mongoose = require "mongoose"
 i18next = require "i18next"
+#passport = require "passport"
 
 #Load local dependencies
 config = require "./config/config"
@@ -20,6 +21,7 @@ logCategory = "APP config"
 app = express()
 app.configure "production", "development", "test", ->
   config.setEnvironment app.settings.env
+console.log app.settings.env
 logger.info "--- App server created and local env set to: "+app.settings.env+" ---", logCategory
 
 #Define Port

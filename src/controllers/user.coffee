@@ -81,5 +81,5 @@ module.exports =
   # Login user
   login: (req, res) ->
      console.log (_csrf: req.session._csrf)
-     #res.render "user/login", _csrf: req.session._csrf
+     #res.render "login", _csrf: req.session._csrf
       

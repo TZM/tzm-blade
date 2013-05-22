@@ -1,4 +1,7 @@
 # Just renders index.blade
 
 exports.index = (req, res) ->
-    res.render "index"
+    tmpl = 
+      "hello": ["world", "xxxx"]
+    res.render "index", _tmpl: tmpl
+    #res.send data

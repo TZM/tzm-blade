@@ -7,10 +7,7 @@
 fs = require 'fs'
 
 module.exports = (app) ->
-  
-  #  Load database and pass it down to the controllers
-  db = app.set("db")
-  
+
   #   - _/_ -> controllers/index/index method
   app.all "/", (req, res, next) ->
     routeMvc("index", "index", req, res, next)
