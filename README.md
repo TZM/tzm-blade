@@ -62,6 +62,24 @@ To run locally for development use:
 
     DEBUG: Running node-supervisor with
     ....
+#Testing
+To run the tests, use:
+
+     ☺  cake test
+     Assetizing footer
+     ...
+
+       app
+         ✓ should expose app settings
+
+       sessions
+         ✓ should be able to store sessions
+         ✓ should be able to retrieve sessions
+
+
+       3 tests complete (51 ms)
+
+     ✓ Mocha tests complete
 #Warning
 This application is still a work in progress and is not ready for use yet.
 #Directories
@@ -78,19 +96,20 @@ This application is still a work in progress and is not ready for use yet.
 * /views          : Blade views / pages
 
 #Stats
-    ☺ cloc --exclude-dir=.app,buildAssets,data,public/css/font,public/css/fonts,public/css/vendor,public/js/vendor .
-        88 text files.
-        78 unique files.
-        4740 files ignored.
+    ☺  cloc --exclude-dir=.app,buildAssets,data,public/css/font,public/css/fonts,public/css/vendor,public/js/vendor,node_modules .
+         101 text files.
+          92 unique files.
+       13379 files ignored.
 
-        http://cloc.sourceforge.net v 1.56  T=1.0 s (39.0 files/s, 4317.0 lines/s)
-        -------------------------------------------------------------------------------
-        Language                     files          blank        comment           code
-        -------------------------------------------------------------------------------
-        CSS                              4            162            213           1804
-        Javascript                      12            128            269            725
-        CoffeeScript                    22            143            178            676
-        Bourne Shell                     1              0              0             19
-        -------------------------------------------------------------------------------
-        SUM:                            39            433            660           3224
-        ------------------------------------------------------------------------------- 
+    http://cloc.sourceforge.net v 1.56  T=1.0 s (47.0 files/s, 4957.0 lines/s)
+    -------------------------------------------------------------------------------
+    Language                     files          blank        comment           code
+    -------------------------------------------------------------------------------
+    CSS                              4            188            213           1957
+    CoffeeScript                    30            191            369            984
+    Javascript                      11            104            265            624
+    Bourne Shell                     1              0              0             19
+    make                             1             12             13             18
+    -------------------------------------------------------------------------------
+    SUM:                            47            495            860           3602
+    -------------------------------------------------------------------------------

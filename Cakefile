@@ -13,7 +13,7 @@ reset = '\x1B[0m'
 pkg = JSON.parse fs.readFileSync('./package.json')
 testCmd = pkg.scripts.test
 startCmd = pkg.scripts.start
-  
+
 
 log = (message, color, explanation) ->
   console.log color + message + reset + ' ' + (explanation or '')
@@ -73,13 +73,13 @@ task 'docs', 'Generate annotated source code with Doccco-Husky', ->
 
 
 task 'build', ->
-  build -> log "✓", green
+  build -> log "✓ Build complete, now run `cake dev`", green
 
 task 'spec', 'Run Mocha tests', ->
-  build -> test -> log "✓", green
+  build -> test -> log "✓ Mocha spec complete", green
 
 task 'test', 'Run Mocha tests', ->
-  build -> test -> log "✓", green
+  build -> test -> log "✓ Mocha tests complete", green
 
 task 'dev', 'start dev env', ->
   # watch_coffee

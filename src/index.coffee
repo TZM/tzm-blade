@@ -8,13 +8,11 @@ i18next = require "i18next"
 #Load local dependencies
 config = require "./config/config"
 models = require "./config/models"
-i18n = require "./config/i18n"
 apps = require "./config/apps"
 routes = require "./config/routes"
 
 #Load and intitialize logger
 logger = require "./utils/logger"
-logger.configure()
 logCategory = "APP config"
 
 # Create server and set environment
@@ -22,6 +20,8 @@ app = express()
 app.configure "production", "development", "test", ->
   config.setEnvironment app.settings.env
 
+# TODO store log messages in the RIAK db
+logger.configure()
 logger.info "--- App server created and local env set to: "+app.settings.env+" ---", logCategory
 
 #Define Port
@@ -39,18 +39,15 @@ module.exports = ->
   
   #  Load Mongoose Models
   models app
-  
-  # Load i18next config
-  i18n app
   # Init i18next
-  i18next.init(app.i18n)
-  i18next.registerAppHelper(app)
-  #  Load Expressjs config
+  i18next.init(config.I18N)
+  # Load Expressjs config
   apps app
-  
   #  Load routes config
   routes app
   
   app
 
+# register i18next helpers
+i18next.registerAppHelper(app)
 logger.info "--- Modules loaded into namespace ---", logCategory
