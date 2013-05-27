@@ -15,7 +15,6 @@ maxAges = 86400000 * 30
 
 config = require "../config/config"
 config.setEnvironment process.env.NODE_ENV
-
 # Redis session stores
 options =
   hosts: [new RedisStore(

@@ -4,7 +4,7 @@
 
   require("coffee-script");
 
-  init = require("./.app/")();
+  init = require("./.app/index.js")();
 
   nowjs = require("now");
 

@@ -19,7 +19,7 @@ logCategory = "APP config"
 app = express()
 app.configure "production", "development", "test", ->
   config.setEnvironment app.settings.env
-
+  console.log 'environment is: ', app.settings.env
 # TODO store log messages in the RIAK db
 logger.configure()
 logger.info "--- App server created and local env set to: "+app.settings.env+" ---", logCategory
