@@ -1,4 +1,4 @@
-app = require("../.app/")()
+app = require("../app/")()
 should = require("should")
 express = require("express")
 RedisStore = require("connect-redis")(express)

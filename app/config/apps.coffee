@@ -40,7 +40,7 @@ module.exports = (app) ->
   multipleRedisSessions = require("connect-multi-redis")(app, express.session)
   logger.info "Configure expressjs", logCategory
   # FIXME use _.each to loop for each dirs and Gzip
-  dirs = ["/assets", "/public", "/nowjs", "/locales", "/data/topo"]
+  dirs = ["/assets", "/public", "/locales", "/data/topo"]
   app.configure ->
       app.use assets(build : true)
       jsPaths assets, console.log
@@ -48,7 +48,6 @@ module.exports = (app) ->
       .use(express.compress())
       .use(express.static(process.cwd() + "/assets", {maxAge:maxAges}))
       .use(express.static(process.cwd() + "/public", {maxAge:maxAges}))
-      .use(express.static(process.cwd() + "/nowjs", {maxAge:maxAges}))
       .use(express.static(process.cwd() + "/locales", {maxAge:maxAges}))
       .use(express.static(process.cwd() + "/data/topo", {maxAge:maxAges}))
       .use(express.logger('dev'))
@@ -105,7 +104,7 @@ module.exports = (app) ->
     .use(blade.middleware(process.cwd() + "/views"))
     #.use(passport.initialize())
     #.use(passport.session())
-    .use(express.csrf())
+    # .use(express.csrf())
     #Configure dynamic helpers
     .use (req, res, next) ->
       formData = req.session.formData or {}

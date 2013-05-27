@@ -80,6 +80,8 @@ module.exports =
         
   # Login user
   login: (req, res) ->
+     console.log('user/login')
      console.log (_csrf: req.session._csrf)
+     res.send 200
      #res.render "login", _csrf: req.session._csrf
       

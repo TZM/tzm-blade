@@ -20,12 +20,13 @@ log = (message, color, explanation) ->
 
 # Compiles app.coffee and src directory to the .app directory
 build = (callback) ->
-  options = ['-c','-b', '-o', '.app', 'src']
-  cmd = which.sync 'coffee'
-  coffee = spawn cmd, options
-  coffee.stdout.pipe process.stdout
-  coffee.stderr.pipe process.stderr
-  coffee.on 'exit', (status) -> callback?() if status is 0
+  # options = ['-c','-b', '-o', '.app', 'src']
+  # cmd = which.sync 'coffee'
+  # coffee = spawn cmd, options
+  # coffee.stdout.pipe process.stdout
+  # coffee.stderr.pipe process.stderr
+  # coffee.on 'exit', (status) -> callback?() if status is 0
+  callback?()
 
 # mocha test
 test = (callback) ->
@@ -41,7 +42,7 @@ test = (callback) ->
     '--require'
     'should'
     '--require'
-    './server'
+    './run'
   ]
   try
     cmd = which.sync 'mocha'
@@ -83,20 +84,20 @@ task 'test', 'Run Mocha tests', ->
 
 task 'dev', 'start dev env', ->
   # watch_coffee
-  options = ['-c', '-b', '-w', '-o', '.app', 'src']
-  cmd = which.sync 'coffee'  
-  coffee = spawn cmd, options
-  coffee.stdout.pipe process.stdout
-  coffee.stderr.pipe process.stderr
+  # options = ['-c', '-b', '-w', '-o', '.app', 'src']
+  # cmd = which.sync 'coffee'  
+  # coffee = spawn cmd, options
+  # coffee.stdout.pipe process.stdout
+  # coffee.stderr.pipe process.stderr
   log 'Watching coffee files', green
   # watch_js
   supervisor = spawn 'node', [
     './node_modules/supervisor/lib/cli-wrapper.js',
     '-w',
-    '.app,views', 
+    'app,views', 
     '-e', 
     'js|blade', 
-    'server'
+    'run'
   ]
   supervisor.stdout.pipe process.stdout
   supervisor.stderr.pipe process.stderr
@@ -113,7 +114,7 @@ task 'debug', 'start debug env', ->
   # run debug mode
   app = spawn 'node', [
     '--debug',
-    'server'
+    'run'
   ]
   app.stdout.pipe process.stdout
   app.stderr.pipe process.stderr

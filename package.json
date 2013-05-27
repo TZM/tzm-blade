@@ -15,7 +15,7 @@
   },
   "scripts": {
     "install": "node node_modules/coffee-script/bin/cake build",
-    "start": "node server.js",
+    "start": "node run.js",
     "test": "make test"
   },
   "dependencies": {
@@ -23,7 +23,6 @@
     "mongoose": "*",
     "bcrypt": "*",
     "ua-parser-js": "~0.6",
-    "now": "git://github.com/nkhine/now.git",
     "i18next": "~1.5.16",
     "blade": "git://github.com/bminer/node-blade.git",
     "d3": "~3.0.6",
