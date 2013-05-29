@@ -2,8 +2,8 @@
 # Sets application config parameters depending on `env` name
 db = require "./db"
 i18next = require "./i18n"
-
 exports.setEnvironment = (env) ->
+
   #I18N = require "./i18n"
   # General settings
   exports.SMTP =

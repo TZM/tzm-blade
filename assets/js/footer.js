@@ -33,18 +33,6 @@ $(function($) {
     $( "body" ).css( "marginTop", 0 );
   });
   
-   $("#remember_me").click(function(e) {
-       if ($("#remember_me").val() == "off"){
-         $("#password").attr("disabled", true)
-         $("#email").focus()
-         $(".btn-login").html('Continue')
-         $("#remember_me").val("on")
-       }else{
-         $("#password").attr("disabled", false)
-         $(".btn-login").html("Login")
-         $("#remember_me").val("off")
-       }
-   })
   //don't close login form
   $(".forgot-password").click(function(e){
   //do something

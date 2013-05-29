@@ -1,14 +1,14 @@
-# Just renders login.blade
-exports.login = (req, res) ->
-  console.log (_csrf: req.session._csrf)
-  console.log req.body
-  res.render "user/login", _csrf: req.session._csrf
+#Just renders login.blade
+#exports.login = (req, res) ->
+  #console.log (_csrf: req.session._csrf)
+  #console.log 'REQ.BODY!!!!!!!!!!!!!!!!!',req.body
+  #res.render "user/login", _csrf: req.session._csrf
 exports.login = (req, res, next) ->
   console.log('LOGIN');
   if req.isAuthenticated()
    next()
   
-  # login request with cookie
+  # login request with cokie
   else if req.signedCookies.logintoken
    cookie = JSON.parse(req.signedCookies.logintoken)
    LoginToken.findOne
@@ -59,7 +59,7 @@ exports.login = (req, res, next) ->
   
   # coming from login or activation
   else if req.newUser
-   
+   console.log 'new user'
    #wipe out req.newUser
    newUser = req.newUser
    req.newUser = {}
@@ -67,7 +67,7 @@ exports.login = (req, res, next) ->
      return res.redirect(routes.login.url)  if err
      if req.body.remember_me
        agent = useragent.parse(req.headers["user-agent"])
-       
+       console.log 'useragent'
        # TODO: add geo ip
        loginToken = new LoginToken(
          email: newUser.email
@@ -84,7 +84,9 @@ exports.login = (req, res, next) ->
          res.redirect "login", _csrf: req.session._csrf
   
      else
+       console.log 'redirect login'
        res.redirect "login", _csrf: req.session._csrf
   
   else
-   next()
+    console.log 'last next'
+    next()

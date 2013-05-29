@@ -15,6 +15,21 @@ jQuery(function($) {
         language = (language_complete[0]);
     }
 
+    $("#remember_me").click(function(e) {
+      if ($("#remember_me").val() == "off"){
+        $("#password").attr("disabled", true)
+        $("#email").focus()
+        $(".btn-login").html("ns.forms:button.continue")
+        $("#form_login_user").attr("action", "user/create")
+        $("#remember_me").val("on")
+      }else{
+        $("#password").attr("disabled", false)
+        $("#form_login_user").attr("action", "user/login")
+        $(".btn-login").html('ns.forms:button.login')
+        $("#remember_me").val("off")
+      }
+    })
+
     function setLanguage() {
         // save to use translation function as resources are fetched
         $("title").i18n();
@@ -24,8 +39,10 @@ jQuery(function($) {
         $(".menu").i18n();
         $(".user-menu").i18n();
         $(".sub-section").i18n();
+        $("#remember_me").i18n()
         $("#footer").i18n();
         $("#language-menu").hide();
+
     }
 
    // language selector
