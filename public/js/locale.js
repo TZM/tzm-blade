@@ -18,14 +18,16 @@ jQuery(function($) {
     $("#remember_me").click(function(e) {
       if ($("#remember_me").val() == "off"){
         $("#password").attr("disabled", true)
+        $(".btn-continue").removeClass("hidden")
+        $(".btn-login").addClass("hidden")
         $("#email").focus()
-        $(".btn-login").html("ns.forms:button.continue")
         $("#form_login_user").attr("action", "user/create")
         $("#remember_me").val("on")
       }else{
         $("#password").attr("disabled", false)
+        $(".btn-continue").addClass("hidden")
+        $(".btn-login").removeClass("hidden")
         $("#form_login_user").attr("action", "user/login")
-        $(".btn-login").html('ns.forms:button.login')
         $("#remember_me").val("off")
       }
     })
