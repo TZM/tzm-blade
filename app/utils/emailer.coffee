@@ -45,14 +45,11 @@ class Emailer
     transport.sendMail messageData, callback
 
   getTransport: ()->
-    console.log "SMTP CONFIG!!!!!!!!!!", config.SMTP 
     emailer.createTransport "SMTP",
       service: "Gmail"
       auth:
-        user: 'moob.test@gmail.com'
-        pass: 'get1ready2'
-        #user: config.SMTP.GMAIL.SMTP_USER,
-        #pass: config.SMTP.GMAIL.SMTP_PASSWD
+        user: config.SMTP.user,
+        pass: config.SMTP.pass
 
   getHtml: (templateName, data)->
     templatePath = "./views/emails/#{templateName}.html"
