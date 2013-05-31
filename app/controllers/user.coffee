@@ -4,8 +4,8 @@ validator = require("../utils/validation").validator()
 config = require("../config/config")
 validation = require("../utils/validation")
 messages = require "../utils/messages"
-Login = require ("./login")
 Emailer = require ("../utils/emailer")
+passport = require("passport")
 
 randomPassword = (length) ->
     chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz".split("")
@@ -32,6 +32,7 @@ module.exports =
   # Creates new user with data from `req.body`
   create: (req, res) ->
     # FIXME - have a better error page
+    console.log 'user create'
     delete req.body.remember_me
     password = randomPassword(6)
     req.body.password = password
@@ -39,6 +40,8 @@ module.exports =
     User.findOne req.body.email, (err,user) ->
       unless err
         if user
+          console.log 'user found'
+          console.log 
           # email user verification token
           options = 
             template: "reset"
@@ -47,13 +50,25 @@ module.exports =
               name: ""
               surname: ""
               email: user.email
-          if config.APP.hostname is 'localhost'
-            data = 
-              link: "http://localhost:3000/user/resetpassword/"+user.tokenString
+          if user.active is true
+            console.log 'user is active'
+            action = '/user/resetpassword/'
           else
+            console.log 'user is not active'
+            action = '/user/activate/'
+            options.template = "activation"
+            options.subject = "account activation"
+          if config.APP.hostname is 'localhost'
+            console.log 'is localhost'
             data = 
-              link: config.APP.hostname+"/user/resetpassword/"+user.tokenString
+              link: "http://"+config.APP.hostname+":"+config.PORT+action+user.tokenString
+          else
+            console.log 'not localhost'
+            data = 
+              link: config.APP.hostname+action+user.tokenString
+
           mailer = new Emailer(options, data);
+          console.log 'data!!!!!!!!!!!!!!!!', data
           mailer.send (err,ok)->
             unless err
               res.render "user/create", _csrf: req.session._csrf
@@ -70,15 +85,15 @@ module.exports =
                 console.log 'user', user
                 # email user verification token
                 options = 
-                  template: "register"
-                  subject: "registration"
+                  template: "activation"
+                  subject: "account activation"
                   to: 
                     name: ""
                     surname: ""
                     email: user.email
                 if config.APP.hostname is 'localhost'
                   data = 
-                    link: "http://localhost:3000/user/activate/"+user.tokenString
+                    link: config.APP.hostname+":"+config.PORT+"/user/activate/"+user.tokenString
                 else
                   data = 
                     link: config.APP.hostname+"/user/activate/"+user.tokenString
@@ -118,14 +133,10 @@ module.exports =
     User.activate req.params.id, (err, user) ->
       unless err
         console.log 'activate. user', user
-        if user
-          res.redirect "user/get/"+req.params.id
-        else
-          console.log err
-          res.render "user/login"
+        res.redirect "user/login/"+req.params.id
       else if err is "token-expired-or-user-active"
         console.log "token-expired-or-user-active" 
-        res.render "user/login"
+        res.send "your activation token has expired. Please request activation another time"
 
   # Gets user by id
 
@@ -143,13 +154,16 @@ module.exports =
     console.log 1
     console.log req.body
     if req.body.password? and req.body.password is req.body.password_confirm
-      User.update req.body.token, password: req.body.password,  (err, user) ->
+      User.findOne req.body.token,  (err, user) ->
         unless err
           console.log 2
           if user
+            user.password = req.body.password
             console.log 3
-            res.redirect "user/get/"+req.body.token
-            #res.render "user/user"
+            user.save (err) ->
+              unless err
+                res.redirect "user/get/"+req.body.token
+                #res.render "user/user"
           else
             res.render "user/login"
               token: req.body.token      
@@ -200,33 +214,25 @@ module.exports =
         res.send err
         res.statusCode = 500
         
-  # Login user
   login: (req, res, next) ->
-    #console.log 'BODY!!!', req.body
-    #req.logIn user, (err) ->
-      #if err
-        #console.log err
-      #else
-        #console.log arguments
+    console.log 'authenticate'
+    passport.authenticate("local", (err, user, info) ->
+      unless err
+        'no err'
+        if user
+          console.log user
+          req.logIn user, (err) ->
+            next(err)  if err
+            req.flash('info', 'authentication success')
+            res.redirect "/"
+        else
+          console.log info
+          console.log 'user not found'
+          req.session.messages = [info.message]
+          return res.redirect("index")
+      else
+        console.log 
+        next(err)
 
-    #if req.body.remember_me is 'on'
-      ##Login.login(req,res,next)
-      #User.findOne req.body.email, (err,user) ->
-        #unless err
-          #if user
-            #res.send user
-          #else
-            #console.log 'wrong login or password'
-            ##res.redirect 'user/create'
-        #else
-          #res.send err
-          #res.statusCode = 500
-            ##console.log 'user not found'
-        ##else
-          ##res.send err
-          ##console.log 'user find error'
-    #else
-      #console.log 'huyedy',req.body
-      #console.log (_csrf: req.session._csrf)
-      #res.send 200, req.body
-      
+
+    ) req, res, next

@@ -1,8 +1,7 @@
 express = require 'express'
 router = new express.Router()
-
 mongoose = require 'mongoose'
-User = mongoose.model 'User'
+User = require "../models/user/user"
 
 { _ } = require 'underscore'
 

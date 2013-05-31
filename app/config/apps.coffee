@@ -8,7 +8,9 @@ RedisStore = require("connect-redis")(express)
 blade = require "blade"
 i18n = require "i18next"
 logger = require "../utils/logger"
-passport = require "passport"
+passport = require "passport";
+LocalStrategy = require("passport-local").Strategy
+
 
 logCategory = "CONFIGURE"
 maxAges = 86400000 * 30
@@ -55,7 +57,6 @@ module.exports = (app) ->
             dumpException: true
             showStack: true
       ))
-
   #  Add template engine
   app.configure ->
     @set("views", process.cwd() + "/views")
@@ -68,11 +69,13 @@ module.exports = (app) ->
   # FIXME - see if we can do this differently
   app.configure ->
     try
+      require ('./passport.coffee')
       app.set("chapters", require(process.cwd() + "/data/chapters.json"))
       app.set "languages", require(process.cwd() + "/locales/config.json")
       app.set "translation", require(process.cwd() + "/locales/dev/translation.json")
     catch e
       logger.warn "files not found " + e, logCategory
+      require ('./passport.coffee')
       app.set("chapters", [])
       app.set "languages", []
       app.set "translation", []
@@ -84,6 +87,8 @@ module.exports = (app) ->
     @use(express.bodyParser())
     .use(express.methodOverride())
     .use(express.cookieParser('90dj7Q2nC53pFj2b0fa81a3f663fd64'))
+    .use(passport.initialize())
+    .use(passport.session())
     .use(multipleRedisSessions(options))
     .use(express.session(
       key: 'zmgc-connect.sid'
@@ -99,11 +104,8 @@ module.exports = (app) ->
     #    csrf req, res, next
     #  else
     #    next()
-    .use(flash())
     .use(i18n.handle)
     .use(blade.middleware(process.cwd() + "/views"))
-    #.use(passport.initialize())
-    #.use(passport.session())
     # .use(express.csrf())
     #Configure dynamic helpers
     .use (req, res, next) ->
@@ -112,6 +114,8 @@ module.exports = (app) ->
       res.locals
         #for use in templates
         appName: config.APP.name
+        #for connect-flash
+        message: req.flash("info")
         # needed for csrf support
         token: req.session._csrf
       next()

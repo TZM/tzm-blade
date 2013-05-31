@@ -2,6 +2,7 @@
   "button": {
     "login": "Login"
     ,"register": "Register"
+    ,"save": "Save"
     ,"continue": "Continue"
     ,"federated-login": "Federated Login"
     ,"reset-password-wrong": "Wrong confirm password"

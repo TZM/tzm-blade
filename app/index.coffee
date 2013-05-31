@@ -3,20 +3,22 @@ express = require "express"
 stylus = require "stylus"
 mongoose = require "mongoose"
 i18next = require "i18next"
-#passport = require "passport"
-
 #Load local dependencies
 config = require "./config/config"
 models = require "./config/models"
 apps = require "./config/apps"
 routes = require "./config/routes"
-
+passport = "passport"
 #Load and intitialize logger
 logger = require "./utils/logger"
 logCategory = "APP config"
-
+flash = require "connect-flash"
 # Create server and set environment
 app = express()
+app.configure ->
+  app.use( flash() )
+  require ("./config/passport")
+
 app.configure "production", "development", "test", ->
   config.setEnvironment app.settings.env
   console.log 'environment is: ', app.settings.env
@@ -45,9 +47,11 @@ module.exports = ->
   apps app
   #  Load routes config
   routes app
-  
+  # 
   app
-
 # register i18next helpers
+
+
 i18next.registerAppHelper(app)
 logger.info "--- Modules loaded into namespace ---", logCategory
+

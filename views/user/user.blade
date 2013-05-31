@@ -2,3 +2,37 @@ include "../../layout/layout.blade"
 replace block page
   #user
     p="User profile page"
+    br
+    br
+    form#user_edit_profile.form-horizontal(method="post" action="/user/update")
+      .control-group
+        label.control-label(for='name') name:
+        .controls
+          .input-prepend
+            .add-on
+            input.input-xlarge.focused.required(id="name" name="name" type="text" value="" placeholder="Enter your name")
+      .control-group
+        .controls
+          .input-prepend
+            .add-on
+              i.icon-key
+            input.input-xlarge.focused.required(id="old_password" name="old_password" type="password" value="" placeholder="Enter your old password")
+      .control-group
+        .controls
+          .input-prepend
+            .add-on
+              i.icon-key
+            input.input-xlarge.focused.required(id="password" name="password" type="password" value="" placeholder="New password")
+      .control-group
+        .controls
+          .input-prepend
+            .add-on
+              i.icon-key
+            input.input-xlarge.focused.required(id="password_confirm" name="password_confirm" type="password" value="" placeholder="Confirm password")
+      .control-group.row-fluid
+        .controls
+          .span1
+            button.btn.btn-block.btn-primary.btn-small(id="save" type="submit")=t("ns.forms:button.save")
+
+
+

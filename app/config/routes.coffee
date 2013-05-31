@@ -31,6 +31,7 @@ module.exports = (app) ->
 
   # Robots.txt
   app.all '/robots.txt', (req, res) ->
+    req.flash()
     res.set 'Content-Type', 'text/plain'
     if app.settings.env == 'production'
       res.send 'User-agent: *\nDisallow: /signin\nDisallow: /signup\nDisallow: /signout\nSitemap: /sitemap.xml'
@@ -40,6 +41,7 @@ module.exports = (app) ->
   # If all else failed, show 404 page
   app.all "/*", (req, res) ->
     console.warn "error 404: ", req.url
+    req.flash('info', '404!')
     res.render '404',
       status: 404
 

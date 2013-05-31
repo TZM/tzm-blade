@@ -8,10 +8,10 @@ exports.setEnvironment = (env) ->
   # General settings
   exports.SMTP =
     service: "Gmail"
-    #user: process.env.SMTP_USER
-    #pass: process.env.SMTP_PASSWD
-    user: 'gca@zmgc.net'
-    pass: 'e5NC%g6e'
+    user: process.env.SMTP_USER
+    pass: process.env.SMTP_PASSWD
+    #user: 'gca@zmgc.net'
+    #pass: 'e5NC%g6e'
 
   exports.EMAIL =
     registration: "gca-dev@zmgc.net"
