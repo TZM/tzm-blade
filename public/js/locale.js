@@ -21,15 +21,16 @@ jQuery(function($) {
         $(".btn-continue").removeClass("hidden")
         $(".btn-login").addClass("hidden")
         $("#email").focus()
-        $("#form_login_user").attr("action", "user/create")
+        $("#form_login_user").attr("action", "/user/create")
         $("#remember_me").val("on")
       }else{
         $("#password").attr("disabled", false)
         $(".btn-continue").addClass("hidden")
         $(".btn-login").removeClass("hidden")
-        $("#form_login_user").attr("action", "user/login")
+        $("#form_login_user").attr("action", "/user/login")
         $("#remember_me").val("off")
       }
+      console.log($("#form_login_user").attr("action"));
     })
 
     function setLanguage() {

@@ -36,9 +36,11 @@ module.exports =
     delete req.body.remember_me
     password = randomPassword(6)
     req.body.password = password
+    console.log(req.body.email);
     # check if user email exists
-    User.findOne req.body.email, (err,user) ->
+    User.findOne { email:req.body.email }, (err,user) ->
       unless err
+        console.log(user);
         if user
           console.log 'user found'
           console.log 
@@ -69,6 +71,8 @@ module.exports =
 
           mailer = new Emailer(options, data);
           console.log 'data!!!!!!!!!!!!!!!!', data
+          console.log(options, data);
+          console.log('==============');
           mailer.send (err,ok)->
             unless err
               res.render "user/create", _csrf: req.session._csrf
@@ -198,6 +202,14 @@ module.exports =
              
   # Updates user with data from `req.body`
   update: (req, res) ->
+    # change to update
+    # console.log(User);
+    # console.log(User.findByIdAndUpdate);
+    console.log(req.query);
+    console.log('============');
+    console.log(req.body);
+    console.log('============');
+    console.log(req.params);
     User.findByIdAndUpdate req.params.id, {"$set":req.body}, (err, user) ->
       if not err
         res.send user

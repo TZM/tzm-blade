@@ -56,6 +56,7 @@ routeMvc = (controllerName, methodName, req, res, next) ->
     next()
     return
   data = null
+  console.log(controller[methodName]);
   if typeof controller[methodName] is "function"
     actionMethod = controller[methodName].bind controller
     actionMethod req, res, next
