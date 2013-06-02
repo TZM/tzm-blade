@@ -32,34 +32,27 @@ Route =
 
 
   _sendMail: (req, res, options, data) ->
-    # console.log('mailer', options, data);
     mailer = new Emailer(options, data);
-    # console.log 'data!!!!!!!!!!!!!!!!', data
     mailer.send (err,ok)->
       unless err
-        # console.log "EMAIL " + user.email
         res.statusCode = 201
         res.render "user/create", _csrf: req.session._csrf
-        # console.log ok    
+        console.log ok    
       else
         res.send err
         res.statusCode = 500
-        # console.log err
+        console.log err
 
 
   # Creates new user with data from `req.body`
   create: (req, res) ->
     # FIXME - have a better error page
-    # console.log 'user create'
     delete req.body.remember_me
     password = randomPassword(6)
     req.body.password = password
-    # console.log(req.body.email);
     # check if user email exists
-    # console.log('start user create');
     User.findOne { email:req.body.email }, (err,user) ->
       unless err
-        # console.log('user',user);
         if user
           console.log 'user found'
 
@@ -73,24 +66,19 @@ Route =
               email: user.email
 
           if user.active is true
-            # console.log 'user is active'
             action = '/user/resetpassword/'
           else
-            # console.log 'user is not active'
             action = '/user/activate/'
             options.template = "activation"
             options.subject = "account activation"
           
           if config.APP.hostname is 'localhost'
-            # console.log 'is localhost'
             data = 
               link: "http://"+config.APP.hostname+":"+config.PORT+action+user.tokenString
           else
-            # console.log 'not localhost'
             data = 
               link: config.APP.hostname+action+user.tokenString
 
-          # console.log('mailer!');
           Route._sendMail(req, res, options, data);
 
         else
@@ -99,10 +87,8 @@ Route =
           console.log('user not found create new one', user);
 
           user.save (err, user) ->
-            # console.log(err,user);
             unless err
               if user
-                # console.log 'user', user
                 # email user verification token
                 options = 
                   template: "activation"
@@ -121,7 +107,6 @@ Route =
                   data = 
                     link: config.APP.hostname+"/user/activate/"+user.tokenString
                 
-                  # console.log('mailer!');
                 Route._sendMail(req, res, options, data);
 
               else
@@ -148,9 +133,14 @@ Route =
   activate: (req, res, next) ->
     console.log "activate"
     User.activate req.params.id, (err, user) ->
+      console.log('end of activate');
       unless err
         console.log 'activate. user', user
-        res.redirect "user/resetpassword/"+req.params.id
+        req.logIn user, (err) ->
+          next(err)  if err
+          req.flash('info', 'authentication success')
+          
+          res.redirect "user/resetpassword/"+req.params.id
       else if err is "token-expired-or-user-active"
         console.log "token-expired-or-user-active" 
         res.send "your activation token has expired. Please request activation another time"
@@ -162,19 +152,16 @@ Route =
 
   resetpassword: (req, res) ->
     console.log 'resetpass'
-    console.log req.body
-    console.log 1
-    console.log req.params.id
+    console.log(req.session);
+    console.log(req.user);
     res.render "user/login"
       token: req.params.id
 
 
   changepassword: (req, res) ->
     console.log 'changepassword'
-    console.log 1
-    console.log req.body
     if req.body.password? and req.body.password is req.body.password_confirm
-      User.findOne req.body.token,  (err, user) ->
+      User.findOne { tokenString:req.body.token },  (err, user) ->
         unless err
           console.log 2
           if user
@@ -182,8 +169,12 @@ Route =
             console.log 3
             user.save (err) ->
               unless err
-                res.redirect "user/get/"+req.body.token
+                console.log('user after save:', user);
+                res.redirect "user/get/"+user.tokenString
                 #res.render "user/user"
+              else
+                res.statusCode = 500
+                res.send "user save error"
           else
             res.render "user/login"
               token: req.body.token      
@@ -198,15 +189,20 @@ Route =
   get: (req, res) ->
     console.log req.params
     console.log 'get'
+    console.log 'get2'
     console.log req.params.id
+    console.log(1);
     User.findById req.params.id, (err, user) ->
+      console.log(1,err,user);
       if not err
-        console.log(user);
+        console.log(2);
         res.render "user/user"
           user: user
             
       else
+        console.log(3);
         User.findOne tokenString: req.params.id, (err, user) ->
+          console.log(3,err,user);
           unless err
             if user
               res.render "user/user"
@@ -221,17 +217,13 @@ Route =
 
   # Updates user with data from `req.body`
   update: (req, res) ->
-    # change to update
-    # console.log(User);
-    # console.log(User.findByIdAndUpdate);
-    console.log(req.query);
-    console.log('============');
-    console.log(req.body);
-    console.log('============');
-    console.log(req.params);
-    User.findByIdAndUpdate req.params.id, {"$set":req.body}, (err, user) ->
+
+    console.log('update');
+
+    User.update { _id:req.user.id }, {"$set":req.body}, (err, user) ->
       if not err
-        res.send user
+        req.flash('info', 'data saved')
+        res.redirect "/"
       else
         res.send err
         res.statusCode = 500

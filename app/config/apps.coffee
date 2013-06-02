@@ -87,8 +87,6 @@ module.exports = (app) ->
     @use(express.bodyParser())
     .use(express.methodOverride())
     .use(express.cookieParser('90dj7Q2nC53pFj2b0fa81a3f663fd64'))
-    .use(passport.initialize())
-    .use(passport.session())
     .use(multipleRedisSessions(options))
     .use(express.session(
       key: 'zmgc-connect.sid'
@@ -97,6 +95,8 @@ module.exports = (app) ->
       cookie:
         maxAge: 86400000 * 30     # 90 days
     ))
+    .use(passport.initialize())
+    .use(passport.session())
     #csrf protection
     #.use (req, res, next) ->
     #  # Only use CSRF if user is logged in
@@ -117,7 +117,7 @@ module.exports = (app) ->
         #for connect-flash
         message: req.flash("info")
         # needed for csrf support
-        token: req.session._csrf
+        # token: req.session._csrf
       next()
 
   app

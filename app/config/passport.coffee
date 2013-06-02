@@ -7,10 +7,11 @@ console.log 'passport'
 
 # serialize sessions
 passport.serializeUser (user, done) ->
-  console.log 'serialize user'
-  if user.id
-    done null, user.id  if user.id
+  console.log 'serialize user',user
+  if user._id
+    done null, user._id 
   else
+    done 'no user'
     console.log 'serialize user not found'
 
 passport.deserializeUser (id, done) ->
@@ -18,13 +19,13 @@ passport.deserializeUser (id, done) ->
   User.findOne _id: id, (err, user) ->
     unless err
       if user
-        log.info logFrom, "success"
-        done null, user.entity
+        console.log "success"
+        done null, user
       else
-        log.warn logFrom, "user not found"
+        console.log "user not found"
         done null, false
     else
-      log.error logFrom, "error: ", err
+      console.log "error: ", err
       done err, false
 
 # use local strategy

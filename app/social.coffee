@@ -7,10 +7,13 @@ config = require "./config"
 
 # Set up passport auth middleware
 exports.setup = (passport) ->
+
   passport.serializeUser (user, done) ->
+    console.log('social, serialize');
     done null, user.id
 
   passport.deserializeUser (id, done) ->
+    console.log('social, deserialize');
     User.findById id, (err, user) ->
       done err, user
 

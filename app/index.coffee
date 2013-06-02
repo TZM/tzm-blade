@@ -8,7 +8,9 @@ config = require "./config/config"
 models = require "./config/models"
 apps = require "./config/apps"
 routes = require "./config/routes"
-passport = "passport"
+# passport = require "passport"
+# console.log(passport);
+
 #Load and intitialize logger
 logger = require "./utils/logger"
 logCategory = "APP config"
@@ -17,7 +19,11 @@ flash = require "connect-flash"
 app = express()
 app.configure ->
   app.use( flash() )
-  require ("./config/passport")
+#   app.use(passport.initialize())
+#   app.use(passport.session())
+#   app.use(require "./config/passport")
+ 
+
 
 app.configure "production", "development", "test", ->
   config.setEnvironment app.settings.env
@@ -28,7 +34,7 @@ logger.info "--- App server created and local env set to: "+app.settings.env+" -
 
 #Define Port
 app.port = config.PORT
-logger.info "--- Server running on port: "+app.port+" ---", logCategory
+logger.info "--- Server running on port: "+app.port+" --- ", logCategory
 
 #Connect to database
 dbconnection = require "./utils/dbconnect"

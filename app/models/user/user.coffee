@@ -243,11 +243,13 @@ UserSchema.statics.activate = (token, cb) ->
     return cb(err)  if err
     if existingUser
       if existingUser.tokenExpires > Date.now()
-        existingUser.update
-          $set:
-            active: true
-            groups: "member"
-        , cb
+        existingUser.active = true
+        existingUser.groups = "member"
+        existingUser.save (err, user)->
+          unless err
+            cb null, user
+          else 
+            cb "save error"
       else
         cb "token-expired"
     else
