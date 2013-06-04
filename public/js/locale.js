@@ -32,7 +32,123 @@ jQuery(function($) {
       }
       console.log($("#form_login_user").attr("action"));
     })
+    
+    $('#save').click(function(cb) {
+        $('#user_edit_profile').validate({
+          rules: {
+              name:{
+                required: function(element) {
+                    return $("#password_old").val() > 6;
+                  }
+              },
+              password_old: {
+                  required: false,
+                  minlength: 6
+              },
+              password_new: {
+                  required: function(element) {
+                      return $("#password_old").val() > 6;
+              },
+                  minlength: 6,
+              },
+              password_confirm: {
+                  required: function(element) {
+                      return $("#password_new").val() > 6;
+                    },
+                  equalTo: "#password_new"
+              }
+          },
+          messages: {
+              name: {
+                required: "Nothing to save, change any field to save"
+              },
+              password_old: {
+                  minlength: "Your password must be at least 6 characters long"
+                  ,required: "Enter your old password"
+              },
+              password_new: {
+                  minlength: "Your password must be at least 6 characters long"
+                  ,equalTo: "Please enter the same password as above"
+                  ,required: "Enter your new password"
+              },
+              password_confirm: {
+                  minlength: "Your password must be at least 6 characters long"
+                  ,equalTo: "Please enter the same password as above"
+                  ,required: "Enter your old password"
+              }
+          }
+        })
+    })  
 
+    $('#login').click(function(cb) {
+        $('#form_login_user').validate({
+            rules:{
+                email:{
+                    email:true,
+                    required: true
+                },password:{
+                    required: true,
+                    minlength: 6 
+                }
+            },
+            messages:{
+                email:{
+                    email:'Please enter a valid email',
+                    required: 'Enter your email'
+                },password:{
+                    required: 'Password is required',
+                    minlength: jQuery.format("At least {0} characters required!")
+                }
+            }
+      })
+    }) 
+    $('#continue').click(function(cb) {
+      $('#form_login_user').validate({
+          rules:{
+              email:{
+                  email:true
+                  ,required: true
+              },password:{
+                  required: false
+              }
+          },messages:{
+              email:{
+                email:'Please enter a valid email',
+                required: 'Please enter your email'
+              },password:{
+                requried: 'password is not required'
+              }
+          }
+      })
+    })
+
+    $('#reset').click(function(cb) {
+        $('#form_reset_password').validate({
+          rules: {
+              password_new: {
+                  required: true,
+                  minlength: 6
+              },
+              password_confirm: {
+                  required: function(element) {
+                    return $("#password_new").val() > 6;
+                  },  
+                  equalTo: "#password_new"
+              }
+          },
+          messages: {
+              password_new: {
+                  required: "Please provide a password",
+                  minlength: "Your password must be at least 6 characters long"
+              },
+              password_confirm: {
+                  required: "Please provide a password",
+                  minlength: "Your password must be at least 6 characters long",
+                  equalTo: "Please enter the same password as above"
+              }
+          }
+        })
+    })  
     function setLanguage() {
         // save to use translation function as resources are fetched
         $("title").i18n();

@@ -36,16 +36,18 @@ replace block page
               .input-prepend
                 .add-on
                   i.icon-key
-                input.input-xlarge.focused.required(id="password" name="password" type="password" value="" placeholder="New password")
+                input.input-xlarge.focused.required(id="password_new" name="password_new" type="password" placeholder='#{t("ns.forms:ph.new")}')
           .control-group
             .controls
               .input-prepend
                 .add-on
                   i.icon-key
-                input.input-xlarge.focused.required(id="password_confirm" name="password_confirm" type="password" value="" placeholder="Confirm password")
+                input.input-xlarge.focused.required(id="password_confirm" name="password_confirm" type="password" placeholder='#{t("ns.forms:ph.confirm")}')
           .control-group.row-fluid
             .controls
               .span2
-                button.btn.btn-block.btn-primary.btn-small(id="reset" type="submit")=t("ns.forms:button.reset-password")
-
-
+                button#reset.btn.btn-block.btn-primary.btn-small(type="submit")=t("ns.forms:button.reset-password")
+          .control-group.row-fluid
+            .controls     
+              label.error.text-info(for="password_new")
+              label.error.text-success(for="password_confirm")

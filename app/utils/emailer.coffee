@@ -28,7 +28,7 @@ class Emailer
   constructor: (@options, @data)->
   
   send: (callback)->
-    console.log @data
+    # console.log @data
     html = "follow this <a href=#{@data.link}>link</a><br> to reset your password<img class='cid:logo@zmgc.net'></img>" if @options.template is 'reset'
     html = "follow this <a href=#{@data.link}>link</a><br> to verify your email anddress and create account<br><img class='cid:logo@zmgc.net'></img>" if @options.template is "activation"
 

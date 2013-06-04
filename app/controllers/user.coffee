@@ -7,6 +7,8 @@ messages = require "../utils/messages"
 Emailer = require ("../utils/emailer")
 passport = require("passport")
 
+validationEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+
 randomPassword = (length) ->
     chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz".split("")
     length = Math.floor(Math.random() * chars.length)  unless length
@@ -37,6 +39,7 @@ Route =
       unless err
         res.statusCode = 201
         res.render "user/create", _csrf: req.session._csrf
+
         console.log ok    
       else
         res.send err
@@ -48,48 +51,50 @@ Route =
   create: (req, res) ->
     # FIXME - have a better error page
     delete req.body.remember_me
-    password = randomPassword(6)
-    req.body.password = password
-    # check if user email exists
-    User.findOne { email:req.body.email }, (err,user) ->
-      unless err
-        if user
-          console.log 'user found'
+    password = randomPassword(26)
+    req.body.password = password if !req.body.password 
+    req.body.email = req.body.email.trim()
+    if validationEmail.test(req.body.email)
+      # check if user email exists
+      User.findOne { email:req.body.email }, (err,user) ->
+        unless err
+          if user
+            console.log 'user found'
 
-          # email user verification token
-          options = 
-            template: "reset"
-            subject: "reseting your password"
-            to: 
-              name: ""
-              surname: ""
-              email: user.email
+            # email user verification token
+            options = 
+              template: "reset"
+              subject: "reseting your password"
+              to: 
+                name: ""
+                surname: ""
+                email: user.email
 
-          if user.active is true
-            action = '/user/resetpassword/'
+            if user.active is true
+              action = '/user/resetpassword/'
+            else
+              action = '/user/activate/'
+              options.template = "activation"
+              options.subject = "account activation"
+            
+            if config.APP.hostname is 'localhost'
+              data = 
+                link: "http://"+config.APP.hostname+":"+config.PORT+action+user.tokenString
+            else
+              data = 
+                link: config.APP.hostname+action+user.tokenString
+
+            Route._sendMail(req, res, options, data);
+
           else
-            action = '/user/activate/'
-            options.template = "activation"
-            options.subject = "account activation"
-          
-          if config.APP.hostname is 'localhost'
-            data = 
-              link: "http://"+config.APP.hostname+":"+config.PORT+action+user.tokenString
-          else
-            data = 
-              link: config.APP.hostname+action+user.tokenString
-
-          Route._sendMail(req, res, options, data);
-
-        else
-          user = new User req.body
-
-          console.log('user not found create new one', user);
-
-          user.save (err, user) ->
-            unless err
-              if user
-                # email user verification token
+            User.register req.body, (err,user)->
+              console.log(arguments);
+              unless err
+            # console.log('user not found create new one', user);
+            # user.save (err, user) ->
+            #   unless err
+                # if user
+                  # email user verification token
                 options = 
                   template: "activation"
                   subject: "account activation"
@@ -108,17 +113,23 @@ Route =
                     link: config.APP.hostname+"/user/activate/"+user.tokenString
                 
                 Route._sendMail(req, res, options, data);
-
+                # else
+                #   req.flash('info', 'user save error')
+                #   res.statusCode = 400
+                #   res.redirect('/')
               else
-                res.send 'user create error'
+                req.flash('info', err.message)
                 res.statusCode = 500
-            else
-              res.send err
-              res.statusCode = 500
-      else
-        res.send err
-        res.statusCode = 500
-
+                res.redirect('/')
+        else
+          req.flash('info', err.message)
+          res.statusCode = 500
+          res.redirect('/')
+          
+    else
+      res.statusCode = 400
+      res.redirect('/')
+      req.flash('info', 'please enter a valid email')
   # Routing middleware to call the user activation
   # Receives error or activated user
   # @param  {object}   req  Request.
@@ -138,96 +149,128 @@ Route =
         console.log 'activate. user', user
         req.logIn user, (err) ->
           next(err)  if err
-          req.flash('info', 'authentication success')
-          
+          req.flash('info', 'Activation success')
           res.redirect "user/resetpassword/"+req.params.id
       else if err is "token-expired-or-user-active"
         console.log "token-expired-or-user-active" 
-        res.send "your activation token has expired. Please request activation another time"
+        res.statusCode = 403
+        req.flash('info', 'Your activation token has expired. Please request activation another time')
+        res.render '/'
 
-
-  
 
   # Gets user by id
 
   resetpassword: (req, res) ->
     console.log 'resetpass'
-    console.log(req.session);
-    console.log(req.user);
-    res.render "user/login"
-      token: req.params.id
-
+    if req.user?
+      req.flash('info', 'Enter your new password')
+      res.render "user/resetpassword"
+        token: req.params.id
+    else
+      req.flash('info', 'Your activation token has expired. Please request activation another time')
+      res.render '/'
 
   changepassword: (req, res) ->
     console.log 'changepassword'
-    if req.body.password? and req.body.password is req.body.password_confirm
-      User.findOne { tokenString:req.body.token },  (err, user) ->
+    if req.body.password_new is req.body.password_confirm and req.body.password_new isnt ''
+      User.findOne { tokenString: req.body.token },  (err, user) ->
         unless err
           console.log 2
           if user
-            user.password = req.body.password
+            user.password = req.body.password_new
             console.log 3
             user.save (err) ->
               unless err
-                console.log('user after save:', user);
-                res.redirect "user/get/"+user.tokenString
+                req.logIn user, (err) ->
+                  next(err)  if err
+                  req.flash('info', 'Password changed')
+                  res.redirect "/user/get"
                 #res.render "user/user"
               else
-                res.statusCode = 500
-                res.send "user save error"
+                req.flash('info', err)
+                res.redirect "/"
           else
-            res.render "user/login"
-              token: req.body.token      
+            req.flash('info', 'Token has expired, please request link again')
+            res.redirect "/"
         else
           console.log err
-          res.render "/user/login"
+          res.render "/user/resetpassword"
             token: req.body.token      
     else
-      res.render "/user/login"
+      res.render "/user/resetpassword"
         token: req.body.token      
 
   get: (req, res) ->
-    console.log req.params
-    console.log 'get'
-    console.log 'get2'
-    console.log req.params.id
-    console.log(1);
-    User.findById req.params.id, (err, user) ->
-      console.log(1,err,user);
-      if not err
-        console.log(2);
-        res.render "user/user"
-          user: user
-            
-      else
-        console.log(3);
-        User.findOne tokenString: req.params.id, (err, user) ->
-          console.log(3,err,user);
-          unless err
-            if user
-              res.render "user/user"
-                user: user
+    if req.session.passport.user
+      User.findById req.session.passport.user, (err, user) ->
+        console.log(1,err,user);
+        unless err
+          console.log(2);
+          res.render "user/user" 
+            user: user
+        else
+          console.log(3);
+          User.findOne tokenString: req.params.id, (err, user) ->
+            console.log(3,err,user);
+            unless err
+              if user
+                res.render "user/user",
+                  user: user
+              else
+                req.flash('info', 'user not found')
+                res.redirect '/'
             else
-              console.log(user);
-              res.statusCode = 400
-              res.send user
-          else
-            res.statusCode = 500
-            res.send err
-
+              req.flash('info', err)
+              res.redirect '/'
+    else
+      req.flash('info', 'You are not logged in')
+      res.redirect '/'
   # Updates user with data from `req.body`
   update: (req, res) ->
+    if req.body
+      console.log('update');
+      console.log(req.user.id);
+      User.findById req.user.id, (err, user) ->
+        unless err
+            if user
+              console.log(1);
+              if req.body.password_old >= 6
+                user.comparePassword req.body.password_old, (err,isMatch)->
+                  unless err
+                    console.log(3);
+                    if isMatch
+                      console.log(4);
+                      user.password = req.body.password_new is req.body.password_confirm
+                      user.name = req.body.name if req.body.name
+                      user.save (err) ->
+                        req.flash('info', 'Profile saved')
+                        res.redirect '/user/get'
+                    else
+                      console.log(5);
+                      req.flash('info', 'Invalid old password')
+                      res.redirect "/user/get"
+                  else
+                    console.log(6);
+                    req.flash('info', 'Invalid old password')
+                    res.redirect "/user/get"
+              else if req.body.name isnt ''
+                console.log(7);
+                user.name = req.body.name
+                user.save (err) ->
+                  req.flash('info', 'Profile saved')
+                  res.redirect 'user/get'
+              else 
+                req.flash('info', 'Nothing to save')
+                res.redirect 'user/get'
+        else
+          console.log(8);
+          req.flash('info', err)
+          res.redirect '/'
+    else
+      console.log(9);
+      req.flash('info', 'nothing to save')
+      console.log(req.body.does not exists);
 
-    console.log('update');
-
-    User.update { _id:req.user.id }, {"$set":req.body}, (err, user) ->
-      if not err
-        req.flash('info', 'data saved')
-        res.redirect "/"
-      else
-        res.send err
-        res.statusCode = 500
-    
   # Deletes user by id
   delete: (req, res) ->
     User.findByIdAndRemove req.params.id, (err) ->
@@ -239,27 +282,33 @@ Route =
         
   login: (req, res, next) ->
     console.log 'authenticate'
+    console.log(req.body)
     console.log('here');
-    passport.authenticate("local", (err, user, info) ->
-      console.log(arguments);
-      unless err
-        'no err'
-        if user
-          console.log user
-          req.logIn user, (err) ->
-            next(err)  if err
-            req.flash('info', 'authentication success')
-            res.redirect "/"
+    req.body.email = req.body.email.trim()
+    if validationEmail.test(req.body.email)
+      passport.authenticate("local", (err, user, info) ->
+        console.log(arguments);
+        unless err
+          console.log('no err');
+          if user
+            console.log user
+            req.logIn user, (err) ->
+              unless err
+                req.flash('info', 'Authentication success')
+                res.redirect '/user/get'
+          else
+            console.log info
+            console.log 'user not found'
+            req.session.messages = info.message
+            req.flash('info', info.message)
+            res.redirect('/')
         else
-          console.log info
-          console.log 'user not found'
-          req.session.messages = [info.message]
-          return res.redirect("index")
-      else
-        console.log 
-        next(err)
+          console.log 
+          next(err)
 
-
-    ) req, res, next
-
+      ) req, res, next
+    else
+      console.log('email is not valid');
+      res.send
+        message: 'please enter a valid email'
 module.exports = Route

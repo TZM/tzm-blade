@@ -2,6 +2,8 @@
   "button": {
     "login": "Login"
     ,"register": "Register"
+    ,"email": "Email"
+    ,"password": "Password"
     ,"save": "Save"
     ,"continue": "Continue"
     ,"federated-login": "Federated Login"
@@ -10,5 +12,13 @@
     ,"remember-me": "Check this box if you don't have a password or you forgot it."
     ,"create-new-account": "Create New Account"
     ,"sign-in": "Sign in"
+  },
+  "ph": {
+    "password": "Enter your password"
+    ,"email": "Enter your email"
+    ,"confirm": "Enter new password again"
+    ,"old": "Enter your old password"
+    ,"new": "Enter now password"
+    ,"name": "Enter your name"
   }
 }

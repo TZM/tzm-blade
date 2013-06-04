@@ -51,7 +51,10 @@ UserSchema = new Schema(
     type: Boolean
     require: true
     default: false
-
+  name:
+    type: String
+    require: false
+    default: ''
   #groups: [UserGroupSchema]
   groups: # [guest, member, reviewer, admin]
     type: String

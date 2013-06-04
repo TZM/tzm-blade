@@ -8,13 +8,13 @@
                         .input-prepend
                             .add-on
                                 i.icon-envelope
-                            input.input-xlarge.focused.required(id="email" name="email" type="text" value="" placeholder="Username or email address")
+                            input.input-xlarge.focused.required(id="email" name="email" type="text" value="" '#{t("ns.forms:ph.email")}')
                 .control-group
                     .controls
                         .input-prepend
                             .add-on
                                 i.icon-key
-                            input.input-xlarge.focused.required(id="password" name="password" type="password" value="" placeholder="Password")
+                            input.input-xlarge.focused.required(id="password" name="password" type="password" value="" placeholder='#{t("ns.forms:ph.password")}')
                 .control-group.row-fluid
                     label.checkbox.span7
                         input#remember_me(name="remember_me" value="on" type="checkbox")

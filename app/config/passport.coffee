@@ -40,17 +40,24 @@ passport.use new LocalStrategy(
           user.comparePassword password, (err,isMatch)->
             unless err 
               if isMatch
-                return done(null,user, message: 'authorization success')
+                done(null,user, message: 'authorization success')
               else
-                console.log 'password not match'
-                return done(null,false, message: 'pass isns match')
+                if user.loginAttempts < 5
+                  user.incLoginAttempts(cb)
+                  console.log(user);
+                  console.log 'password not match'
+                  done(null,false, message: 'Invalid password')
+                else
+                  user.active
             else
+              user.failedLogin(1)
+              console.log(user);
               console.log 'compare error'
-              return done(err,false, message: 'comparing error')
+              done(err,false, message: 'Invalid password')
         else
           console.log 'user not found'
-          return done(null, false, message: "Unknown user")
+          done(null, false, message: "Email or password invalid")
       else
         console.log 'user find error'
-        done(err,false, message: 'user.find error')
+        done(err,false, message: 'Bad request')
 )
