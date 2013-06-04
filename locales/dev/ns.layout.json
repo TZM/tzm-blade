@@ -12,11 +12,16 @@
   }
   ,"user": {
     "gravatar": "Gravatar"
+    ,"name": "Your name"
     ,"profile": "Profile"
     ,"login": "Login"
     ,"logout": "Log out"
     ,"contact": "Contact"
     ,"help": "Help"
+    ,"password": "Password"
+    ,"password_new": "New password"
+    ,"password_old": "Old Password"
+    ,"password_confirm": "Confirm Password"
   }
   ,"footer": {
     "network": "TZM Network"

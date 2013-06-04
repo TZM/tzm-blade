@@ -6,29 +6,32 @@ replace block page
     br
     form#user_edit_profile.form-horizontal(method="post" action="/user/update")
       .control-group
-        label.control-label(for='name') name:
+        label.control-label(for='name') #{t("ns.layout:user.name")}:
         .controls
           .input-prepend
             .add-on
             input.input-xlarge.focused.required(id="name" name="name" type="text" placeholder=locals.user.name)
       .control-group
+        label.control-label(for='password_old') #{t("ns.layout:user.password_old")}:
         .controls
           .input-prepend
             .add-on
               i.icon-key
-            input.input-xlarge.focused.required(id="password_old" name="password_old" type="password" placeholder='#{t("ns.forms:ph.old")}')
+            input#password_old.input-xlarge.focused.required(name="password_old" type="password" placeholder='#{t("ns.forms:ph.old")}')
       .control-group
+        label.control-label(for='password_new') #{t("ns.layout:user.password_new")}:
         .controls
           .input-prepend
             .add-on
               i.icon-key
-            input.input-xlarge.focused.required(id="password_new" name="password_new" type="password" placeholder='#{t("ns.forms:ph.new")}')
+            input#password_new.input-xlarge.focused.required(name="password_new" type="password" placeholder='#{t("ns.forms:ph.new")}')
       .control-group
+        label.control-label(for='password_confirm') #{t("ns.layout:user.password_confirm")}:
         .controls
           .input-prepend
             .add-on
               i.icon-key
-            input.input-xlarge.focused.required(id="password_confirm" name="password_confirm" type="password" placeholder='#{t("ns.forms:ph.confirm")}')
+            input#password_confirm.input-xlarge.focused.required(name="password_confirm" type="password" placeholder='#{t("ns.forms:ph.confirm")}')
       .control-group.row-fluid
         .controls
           .span1

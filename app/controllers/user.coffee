@@ -28,8 +28,9 @@ Route =
   # Lists all users
   index: (req, res) ->
     # FIXME set permissions to see this - only admins
-    User.find {}, (err, users) ->
-      res.send users
+    if req.user.groups is 'admin'
+      User.find {}, (err, users) ->
+        res.send users
 
 
 
@@ -51,85 +52,88 @@ Route =
   create: (req, res) ->
     # FIXME - have a better error page
     delete req.body.remember_me
-    password = randomPassword(26)
-    req.body.password = password if !req.body.password 
-    req.body.email = req.body.email.trim()
-    if validationEmail.test(req.body.email)
-      # check if user email exists
-      User.findOne { email:req.body.email }, (err,user) ->
-        unless err
-          if user
-            console.log 'user found'
+    if req.body?
+      password = randomPassword(26)
+      req.body.password = password if !req.body.password 
+      req.body.email = req.body.email.trim()
+      if validationEmail.test(req.body.email)
+        # check if user email exists
+        User.findOne { email:req.body.email }, (err,user) ->
+          unless err
+            if user
+              console.log 'user found'
 
-            # email user verification token
-            options = 
-              template: "reset"
-              subject: "reseting your password"
-              to: 
-                name: ""
-                surname: ""
-                email: user.email
+              # email user verification token
+              options = 
+                template: "reset"
+                subject: "reseting your password"
+                to: 
+                  name: ""
+                  surname: ""
+                  email: user.email
 
-            if user.active is true
-              action = '/user/resetpassword/'
-            else
-              action = '/user/activate/'
-              options.template = "activation"
-              options.subject = "account activation"
-            
-            if config.APP.hostname is 'localhost'
-              data = 
-                link: "http://"+config.APP.hostname+":"+config.PORT+action+user.tokenString
-            else
-              data = 
-                link: config.APP.hostname+action+user.tokenString
-
-            Route._sendMail(req, res, options, data);
-
-          else
-            User.register req.body, (err,user)->
-              console.log(arguments);
-              unless err
-            # console.log('user not found create new one', user);
-            # user.save (err, user) ->
-            #   unless err
-                # if user
-                  # email user verification token
-                options = 
-                  template: "activation"
-                  subject: "account activation"
-                  to: 
-                    name: ""
-                    surname: ""
-                    email: user.email
-
-                console.log(options);
-                
-                if config.APP.hostname is 'localhost'
-                  data = 
-                    link: "http://"+config.APP.hostname+":"+config.PORT+"/user/activate/"+user.tokenString
-                else
-                  data = 
-                    link: config.APP.hostname+"/user/activate/"+user.tokenString
-                
-                Route._sendMail(req, res, options, data);
-                # else
-                #   req.flash('info', 'user save error')
-                #   res.statusCode = 400
-                #   res.redirect('/')
+              if user.active is true
+                action = '/user/resetpassword/'
               else
-                req.flash('info', err.message)
-                res.statusCode = 500
-                res.redirect('/')
-        else
-          req.flash('info', err.message)
-          res.statusCode = 500
-          res.redirect('/')
-          
+                action = '/user/activate/'
+                options.template = "activation"
+                options.subject = "account activation"
+              
+              if config.APP.hostname is 'localhost'
+                data = 
+                  link: "http://"+config.APP.hostname+":"+config.PORT+action+user.tokenString
+              else
+                data = 
+                  link: config.APP.hostname+action+user.tokenString
+
+              Route._sendMail(req, res, options, data);
+
+            else
+              User.register req.body, (err,user)->
+                console.log(arguments);
+                unless err
+              # console.log('user not found create new one', user);
+              # user.save (err, user) ->
+              #   unless err
+                  # if user
+                    # email user verification token
+                  options = 
+                    template: "activation"
+                    subject: "account activation"
+                    to: 
+                      name: ""
+                      surname: ""
+                      email: user.email
+
+                  console.log(options);
+                  
+                  if config.APP.hostname is 'localhost'
+                    data = 
+                      link: "http://"+config.APP.hostname+":"+config.PORT+"/user/activate/"+user.tokenString
+                  else
+                    data = 
+                      link: config.APP.hostname+"/user/activate/"+user.tokenString
+                  
+                  Route._sendMail(req, res, options, data);
+                  # else
+                  #   req.flash('info', 'user save error')
+                  #   res.statusCode = 400
+                  #   res.redirect('/')
+                else
+                  req.flash('info', err.message)
+                  res.statusCode = 500
+                  res.redirect('/')
+          else
+            req.flash('info', err.message)
+            res.statusCode = 500
+            res.redirect('/')
+            
+      else
+        res.statusCode = 400
+        res.redirect('/')
+        req.flash('info', 'please enter a valid email')
     else
-      res.statusCode = 400
       res.redirect('/')
-      req.flash('info', 'please enter a valid email')
   # Routing middleware to call the user activation
   # Receives error or activated user
   # @param  {object}   req  Request.
@@ -201,73 +205,61 @@ Route =
         token: req.body.token      
 
   get: (req, res) ->
-    if req.session.passport.user
+    if req.session.passport.user?
       User.findById req.session.passport.user, (err, user) ->
-        console.log(1,err,user);
         unless err
-          console.log(2);
           res.render "user/user" 
             user: user
+    else if req.params.id?
+      User.findOne {$or: [{tokenString: req.params.id}, {_id: req.params.id}]}, (err, user) ->
+        unless err
+          if user
+            res.render "user/user",
+              user: user
+          else
+            req.flash('info', 'user not found')
+            res.redirect '/'
         else
-          console.log(3);
-          User.findOne tokenString: req.params.id, (err, user) ->
-            console.log(3,err,user);
-            unless err
-              if user
-                res.render "user/user",
-                  user: user
-              else
-                req.flash('info', 'user not found')
-                res.redirect '/'
-            else
-              req.flash('info', err)
-              res.redirect '/'
+          req.flash('info', err)
+          res.redirect '/'
     else
       req.flash('info', 'You are not logged in')
       res.redirect '/'
   # Updates user with data from `req.body`
   update: (req, res) ->
-    if req.body
+    if req.body.name? or req.body.password_old?
       console.log('update');
       console.log(req.user.id);
       User.findById req.user.id, (err, user) ->
         unless err
             if user
-              console.log(1);
               if req.body.password_old >= 6
                 user.comparePassword req.body.password_old, (err,isMatch)->
                   unless err
-                    console.log(3);
                     if isMatch
-                      console.log(4);
-                      user.password = req.body.password_new is req.body.password_confirm
+                      user.password = req.body.password_new
                       user.name = req.body.name if req.body.name
                       user.save (err) ->
                         req.flash('info', 'Profile saved')
                         res.redirect '/user/get'
                     else
-                      console.log(5);
                       req.flash('info', 'Invalid old password')
                       res.redirect "/user/get"
                   else
-                    console.log(6);
                     req.flash('info', 'Invalid old password')
                     res.redirect "/user/get"
               else if req.body.name isnt ''
-                console.log(7);
                 user.name = req.body.name
                 user.save (err) ->
                   req.flash('info', 'Profile saved')
                   res.redirect 'user/get'
-              else 
-                req.flash('info', 'Nothing to save')
+              else
+                req.flash('info', 'Invalid old password')
                 res.redirect 'user/get'
         else
-          console.log(8);
           req.flash('info', err)
           res.redirect '/'
     else
-      console.log(9);
       req.flash('info', 'nothing to save')
       console.log(req.body.does not exists);
 
@@ -284,31 +276,31 @@ Route =
     console.log 'authenticate'
     console.log(req.body)
     console.log('here');
-    req.body.email = req.body.email.trim()
-    if validationEmail.test(req.body.email)
-      passport.authenticate("local", (err, user, info) ->
-        console.log(arguments);
-        unless err
-          console.log('no err');
-          if user
-            console.log user
-            req.logIn user, (err) ->
-              unless err
-                req.flash('info', 'Authentication success')
-                res.redirect '/user/get'
+    if req.body.email?
+      req.body.email = req.body.email.trim()
+      if validationEmail.test(req.body.email)
+        passport.authenticate("local", (err, user, info) ->
+          console.log(arguments);
+          unless err
+            console.log('no err');
+            if user
+              console.log user
+              req.logIn user, (err) ->
+                unless err
+                  req.flash('info', 'Authentication success')
+                  res.redirect '/user/get'
+            else
+              console.log info
+              console.log 'user not found'
+              req.flash('info', info.message)
+              res.redirect('/')
           else
-            console.log info
-            console.log 'user not found'
-            req.session.messages = info.message
-            req.flash('info', info.message)
-            res.redirect('/')
-        else
-          console.log 
-          next(err)
-
-      ) req, res, next
+            next(err)
+        ) req, res, next
+      else
+        console.log('email is not valid');
+        req.flash('info', "Please enter a valid email")
+        res.redirect '/'
     else
-      console.log('email is not valid');
-      res.send
-        message: 'please enter a valid email'
+      res.redirect '/'
 module.exports = Route

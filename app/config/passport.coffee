@@ -37,23 +37,27 @@ passport.use new LocalStrategy(
     User.findOne email: email, (err, user) ->
       unless err
         if user
-          user.comparePassword password, (err,isMatch)->
-            unless err 
-              if isMatch
-                done(null,user, message: 'authorization success')
-              else
-                if user.loginAttempts < 5
-                  user.incLoginAttempts(cb)
-                  console.log(user);
-                  console.log 'password not match'
-                  done(null,false, message: 'Invalid password')
+          if !user.lockUntil
+            user.comparePassword password, (err,isMatch)->
+              unless err 
+                if isMatch
+                  done(null,user, message: 'authorization success')
                 else
-                  user.active
-            else
-              user.failedLogin(1)
-              console.log(user);
-              console.log 'compare error'
-              done(err,false, message: 'Invalid password')
+                  attempts = user.loginAttempts
+                  if user.loginAttempts < 5
+                    user.incLoginAttempts (cb)->
+                      console.log 'password not match'
+                      done(null,false, message: 'Invalid password. '+(5-attempts)+' Attempts remaining')
+                  else
+                    user.active
+              else
+                user.failedLogin(cb) ->
+                  done(err,false, message: 'Invalid password. '+(5-attempts)+' Attempts remaining')
+          else
+            console.log 'user is locked'
+            date = new Date(user.lockUntil)
+            console.log(date);
+            done(err,false, message: 'Account is locked until: '+date)
         else
           console.log 'user not found'
           done(null, false, message: "Email or password invalid")

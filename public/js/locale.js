@@ -38,24 +38,21 @@ jQuery(function($) {
           rules: {
               name:{
                 required: function(element) {
-                    return $("#password_old").val() > 6;
+                    return $("#password_old").val().length < 6
                   }
-              },
-              password_old: {
-                  required: false,
-                  minlength: 6
-              },
-              password_new: {
-                  required: function(element) {
-                      return $("#password_old").val() > 6;
-              },
-                  minlength: 6,
+              },password_old: {
+                required: false,
+                minlength: 6
+              },password_new: {
+                required: function(element) {
+                  return $("#password_old").val().length >= 6
+                },minlength: 6
               },
               password_confirm: {
-                  required: function(element) {
-                      return $("#password_new").val() > 6;
-                    },
-                  equalTo: "#password_new"
+                equalTo: "#password_new",
+                required: function(element) {
+                    return $("#password_old").val().length >= 6
+                  }
               }
           },
           messages: {
@@ -67,7 +64,7 @@ jQuery(function($) {
                   ,required: "Enter your old password"
               },
               password_new: {
-                  minlength: "Your password must be at least 6 characters long"
+                  minlength: "Your new password must be at least 6 characters long"
                   ,equalTo: "Please enter the same password as above"
                   ,required: "Enter your new password"
               },
