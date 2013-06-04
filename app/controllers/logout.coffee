@@ -5,7 +5,7 @@ exports.logout = (req, res) ->
       cookie = JSON.parse(req.signedCookies.logintoken)
       if not cookie.email or not cookie.series or not cookie.token
         req.logOut()
-        res.redirect 'login'
+        res.redirect '/'
       else
         LoginToken.remove
           email: cookie.email
@@ -14,10 +14,10 @@ exports.logout = (req, res) ->
         , (err, user) ->
           res.clearCookie "logintoken"
           req.logOut()
-          res.redirect 'login'
+          res.redirect '/'
 
     else
       req.logOut()
-      res.redirect 'login'
+      res.redirect '/'
   else
-    res.redirect 'login'
+    res.redirect '/'

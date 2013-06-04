@@ -54,6 +54,10 @@ UserSchema = new Schema(
   name:
     type: String
     require: false
+    default: 'user'
+  surname:
+    type: String
+    require: false
     default: ''
   #groups: [UserGroupSchema]
   groups: # [guest, member, reviewer, admin]

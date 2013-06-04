@@ -36,13 +36,14 @@ jQuery(function($) {
     $('#save').click(function(cb) {
         $('#user_edit_profile').validate({
           rules: {
-              name:{
-                required: function(element) {
-                    return $("#password_old").val().length < 6
-                  }
+              surname:{
+                required: false
+              },name:{
+                required: false
               },password_old: {
-                required: false,
-                minlength: 6
+                required: function(element) {
+                  return $("#password_new").val().length >= 6
+                },minlength: 6
               },password_new: {
                 required: function(element) {
                   return $("#password_old").val().length >= 6
@@ -53,10 +54,13 @@ jQuery(function($) {
                 required: function(element) {
                     return $("#password_old").val().length >= 6
                   }
-              }
+              },
+
           },
           messages: {
               name: {
+                required: "Nothing to save, change any field to save"
+              },name: {
                 required: "Nothing to save, change any field to save"
               },
               password_old: {
@@ -81,11 +85,11 @@ jQuery(function($) {
         $('#form_login_user').validate({
             rules:{
                 email:{
-                    email:true,
-                    required: true
-                },password:{
-                    required: true,
-                    minlength: 6 
+                  email: true
+                  ,required: true
+                },password:{ 
+                  required: true
+                  ,minlength: 6 
                 }
             },
             messages:{
@@ -103,17 +107,17 @@ jQuery(function($) {
       $('#form_login_user').validate({
           rules:{
               email:{
-                  email:true
-                  ,required: true
+                email: true
+                ,required: true
               },password:{
-                  required: false
+                required: false
               }
           },messages:{
               email:{
                 email:'Please enter a valid email',
                 required: 'Please enter your email'
               },password:{
-                requried: 'password is not required'
+                requried: 'password is required'
               }
           }
       })
@@ -123,14 +127,12 @@ jQuery(function($) {
         $('#form_reset_password').validate({
           rules: {
               password_new: {
-                  required: true,
-                  minlength: 6
+                  required: true
+                  ,minlength: 6
               },
               password_confirm: {
-                  required: function(element) {
-                    return $("#password_new").val() > 6;
-                  },  
-                  equalTo: "#password_new"
+                  required: true
+                  ,equalTo: "#password_new"
               }
           },
           messages: {

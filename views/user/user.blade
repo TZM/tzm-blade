@@ -12,6 +12,12 @@ replace block page
             .add-on
             input.input-xlarge.focused.required(id="name" name="name" type="text" placeholder=locals.user.name)
       .control-group
+        label.control-label(for='surname') #{t("ns.layout:user.surname")}:
+        .controls
+          .input-prepend
+            .add-on
+            input.input-xlarge.focused.required(id="surname" name="surname" type="text" placeholder=locals.user.surname)
+      .control-group
         label.control-label(for='password_old') #{t("ns.layout:user.password_old")}:
         .controls
           .input-prepend

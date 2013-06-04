@@ -13,6 +13,7 @@
   ,"user": {
     "gravatar": "Gravatar"
     ,"name": "Your name"
+    ,"surname": "Your surname"
     ,"profile": "Profile"
     ,"login": "Login"
     ,"logout": "Log out"
@@ -28,5 +29,10 @@
     ,"tools": "Tools"
     ,"documentations": "Documentations"
     ,"faq": "F.A.Q"
+    ,"profile": "Profile"
+    ,"help": "Help"
+    ,"recommend": "Recommend"
+    ,"account": "Account settings..."
+    ,"logout": "Log Out"
   }
 }

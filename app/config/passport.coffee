@@ -37,7 +37,7 @@ passport.use new LocalStrategy(
     User.findOne email: email, (err, user) ->
       unless err
         if user
-          if !user.lockUntil
+          unless user.lockUntil? and user.lockUntil < Date.now()
             user.comparePassword password, (err,isMatch)->
               unless err 
                 if isMatch
