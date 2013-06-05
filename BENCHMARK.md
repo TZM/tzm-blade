@@ -1,5 +1,7 @@
 #Benchmark Results
+    ☺  gnuplot data/benchmark/plot.p
 
+[-n 100](data/benchmark/benchmark100.png)
 ##Test -n 100 -c 1
     ☺  ab -n 100 -c 1 -g data/benchmark/home-100-1.tsv http://localhost:3000/                                                                               ruby-2.0.0-p195 master a6f469a""
     This is ApacheBench, Version 2.3 <$Revision: 655654 $>
@@ -135,6 +137,7 @@
       98%  10895
       99%  10895
      100%  10895 (longest request)
+[-n 1000](data/benchmark/benchmark1000.png)
 ##Test -n 1000 -c 1
     ☺  ab -n 1000 -c 1 -g data/benchmark/home-1000-1.tsv http://localhost:3000/                                                                       ruby-2.0.0-p195 master a6f469a""
     This is ApacheBench, Version 2.3 <$Revision: 655654 $>
@@ -303,6 +306,7 @@
       98%  11418
       99%  11420
      100%  11424 (longest request)
+[-n 2000](data/benchmark/benchmark2000.png)
 ##Test -n 2000 -c 1
     ☺  ab -n 2000 -c 1 -g data/benchmark/home-2000-1.tsv http://localhost:3000/                                                                       ruby-2.0.0-p195 master a6f469a""
     This is ApacheBench, Version 2.3 <$Revision: 655654 $>
