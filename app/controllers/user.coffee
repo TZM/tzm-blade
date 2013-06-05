@@ -171,18 +171,15 @@ Route =
     if req.body.password_new is req.body.password_confirm and req.body.password_new isnt ''
       User.findOne { tokenString: req.body.token },  (err, user) ->
         unless err
-          console.log 2
           if user
             user.password = req.body.password_new
             user.loginAttempts = 0
-            console.log 3
             user.save (err) ->
               unless err
                 req.logIn user, (err) ->
                   next(err)  if err
                   req.flash('info', 'Password changed')
                   res.redirect "/user/get"
-                #res.render "user/user"
               else
                 req.flash('info', err)
                 res.redirect "/"
@@ -192,10 +189,12 @@ Route =
         else
           console.log err
           res.render "/user/resetpassword"
-            token: req.body.token      
+            token: req.body.token
+            user: req.user      
     else
       res.render "/user/resetpassword"
-        token: req.body.token      
+        token: req.body.token
+        user: req.user
 
   get: (req, res) ->
     if req.session.passport.user?
@@ -222,7 +221,6 @@ Route =
   update: (req, res) ->
     if req.body.name? or req.body.password_old?
       console.log('update');
-      console.log(req.user.id);
       User.findById req.user.id, (err, user) ->
         unless err
             if user

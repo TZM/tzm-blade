@@ -2,3 +2,4 @@
 
 exports.map = (req, res) ->
     res.render "map"
+      user: req.user
