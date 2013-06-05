@@ -20,15 +20,28 @@ header
                             li
                                 a(href="/"+i class=""+i data-i18n="menu."+i)!=t("ns.layout:menu."+i)
                 //login / user menu
-                ul.nav.pull-right
-                    li.divider-vertical
-                    li.dropdown
-                        a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
-                            span.icon-signin
-                            span!=t("ns.layout:user.login")
-                            b.caret
-                        .dropdown-menu.well.pull-right
-                            span=t("ns.forms:button.federated-login")
-                            include "forms/federated-form.blade"
-                            span=t("ns.forms:button.login")
-                            include "forms/login-form.blade"
+                - if (!locals.user)
+                    ul.nav.pull-right(list-style-type="none")
+                        li.divider-vertical
+                            li.dropdown
+                                a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
+                                    span.icon-signin
+                                    span!=t("ns.layout:user.login")
+                                    b.caret
+                                .dropdown-menu.well.pull-right
+                                    span=t("ns.forms:button.federated-login")
+                                    include "forms/federated-form.blade"
+                                    span=t("ns.forms:button.login")
+                                    include "forms/login-form.blade"
+                - else
+                    ul.nav.pull-right(list-style-type="none")
+                        li.divider-vertical
+                            li.dropdown
+                                a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
+                                    span.icon-user
+                                    span!=t("ns.layout:footer.profile")
+                                    b.caret
+                                .dropdown-menu.well.pull-right(background-color="gray")
+                                    b.pull-right=user.name +" "+ user.surname                                    
+                                    br
+                                    include "forms/profile-form.blade"

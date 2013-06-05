@@ -2,14 +2,17 @@
 # Sets application config parameters depending on `env` name
 db = require "./db"
 i18next = require "./i18n"
-
 exports.setEnvironment = (env) ->
+
   #I18N = require "./i18n"
   # General settings
   exports.SMTP =
     service: "Gmail"
-    user: process.env.SMTP_USER
-    pass: process.env.SMTP_PASSWD
+    # user: process.env.SMTP_USER
+    # pass: process.env.SMTP_PASSWD
+    user: process.env.SMTP_USER || 'gca@zmgc.net'
+    pass: process.env.SMTP_PASSWD || 'b0ff25e16d22'
+
   exports.EMAIL =
     registration: "gca-dev@zmgc.net"
     info: "info@zmgc.net"
@@ -31,6 +34,10 @@ exports.setEnvironment = (env) ->
 
     when "test"
       exports.PORT = process.env.PORT or 3000
+      exports.APP =
+        name: "ZMGC Test"
+        hostname: "localhost"
+        host: "127.0.0.1"
       exports.DEBUG_LOG = false
       exports.DEBUG_WARN = false
       exports.DEBUG_ERROR = true

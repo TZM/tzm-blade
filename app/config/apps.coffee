@@ -8,14 +8,15 @@ RedisStore = require("connect-redis")(express)
 blade = require "blade"
 i18n = require "i18next"
 logger = require "../utils/logger"
-passport = require "passport"
+passport = require "passport";
+LocalStrategy = require("passport-local").Strategy
+
 
 logCategory = "CONFIGURE"
 maxAges = 86400000 * 30
 
 config = require "../config/config"
 config.setEnvironment process.env.NODE_ENV
-
 # Redis session stores
 options =
   hosts: [new RedisStore(
@@ -41,7 +42,7 @@ module.exports = (app) ->
   multipleRedisSessions = require("connect-multi-redis")(app, express.session)
   logger.info "Configure expressjs", logCategory
   # FIXME use _.each to loop for each dirs and Gzip
-  dirs = ["/assets", "/public", "/nowjs", "/locales", "/data/topo"]
+  dirs = ["/assets", "/public", "/locales", "/data/topo"]
   app.configure ->
       app.use assets(build : true)
       jsPaths assets, console.log
@@ -49,7 +50,6 @@ module.exports = (app) ->
       .use(express.compress())
       .use(express.static(process.cwd() + "/assets", {maxAge:maxAges}))
       .use(express.static(process.cwd() + "/public", {maxAge:maxAges}))
-      .use(express.static(process.cwd() + "/nowjs", {maxAge:maxAges}))
       .use(express.static(process.cwd() + "/locales", {maxAge:maxAges}))
       .use(express.static(process.cwd() + "/data/topo", {maxAge:maxAges}))
       .use(express.logger('dev'))
@@ -57,7 +57,6 @@ module.exports = (app) ->
             dumpException: true
             showStack: true
       ))
-
   #  Add template engine
   app.configure ->
     @set("views", process.cwd() + "/views")
@@ -70,11 +69,13 @@ module.exports = (app) ->
   # FIXME - see if we can do this differently
   app.configure ->
     try
+      require ('./passport.coffee')
       app.set("chapters", require(process.cwd() + "/data/chapters.json"))
       app.set "languages", require(process.cwd() + "/locales/config.json")
       app.set "translation", require(process.cwd() + "/locales/dev/translation.json")
     catch e
       logger.warn "files not found " + e, logCategory
+      require ('./passport.coffee')
       app.set("chapters", [])
       app.set "languages", []
       app.set "translation", []
@@ -94,6 +95,8 @@ module.exports = (app) ->
       cookie:
         maxAge: 86400000 * 30     # 90 days
     ))
+    .use(passport.initialize())
+    .use(passport.session())
     #csrf protection
     #.use (req, res, next) ->
     #  # Only use CSRF if user is logged in
@@ -101,12 +104,9 @@ module.exports = (app) ->
     #    csrf req, res, next
     #  else
     #    next()
-    .use(flash())
     .use(i18n.handle)
     .use(blade.middleware(process.cwd() + "/views"))
-    #.use(passport.initialize())
-    #.use(passport.session())
-    .use(express.csrf())
+    # .use(express.csrf())
     #Configure dynamic helpers
     .use (req, res, next) ->
       formData = req.session.formData or {}
@@ -114,8 +114,10 @@ module.exports = (app) ->
       res.locals
         #for use in templates
         appName: config.APP.name
+        #for connect-flash
+        message: req.flash("info")
         # needed for csrf support
-        token: req.session._csrf
+        # token: req.session._csrf
       next()
 
   app

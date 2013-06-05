@@ -15,6 +15,138 @@ jQuery(function($) {
         language = (language_complete[0]);
     }
 
+    $("#remember_me").click(function(e) {
+      if ($("#remember_me").val() == "off"){
+        $("#password").attr("disabled", true)
+        $(".btn-continue").removeClass("hidden")
+        $(".btn-login").addClass("hidden")
+        $("#email").focus()
+        $("#form_login_user").attr("action", "/user/create")
+        $("#remember_me").val("on")
+      }else{
+        $("#password").attr("disabled", false)
+        $(".btn-continue").addClass("hidden")
+        $(".btn-login").removeClass("hidden")
+        $("#form_login_user").attr("action", "/user/login")
+        $("#remember_me").val("off")
+      }
+      console.log($("#form_login_user").attr("action"));
+    })
+    
+    $('#save').click(function(cb) {
+        $('#user_edit_profile').validate({
+          rules: {
+              surname:{
+                required: false
+              },name:{
+                required: false
+              },password_old: {
+                required: function(element) {
+                  return $("#password_new").val().length >= 6
+                },minlength: 6
+              },password_new: {
+                required: function(element) {
+                  return $("#password_old").val().length >= 6
+                },minlength: 6
+              },
+              password_confirm: {
+                equalTo: "#password_new",
+                required: function(element) {
+                    return $("#password_old").val().length >= 6
+                  }
+              },
+
+          },
+          messages: {
+              name: {
+                required: "Nothing to save, change any field to save"
+              },name: {
+                required: "Nothing to save, change any field to save"
+              },
+              password_old: {
+                  minlength: "Your password must be at least 6 characters long"
+                  ,required: "Enter your old password"
+              },
+              password_new: {
+                  minlength: "Your new password must be at least 6 characters long"
+                  ,required: "Enter your new password"
+              },
+              password_confirm: {
+                  minlength: "Your password must be at least 6 characters long"
+                  ,equalTo: "Please enter the same password as above"
+                  ,required: "Enter your old password"
+              }
+          }
+        })
+    })  
+
+    $('#login').click(function(cb) {
+        $('#form_login_user').validate({
+            rules:{
+                email:{
+                  email: true
+                  ,required: true
+                },password:{ 
+                  required: true
+                  ,minlength: 6 
+                }
+            },
+            messages:{
+                email:{
+                    email:'Please enter a valid email',
+                    required: 'Enter your email'
+                },password:{
+                    required: 'Password is required',
+                    minlength: jQuery.format("At least {0} characters required!")
+                }
+            }
+      })
+    }) 
+    $('#continue').click(function(cb) {
+      $('#form_login_user').validate({
+          rules:{
+              email:{
+                email: true
+                ,required: true
+              },password:{
+                required: false
+              }
+          },messages:{
+              email:{
+                email:'Please enter a valid email',
+                required: 'Please enter your email'
+              },password:{
+                requried: 'password is required'
+              }
+          }
+      })
+    })
+
+    $('#reset').click(function(cb) {
+        $('#form_reset_password').validate({
+          rules: {
+              password_new: {
+                  required: true
+                  ,minlength: 6
+              },
+              password_confirm: {
+                  required: true
+                  ,equalTo: "#password_new"
+              }
+          },
+          messages: {
+              password_new: {
+                  required: "Please provide a password",
+                  minlength: "Your password must be at least 6 characters long"
+              },
+              password_confirm: {
+                  required: "Please provide a password",
+                  minlength: "Your password must be at least 6 characters long",
+                  equalTo: "Please enter the same password as above"
+              }
+          }
+        })
+    })  
     function setLanguage() {
         // save to use translation function as resources are fetched
         $("title").i18n();
@@ -24,8 +156,10 @@ jQuery(function($) {
         $(".menu").i18n();
         $(".user-menu").i18n();
         $(".sub-section").i18n();
+        $("#remember_me").i18n()
         $("#footer").i18n();
         $("#language-menu").hide();
+
     }
 
    // language selector

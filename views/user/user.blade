@@ -1,4 +1,53 @@
 include "../../layout/layout.blade"
 replace block page
   #user
-    p="User profile page"
+    p="User profile page" 
+    b.text-success= message
+    br
+    form#user_edit_profile.form-horizontal(method="post" action="/user/update")
+      .control-group
+        label.control-label(for='name') #{t("ns.layout:user.name")}:
+        .controls
+          .input-prepend
+            .add-on
+            input.input-xlarge.focused.required(id="name" name="name" type="text" placeholder=locals.user.name)
+      .control-group
+        label.control-label(for='surname') #{t("ns.layout:user.surname")}:
+        .controls
+          .input-prepend
+            .add-on
+            input.input-xlarge.focused.required(id="surname" name="surname" type="text" placeholder=locals.user.surname)
+      .control-group
+        label.control-label(for='password_old') #{t("ns.layout:user.password_old")}:
+        .controls
+          .input-prepend
+            .add-on
+              i.icon-key
+            input#password_old.input-xlarge.focused.required(name="password_old" type="password" placeholder='#{t("ns.forms:ph.old")}')
+      .control-group
+        label.control-label(for='password_new') #{t("ns.layout:user.password_new")}:
+        .controls
+          .input-prepend
+            .add-on
+              i.icon-key
+            input#password_new.input-xlarge.focused.required(name="password_new" type="password" placeholder='#{t("ns.forms:ph.new")}')
+      .control-group
+        label.control-label(for='password_confirm') #{t("ns.layout:user.password_confirm")}:
+        .controls
+          .input-prepend
+            .add-on
+              i.icon-key
+            input#password_confirm.input-xlarge.focused.required(name="password_confirm" type="password" placeholder='#{t("ns.forms:ph.confirm")}')
+      .control-group.row-fluid
+        .controls
+          .span1
+            button.btn.btn-block.btn-primary.btn-small(id="save" type="submit")=t("ns.forms:button.save")
+      .control-group.row-fluid
+        .controls
+          label.error.text-success(for="name")
+          label.error.text-info(for="password_old")
+          label.error.text-warn(for="password_new")
+          label.error.text-error(for="password_confirm")
+
+
+

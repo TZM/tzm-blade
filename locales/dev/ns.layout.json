@@ -12,16 +12,27 @@
   }
   ,"user": {
     "gravatar": "Gravatar"
+    ,"name": "Your name"
+    ,"surname": "Your surname"
     ,"profile": "Profile"
     ,"login": "Login"
     ,"logout": "Log out"
     ,"contact": "Contact"
     ,"help": "Help"
+    ,"password": "Password"
+    ,"password_new": "New password"
+    ,"password_old": "Old Password"
+    ,"password_confirm": "Confirm Password"
   }
   ,"footer": {
     "network": "TZM Network"
     ,"tools": "Tools"
     ,"documentations": "Documentations"
     ,"faq": "F.A.Q"
+    ,"profile": "Profile"
+    ,"help": "Help"
+    ,"recommend": "Recommend"
+    ,"account": "Account settings..."
+    ,"logout": "Log Out"
   }
 }

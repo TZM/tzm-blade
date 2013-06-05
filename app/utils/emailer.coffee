@@ -1,16 +1,23 @@
 # /src/utils/emailer.coffee
 
-config = require "../config/index"
+config = require "../config/config"
 emailer = require("nodemailer")
 fs      = require("fs")
 _       = require("underscore")
 
 class Emailer
 
-  options: {}
-
-  data: {}
-
+  options: {
+    #template: 
+    #to: 
+      #name:
+      #surname:
+      #email:
+  }
+  data: {
+    #pass: 
+    #link:
+  }
   # Define attachments here
   attachments: [
     fileName: "logo.png"
@@ -19,9 +26,15 @@ class Emailer
   ]
 
   constructor: (@options, @data)->
-
+  
   send: (callback)->
-    html = @getHtml(@options.template, @data)
+    # console.log @data
+    html = "follow this <a href=#{@data.link}>link</a><br> to reset your password<img class='cid:logo@zmgc.net'></img>" if @options.template is 'reset'
+    html = "follow this <a href=#{@data.link}>link</a><br> to verify your email anddress and create account<br><img class='cid:logo@zmgc.net'></img>" if @options.template is "activation"
+
+    #FIXME doesnt work getHtml() cannot put @data to template, unexpected token '=' at (<h3><%= pass %></h3>)
+    #html = @getHtml(@options.template, @data)
+
     attachments = @getAttachments(html)
     messageData =
       to: "'#{@options.to.name} #{@options.to.surname}' <#{@options.to.email}>"
@@ -37,8 +50,8 @@ class Emailer
     emailer.createTransport "SMTP",
       service: "Gmail"
       auth:
-        user: config.SMTP.GMAIL.SMTP_USER,
-        pass: config.SMTP.GMAIL.SMTP_PASSWD
+        user: config.SMTP.user,
+        pass: config.SMTP.pass
 
   getHtml: (templateName, data)->
     templatePath = "./views/emails/#{templateName}.html"

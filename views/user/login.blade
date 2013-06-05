@@ -28,4 +28,26 @@ replace block page
         span=t("ns.forms:button.register")
         include "../forms/registration-form.blade"
       #reset-password.tab-pane.fade.in
-        p="Reset password"
+        form#form_reset_password.auth-at-dropdown(method="post" action="/user/changepassword")
+          input(id="token" type="hidden" name="token" value="#{token}")
+          p="Reset password"
+          .control-group
+            .controls
+              .input-prepend
+                .add-on
+                  i.icon-key
+                input.input-xlarge.focused.required(id="password_new" name="password_new" type="password" placeholder='#{t("ns.forms:ph.new")}')
+          .control-group
+            .controls
+              .input-prepend
+                .add-on
+                  i.icon-key
+                input.input-xlarge.focused.required(id="password_confirm" name="password_confirm" type="password" placeholder='#{t("ns.forms:ph.confirm")}')
+          .control-group.row-fluid
+            .controls
+              .span2
+                button#reset.btn.btn-block.btn-primary.btn-small(type="submit")=t("ns.forms:button.reset-password")
+          .control-group.row-fluid
+            .controls     
+              label.error.text-info(for="password_new")
+              label.error.text-success(for="password_confirm")

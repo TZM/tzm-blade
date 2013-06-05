@@ -51,7 +51,14 @@ UserSchema = new Schema(
     type: Boolean
     require: true
     default: false
-
+  name:
+    type: String
+    require: false
+    default: 'user'
+  surname:
+    type: String
+    require: false
+    default: ''
   #groups: [UserGroupSchema]
   groups: # [guest, member, reviewer, admin]
     type: String
@@ -134,6 +141,21 @@ UserSchema.methods.incLoginAttempts = (cb) ->
 
   # lock the user if we've reached max attempts and it's not locked already
   updates.$set = lockUntil: Date.now() + LOCK_TIME  if @loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS and not @isLocked
+  @update updates, cb
+
+UserSchema.methods.resetLoginAttempts = (cb) ->
+  
+  #if we have a previous lock that has expired, restart at 1
+  if @lockUntil and @lockUntil < Date.now()
+    return @update(
+      $set:
+        loginAttempts: 0
+    , cb)
+
+  # reset login attempts to zero
+  updates = $set:
+    loginAttempts: 0
+
   @update updates, cb
 
 # Static methods
@@ -243,11 +265,13 @@ UserSchema.statics.activate = (token, cb) ->
     return cb(err)  if err
     if existingUser
       if existingUser.tokenExpires > Date.now()
-        existingUser.update
-          $set:
-            active: true
-            groups: "member"
-        , cb
+        existingUser.active = true
+        existingUser.groups = "member"
+        existingUser.save (err, user)->
+          unless err
+            cb null, user
+          else 
+            cb "save error"
       else
         cb "token-expired"
     else

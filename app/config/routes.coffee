@@ -12,7 +12,7 @@ module.exports = (app) ->
   app.all "/", (req, res, next) ->
     routeMvc("index", "index", req, res, next)
 
-  fs.readdirSync(process.cwd() + "/.app/controllers").forEach (file) ->
+  fs.readdirSync(process.cwd() + "/app/controllers").forEach (file) ->
     controller = file.split(".")[0]
     app.all "/#{controller}", (req, res, next) ->
       routeMvc("#{controller}", "#{controller}", req, res, next)
@@ -31,6 +31,7 @@ module.exports = (app) ->
 
   # Robots.txt
   app.all '/robots.txt', (req, res) ->
+    req.flash()
     res.set 'Content-Type', 'text/plain'
     if app.settings.env == 'production'
       res.send 'User-agent: *\nDisallow: /signin\nDisallow: /signup\nDisallow: /signout\nSitemap: /sitemap.xml'
@@ -40,8 +41,10 @@ module.exports = (app) ->
   # If all else failed, show 404 page
   app.all "/*", (req, res) ->
     console.warn "error 404: ", req.url
+    req.flash('info', '404!')
     res.render '404',
       status: 404
+      user: req.user
 
 # render the page based on controller name, method and id
 routeMvc = (controllerName, methodName, req, res, next) ->
@@ -54,6 +57,7 @@ routeMvc = (controllerName, methodName, req, res, next) ->
     next()
     return
   data = null
+  console.log(controller[methodName]);
   if typeof controller[methodName] is "function"
     actionMethod = controller[methodName].bind controller
     actionMethod req, res, next
