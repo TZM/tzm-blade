@@ -1,9 +1,41 @@
 #Benchmark Results
-    ☺  gnuplot data/benchmark/plot.p
+These tests identify the minimum time spent by the application to load the home page.
 
-[-n 100](data/benchmark/benchmark100.png)
+    ☺  system_profiler                                                                  ruby-2.0.0-p195 master a6f469a""
+    Hardware:
+
+        Hardware Overview:
+
+          Model Name: MacBook
+          Model Identifier: MacBook6,1
+          Processor Name: Intel Core 2 Duo
+          Processor Speed: 2.26 GHz
+          Number Of Processors: 1
+          Total Number Of Cores: 2
+          L2 Cache: 3 MB
+          Memory: 4 GB
+          Bus Speed: 1.07 GHz
+          Boot ROM Version: MB61.00C8.B00
+          SMC Version (system): 1.51f53
+##View Response Headers
+    ☺  curl -i http://localhost:3000                                                    ruby-2.0.0-p195 master a6f469a""
+    HTTP/1.1 200 OK
+    X-Powered-By: Express
+    Vary: Accept-Encoding
+    Set-Cookie: i18next=dev; path=/; expires=Thu, 05 Jun 2014 19:11:21 GMT
+    Set-Cookie: zmgc-connect.sid=s%3AcLP82LOC_LXwc0yA2tjfKldE.pIIe1%2BeFVXAHBcUV52avZIvO5pX7idQ%2Fi29KNWxPHWU; Path=/; Expires=Fri, 05 Jul 2013 19:11:21 GMT; HttpOnly
+    Content-Type: text/html; charset=utf-8
+    Content-Length: 20884
+    ETag: "1230553477"
+    Date: Wed, 05 Jun 2013 19:11:21 GMT
+    Connection: keep-alive
+##Visualise the results
+    ☺  gnuplot data/benchmark/plot.p
+[![-n 100](data/benchmark/benchmark100.png)](#test--n-100--c-1)
+[![-n 1000](data/benchmark/benchmark1000.png)](#test--n-1000--c-1)
+[![-n 2000](data/benchmark/benchmark2000.png)](#test--n-2000--c-1)
 ##Test -n 100 -c 1
-    ☺  ab -n 100 -c 1 -g data/benchmark/home-100-1.tsv http://localhost:3000/                                                                               ruby-2.0.0-p195 master a6f469a""
+    ☺  ab -n 100 -c 1 -g data/benchmark/home-100-1.tsv http://localhost:3000/           ruby-2.0.0-p195 master a6f469a""
     This is ApacheBench, Version 2.3 <$Revision: 655654 $>
     Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
     Licensed to The Apache Software Foundation, http://www.apache.org/
@@ -48,7 +80,7 @@
      99%    475
     100%    475 (longest request)
 ##Test -n 100 -c 10
-    ☺  ab -n 100 -c 10 -g data/benchmark/home-100-10.tsv http://localhost:3000/                                                                       ruby-2.0.0-p195 master a6f469a""
+    ☺  ab -n 100 -c 10 -g data/benchmark/home-100-10.tsv http://localhost:3000/         ruby-2.0.0-p195 master a6f469a""
     This is ApacheBench, Version 2.3 <$Revision: 655654 $>
     Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
     Licensed to The Apache Software Foundation, http://www.apache.org/
@@ -93,7 +125,7 @@
       99%   1179
      100%   1179 (longest request)
 ##Test -n 100 -c 100
-    ☺  ab -n 100 -c 100 -g data/benchmark/home-100-100.tsv http://localhost:3000/                                                                     ruby-2.0.0-p195 master a6f469a""
+    ☺  ab -n 100 -c 100 -g data/benchmark/home-100-100.tsv http://localhost:3000/       ruby-2.0.0-p195 master a6f469a""
     This is ApacheBench, Version 2.3 <$Revision: 655654 $>
     Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
     Licensed to The Apache Software Foundation, http://www.apache.org/
@@ -137,9 +169,8 @@
       98%  10895
       99%  10895
      100%  10895 (longest request)
-[-n 1000](data/benchmark/benchmark1000.png)
 ##Test -n 1000 -c 1
-    ☺  ab -n 1000 -c 1 -g data/benchmark/home-1000-1.tsv http://localhost:3000/                                                                       ruby-2.0.0-p195 master a6f469a""
+    ☺  ab -n 1000 -c 1 -g data/benchmark/home-1000-1.tsv http://localhost:3000/         ruby-2.0.0-p195 master a6f469a""
     This is ApacheBench, Version 2.3 <$Revision: 655654 $>
     Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
     Licensed to The Apache Software Foundation, http://www.apache.org/
@@ -195,7 +226,7 @@
       99%    282
      100%    485 (longest request)
 ##Test -n 1000 -c 10
-    ☺  ab -n 1000 -c 10 -g data/benchmark/home-1000-10.tsv http://localhost:3000/                                                                     ruby-2.0.0-p195 master a6f469a""
+    ☺  ab -n 1000 -c 10 -g data/benchmark/home-1000-10.tsv http://localhost:3000/       ruby-2.0.0-p195 master a6f469a""
     This is ApacheBench, Version 2.3 <$Revision: 655654 $>
     Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
     Licensed to The Apache Software Foundation, http://www.apache.org/
@@ -251,7 +282,7 @@
       99%   1863
      100%   2253 (longest request)
 ##Test -n 1000 -c 100
-    ☺  ab -n 1000 -c 100 -g data/benchmark/home-1000-100.tsv http://localhost:3000/                                                                   ruby-2.0.0-p195 master a6f469a""
+    ☺  ab -n 1000 -c 100 -g data/benchmark/home-1000-100.tsv http://localhost:3000/     ruby-2.0.0-p195 master a6f469a""
     This is ApacheBench, Version 2.3 <$Revision: 655654 $>
     Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
     Licensed to The Apache Software Foundation, http://www.apache.org/
@@ -306,9 +337,8 @@
       98%  11418
       99%  11420
      100%  11424 (longest request)
-[-n 2000](data/benchmark/benchmark2000.png)
 ##Test -n 2000 -c 1
-    ☺  ab -n 2000 -c 1 -g data/benchmark/home-2000-1.tsv http://localhost:3000/                                                                       ruby-2.0.0-p195 master a6f469a""
+    ☺  ab -n 2000 -c 1 -g data/benchmark/home-2000-1.tsv http://localhost:3000/         ruby-2.0.0-p195 master a6f469a""
     This is ApacheBench, Version 2.3 <$Revision: 655654 $>
     Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
     Licensed to The Apache Software Foundation, http://www.apache.org/
@@ -364,7 +394,7 @@
       99%    195
      100%    450 (longest request)
 ##Test -n 2000 -c 10
-    ☺  ab -n 2000 -c 10 -g data/benchmark/home-2000-10.tsv http://localhost:3000/                                                                     ruby-2.0.0-p195 master a6f469a""
+    ☺  ab -n 2000 -c 10 -g data/benchmark/home-2000-10.tsv http://localhost:3000/       ruby-2.0.0-p195 master a6f469a""
     This is ApacheBench, Version 2.3 <$Revision: 655654 $>
     Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
     Licensed to The Apache Software Foundation, http://www.apache.org/
@@ -420,7 +450,7 @@
       99%   1386
      100%   1860 (longest request)
 ##Test -n 2000 -c 100
-    ☺  ab -n 2000 -c 100 -g data/benchmark/home-2000-100.tsv http://localhost:3000/                                                                   ruby-2.0.0-p195 master a6f469a""
+    ☺  ab -n 2000 -c 100 -g data/benchmark/home-2000-100.tsv http://localhost:3000/     ruby-2.0.0-p195 master a6f469a""
     This is ApacheBench, Version 2.3 <$Revision: 655654 $>
     Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
     Licensed to The Apache Software Foundation, http://www.apache.org/

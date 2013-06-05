@@ -24,7 +24,9 @@ set xlabel "request"
 set ylabel "response time (ms)"
 
 # plot data from "home-xxx-x.tsv" using column 9 with smooth sbezier lines
-# and title of "ZMGC home page benchmark" for the given data
-#plot "data/benchmark/home-100-1.tsv" using 9 smooth sbezier with lines title "-n 100 -c 1", "data/benchmark/home-100-10.tsv" using 9 smooth sbezier with lines title "-n 100 -c 10", "data/benchmark/home-100-100.tsv" using 9 smooth sbezier with lines title "-n 100 -c 100"
+
+plot "data/benchmark/home-100-1.tsv" using 9 smooth sbezier with lines title "-n 100 -c 1", "data/benchmark/home-100-10.tsv" using 9 smooth sbezier with lines title "-n 100 -c 10", "data/benchmark/home-100-100.tsv" using 9 smooth sbezier with lines title "-n 100 -c 100"
+
 #plot "data/benchmark/home-1000-1.tsv" using 9 smooth sbezier with lines title "-n 1000 -c 1", "data/benchmark/home-1000-10.tsv" using 9 smooth sbezier with lines title "-n 1000 -c 10", "data/benchmark/home-1000-100.tsv" using 9 smooth sbezier with lines title "-n 1000 -c 100"
+
 #plot "data/benchmark/home-2000-1.tsv" using 9 smooth sbezier with lines title "-n 2000 -c 1", "data/benchmark/home-2000-10.tsv" using 9 smooth sbezier with lines title "-n 2000 -c 10", "data/benchmark/home-2000-100.tsv" using 9 smooth sbezier with lines title "-n 2000 -c 100"
