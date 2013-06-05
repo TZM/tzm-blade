@@ -143,6 +143,21 @@ UserSchema.methods.incLoginAttempts = (cb) ->
   updates.$set = lockUntil: Date.now() + LOCK_TIME  if @loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS and not @isLocked
   @update updates, cb
 
+UserSchema.methods.resetLoginAttempts = (cb) ->
+  
+  #if we have a previous lock that has expired, restart at 1
+  if @lockUntil and @lockUntil < Date.now()
+    return @update(
+      $set:
+        loginAttempts: 0
+    , cb)
+
+  # reset login attempts to zero
+  updates = $set:
+    loginAttempts: 0
+
+  @update updates, cb
+
 # Static methods
 # Register new user
 UserSchema.statics.register = (user, cb) ->

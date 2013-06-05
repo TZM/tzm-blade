@@ -48,7 +48,7 @@ Route =
 
 
   # Creates new user with data from `req.body`
-  create: (req, res) ->
+  create: (req, res, next) ->
     # FIXME - have a better error page
     delete req.body.remember_me
     if req.body?
@@ -60,8 +60,8 @@ Route =
         User.findOne { email:req.body.email }, (err,user) ->
           unless err
             if user
+              #check if user is locked now
               unless user.lockUntil? and user.lockUntil < Date.now()
-                console.log 'user found'
                 # email user verification token
                 options = 
                   template: "reset"
@@ -71,6 +71,7 @@ Route =
                     surname: user.surname
                     email: user.email
 
+                #check if user is already active then reset password if not then send activation link again
                 if user.active is true
                   action = '/user/resetpassword/'
                 else
@@ -84,7 +85,8 @@ Route =
                 else
                   data = 
                     link: config.APP.hostname+action+user.tokenString
-
+                user.resetLoginAttempts (cb) ->
+                  console.log(cb);
                 Route._sendMail(req, res, options, data);
               else
                 date = new Date(user.lockUntil)
@@ -164,7 +166,7 @@ Route =
       req.flash('info', 'Your activation token has expired. Please request activation another time')
       res.redirect '/'
 
-  changepassword: (req, res) ->
+  changepassword: (req, res,next) ->
     console.log 'changepassword'
     if req.body.password_new is req.body.password_confirm and req.body.password_new isnt ''
       User.findOne { tokenString: req.body.token },  (err, user) ->
@@ -172,6 +174,7 @@ Route =
           console.log 2
           if user
             user.password = req.body.password_new
+            user.loginAttempts = 0
             console.log 3
             user.save (err) ->
               unless err
@@ -223,8 +226,7 @@ Route =
       User.findById req.user.id, (err, user) ->
         unless err
             if user
-              console.log('assert', req.body.password_old >= 6);
-              if req.body.password_old >= 6
+              if req.body.password_old.length >= 6
                 user.comparePassword req.body.password_old, (err,isMatch)->
                   unless err
                     if isMatch

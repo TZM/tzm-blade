@@ -41,7 +41,9 @@ passport.use new LocalStrategy(
             user.comparePassword password, (err,isMatch)->
               unless err 
                 if isMatch
-                  done(null,user, message: 'authorization success')
+                  user.resetLoginAttempts (cb) ->
+                    console.log(cb);
+                    done(null,user, message: 'authorization success')
                 else
                   attempts = user.loginAttempts
                   if user.loginAttempts < 5
@@ -49,10 +51,13 @@ passport.use new LocalStrategy(
                       console.log 'password not match'
                       done(null,false, message: 'Invalid password. '+(5-attempts)+' Attempts remaining')
                   else
-                    user.active
+                    done(null,false, message: 'Account is locked after 5 wrong attempts')
               else
-                user.failedLogin(cb) ->
-                  done(err,false, message: 'Invalid password. '+(5-attempts)+' Attempts remaining')
+                attempts = user.loginAttempts
+                if user.loginAttempts < 5
+                  user.incLoginAttempts (cb)->
+                    console.log 'password not match'
+                    done(null,false, message: 'Invalid password. '+(5-attempts)+' Attempts remaining')
           else
             console.log 'user is locked'
             date = new Date(user.lockUntil)
