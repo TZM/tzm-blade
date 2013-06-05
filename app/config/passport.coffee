@@ -42,7 +42,6 @@ passport.use new LocalStrategy(
               unless err 
                 if isMatch
                   user.resetLoginAttempts (cb) ->
-                    console.log(cb);
                     done(null,user, message: 'authorization success')
                 else
                   attempts = user.loginAttempts

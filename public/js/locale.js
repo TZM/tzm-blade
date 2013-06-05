@@ -69,7 +69,6 @@ jQuery(function($) {
               },
               password_new: {
                   minlength: "Your new password must be at least 6 characters long"
-                  ,equalTo: "Please enter the same password as above"
                   ,required: "Enter your new password"
               },
               password_confirm: {

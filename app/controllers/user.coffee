@@ -135,7 +135,6 @@ Route =
   #                         Success: Falls through.
   
 
-
   activate: (req, res, next) ->
     console.log "activate"
     User.activate req.params.id, (err, user) ->
@@ -149,8 +148,8 @@ Route =
       else if err is "token-expired-or-user-active"
         console.log "token-expired-or-user-active" 
         res.statusCode = 403
-        req.flash('info', 'Your activation token has expired. Please request activation another time')
-        res.render '/'
+        req.flash('info', 'Your activation token has expired. Please request activation link again')
+        res.redirect '/'
 
 
   # Gets user by id
@@ -158,17 +157,32 @@ Route =
   resetpassword: (req, res) ->
     console.log 'resetpass'
     if req.params.id?
-      req.flash('info', 'Enter your new password')
-      res.render "user/resetpassword"
-        token: req.params.id
-        user: req.user
+      User.findOne {tokenString: req.params.id}, (err,user)->
+        unless err
+          if user
+            req.logIn user, (err)->
+              unless err
+                req.flash('info', 'Enter your new password')
+                res.render "user/resetpassword"
+                  token: req.params.id
+                  user: req.user
+              else
+                req.flash('info', 'Your activation token has expired. Please request activation link again')
+                res.redirect '/'
+          else
+            req.flash('info', 'Your activation token has expired. Please request activation link again')
+            res.redirect '/'
+        else
+          req.flash('info', 'Your activation token has expired. Please request activation link again')
+          res.redirect '/'
     else
-      req.flash('info', 'Your activation token has expired. Please request activation another time')
+      req.flash('info', 'Your activation token has expired. Please request activation link again')
       res.redirect '/'
+      
 
   changepassword: (req, res,next) ->
     console.log 'changepassword'
-    if req.body.password_new is req.body.password_confirm and req.body.password_new isnt ''
+    if req.body.password_new is req.body.password_confirm and req.body.password_new.length >=6
       User.findOne { tokenString: req.body.token },  (err, user) ->
         unless err
           if user
@@ -190,12 +204,11 @@ Route =
           console.log err
           res.render "/user/resetpassword"
             token: req.body.token
-            user: req.user      
+            user: req.user
     else
       res.render "/user/resetpassword"
         token: req.body.token
         user: req.user
-
   get: (req, res) ->
     if req.session.passport.user?
       User.findById req.session.passport.user, (err, user) ->
@@ -225,21 +238,26 @@ Route =
         unless err
             if user
               if req.body.password_old.length >= 6
-                user.comparePassword req.body.password_old, (err,isMatch)->
-                  unless err
-                    if isMatch
-                      user.password = req.body.password_new
-                      user.name = req.body.name if req.body.name
-                      user.surname = req.body.surname if req.body.surname
-                      user.save (err) ->
-                        req.flash('info', 'Profile saved')
-                        res.redirect '/user/get'
+                if req.body.password_new is req.body.password_confirm
+                  user.comparePassword req.body.password_old, (err,isMatch)->
+                    unless err
+                      if isMatch
+                        user.password = req.body.password_new
+                        user.name = req.body.name if req.body.name
+                        user.surname = req.body.surname if req.body.surname
+                        user.save (err) ->
+                          req.flash('info', 'Profile saved')
+                          res.redirect '/user/get'
+                      else
+                        req.flash('info', 'Invalid old password')
+                        res.redirect "/user/get"
+
                     else
                       req.flash('info', 'Invalid old password')
                       res.redirect "/user/get"
-                  else
-                    req.flash('info', 'Invalid old password')
-                    res.redirect "/user/get"
+                else
+                  req.flash('info', 'Confirm passsword is not the same')
+                  res.redirect "/user/get"
               else if req.body.name isnt '' or req.body.surname isnt ''
                 user.name = req.body.name if req.body.name
                 user.surname = req.body.surname if req.body.surname
