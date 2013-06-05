@@ -277,9 +277,7 @@ Route =
       req.body.email = req.body.email.trim()
       if validationEmail.test(req.body.email)
         passport.authenticate("local", (err, user, info) ->
-          console.log(arguments);
           unless err
-            console.log('no err');
             if user
               console.log user
               req.logIn user, (err) ->
@@ -288,7 +286,6 @@ Route =
                   res.redirect '/user/get'
             else
               console.log info
-              console.log 'user not found'
               req.flash('info', info.message)
               res.redirect('/')
           else

@@ -1,9 +1,19 @@
 app = require("../app/")()
 should = require("should")
 express = require("express")
+request = require('../node_modules/request');
 RedisStore = require("connect-redis")(express)
+config = require("../app/config/config")
+assert = require('../node_modules/assert');
 
-
+if config.APP.hostname is 'localhost'
+  Url = "http://"+config.APP.hostname+":"+config.PORT
+else
+  Url= config.APP.hostname
+user = {
+  email: "testuser@test.com"
+  password: "asdasd"
+}
 describe "app", ->
   it "should expose app settings", (done) ->
     obj = app.settings
@@ -15,8 +25,12 @@ describe "sessions", ->
   sessionData =
     cookie:
       maxAge: 2000
-
     name: "tj"
+
+
+
+
+
 
   # TODO: Find out why this before statement times out
   # Is there a risk that the store will not be instantiated when the tests run
@@ -44,3 +58,20 @@ describe "sessions", ->
       store.destroy "123", ->
         store.client.end()
         done()
+
+describe '/user/create', ->
+  it 'login-pass match', (done)->
+    console.log 'test create'
+    req =
+        url: Url+"/user/create"
+        method: 'POST'
+        body: 
+            email: user.email
+            password: user.password
+            remember_me: "on"
+        json: true
+    request req, (error, res, body) ->
+        console.log(Url);
+        assert res
+        done()
+        console.log ''

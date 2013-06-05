@@ -47,7 +47,9 @@
     "connect-flash": "~0.1.1",
     "base64url": "0.0.4",
     "passport": "~0.1.17",
-    "passport-local": "~0.1.6"
+    "passport-local": "~0.1.6",
+    "request": "~2.21.0",
+    "assert": "~0.4.9"
   },
   "devDependencies": {
     "coffee-script": ">=1.6.2",

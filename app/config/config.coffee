@@ -34,6 +34,10 @@ exports.setEnvironment = (env) ->
 
     when "test"
       exports.PORT = process.env.PORT or 3000
+      exports.APP =
+        name: "ZMGC Test"
+        hostname: "localhost"
+        host: "127.0.0.1"
       exports.DEBUG_LOG = false
       exports.DEBUG_WARN = false
       exports.DEBUG_ERROR = true
