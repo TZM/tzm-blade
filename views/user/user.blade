@@ -44,10 +44,21 @@ replace block page
             button.btn.btn-block.btn-primary.btn-small(id="save" type="submit")=t("ns.forms:button.save")
       .control-group.row-fluid
         .controls
-          label.error.text-success(for="name")
+          #passlength.hide=t("ns.msg:error.passlength")
+          #passreq.hide=t("ns.msg:error.passreq")
+          #newpassreq.hide=t("ns.msg:error.newpassreq")
+          #oldpassreq.hide=t("ns.msg:error.oldpassreq")
+          #confirmpassreq.hide=t("ns.msg:error.confirmpassreq")
+          #passlength.hide=t("ns.msg:error.passlength")
+          #saveerr.hide=t("ns.msg:error.save")
+          #namelength.hide=t("ns.msg:error.namelength")
+          #surnamelength.hide=t("ns.msg:error.surnamelength")
+          #passequal.hide=t("ns.msg:error.passequal")
+
+
+          label.error.text-error(for="name")
+          label.error.text-error(for="surname")
           label.error.text-info(for="password_old")
           label.error.text-warn(for="password_new")
           label.error.text-error(for="password_confirm")
-
-
 

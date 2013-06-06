@@ -22,5 +22,10 @@
                         button#login.btn.btn-block.btn-primary.btn-small.btn-login(type="submit")=t("ns.forms:button.login")
                         button#continue.login.btn.btn-block.btn-primary.btn-small.btn-continue.hidden(type="submit")=t("ns.forms:button.continue")
                 .control-group.row-fluid
+                    #passreq.hide=t("ns.msg:error.passreq")
+                    #emailreq.hide=t("ns.msg:error.emailreq")
+                    #emailvalid.hide=t("ns.msg:error.emailvalid")
+                    #passlength.hide=t("ns.msg:error.passlength")
+
                     label.error.text-info(for="email")
                     label.error.text-success(for="password")

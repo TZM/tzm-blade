@@ -72,6 +72,7 @@ UserSchema = new Schema(
 
   lockUntil:
     type: Number
+    default: 0
 
   tokenString:
     type: String

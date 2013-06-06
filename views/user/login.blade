@@ -48,6 +48,11 @@ replace block page
               .span2
                 button#reset.btn.btn-block.btn-primary.btn-small(type="submit")=t("ns.forms:button.reset-password")
           .control-group.row-fluid
-            .controls     
+            .controls    
+              #passreq.hide=t("ns.msg:error.passreq.hide")
+              #confirmpassreq=t("ns.msg:error.confirmpassreq")
+              #passlength.hide=t("ns.msg:error.passlength")
+              #passequal.hide=t("ns.msg:error.passequal")
+
               label.error.text-info(for="password_new")
               label.error.text-success(for="password_confirm")

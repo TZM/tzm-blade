@@ -37,36 +37,58 @@ passport.use new LocalStrategy(
     User.findOne email: email, (err, user) ->
       unless err
         if user
-          unless user.lockUntil? and user.lockUntil < Date.now()
+          attempts = user.loginAttempts
+          if ((5-attempts) > 1)
+            remaining = "attemptsrem"
+          else
+            remaining = "attemptrem"
+          if user.lockUntil < Date.now()
             user.comparePassword password, (err,isMatch)->
               unless err 
                 if isMatch
                   user.resetLoginAttempts (cb) ->
-                    done(null,user, message: 'authorization success')
+                    done(null,user, 
+                      message: 'authorizationsuccess'
+                      data: '.'
+                      message2: 'welcome')
                 else
-                  attempts = user.loginAttempts
+                  
                   if user.loginAttempts < 5
                     user.incLoginAttempts (cb)->
-                      console.log 'password not match'
-                      done(null,false, message: 'Invalid password. '+(5-attempts)+' Attempts remaining')
+                      done(null,false, 
+                        message: 'invalidpass'
+                        data: '. '+(5-attempts)
+                        message2: remaining )
                   else
-                    date = new Date(user.lockUntil)
-                    done(null,false, message: 'Account is locked after 5 wrong attempts until '+date)
+                    done(null,false, 
+                      message: 'lockedafter'
+                      data: attempts
+                      message2: 'wrongattempts')
               else
                 attempts = user.loginAttempts
                 if user.loginAttempts < 5
                   user.incLoginAttempts (cb)->
-                    console.log 'password not match'
-                    done(null,false, message: 'Invalid password. '+(5-attempts)+' Attempts remaining')
+                    done(null,false, 
+                      message: 'invalidpass'
+                      data: '. '+(5-attempts)
+                      message2: remaining )
           else
             console.log 'user is locked'
             date = new Date(user.lockUntil)
             console.log(date);
-            done(err,false, message: 'Account is locked until: '+date)
+            done(err,false, 
+              message: 'lockeduntil'
+              data: ": "+date+"."
+              message2:'tryagainlater')
         else
-          console.log 'user not found'
-          done(null, false, message: "Email or password invalid")
+          done(null, false, 
+            message: "authorizationfailed"
+            data: '.'
+            message2: 'tryagain')
       else
         console.log 'user find error'
-        done(err,false, message: 'Bad request')
+        done(err,false, 
+          message: 'authorizationfailed'
+          data: '.'
+          message2: 'tryagain')
 )

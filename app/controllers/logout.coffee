@@ -1,5 +1,4 @@
 exports.logout = (req, res) ->
-  console.log req
   if req.user
     if req.signedCookies.logintoken
       cookie = JSON.parse(req.signedCookies.logintoken)

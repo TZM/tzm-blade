@@ -38,8 +38,10 @@ jQuery(function($) {
           rules: {
               surname:{
                 required: false
+                ,minlength: 3
               },name:{
                 required: false
+                ,minlength: 3
               },password_old: {
                 required: function(element) {
                   return $("#password_new").val().length >= 6
@@ -59,22 +61,25 @@ jQuery(function($) {
           },
           messages: {
               name: {
-                required: "Nothing to save, change any field to save"
-              },name: {
-                required: "Nothing to save, change any field to save"
+                required: $('#saveerr').text()
+                ,minlength: $('#namelength').text()
+              },
+              surname: {
+                required: $('#saveerr').text()
+                ,minlength: $('#surnamelength').text()
               },
               password_old: {
-                  minlength: "Your password must be at least 6 characters long"
-                  ,required: "Enter your old password"
+                minlength: $('#passlength').text()
+                ,required: $('#oldpassreq').text()
               },
               password_new: {
-                  minlength: "Your new password must be at least 6 characters long"
-                  ,required: "Enter your new password"
+                minlength: $('#passlength').text()
+                ,required: $('#newpassreq').text()
               },
               password_confirm: {
-                  minlength: "Your password must be at least 6 characters long"
-                  ,equalTo: "Please enter the same password as above"
-                  ,required: "Enter your old password"
+                minlength: $('#passlength').text()
+                ,equalTo: $('#passequal').text()
+                ,required: $('#confirmpassreq').text()
               }
           }
         })
@@ -93,11 +98,11 @@ jQuery(function($) {
             },
             messages:{
                 email:{
-                    email:'Please enter a valid email',
-                    required: 'Enter your email'
+                    email: $('#emailvalid').text()
+                    ,required: $('#emailreq').text()
                 },password:{
-                    required: 'Password is required',
-                    minlength: jQuery.format("At least {0} characters required!")
+                    required: $('#passreq').text()
+                    ,minlength: $('#passlength').text()
                 }
             }
       })
@@ -113,10 +118,10 @@ jQuery(function($) {
               }
           },messages:{
               email:{
-                email:'Please enter a valid email',
-                required: 'Please enter your email'
+                email: $('#emailvalid').text()
+                ,required:  $('#emailreq').text()
               },password:{
-                requried: 'password is required'
+                requried: ''
               }
           }
       })
@@ -136,13 +141,13 @@ jQuery(function($) {
           },
           messages: {
               password_new: {
-                  required: "Please provide a password",
-                  minlength: "Your password must be at least 6 characters long"
+                  required: $('#newpassreq').text()
+                  ,minlength: $('#passlength').text()
               },
               password_confirm: {
-                  required: "Please provide a password",
-                  minlength: "Your password must be at least 6 characters long",
-                  equalTo: "Please enter the same password as above"
+                  required: $('#confirmpassreq').text()
+                  ,minlength: $('#passlength').text()
+                  ,equalTo:  $('#passequal').text()
               }
           }
         })
