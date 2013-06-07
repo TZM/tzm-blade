@@ -19,34 +19,25 @@ randomPassword = (length) ->
         str += chars[Math.floor(Math.random() * chars.length)]
         i++
     return str
-
-
-
 # User model's CRUD controller.
 Route = 
-
   # Lists all users
   index: (req, res) ->
     # FIXME set permissions to see this - only admins
     if req.user.groups is 'admin'
       User.find {}, (err, users) ->
         res.send users
-
-
-
   _sendMail: (req, res, options, data, linkinfo) ->
     mailer = new Emailer(options, data);
     mailer.send (err,ok)->
       unless err
         res.statusCode = 201
-        console.log ok 
         req.flash('info', linkinfo)
         res.redirect '/'
       else
+        res.statusCode = 400
         req.flash('info', req.i18n.t('ns.msg:flash.sender')+".")
         res.redirect '/'
-
-
   # Creates new user with data from `req.body`
   create: (req, res, next) ->
     # FIXME - have a better error page
@@ -54,7 +45,7 @@ Route =
     if req.body?
       password = randomPassword(26)
       req.body.password = password if !req.body.password 
-      req.body.email = req.body.email.trim()
+      req.body.email = req.body.email.toLowerCase()
       if validationEmail.test(req.body.email)
         # check if user email exists
         User.findOne { email:req.body.email }, (err,user) ->
@@ -69,7 +60,6 @@ Route =
                   name: user.name
                   surname: user.surname
                   email: user.email
-
               #check if user is already active then reset password if not then send activation link again
               if user.active is true
                 action = '/user/resetpassword/'
@@ -121,62 +111,63 @@ Route =
         res.redirect('/')
         req.flash('info', req.i18n.t('ns.msg:flash.validemail'))
     else
+      res.statusCode = 400
       res.redirect('/')
-  # Routing middleware to call the user activation
-  # Receives error or activated user
-  # @param  {object}   req  Request.
-  # @param  {object}   res  Response.
-  # @param  {object}   next Middleware chain.
-  # @return {mixed}         Error: Redirects to Login Screen - User active
-  #                         Error: Redirects to resend activation - user inactive
-  #                         Success: Falls through.
-  
-
   activate: (req, res, next) ->
     console.log "activate"
     User.activate req.params.id, (err, user) ->
       console.log('end of activate');
       unless err
-        console.log 'activate. user', user
-        req.logIn user, (err) ->
-          next(err)  if err
-          req.flash('info', 'Activation success')
-          res.redirect "user/resetpassword/"+req.params.id
+        if user
+          console.log 'activate. user', user
+          if user.activate is false
+            req.logIn user, (err) ->
+              next(err)  if err
+              req.flash('info', 'Activation success')
+              res.redirect "user/resetpassword/"+req.params.id
+          else
+            res.statusCode = 400
+            req.flash('info', req.i18n.t('ns.msg:flash.alreadyactivated'))
+            res.redirect '/'
+        else
+          res.statusCode = 400
+          req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
+          res.redirect '/'
       else if err is "token-expired-or-user-active"
         console.log "token-expired-or-user-active" 
         res.statusCode = 403
         req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
         res.redirect '/'
-
-
-  # Gets user by id
-
   resetpassword: (req, res) ->
     console.log 'resetpass'
+    console.log(req.params.id);
     if req.params.id?
+      
       User.findOne {tokenString: req.params.id}, (err,user)->
         unless err
           if user
             req.logIn user, (err)->
               unless err
                 req.flash('info', 'Enter your new password')
-                res.render "user/resetpassword"
+                res.render "user/resetpassword",
                   token: req.params.id
                   user: req.user
               else
+                res.statusCode = 403
                 req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
                 res.redirect '/'
           else
+            res.statusCode = 403
             req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
             res.redirect '/'
         else
+          res.statusCode = 403
           req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
           res.redirect '/'
     else
+      res.statusCode = 403
       req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
       res.redirect '/'
-      
-
   changepassword: (req, res,next) ->
     console.log 'changepassword'
     if req.body.password_new is req.body.password_confirm and req.body.password_new.length >=6
@@ -193,25 +184,29 @@ Route =
                   req.flash('info', 'Password changed')
                   res.redirect "/user/get"
               else
+                res.statusCode = 400
                 req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err.message)
                 res.redirect "/"
           else
+            res.statusCode = 400
             req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
             res.redirect "/"
         else
           console.log err
-          res.render "/user/resetpassword"
+          res.statusCode = 400
+          res.render "/user/resetpassword",
             token: req.body.token
             user: req.user
     else
-      res.render "/user/resetpassword"
+      res.statusCode = 400
+      res.render "/user/resetpassword",
         token: req.body.token
         user: req.user
   get: (req, res) ->
     if req.session.passport.user?
       User.findById req.session.passport.user, (err, user) ->
         unless err
-          res.render "user/user" 
+          res.render "user/user",
             user: user
     else if req.params.id?
       User.findOne {$or: [{tokenString: req.params.id}, {_id: req.params.id}]}, (err, user) ->
@@ -220,12 +215,15 @@ Route =
             res.render "user/user",
               user: user
           else
+            res.statusCode = 400
             req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
             res.redirect '/'
         else
-          req.flash('info', err)
+          res.statusCode = 400
+          req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err)
           res.redirect '/'
     else
+      res.statusCode = 403
       req.flash('info', req.i18n.t('ns.msg:flash.unauthorized'))
       res.redirect '/'
   # Updates user with data from `req.body`
@@ -244,35 +242,45 @@ Route =
                         user.name = req.body.name if req.body.name
                         user.surname = req.body.surname if req.body.surname
                         user.save (err) ->
-                          req.flash('info', req.i18n.t('ns.msg:flash.profilesaved'))
-                          res.redirect '/user/get'
+                          unless err
+                            req.flash('info', req.i18n.t('ns.msg:flash.profilesaved'))
+                            res.redirect '/user/get'
+                          else
+                            res.statusCode = 500
+                            req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err)
+                            res.redirect '/user/get'
                       else
                         req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
                         res.redirect "/user/get"
-
+                        res.statusCode = 400
                     else
                       req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
                       res.redirect "/user/get"
+                      res.statusCode = 400
                 else
                   req.flash('info', req.i18n.t('ns.msg:flash.invalidconfirmpass'))
                   res.redirect "/user/get"
+                  res.statusCode = 400
               else if req.body.name isnt '' or req.body.surname isnt ''
                 user.name = req.body.name if req.body.name
                 user.surname = req.body.surname if req.body.surname
                 user.save (err) ->
                   req.flash('info', req.i18n.t('ns.msg:flash.profilesaved'))
                   res.redirect 'user/get'
+                  res.statusCode = 400
               else
                 req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
                 res.redirect 'user/get'
+                res.statusCode = 400
         else
           req.flash('info', err)
           res.redirect '/'
+          res.statusCode = 400
     else
       req.flash('info', req.i18n.t('ns.msg:flash.saveerr'))
       res.redirect 'user/get'
+      res.statusCode = 400
       console.log("body is not valid");
-
   # Deletes user by id
   delete: (req, res) ->
     User.findByIdAndRemove req.params.id, (err) ->
@@ -281,7 +289,6 @@ Route =
       else
         res.send err
         res.statusCode = 500
-        
   login: (req, res, next) ->
     console.log 'authenticate'
     if req.isAuthenticated()
@@ -289,27 +296,41 @@ Route =
       res.redirect '/'
     else if req.body.email?
       console.log('not logged in. authenticate');
-      req.body.email = req.body.email.trim()
+      req.body.email = req.body.email.toLowerCase()
+      console.log(req.body);
       if validationEmail.test(req.body.email)
         passport.authenticate("local", (err, user, info) ->
           unless err
             if user
-              console.log user
               req.logIn user, (err) ->
                 unless err
                   req.flash('info', req.i18n.t('ns.msg:flash.'+info.message)+info.data+" "+req.i18n.t('ns.msg:flash.'+info.message2))
+                  res.statusCode = 201
                   res.redirect '/user/get'
+                else
+                  console.log(5);
+                  console.log("inactiveuser");
+                  req.flash('info', req.i18n.t('ns.msg:flash.authorizationfailed'))
+                  res.redirect '/'
+                  res.statusCode = 403
             else
+              console.log(4);
               req.flash('info', req.i18n.t('ns.msg:flash.'+info.message)+info.data+" "+req.i18n.t('ns.msg:flash.'+info.message2))
               res.redirect('/')
+              res.statusCode = 403
           else
+            console.log(3);
             next(err)
         ) req, res, next
       else
         console.log('email is not valid');
         req.flash('info', req.i18n.t('ns.msg:flash.'+info.message)+info.data+" "+req.i18n.t('ns.msg:flash.'+info.message2))
         res.redirect '/'
+        res.statusCode = 403
     else
-      res.redirect '/'
+      console.log(1);
+      res.redirect '/',
         user: req.user
+      res.statusCode = 403
+
 module.exports = Route

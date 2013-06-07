@@ -14,7 +14,9 @@
   },
   "flash": {
     "welcome": "Welcome!"
+    ,"inactiveuser": "User is not activated, Please follow activation link on your email"
     ,"alreadyauthorized": "You are already signed up"
+    ,"alreadyactivated": "User is already activated"
     ,"authorizationsuccess": "Authorization success"
     ,"authorizationfailed": "Email or password invalid"
     ,"saveerr": "Nothing to save"
@@ -33,11 +35,11 @@
     ,"lockedafter": "Account is locked after "
     ,"profilesaved": "Profile saved"
     ,"passwordchanged": "Password changed"
-    ,"resetlink": "Yorr reset password link sent to your email"
+    ,"requestlinkagain": "Or request link again if you have not received a message"
+    ,"resetlink": "Your reset password link sent to your email"
     ,"tryagain": "Try again"
     ,"tryagainlater": "Please try again later"
     ,"wait": "Please wait..."
     ,"wrongattempts": "wrong attempts"
-
   }
 }

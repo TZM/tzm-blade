@@ -3,13 +3,85 @@ should = require("should")
 express = require("express")
 request = require('../node_modules/request');
 RedisStore = require("connect-redis")(express)
+assert = require('assert');
 config = require("../app/config/config")
-assert = require('../node_modules/assert');
+Imap = require("imap")
+mailparser = require("mailparser")
 
 if config.APP.hostname is 'localhost'
   Url = "http://"+config.APP.hostname+":"+config.PORT
 else
   Url= config.APP.hostname
+
+mailer =
+  username: "zmgc.test@gmail.com"
+  password: "b0ff25e16d22"
+
+user = 
+  email: "zmgc.test@gmail.com"
+  password: "asdasdasd"
+
+server = new Imap.ImapConnection(
+  user: mailer.username
+  password: mailer.password
+  host: "imap.gmail.com",
+  port: 993,
+  secure: true
+)
+Token = ''
+parser = (cb)->
+  exitOnErr = (err) ->
+      console.error err
+      do process.exit
+
+  server.connect (err) ->
+    exitOnErr err if err
+    
+    server.openBox "INBOX", false, (err,box) ->
+      exitOnErr err if err
+      console.log "You have #{box.messages.total} messages in your INBOX"
+      server.on "mail", (count) ->
+        if count isnt 0
+          server.seq.fetch box.messages.total + ":*",
+            struct: false
+          ,
+            body: true
+            headers: false
+            cb: (fetch) ->
+              fetch.on "message", (msg) ->
+                parser = new mailparser.MailParser
+                  showAttachmentLinks: true
+                _text = ''
+                msg.on "data", (data) ->
+                  parser.write data
+                  _text += data.toString()
+                msg.on "end", ->
+                  parser.end()
+                  parser.on "end", (data)->
+                    index1 = _text.indexOf('/user/')
+                    __text = _text.substring(index1,_text.length)
+                    index2 = __text.indexOf('>')
+                    link = __text.substring(0,index2)
+                    console.log(link.toString());
+                    a1 = link.split('/')
+                    a1length = a1.length
+                    str = a1[a1length-1]
+                    token = str
+                    # __params = link.substring(str.length, linklength)
+                    Token = token
+                    console.log("token: "+ token);
+                    cb null, link, token
+                  console.log "Finished message no. " + msg.seqno
+              
+              fetch.on "end", ->
+                server.logout()
+            , (err) ->
+              cb err if err
+
+              console.log "Done fetching all messages!"
+              server.logout()
+        else
+          setTimeout(parser, 1000)
 
 describe "app", ->
   it "should expose app settings", (done) ->
@@ -51,13 +123,10 @@ describe "sessions", ->
         done()
 
 describe '/user/create', ->
-  it 'login-pass match', (done)->
-    user = 
-      email: "testuser"
-      password: "asdasd"
-    console.log 'test create'
+  it 'create test user', (done)->
+    this.timeout(50000);
     req =
-      url: Url+"/user/create"
+      uri: Url+"/user/create"
       method: 'POST'
       body: 
         email: user.email
@@ -66,4 +135,96 @@ describe '/user/create', ->
       json: true  
     request req, (error, res, body) ->
       console.log(res.statusCode);
+      assert res.statusCode is 302, res.statusCode
       done()
+
+
+
+
+describe '/user/activate or reset password', ->
+  it 'parsing inbox', (done)->
+    this.timeout(900000);
+    setTimeout(done, 90000)
+    parser (err,link,token)->
+      Token = token
+      console.log("error: ", err) if err
+      if link
+        req =
+          url: Url+link
+          method: 'POST'
+          params: 
+            id: Token
+        request req, (error, res, body) ->
+          console.log("requested uri: "+req.url);
+          console.log(res.statusCode);
+          assert res.statusCode is 302, res.statusCode
+          done()
+      else
+        console.log("error: ",err);
+
+  describe '/user/resetpassword', ->
+    it 'user resetting password', (done)->
+      req =
+        uri: Url+"/user/resetpassword/"+Token
+        method: 'POST'
+        body: 
+          password_new: user.password
+          password_confirm: user.password
+        json: true
+        params:
+          id: Token
+      request req, (error, res) ->
+        console.log("error: ", error);
+        console.log("statuscode: ", res.statusCode);
+        assert res.statusCode is 200 or 302, res.statusCode
+        done()
+
+
+describe '/user/changepassword', ->
+  it 'user resetting password', (done)->
+    
+    req =
+      uri: Url+"/user/changepassword"
+      method: 'POST'
+      body: 
+        password_new: user.password
+        password_confirm: user.password
+      json: true
+      params:
+        id: Token
+    request req, (error, res) ->
+      console.log("error: ", error);
+      console.log("statuscode: ", res.statusCode);
+      assert res.statusCode is 302, res.statusCode
+      done()
+
+describe '/user/login', ->
+  it 'success login', (done)->
+    
+    req =
+      uri: Url+"/user/login"
+      method: 'POST'
+      body: 
+        email: user.email
+        password: user.password
+        remember_me: "on"
+      json: true
+
+    request req, (error, res) ->
+      console.log(error);
+      console.log(res.statusCode);
+      console.log(res.message);
+      assert res.statusCode isnt 403, res.statusCode
+      done()
+
+
+
+
+
+
+
+
+
+
+
+

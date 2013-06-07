@@ -7,8 +7,8 @@ flash = require "connect-flash"
 RedisStore = require("connect-redis")(express)
 blade = require "blade"
 i18n = require "i18next"
-logger = require "../utils/logger"
-passport = require "passport";
+logger = require "winston"
+passport = require "passport"
 LocalStrategy = require("passport-local").Strategy
 
 
@@ -17,6 +17,7 @@ maxAges = 86400000 * 30
 
 config = require "../config/config"
 config.setEnvironment process.env.NODE_ENV
+
 # Redis session stores
 options =
   hosts: [new RedisStore(
