@@ -55,7 +55,7 @@ passport.use new LocalStrategy(
                         message2: 'welcome')
                   else
                     if user.loginAttempts < 5
-                      console.log("passmatch");
+                      console.log("pass not match");
                       user.incLoginAttempts (cb)->
                         done(null,false, 
                           message: 'invalidpass',

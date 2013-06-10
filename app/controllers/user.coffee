@@ -27,17 +27,18 @@ Route =
     if req.user.groups is 'admin'
       User.find {}, (err, users) ->
         res.send users
+
   _sendMail: (req, res, options, data, linkinfo) ->
     mailer = new Emailer(options, data);
     mailer.send (err,ok)->
       unless err
         res.statusCode = 201
         req.flash('info', linkinfo)
-        res.redirect '/'
+        res.redirect "index"
       else
         res.statusCode = 400
         req.flash('info', req.i18n.t('ns.msg:flash.sender')+".")
-        res.redirect '/'
+        res.redirect "index"
   # Creates new user with data from `req.body`
   create: (req, res, next) ->
     # FIXME - have a better error page
@@ -100,19 +101,19 @@ Route =
                 else
                   req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err.message)
                   res.statusCode = 500
-                  res.redirect('/')
+                  res.redirect("index")
           else
             req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err.message)
             res.statusCode = 500
-            res.redirect('/')
+            res.redirect("index")
             
       else
         res.statusCode = 400
-        res.redirect('/')
+        res.redirect("index")
         req.flash('info', req.i18n.t('ns.msg:flash.validemail'))
     else
       res.statusCode = 400
-      res.redirect('/')
+      res.redirect("index")
   activate: (req, res, next) ->
     console.log "activate"
     User.activate req.params.id, (err, user) ->
@@ -128,16 +129,16 @@ Route =
           else
             res.statusCode = 400
             req.flash('info', req.i18n.t('ns.msg:flash.alreadyactivated'))
-            res.redirect '/'
+            res.redirect "index"
         else
           res.statusCode = 400
           req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
-          res.redirect '/'
+          res.redirect "index"
       else if err is "token-expired-or-user-active"
         console.log "token-expired-or-user-active" 
         res.statusCode = 403
         req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
-        res.redirect '/'
+        res.redirect "index"
   resetpassword: (req, res) ->
     console.log 'resetpass'
     console.log(req.params.id);
@@ -155,19 +156,19 @@ Route =
               else
                 res.statusCode = 403
                 req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
-                res.redirect '/'
+                res.redirect "index"
           else
             res.statusCode = 403
             req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
-            res.redirect '/'
+            res.redirect "index"
         else
           res.statusCode = 403
           req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
-          res.redirect '/'
+          res.redirect "index"
     else
       res.statusCode = 403
       req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
-      res.redirect '/'
+      res.redirect "index"
   changepassword: (req, res,next) ->
     console.log 'changepassword'
     if req.body.password_new is req.body.password_confirm and req.body.password_new.length >=6
@@ -217,15 +218,15 @@ Route =
           else
             res.statusCode = 400
             req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
-            res.redirect '/'
+            res.redirect "index"
         else
           res.statusCode = 400
           req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err)
-          res.redirect '/'
+          res.redirect "index"
     else
       res.statusCode = 403
       req.flash('info', req.i18n.t('ns.msg:flash.unauthorized'))
-      res.redirect '/'
+      res.redirect "index"
   # Updates user with data from `req.body`
   update: (req, res) ->
     if req.body.name.length >= 3 or req.body.password_old.length >= 6 or req.body.surname.length >= 3
@@ -274,7 +275,7 @@ Route =
                 res.statusCode = 400
         else
           req.flash('info', err)
-          res.redirect '/'
+          res.redirect "index"
           res.statusCode = 400
     else
       req.flash('info', req.i18n.t('ns.msg:flash.saveerr'))
@@ -283,17 +284,16 @@ Route =
       console.log("body is not valid");
   # Deletes user by id
   delete: (req, res) ->
-    User.findByIdAndRemove req.params.id, (err) ->
-      if not err
-        res.send {}
-      else
-        res.send err
-        res.statusCode = 500
+    User.remove {_id: req.params.id}, (err, ok) ->
+      unless err
+        req.flash('info', req.i18n.t('ns.msg:flash.userdeleted'))
+        res.redirect 'user/get'
+        res.statusCode = 400
   login: (req, res, next) ->
     console.log 'authenticate'
     if req.isAuthenticated()
       req.flash('info', req.i18n.t('ns.msg:flash.alreadyauthorized'))
-      res.redirect '/'
+      res.redirect "index"
     else if req.body.email?
       console.log('not logged in. authenticate');
       req.body.email = req.body.email.toLowerCase()
@@ -307,17 +307,19 @@ Route =
                   req.flash('info', req.i18n.t('ns.msg:flash.'+info.message)+info.data+" "+req.i18n.t('ns.msg:flash.'+info.message2))
                   res.statusCode = 201
                   res.redirect '/user/get'
+
                 else
                   console.log(5);
                   console.log("inactiveuser");
                   req.flash('info', req.i18n.t('ns.msg:flash.authorizationfailed'))
-                  res.redirect '/'
+                  res.redirect "index"
                   res.statusCode = 403
             else
               console.log(4);
               req.flash('info', req.i18n.t('ns.msg:flash.'+info.message)+info.data+" "+req.i18n.t('ns.msg:flash.'+info.message2))
-              res.redirect('/')
               res.statusCode = 403
+              res.redirect "index"
+              
           else
             console.log(3);
             next(err)
@@ -325,11 +327,11 @@ Route =
       else
         console.log('email is not valid');
         req.flash('info', req.i18n.t('ns.msg:flash.'+info.message)+info.data+" "+req.i18n.t('ns.msg:flash.'+info.message2))
-        res.redirect '/'
+        res.redirect "index"
         res.statusCode = 403
     else
       console.log(1);
-      res.redirect '/',
+      res.redirect "index",
         user: req.user
       res.statusCode = 403
 

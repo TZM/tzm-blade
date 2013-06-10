@@ -174,6 +174,7 @@ describe '/user/activate or reset password', ->
         params:
           id: Token
       request req, (error, res) ->
+        console.log(req.res);
         console.log("error: ", error);
         console.log("statuscode: ", res.statusCode);
         assert res.statusCode is 200 or 302, res.statusCode
@@ -210,12 +211,23 @@ describe '/user/login', ->
         remember_me: "on"
       json: true
 
-    request req, (error, res) ->
+    request req, (error, res, body) ->
       console.log(error);
-      console.log(res.statusCode);
-      console.log(res.message);
       assert res.statusCode isnt 403, res.statusCode
       done()
+
+describe '/user/get', ->
+  it 'get user', (done)->
+    req =
+      uri: Url+"/user/get"
+      method: 'GET'
+      json: true
+    request req, (error, res) ->
+      console.log(error);
+      console.log(arguments);
+      assert res.statusCode isnt 403, res.statusCode
+      done()
+
 
 
 
