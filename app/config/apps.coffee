@@ -1,6 +1,6 @@
 #Load dependencies
 express = require "express"
-csrf = express.csrf()
+# csrf = express.csrf()
 assets = require "connect-assets"
 jsPaths = require "connect-assets-jspaths"
 flash = require "connect-flash"
@@ -83,6 +83,10 @@ module.exports = (app) ->
       next()
       return
 
+
+  # arr = [];
+  console.log(express.csrf.toString());
+
   # Set sessions and middleware
   app.configure ->
     @use(express.bodyParser())
@@ -99,15 +103,19 @@ module.exports = (app) ->
     .use(passport.initialize())
     .use(passport.session())
     #csrf protection
-    #.use (req, res, next) ->
-    #  # Only use CSRF if user is logged in
-    #  if req.session.userId
-    #    csrf req, res, next
-    #  else
-    #    next()
+    # .use (req, res, next) ->
+      # Only use CSRF if user is logged in
+      # if req.session.passport and req.session.passport and req.session.passport.user
+      #   console.log('session');
+      #   # console.log(req.session._csrf);
+      #   arr.push(req.session._csrf);
+      #   console.log(arr);
+      #   csrf req, res, next
+      # else
+      #   next()
     .use(i18n.handle)
     .use(blade.middleware(process.cwd() + "/views"))
-    # .use(express.csrf())
+    .use(express.csrf())
     #Configure dynamic helpers
     .use (req, res, next) ->
       formData = req.session.formData or {}
@@ -118,7 +126,8 @@ module.exports = (app) ->
         #for connect-flash
         message: req.flash("info")
         # needed for csrf support
-        # token: req.session._csrf
+        csrf_token: req.session._csrf
+      # res.cookie.
       next()
 
   app

@@ -2,6 +2,7 @@
     .span3
         form#form_login_user.auth-at-dropdown(method="post" action="/user/login")
             fieldset
+                input(type='hidden', name='_csrf', value=csrf_token)
                 .control-group
                     .controls
                         .input-prepend

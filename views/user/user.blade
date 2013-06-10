@@ -5,6 +5,7 @@ replace block page
     b.text-success= message
     br
     form#user_edit_profile.form-horizontal(method="post" action="/user/update")
+      input(type='hidden', name='_csrf', value=csrf_token)
       .control-group
         label.control-label(for='name') #{t("ns.layout:user.name")}:
         .controls

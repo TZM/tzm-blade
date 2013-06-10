@@ -171,9 +171,11 @@ Route =
       res.redirect "index"
   changepassword: (req, res,next) ->
     console.log 'changepassword'
+    console.log(req.body);
     if req.body.password_new is req.body.password_confirm and req.body.password_new.length >=6
       User.findOne { tokenString: req.body.token },  (err, user) ->
         unless err
+          console.log('user',user);
           if user
             user.password = req.body.password_new
             user.loginAttempts = 0
@@ -191,7 +193,7 @@ Route =
           else
             res.statusCode = 400
             req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
-            res.redirect "/"
+            res.redirect "index"
         else
           console.log err
           res.statusCode = 400
@@ -231,6 +233,7 @@ Route =
   update: (req, res) ->
     if req.body.name.length >= 3 or req.body.password_old.length >= 6 or req.body.surname.length >= 3
       console.log('update');
+      console.log('body', req.body);
       User.findById req.user.id, (err, user) ->
         unless err
             if user
@@ -251,35 +254,46 @@ Route =
                             req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err)
                             res.redirect '/user/get'
                       else
+                        console.log('1');
                         req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
                         res.redirect "/user/get"
                         res.statusCode = 400
                     else
+                      console.log('2');
                       req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
                       res.redirect "/user/get"
                       res.statusCode = 400
                 else
+                  console.log('3');
                   req.flash('info', req.i18n.t('ns.msg:flash.invalidconfirmpass'))
-                  res.redirect "/user/get"
                   res.statusCode = 400
+                  res.redirect "/user/get"
               else if req.body.name isnt '' or req.body.surname isnt ''
                 user.name = req.body.name if req.body.name
                 user.surname = req.body.surname if req.body.surname
                 user.save (err) ->
-                  req.flash('info', req.i18n.t('ns.msg:flash.profilesaved'))
-                  res.redirect 'user/get'
-                  res.statusCode = 400
+                  unless err
+                    console.log('4');
+                    req.flash('info', req.i18n.t('ns.msg:flash.profilesaved'))
+                    res.redirect '/user/get'
+                  else 
+                    res.statusCode = 500
+                    req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err)
+                    res.redirect '/user/get'
               else
+                console.log('5');
                 req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
-                res.redirect 'user/get'
+                res.redirect '/user/get'
                 res.statusCode = 400
         else
+          console.log('6');
           req.flash('info', err)
           res.redirect "index"
           res.statusCode = 400
     else
+      console.log('7');
       req.flash('info', req.i18n.t('ns.msg:flash.saveerr'))
-      res.redirect 'user/get'
+      res.redirect '/user/get'
       res.statusCode = 400
       console.log("body is not valid");
   # Deletes user by id
@@ -287,7 +301,7 @@ Route =
     User.remove {_id: req.params.id}, (err, ok) ->
       unless err
         req.flash('info', req.i18n.t('ns.msg:flash.userdeleted'))
-        res.redirect 'user/get'
+        res.redirect '/user/get'
         res.statusCode = 400
   login: (req, res, next) ->
     console.log 'authenticate'
