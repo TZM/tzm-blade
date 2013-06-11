@@ -96,20 +96,21 @@ This application is still a work in progress and is not ready for use yet.
 * /views          : Blade views / pages
 
 #Stats
-    ☺  cloc --exclude-dir=.app,buildAssets,data,public/css/font,public/css/fonts,public/css/vendor,public/js/vendor,node_modules .
-         101 text files.
-          92 unique files.
-       13379 files ignored.
+    ☺  cloc --exclude-dir=.app,buildAssets,data,public/css/font,public/css/fonts,public/css/vendor,public/js/vendor,node_modules .                    ruby-2.0.0-p195 master a6f469a""
+         107 text files.
+          99 unique files.
+       14125 files ignored.
 
-    http://cloc.sourceforge.net v 1.56  T=1.0 s (47.0 files/s, 4957.0 lines/s)
+    http://cloc.sourceforge.net v 1.56  T=5.0 s (10.0 files/s, 1159.8 lines/s)
     -------------------------------------------------------------------------------
     Language                     files          blank        comment           code
     -------------------------------------------------------------------------------
-    CSS                              4            188            213           1957
-    CoffeeScript                    30            191            369            984
-    Javascript                      11            104            265            624
+    CSS                              5            278            242           2460
+    CoffeeScript                    31            224            314           1362
+    Javascript                      10             70            129            649
     Bourne Shell                     1              0              0             19
     make                             1             12             13             18
+    HTML                             2              3              0              6
     -------------------------------------------------------------------------------
-    SUM:                            47            495            860           3602
+    SUM:                            50            587            698           4514
     -------------------------------------------------------------------------------
