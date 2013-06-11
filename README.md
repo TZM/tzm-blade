@@ -2,6 +2,8 @@
 * [Node.js](http://nodejs.org/)
 * [Blade HTML Compiler](https://github.com/bminer/node-blade)
 
+#Background
+Please refer to the [wiki](https://github.com/TZM/tzm-blade/wiki) for deeper understanding of what this project is hoping to achieve. We also have a public [trello](https://trello.com/zmgc) board. 
 #Setup
 Before running this application we will need to setup couple of environmental settings, in order not to add any private data within the code.
 
@@ -52,6 +54,45 @@ To deploy on AppFog, you will need to first create an account and then setup you
     
     ☺ npm start
     Server running at http://127.0.0.1:9080/
+#Start databases
+Currently we employ mongoDB to store the user data and Redis for sessions. We are currently working on migrating this to Riak, please follow the [documentation](#) for the secure deployment.
+##Mongo
+    ☺  mongod                                                                                                                                                        ruby-2.0.0-p195""
+    Tue Jun 11 17:46:06.222 kern.sched unavailable
+    Tue Jun 11 17:46:06.234 [initandlisten] MongoDB starting : pid=19865 port=27017 dbpath=/usr/local/var/mongodb 64-bit host=aqoon.local
+    Tue Jun 11 17:46:06.234 [initandlisten] db version v2.4.1
+    Tue Jun 11 17:46:06.234 [initandlisten] git version: 1560959e9ce11a693be8b4d0d160d633eee75110
+    Tue Jun 11 17:46:06.234 [initandlisten] build info: Darwin bs-osx-106-x86-64-1.local 10.8.0 Darwin Kernel Version 10.8.0: Tue Jun  7 16:33:36 PDT 2011; root:xnu-1504.15.3~1/RELEASE_I386 i386 BOOST_LIB_VERSION=1_49
+    Tue Jun 11 17:46:06.234 [initandlisten] allocator: system
+    Tue Jun 11 17:46:06.234 [initandlisten] options: { bind_ip: "127.0.0.1", config: "/usr/local/etc/mongod.conf", dbpath: "/usr/local/var/mongodb" }
+    Tue Jun 11 17:46:06.246 [initandlisten] journal dir=/usr/local/var/mongodb/journal
+    Tue Jun 11 17:46:06.246 [initandlisten] recover : no journal files present, no recovery needed
+    Tue Jun 11 17:46:06.316 [websvr] admin web console waiting for connections on port 28017
+    Tue Jun 11 17:46:06.317 [initandlisten] waiting for connections on port 27017
+##Redis
+    ☺  redis-server                                                                                                                                                  ruby-2.0.0-p195""
+    [98950] 11 Jun 16:35:25.877 # Warning: no config file specified, using the default config. In order to specify a config file use    redis-server /path/to/redis.conf  
+    [98950] 11 Jun 16:35:25.879 # Un    able to set the max number of files limit to 10032 (Invalid argument), setting the max clients    configuration to 8160.  
+                    _._   
+               _.-``__    ''-._   
+          _.-``    `.     `_.  ''-._           Redis 2.6.11 (00000000/0) 64 bit   
+      .-`` .-```.  ```\   /    _.,_ ''-._   
+     (    '      ,          .-`  | `,       )     Running in stand alone mode  
+     |`-._`-...-` __...   -.``-._|'` _.-'   |     Port: 6379   
+     |    `-._   `._       /     _.-'       |     PID: 98950   
+      `-._    `-._  `-.   /  _.-'    _.-'   
+     |`-._`-._    `-.__   .-'    _.-'_.-'   |  
+     |    `-._`-._           _.-'_.-'       |           http://redis.io  
+      `-._    `-._`-.__   .-'_.-'    _.-'   
+     |`-._`-._    `-.__   .-'    _.-'_.-'   |  
+     |    `-._`-._           _.-'_.-'       |  
+      `-._    `-._`-.__   .-'_.-'    _.-'   
+          `-._    `-.__   .-'    _.-'   
+              `-._           _.-'   
+                  `-.__   .-'   
+    
+    [98950] 11 Jun 16:35:25.880 # Server started, Redis version 2.6.11
+    [98950] 11 Jun 16:35:25.880 * The server is now ready to accept connections on port 6379
 #Development
 To run locally for development use:
 

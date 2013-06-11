@@ -1,7 +1,7 @@
 app = require("../app/")()
 should = require("should")
 express = require("express")
-request = require('../node_modules/request');
+request = require('../node_modules/request')
 RedisStore = require("connect-redis")(express)
 assert = require('assert');
 config = require("../app/config/config")
@@ -69,7 +69,7 @@ parser = (cb)->
                     token = str
                     # __params = link.substring(str.length, linklength)
                     Token = token
-                    console.log("token: "+ token);
+                    console.log "token: "+ token
                     cb null, link, token
                   console.log "Finished message no. " + msg.seqno
               
@@ -138,9 +138,6 @@ describe '/user/create', ->
       assert res.statusCode is 302, res.statusCode
       done()
 
-
-
-
 describe '/user/activate or reset password', ->
   it 'parsing inbox', (done)->
     this.timeout(900000);
@@ -155,12 +152,12 @@ describe '/user/activate or reset password', ->
           params: 
             id: Token
         request req, (error, res, body) ->
-          console.log("requested uri: "+req.url);
-          console.log(res.statusCode);
+          console.log "requested uri: "+req.url
+          console.log res.statusCode
           assert res.statusCode is 302, res.statusCode
           done()
       else
-        console.log("error: ",err);
+        console.log("error: ",err)
 
   describe '/user/resetpassword', ->
     it 'user resetting password', (done)->
@@ -174,12 +171,11 @@ describe '/user/activate or reset password', ->
         params:
           id: Token
       request req, (error, res) ->
-        console.log(req.res);
-        console.log("error: ", error);
-        console.log("statuscode: ", res.statusCode);
+        console.log req.res
+        console.log("error: ", error)
+        console.log("statuscode: ", res.statusCode)
         assert res.statusCode is 200 or 302, res.statusCode
         done()
-
 
 describe '/user/changepassword', ->
   it 'user resetting password', (done)->
@@ -194,8 +190,8 @@ describe '/user/changepassword', ->
       params:
         id: Token
     request req, (error, res) ->
-      console.log("error: ", error);
-      console.log("statuscode: ", res.statusCode);
+      console.log("error: ", error)
+      console.log("statuscode: ", res.statusCode)
       assert res.statusCode is 302, res.statusCode
       done()
 
@@ -208,11 +204,11 @@ describe '/user/login', ->
       body: 
         email: user.email
         password: user.password
-        remember_me: "on"
+        remember_me: "off"
       json: true
 
     request req, (error, res, body) ->
-      console.log(error);
+      console.log error
       assert res.statusCode isnt 403, res.statusCode
       done()
 
@@ -223,20 +219,7 @@ describe '/user/get', ->
       method: 'GET'
       json: true
     request req, (error, res) ->
-      console.log(error);
-      console.log(arguments);
+      console.log error
+      console.log arguments
       assert res.statusCode isnt 403, res.statusCode
       done()
-
-
-
-
-
-
-
-
-
-
-
-
-
