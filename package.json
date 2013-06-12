@@ -14,9 +14,9 @@
     "node": " >=0.8.14"
   },
   "scripts": {
+    "test": "cake test",
     "install": "node node_modules/coffee-script/bin/cake build",
-    "start": "node run.js",
-    "test": "cake test"
+    "start": "node run.js"
   },
   "dependencies": {
     "express": "*",

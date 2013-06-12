@@ -26,6 +26,7 @@ build = (callback) ->
   # coffee.stdout.pipe process.stdout
   # coffee.stderr.pipe process.stderr
   # coffee.on 'exit', (status) -> callback?() if status is 0
+  exec 'npm shrinkwrap'
   callback?()
 
 # mocha test
