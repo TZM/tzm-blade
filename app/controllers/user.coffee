@@ -29,20 +29,23 @@ Route =
         res.send users
 
   _sendMail: (req, res, options, data, linkinfo) ->
+    console.log("sending message to: ", options.to.email);
     mailer = new Emailer(options, data);
-    mailer.send (err,ok)->
+    mailer.send (err,message)->
       unless err
         res.statusCode = 201
         req.flash('info', linkinfo)
         res.redirect "index"
+          
       else
         res.statusCode = 400
-        req.flash('info', req.i18n.t('ns.msg:flash.sender')+".")
+        req.flash('info', req.i18n.t('ns.msg:flash.sendererror')+".")
         res.redirect "index"
   # Creates new user with data from `req.body`
   create: (req, res, next) ->
     # FIXME - have a better error page
     delete req.body.remember_me
+    console.log("server csrf: "+ req.session._csrf);
     if req.body?
       password = randomPassword(26)
       req.body.password = password if !req.body.password 
@@ -52,7 +55,7 @@ Route =
         User.findOne { email:req.body.email }, (err,user) ->
           unless err
             if user
-              # email user verification token
+              # setting up flash message about link info.
               linkinfo = req.i18n.t('ns.msg:flash.resetlink')+"."
               options = 
                 template: "reset"
@@ -63,21 +66,25 @@ Route =
                   email: user.email
               #check if user is already active then reset password if not then send activation link again
               if user.active is true
+                console.log("user exist and activeted");
                 action = '/user/resetpassword/'
               else
+                console.log("user exist but not activated");
                 linkinfo = req.i18n.t('ns.msg:flash.activationlink')+"."
                 action = '/user/activate/'
                 options.template = "activation"
                 options.subject = "account activation"
               
               if config.APP.hostname is 'localhost'
+                console.log("is locals host");
                 data = 
                   link: "http://"+config.APP.hostname+":"+config.PORT+action+user.tokenString
               else
+                console.log("isnt localhost");
                 data = 
                   link: config.APP.hostname+action+user.tokenString
               user.resetLoginAttempts (cb) ->
-                console.log(cb);
+                console.log("wrong login attempts reseted to 0");
               Route._sendMail(req, res, options, data, linkinfo);
             else
               User.register req.body, (err,user)->
@@ -91,27 +98,33 @@ Route =
                       surname: user.surname
                       email: user.email
                   if config.APP.hostname is 'localhost'
+                    console.log("is localhost");
                     data = 
                       link: "http://"+config.APP.hostname+":"+config.PORT+"/user/activate/"+user.tokenString
                   else
+                    console.log("isnt localhost");
                     data = 
                       link: config.APP.hostname+"/user/activate/"+user.tokenString
                   
                   Route._sendMail(req, res, options, data, linkinfo);
                 else
+                  console.log("user register error");
                   req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err.message)
                   res.statusCode = 500
                   res.redirect("index")
           else
+            console.log("user find error");
             req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err.message)
             res.statusCode = 500
             res.redirect("index")
             
       else
+        console.log("email is not valid");
         res.statusCode = 400
         res.redirect("index")
         req.flash('info', req.i18n.t('ns.msg:flash.validemail'))
     else
+      console.log("req.body is empty");
       res.statusCode = 400
       res.redirect("index")
   activate: (req, res, next) ->

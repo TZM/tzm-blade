@@ -15,6 +15,10 @@ routes = require "./config/routes"
 logger = require "./utils/logger"
 logCategory = "APP config"
 flash = require "connect-flash"
+riak = require("riak-js").getClient(
+  host: "127.0.0.1", 
+  port: "8098")
+
 # Create server and set environment
 app = express()
 app.configure ->
