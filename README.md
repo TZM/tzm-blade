@@ -1,4 +1,4 @@
-#TZM Chapters code
+#TZM Chapters code :: [![Build Status](https://travis-ci.org/TZM/tzm-blade.png)](https://travis-ci.org/TZM/tzm-blade)
 * [Node.js](http://nodejs.org/)
 * [Blade HTML Compiler](https://github.com/bminer/node-blade)
 
@@ -27,6 +27,7 @@ Here is a list, that is currently used add these to your .zschrc or .bashrc :
     |Trello    |  TRELLO_ID           |                    |            |
     |          |  TRELLO_SECRET       |                    |            |
     |-------------------------------------------------------------------|
+
 #Installation
 After installing node.js, open terminal and navigate to your sandboxes folder
 
@@ -40,6 +41,7 @@ After installing node.js, open terminal and navigate to your sandboxes folder
     Server running at http://127.0.0.1:9080/
 
 Now you can navigate to http://127.0.0.1:9080/ and see the website.
+
 #Deployment
 The application can be deployed anywhere where you have Nodejs installed, meaning that you can run this on your local machine and setup P2P; For now, this application is running on AppFog at zero cost, as AppFog provides you with a decent enough server to run this application.
 
@@ -54,8 +56,10 @@ To deploy on AppFog, you will need to first create an account and then setup you
     
     ☺ npm start
     Server running at http://127.0.0.1:9080/
+
 #Start databases
 Currently we employ mongoDB to store the user data and Redis for sessions. We are currently working on migrating this to Riak, please follow the [documentation](#) for the secure deployment.
+
 ##Mongo
     ☺  mongod                                                                                                                                                        ruby-2.0.0-p195""
     Tue Jun 11 17:46:06.222 kern.sched unavailable
@@ -69,6 +73,7 @@ Currently we employ mongoDB to store the user data and Redis for sessions. We ar
     Tue Jun 11 17:46:06.246 [initandlisten] recover : no journal files present, no recovery needed
     Tue Jun 11 17:46:06.316 [websvr] admin web console waiting for connections on port 28017
     Tue Jun 11 17:46:06.317 [initandlisten] waiting for connections on port 27017
+
 ##Redis
     ☺  redis-server                                                                                                                                                  ruby-2.0.0-p195""
     [98950] 11 Jun 16:35:25.877 # Warning: no config file specified, using the default config. In order to specify a config file use    redis-server /path/to/redis.conf  
@@ -93,6 +98,7 @@ Currently we employ mongoDB to store the user data and Redis for sessions. We ar
     
     [98950] 11 Jun 16:35:25.880 # Server started, Redis version 2.6.11
     [98950] 11 Jun 16:35:25.880 * The server is now ready to accept connections on port 6379
+
 #Development
 To run locally for development use:
 
@@ -103,8 +109,9 @@ To run locally for development use:
 
     DEBUG: Running node-supervisor with
     ....
+
 #Testing
-The tests are now on Travis, see [https://travis-ci.org/TZM/tzm-blade](https://travis-ci.org/TZM/tzm-blade) and to run localy you do:
+The tests are now on Travis, for continuous integration see [![Build Status](https://travis-ci.org/TZM/tzm-blade.png)](https://travis-ci.org/TZM/tzm-blade) and to run localy you do:
 
      ☺  cake test
      Assetizing footer
@@ -121,8 +128,7 @@ The tests are now on Travis, see [https://travis-ci.org/TZM/tzm-blade](https://t
        3 tests complete (51 ms)
 
      ✓ Mocha tests complete
-#Warning
-This application is still a work in progress and is not ready for use yet.
+
 #Directories
 * /assets         : Stylesheets and Javascripts assets (coffee and less files) managed by the asset pipeline
 * /data           : Data files used by D3, GeoLite and Node-Cldr
@@ -155,3 +161,22 @@ This application is still a work in progress and is not ready for use yet.
     -------------------------------------------------------------------------------
     SUM:                            50            587            698           4514
     -------------------------------------------------------------------------------
+
+#Todo
+ - Mocha BDD api and frontend tests
+ - Stylus css - update the css
+ - Riak
+    - Riak cluster setup and deployment
+    - Riak administration
+    - Riak backup
+ - [AppFog Manifest](https://docs.appfog.com/getting-started/af-cli/manifests) for appfog deployment
+ - Heroku Procfile and instructions for heroku deployments
+ - Production hardening
+    - Cluster
+    - Error handling
+    - Monitoring
+- Continuous Integration - [[https://travis-ci.org/TZM/tzm-blade][Travis-CI]] :: [![Build Status](https://travis-ci.org/TZM/tzm-blade.png)](https://travis-ci.org/TZM/tzm-blade)
+- Documentation
+
+#Warning
+This application is still a work in progress and is not ready for use yet.

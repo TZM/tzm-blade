@@ -25,7 +25,7 @@ env:
       o3z+AtD0ET1hr+cUSg/ARIw2UtcP4EqyI5pLn4BDbasFiQXX9L2u7JtAe5vN
       H0IYmb4BhS1k/TVHQp5E+d2hOtp7M05oniK4DAypKWwbnoj2VOZqiFw6nNAf
       XdIAAB6N9YW/+7y8rMxI9pISJG2ZeJowbV13X5WmpezqFDTlw20=
-after_success:
-- af login --email ${AF_EMAIL} --passwd ${AF_PASSWORD}
-- af update blade
-- af logout
+#after_success:
+#- af login --email ${AF_EMAIL} --passwd ${AF_PASSWORD}
+#- af update blade
+#- af logout
