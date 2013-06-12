@@ -6,6 +6,7 @@ node_js:
 before_script: ./node_modules/.bin/cake build
 before_install:
 - npm install coffee-script
+- gem install af
 services:
 - mongodb
 - redis-server
