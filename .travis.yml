@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "0.8"
+  - "0.10"
+services:
+  - mongodb			# will start mongodb
+  - redis-server	# will start redis-server
+script:
+  - make test
+branches:
+  only:
+    - master
