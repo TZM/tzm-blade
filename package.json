@@ -16,7 +16,7 @@
   "scripts": {
     "install": "node node_modules/coffee-script/bin/cake build",
     "start": "node run.js",
-    "test": "make test"
+    "test": "cake test"
   },
   "dependencies": {
     "express": "*",
