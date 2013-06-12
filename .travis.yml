@@ -1,16 +1,30 @@
+---
 language: node_js
 node_js:
-  - "0.8"
-  - "0.10"
-before_script:
-  ./node_modules/.bin/cake build
+- '0.8'
+- '0.10'
+before_script: ./node_modules/.bin/cake build
 before_install:
-  - npm install coffee-script
+- npm install coffee-script
 services:
-  - mongodb			# will start mongodb
-  - redis-server	# will start redis-server
+- mongodb
+- redis-server
 script:
-  - cake test
+- cake test
 branches:
   only:
-    - master
+  - master
+env:
+  global:
+  - secure: |-
+      QQH8WEG8kghKj22cwNDf9FwRk/jfhyKlUzT5ukraeB3nbIdskGr3ndlNxwvC
+      IVYFttvb8ql3mtyvCb4ATuiJxGsd1ErVlH3HydCqXAVJ7lsUQ9dCM8OdhUFh
+      WeALEX9VFGr/1jX9H/bAf84a9CjAEAD1I0EhsP2WqpIk6cbkD8s=
+  - secure: |-
+      o3z+AtD0ET1hr+cUSg/ARIw2UtcP4EqyI5pLn4BDbasFiQXX9L2u7JtAe5vN
+      H0IYmb4BhS1k/TVHQp5E+d2hOtp7M05oniK4DAypKWwbnoj2VOZqiFw6nNAf
+      XdIAAB6N9YW/+7y8rMxI9pISJG2ZeJowbV13X5WmpezqFDTlw20=
+after_success:
+- af login --email ${AF_EMAIL} --passwd ${AF_PASSWORD}
+- af update blade
+- af logout
