@@ -27,7 +27,7 @@
     ,"invalidoldpass":"Invalid old password"
     ,"invalidconfirmpass":"Invalid confirm password"
     ,"activationlink":"Your activation link was sent to your email"
-    ,"sender": "Email send error, please try again later"
+    ,"sendererror": "Email send error, please try again later"
     ,"dberr": "Database error: "
     ,"validemail": "Please enter a valid email address"
     ,"unauthorized": "You are not login as user"
