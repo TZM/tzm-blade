@@ -104,7 +104,7 @@ To run locally for development use:
     DEBUG: Running node-supervisor with
     ....
 #Testing
-To run the tests, use:
+The tests are now on Travis, see [https://travis-ci.org/TZM/tzm-blade](https://travis-ci.org/TZM/tzm-blade) and to run localy you do:
 
      ☺  cake test
      Assetizing footer
