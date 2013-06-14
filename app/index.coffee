@@ -12,7 +12,7 @@ routes = require "./config/routes"
 riak = require('riak-js').getClient(
   host: config.RIAK_DB.host, 
   port: config.RIAK_DB.port, 
-  debug: true);
+  debug: true)
 
 console.log "riak hostname: ", config.RIAK_DB.host
 console.log "riak port: ", config.RIAK_DB.port
@@ -31,15 +31,6 @@ riak.on "error", (err)->
 riak.on "connected", ->
   console.log("RIAK CONNECTED");
 
-riak.get "flights", "KLM-5034", (err, flight, meta) ->
-  throw err  if err
-  flight.status = "delayed"
-  meta.links.push
-    bucket: "airlines"
-    key: "IBE"
-    tag: "operated_by"
-
-  riak.save "flights", "KLM-5034", flight, meta
 
 # Create server and set environment
 app = express()
@@ -58,16 +49,18 @@ riak.save "users", "user@gmail.com",
 
 
 riak.get "users", "user@gmail.com", (err, user, meta) ->
-  throw err  if err
-  console.log("RIAK user found: ", user);
-  user.active = true
-  meta.links.push
-    bucket: "users"
-    key: "user@gmail.com"
-    
-  console.log("RIAK meta: ", meta);
-  console.log("RIAK user: ", user);
-  riak.save "flights", "user@gmail.com", user, meta
+  unless err
+    console.log("RIAK user found: ", user);
+    user.active = true
+    meta.links.push
+      bucket: "users"
+      key: "user@gmail.com"
+    console.log("RIAK meta: ", meta);
+    console.log("RIAK user: ", user);
+    riak.save "flights", "user@gmail.com", user, meta
+  else
+  console.log("RIAK get error: ",err);
+  
 
 
 
