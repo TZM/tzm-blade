@@ -9,15 +9,37 @@ models = require "./config/models"
 apps = require "./config/apps"
 routes = require "./config/routes"
 # passport = require "passport"
+riak = require('riak-js').getClient(
+  host: config.RIAK_DB.host, 
+  port: config.RIAK_DB.port, 
+  debug: true);
+
+console.log "riak hostname: ", config.RIAK_DB.host
+console.log "riak port: ", config.RIAK_DB.port
+
 # console.log(passport);
+
+
 
 #Load and intitialize logger
 logger = require "./utils/logger"
 logCategory = "APP config"
 flash = require "connect-flash"
-riak = require("riak-js").getClient(
-  host: "127.0.0.1", 
-  port: "8098")
+
+riak.on "error", (err)->
+  console.log("RIAK ERROR:", err);
+riak.on "connected", ->
+  console.log("RIAK CONNECTED");
+
+riak.get "flights", "KLM-5034", (err, flight, meta) ->
+  throw err  if err
+  flight.status = "delayed"
+  meta.links.push
+    bucket: "airlines"
+    key: "IBE"
+    tag: "operated_by"
+
+  riak.save "flights", "KLM-5034", flight, meta
 
 # Create server and set environment
 app = express()
@@ -28,10 +50,33 @@ app.configure ->
 #   app.use(require "./config/passport")
  
 
+riak.save "users", "user@gmail.com",
+  name: "justUser"
+  password: "simplypassword"
+  country: "NL"
+  active: false
+
+
+riak.get "users", "user@gmail.com", (err, user, meta) ->
+  throw err  if err
+  console.log("RIAK user found: ", user);
+  user.active = true
+  meta.links.push
+    bucket: "users"
+    key: "user@gmail.com"
+    
+  console.log("RIAK meta: ", meta);
+  console.log("RIAK user: ", user);
+  riak.save "flights", "user@gmail.com", user, meta
+
+
+
 
 app.configure "production", "development", "test", ->
   config.setEnvironment app.settings.env
   console.log 'environment is: ', app.settings.env
+
+
 # TODO store log messages in the RIAK db
 logger.configure()
 logger.info "--- App server created and local env set to: "+app.settings.env+" ---", logCategory
