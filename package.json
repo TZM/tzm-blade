@@ -5,6 +5,8 @@
   "private": true,
   "version": "0.0.1",
   "homepage": "http://zmgc.net",
+  "license": "GPL",
+  "readmeFilename": "README.md",
   "repository": {
     "type": "git",
     "url": "git://github.com/TZM/tzm-blade.git"
@@ -74,7 +76,7 @@
     "connect"
   ],
   "bugs": {
-    "url": "https://github.com/TZM/tzm-blade/issues"
-  },
-  "license": "GPL"
+    "url": "https://github.com/TZM/tzm-blade/issues",
+    "email": "bugs@zmgc.net"
+  }
 }
