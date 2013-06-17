@@ -1,9 +1,9 @@
 app = require("../../app/")()
 should = require("should")
 express = require("express")
-request = require('../../node_modules/request');
+request = require('../../node_modules/request')
 RedisStore = require("connect-redis")(express)
-assert = require('assert');
+assert = require('assert')
 config = require("../../app/config/config")
 Imap = require("imap")
 mailparser = require("mailparser")
@@ -295,4 +295,15 @@ describe '/user/get', ->
       json: true
     request req, (error, res) ->
       assert res.statusCode is 200, res.statusCode
+      done()
+
+describe '/user/delete', ->
+  it 'delete user', (done)->
+    req =
+      uri: Url+"/user/delete"
+      method: 'GET'
+      json: true
+    request req, (error, res) ->
+      console.log(res.statusCode);
+      assert res.statusCode is 400, res.statusCode
       done()

@@ -2,6 +2,7 @@ app = require("../../app/")()
 express = require("express")
 RedisStore = require("connect-redis")(express)
 should = require("should")
+assert = require('assert')
 
 describe "app", ->
   it "should expose app settings", (done) ->
@@ -20,6 +21,14 @@ describe "sessions", ->
   # before (done) ->
   #   store.client.on "connect", ->
   #     done()
+
+  it "should be able to store", (done) ->
+    # test redis connection
+    # store.client.connected = false
+    should.exist store
+    assert store.client.connected is true
+    assert store.client.ready is true
+    done()
 
   it "should be able to store sessions", (done) ->
     store.set "123", sessionData, (err, ok) ->
