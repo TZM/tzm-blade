@@ -7,6 +7,11 @@ MONGO_DB_URL = null
 MONGO_DB_USER = null
 MONGO_DB_PASS = null
 # MongoDB settings
+RIAK_DB_HOST = "127.0.0.1"
+RIAK_DB_PORT = 10018
+
+#Riak settings
+
 
 module.exports =
   mongo:
@@ -32,3 +37,7 @@ module.exports =
     else
       # Redis settings
       cfRedis: boundServices["redis-2.2"][0]["credentials"]
+  riak:
+    cfRiak =
+      host: RIAK_DB_HOST
+      port: RIAK_DB_PORT      

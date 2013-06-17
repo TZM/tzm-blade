@@ -85,7 +85,7 @@ module.exports = (app) ->
 
 
   # arr = [];
-  console.log(express.csrf.toString());
+  
 
   # Set sessions and middleware
   app.configure ->

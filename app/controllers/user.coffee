@@ -225,7 +225,7 @@ Route =
           res.render "user/user",
             user: user
     else if req.params.id?
-      User.findOne {$or: [{tokenString: req.params.id}, {_id: req.params.id}]}, (err, user) ->
+      User.findById req.params.id, (err, user) ->
         unless err
           if user
             res.render "user/user",

@@ -49,13 +49,13 @@
     "passport": "~0.1.17",
     "passport-local": "~0.1.6",
     "request": "~2.21.0",
-    "assert": "~0.4.9",
     "riak-js": "~0.10.1",
-    "imap": "~0.7.12",
-    "mailparser": "~0.3.6",
     "step": "0.0.5"
   },
   "devDependencies": {
+    "assert": "~0.4.9",
+    "imap": "~0.7.12",
+    "mailparser": "~0.3.6",
     "coffee-script": ">=1.6.2",
     "jasmine-node": ">=1.3.1",
     "supertest": "*",

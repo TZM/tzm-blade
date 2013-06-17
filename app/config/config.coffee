@@ -29,6 +29,7 @@ exports.setEnvironment = (env) ->
       exports.DEBUG_CLIENT = true
       exports.REDIS_DB = db.redis
       exports.MONGO_DB_URL = db.mongo.MONGO_DB_URL
+      exports.RIAK_DB = db.riak
       i18next.debug = true
       exports.I18N = i18next
 
@@ -44,6 +45,7 @@ exports.setEnvironment = (env) ->
       exports.DEBUG_CLIENT = true
       exports.REDIS_DB = db.redis
       exports.MONGO_DB_URL = db.mongo.MONGO_DB_URL
+      exports.RIAK_DB = db.riak
       exports.I18N = i18next
 
     when "production"
@@ -57,6 +59,7 @@ exports.setEnvironment = (env) ->
       exports.DEBUG_CLIENT = false
       exports.REDIS_DB = db.redis
       exports.MONGO_DB_URL = db.mongo.MONGO_DB_URL
+      exports.RIAK_DB = db.riak
       exports.I18N = i18next
     else
       console.log "environment #{env} not found"
