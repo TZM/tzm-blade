@@ -19,8 +19,6 @@ console.log "riak port: ", config.RIAK_DB.port
 
 # console.log(passport);
 
-
-
 #Load and intitialize logger
 logger = require "./utils/logger"
 logCategory = "APP config"
@@ -31,7 +29,6 @@ riak.on "error", (err)->
 riak.on "connected", ->
   console.log("RIAK CONNECTED");
 
-
 # Create server and set environment
 app = express()
 app.configure ->
@@ -40,13 +37,11 @@ app.configure ->
 #   app.use(passport.session())
 #   app.use(require "./config/passport")
  
-
 riak.save "users", "user@gmail.com",
   name: "justUser"
   password: "simplypassword"
   country: "NL"
   active: false
-
 
 riak.get "users", "user@gmail.com", (err, user, meta) ->
   unless err
@@ -60,15 +55,10 @@ riak.get "users", "user@gmail.com", (err, user, meta) ->
     riak.save "flights", "user@gmail.com", user, meta
   else
   console.log("RIAK get error: ",err);
-  
-
-
-
 
 app.configure "production", "development", "test", ->
   config.setEnvironment app.settings.env
   console.log 'environment is: ', app.settings.env
-
 
 # TODO store log messages in the RIAK db
 logger.configure()
@@ -98,7 +88,6 @@ module.exports = ->
   # 
   app
 # register i18next helpers
-
 
 i18next.registerAppHelper(app)
 logger.info "--- Modules loaded into namespace ---", logCategory
