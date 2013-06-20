@@ -8,7 +8,8 @@ MONGO_DB_USER = null
 MONGO_DB_PASS = null
 # MongoDB settings
 RIAK_DB_HOST = "127.0.0.1"
-RIAK_DB_PORT = 10018
+RIAK_DB_PORT = 8098
+# RIAK_DB_PORT = 10018
 
 #Riak settings
 
