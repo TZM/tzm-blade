@@ -179,14 +179,6 @@ UserSchema.pre 'put', (object, next)->
 # Static methods
 # Register new user
 User.statics.register = (user, cb) ->
-
-  user = 
-    name: "qqq"
-    email: "user3@gmail.com"
-    password: "eeeeee"
-    active: false
-    loginAttempts: 8
-
   user.email = sanitize(user.email.toLowerCase().trim()).xss()
   validator.check(user.email, messages.VALIDATE_EMAIL).isEmail()
   errors = validator.getErrors()
