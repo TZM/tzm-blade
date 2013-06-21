@@ -1,0 +1,18 @@
+{
+  "guide": {
+    "sections": {
+      "the-basics": {"title": "The Basics",
+                      "contents": [{"title": "Introduction",
+                                    "content": {"p1": "", "p2": "", "p3": ""}}
+                                  ,{"title": "A Chapter in the Zeitgeist Movement",
+                                    "content": {"p1": "", "p2": "", "p3": ""}}
+                                  ]
+                    }
+      ,"setting-up-a-national-chapter": {"title": "Setting up a National Chapter",
+                      "contents": [{"title": "Gathering Volunteers & Social Media",
+                                    "content": {"p1": "", "p2": "", "p3": ""}}
+                                  ]
+                    }
+    }
+  }
+}
