@@ -177,6 +177,12 @@ The tests are now on Travis, for continuous integration see [![Build Status](htt
  - [DocPad integration](https://github.com/TZM/tzm-blade/issues/12)
  - [AppFog Manifest](https://docs.appfog.com/getting-started/af-cli/manifests) for appfog deployment
  - Heroku Procfile and instructions for heroku deployments
+ - [Vagrant](http://www.vagrantup.com/) - create a dev environment with Riak cluster and and use the Chef provisioning tool to:
+    - install packages, [riak](https://github.com/basho/riak-chef-cookbook), zmgc (node.js, express etc... through npm)
+    - create user accounts, as specified in included JSON config files
+    - setup riak
+    - configure firewalls
+    - etc...
  - Production hardening
     - Cluster
     - Error handling
@@ -188,4 +194,9 @@ The tests are now on Travis, for continuous integration see [![Build Status](htt
 This application is still a work in progress and is not ready for use yet.
 
 #Get involved
-The best way to get involved is to `fork` this project and submit `pull` requests or help with the functional and non-functional development, wireframes and writing of documentation
+The best way to get involved is to `fork` this project and submit `pull` requests or help with the functional and non-functional development, wireframes and writing of documentation.
+
+We need javascript developers, specifically members who know Node.js, Express. Here is a list of how you may help:
+
+  - Development - html5, javascript template development - see [views/](views/) and [assets/](assets/) directory
+  - Localization/Translation - we use the i18next library to localize and internationalize this application - see README.md in [locales/](locales/README.md) directory
