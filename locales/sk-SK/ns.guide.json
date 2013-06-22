@@ -1,15 +1,15 @@
 {
   "guide": {
     "sections": {
-      "the-basics": {"title": "The Basics",
-                      "contents": [{"title": "Introduction",
+      "the-basics": {"title": "Základy",
+                      "contents": [{"title": "Úvod",
                                     "content": {"p1": "", "p2": "", "p3": ""}}
-                                  ,{"title": "A Chapter in the Zeitgeist Movement",
+                                  ,{"title": "Pobočka hnutia Zeitgeist Movement",
                                     "content": {"p1": "", "p2": "", "p3": ""}}
                                   ]
                     }
-      ,"setting-up-a-national-chapter": {"title": "Setting up a National Chapter",
-                      "contents": [{"title": "Gathering Volunteers & Social Media",
+      ,"setting-up-a-national-chapter": {"title": "Vytvorenie národnej pobočky",
+                      "contents": [{"title": "Zhromažďovanie dobrovoľníkov a sociálnych médií",
                                     "content": {"p1": "", "p2": "", "p3": ""}}
                                   ]
                     }
