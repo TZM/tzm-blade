@@ -1,0 +1,77 @@
+{
+  "tzm": "Chapters - Zeitgeist Movement"
+  ,"welcome": [
+    "<p>The Zeitgeist Movement is an explicitly non-violent, global sustainability advocacy group currently working in over 1000 Regional Chapters across 70 countries.</p>"
+    ,"<p>The basic structure of The Movement consists of Chapters, Teams, Projects & Events. Overall, the Chapters are essentially what define the Movement and each Chapter works to not only spread awareness about the roots of our social problems today but also to express the logical, scientific solutions and methods we have at our disposal to update and correct the current social system and create a truly responsible, sustainable, peaceful, global society.</p>"
+  ]
+  ,"menu": {
+    "projects": "Projects"
+    ,"map": "Map"
+    ,"calendar": "Calendar"
+    ,"forums": "Forums"
+    ,"guide": "Guide"
+  }
+  ,"search": {
+    "advanced": "Advanced"
+    ,"search": "Search"
+  }
+  ,"user": {
+    "gravatar": "Gravatar"
+    ,"profile": "Profile"
+    ,"login": "Login"
+    ,"logout": "Log out"
+    ,"contact": "Contact"
+    ,"help": "Help"
+  }
+  ,"language": {
+    "de": "Deutsche"
+    ,"en": "English - UK"
+    ,"fr": "Français"
+    ,"jp": "日本語"
+    ,"pt": "Brasileiro"
+    ,"rs": "Србин"
+    ,"ru": "Русский"
+    ,"us": "English - US"
+  }
+  ,"projects": {
+        "media-project": {"title": "Media Project", "description": "The Media Project Site hosts and links to various audio/visual/literary expressions of TZM Members.", "image_path": "/images/tzm-logo-media.png", "href": "#"}
+        ,"zeitgesit-day": {"title": "Zeitgeist Day", "description": "This site becomes active annually to facilitate our “Zday” Global Event, which occurs in March of each year.", "image_path": "http://zdayglobal.org/templates/theme417/images/logo.png", "href": "http://zdayglobal.org/"}
+        ,"global-redesign-institute": {"title": "Global Redesign Institute", "description": "Virtual interface “Think Tank” project using map/data models to express direct technical changes in line with TZM's train of thought.", "image_path": "/images/tzm-logo.png", "href": "http://www.globalredesigninstitute.org/"}
+        ,"zeitgeist-movement-global-connect": {"title": "Zeitgeist Movement Global Connect", "description": "Aims to create an on-line eco-system within which the ideas of Resource Based Economy can be galvanise into actions.", "image_path": "/images/tzm-zmgc-logo.png", "href": "http://zmgc.net"}
+        ,"media-festival": {"title": "Media Festival", "description": "", "image_path": "/images/tzm-festival-logo.png", "href": "http://zeitgeistmediafestival.org/"}
+  }
+  ,"guide": {
+    "sections": {
+        "the-basics": {"title": "The Basics",
+                        "contents": [{"title": "Introduction",
+                                        "content": {"p1": "", "p2": "", "p3": ""}}
+                                    ,{"title": "A Chapter in the Zeitgeist Movement",
+                                        "content": {"p1": "", "p2": "", "p3": ""}}
+                                    ]
+                        }
+        ,"setting-up-a-national-chapter": {"title": "Setting up a National Chapter",
+                        "contents": [{"title": "Gathering Volunteers & Social Media",
+                                        "content": {"p1": "", "p2": "", "p3": ""}}
+                                    ]
+                        }
+    }
+  }
+  ,"footer": {
+    "chapters": "National Chapters"
+        ,"official_sites": {
+            "official_sites": "Official Sites"
+            ,"tzm_global": "TZM Global"
+            ,"zeitgeist_media_project": "Zeitgeist Media Project"
+            ,"tzm_global_radio": "TZM Global Radio"
+            ,"zeitnews": "ZeitNews"
+            ,"blog": "The Zeitgeist Movement Blog"
+            ,"zeitgeist_brodcasting_network": "Zeitgeist Brodcasting Network"
+            ,"v_radio": "V-Radio"
+        }
+    ,"network": "TZM Network"
+    ,"tools": "Tools"
+    ,"documentations": "Documentations"
+    ,"faq": "F.A.Q"
+    ,"twitter": "Twitter"
+  }
+}

@@ -3,7 +3,12 @@
 * [Blade HTML Compiler](https://github.com/bminer/node-blade)
 
 #Background
+The Zeitgeist Movement Global Connect (ZMGC) aims to create an on-line eco-system within which the ideas of Resource Based Economy can be galvanise into actions that can be used in the real world.
+
+It equips members with on-line tools, by providing the infrastructure necessary to easily exchange, analyse and disseminate information in a highly scalable and non-blocking manner using only Open Source software build by the community.
+
 Please refer to the [wiki](https://github.com/TZM/tzm-blade/wiki) for deeper understanding of what this project is hoping to achieve. We also have a public [trello](https://trello.com/zmgc) board. 
+
 #Setup
 Before running this application we will need to setup couple of environmental settings, in order not to add any private data within the code.
 
@@ -169,8 +174,15 @@ The tests are now on Travis, for continuous integration see [![Build Status](htt
     - Riak cluster setup and deployment
     - Riak administration
     - Riak backup
+ - [DocPad integration](https://github.com/TZM/tzm-blade/issues/12) - [DocPad](https://github.com/bevry/docpad)
  - [AppFog Manifest](https://docs.appfog.com/getting-started/af-cli/manifests) for appfog deployment
  - Heroku Procfile and instructions for heroku deployments
+ - [Vagrant](http://www.vagrantup.com/) - create a dev environment with Riak cluster and and use the Chef provisioning tool to:
+    - install packages, [riak](https://github.com/basho/riak-chef-cookbook), zmgc (node.js, express etc... through npm)
+    - create user accounts, as specified in included JSON config files
+    - setup riak
+    - configure firewalls
+    - etc...
  - Production hardening
     - Cluster
     - Error handling
@@ -180,3 +192,11 @@ The tests are now on Travis, for continuous integration see [![Build Status](htt
 
 #Warning
 This application is still a work in progress and is not ready for use yet.
+
+#Get involved
+The best way to get involved is to `fork` this project and submit `pull` requests or help with the functional and non-functional development, wireframes and writing of documentation.
+
+We need javascript developers, specifically members who know Node.js, Express. Here is a list of how you may help:
+
+  - Development - html5, javascript template development - see [views/](views/) and [assets/](assets/) directory
+  - Localization/Translation - we use the i18next library to localize and internationalize this application - see README.md in [locales/](locales/README.md) directory
