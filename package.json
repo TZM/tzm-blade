@@ -53,7 +53,10 @@
     "request": "~2.21.0",
     "riak-js": "~0.10.1",
     "step": "0.0.5",
-    "cluster": "~0.7.7"
+    "cluster": "~0.7.7",
+    "zukai": "~0.1.1",
+    "riakpbc": "~0.0.12",
+    "step": "0.0.5"
   },
   "devDependencies": {
     "assert": "~0.4.9",
