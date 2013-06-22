@@ -174,7 +174,7 @@ The tests are now on Travis, for continuous integration see [![Build Status](htt
     - Riak cluster setup and deployment
     - Riak administration
     - Riak backup
- - [DocPad integration](https://github.com/TZM/tzm-blade/issues/12)
+ - [DocPad integration](https://github.com/TZM/tzm-blade/issues/12) - [DocPad](https://github.com/bevry/docpad)
  - [AppFog Manifest](https://docs.appfog.com/getting-started/af-cli/manifests) for appfog deployment
  - Heroku Procfile and instructions for heroku deployments
  - [Vagrant](http://www.vagrantup.com/) - create a dev environment with Riak cluster and and use the Chef provisioning tool to:
