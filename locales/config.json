@@ -27,6 +27,10 @@
     "locale": "ru",
     "code": "ru-RU"
   },
+  "sk": {
+    "locale": "sk",
+    "code": "sk-SK"
+  }, 
   "us": {
     "locale": "us",
     "code": "en-US"

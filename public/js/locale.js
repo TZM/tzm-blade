@@ -7,9 +7,9 @@ jQuery(function($) {
         language = setLngCookie;
     } else {
         if (setLng) {
-            language_complete = setLng.split("-");
+            language_complete = setLng;
         } else {
-            language_complete = navigator.language.split("-");
+            language_complete = navigator.language;
         }
 
         language = (language_complete[0]);
@@ -175,9 +175,7 @@ jQuery(function($) {
     $("#language-menu a").on("click", function() {
         var windowReload = false; // TRUE = reload the page; FALSE = do not reload the page
         var $this = $(this);
-        var value = $this.attr("id");
-        var arrValueParts = value.split("-");
-        var language = arrValueParts[0];
+        var language = $this.attr("id");
 
         if (windowReload) {
             window.location.href = "/?lang=" + language;
