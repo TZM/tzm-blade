@@ -18,5 +18,7 @@ i18next-conv converts files from gettext (.mo/.po) to i18next's json format and 
 
 ## Procedure
 Please replace `languageCode-countryCode` with the ones for your language and country, you can get these from [languageCode](http://www.iana.org/assignments/language-subtag-registry)-[countryCode](http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm)
-	$ cp -r locales/dev locales/languageCode-countryCode
-	$ subl locales/languageCode-countryCode
+
+	☺ cp -r locales/dev locales/languageCode-countryCode
+	☺ subl locales/languageCode-countryCode
+See the wiki for further details [https://github.com/TZM/tzm-blade/wiki/Localization-and-Intrenationalization-of-ZMGC-application](https://github.com/TZM/tzm-blade/wiki/Localization-and-Intrenationalization-of-ZMGC-application)
