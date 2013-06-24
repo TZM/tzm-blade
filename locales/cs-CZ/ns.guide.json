@@ -1,0 +1,18 @@
+{
+  "guide": {
+    "sections": {
+      "the-basics": {"title": "Základy",
+                      "contents": [{"title": "Úvod",
+                                    "content": {"p1": "", "p2": "", "p3": ""}}
+                                  ,{"title": "Chapter hnutí Zeitgeist Movement",
+                                    "content": {"p1": "", "p2": "", "p3": ""}}
+                                  ]
+                    }
+      ,"setting-up-a-national-chapter": {"title": "Vytvoření národního chapteru",
+                      "contents": [{"title": "Shromažďování dobrovolníků a sociálních médií",
+                                    "content": {"p1": "", "p2": "", "p3": ""}}
+                                  ]
+                    }
+    }
+  }
+}

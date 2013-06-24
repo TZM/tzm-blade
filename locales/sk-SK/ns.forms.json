@@ -9,15 +9,15 @@
     ,"federated-login": "Prihlásenie iným účtom"
     ,"reset-password-wrong": "Nesprávne potvrdené heslo"
     ,"reset-password": "Resetuj heslo"
-    ,"remember-me": "Začiarkni toto políčko ak nemáte heslo alebo ste ho zabudli."
-    ,"create-new-account": "vytvoriť nový účet"
+    ,"remember-me": "Začiarknite toto políčko ak nemáte heslo alebo ste ho zabudli."
+    ,"create-new-account": "Vytvoriť nový účet"
     ,"sign-in": "Zaregistrovať"
   },
   "ph": {
     "password": "Zadajte vaše heslo"
     ,"email": "Zadajte váš email"
     ,"confirm": "Zadajte znova vaše heslo"
-    ,"old": "Zadajte vaše stáré heslo"
+    ,"old": "Zadajte vaše staré heslo"
     ,"new": "Zadajte nové heslo"
     ,"name": "Zadajte vaše meno"
     ,"surname": "Zadajte vaše priezvisko"
