@@ -2,7 +2,7 @@
   "tzm": "Chapters - Zeitgeist Movement"
   ,"welcome": [
     "<p>Hnutie Zeitgeist je výslovne nenásilná skupina obhajujúca globálnu udržateľnosť, ktorá momentálne pracuje vo viac ako 1000 regionálnych pobočkách (Chapters) v 70 krajinách.</p>"
-    ,"<p>Základná štrukltúra hnutia pozostáva z Pobočiek, Tímov, Projektov a Udalostí. Celkovo možno povedať, že pobočky sú v podstate to, čo definuje hnutie a každá pobočka (Chapter) pracuje nielen na šírení povedomia o koreňoch našich súčasných sociálnych problémov ale tiež poukazuje na logické a vedecké riešenia a metódy, ktoré máme k dispozícii pre vylepšenie a úpravu súčasného systému a vytvorenie skutočne zodpovednej, udržateľnej, mierovej, globálnej spoločnosti.</p>"
+    ,"<p>Základná štruktúra hnutia pozostáva z Pobočiek, Tímov, Projektov a Udalostí. Celkovo možno povedať, že pobočky sú v podstate to, čo definuje hnutie a každá pobočka (Chapter) pracuje nielen na šírení povedomia o koreňoch našich súčasných sociálnych problémov ale tiež poukazuje na logické a vedecké riešenia a metódy, ktoré máme k dispozícii pre vylepšenie a úpravu súčasného systému a vytvorenie skutočne zodpovednej, udržateľnej, mierovej, globálnej spoločnosti.</p>"
   ]
   ,"menu": {
     "projects": "Projekty"
@@ -34,7 +34,7 @@
     ,"us": "English - US"
   }
   ,"projects": {
-        "media-project": {"title": "Media Project", "description": "Stránky The Media Project Site hostujú a odkazujú ma rôzne audio/vizuálne/písomné vyjadrenia členov TZM (Hnutia Zeitgeist).", "image_path": "/images/tzm-logo-media.png", "href": "#"}
+        "media-project": {"title": "Media Project", "description": "Stránky The Media Project Site hostujú a odkazujú na rôzne audio/vizuálne/písomné vyjadrenia členov TZM (Hnutia Zeitgeist).", "image_path": "/images/tzm-logo-media.png", "href": "#"}
         ,"zeitgesit-day": {"title": "Zeitgeist Day", "description": "Tieto stránky sa aktivujú raz ročne pre pre zabezpečenie našej globálnej udalosti “Zday”, ktorá sa koná každoročne v marci.", "image_path": "http://zdayglobal.org/templates/theme417/images/logo.png", "href": "http://zdayglobal.org/"}
         ,"global-redesign-institute": {"title": "Global Redesign Institute", "description": "Virtuálne rozhranie projektu “Think Tank”, používajúca mapové/dátové modely pre vyjadrenie priamych technických zmien v súlade s myšlienkovým prúdom TZM.", "image_path": "/images/tzm-logo.png", "href": "http://www.globalredesigninstitute.org/"}
         ,"zeitgeist-movement-global-connect": {"title": "Zeitgeist Movement Global Connect", "description": "Kladie si za cieľ vytvoriť on-line eko-systém v ktorom by myšlienky ekonomiky založenej na zdrojoch mohli viesť k činom.", "image_path": "/images/tzm-zmgc-logo.png", "href": "http://zmgc.net"}
@@ -59,7 +59,7 @@
   ,"footer": {
     "chapters": "Národné pobočky"
         ,"official_sites": {
-            "official_sites": "Official Sites"
+            "official_sites": "Oficiálne stránky"
             ,"tzm_global": "TZM Global"
             ,"zeitgeist_media_project": "Zeitgeist Media Project"
             ,"tzm_global_radio": "TZM Global Radio"

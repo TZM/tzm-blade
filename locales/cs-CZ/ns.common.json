@@ -1,0 +1,55 @@
+{
+  "tzm": "Chaptery - Hnutí Zeitgeist"
+  ,"welcome": [
+    "<p>Hnutí Zeitgeist je výslovně nenásilná skupina hájící globální udržitelnost, která momentálně pracuje ve více než 1000 regionálních chapterů v 70 zemích.</p>"
+    ,
+  ]
+  ,"projects": {
+    "media-project": {
+        "title": "Media Project"
+        ,"description": "Stránky The Media Project Site hostují a odkazují na různé audio / vizuální / písemná vyjádření členů TZM (Hnutí Zeitgeist)."
+    }
+    ,"zeitgesit-day": {
+        "title": "Zeitgeist Day"
+        ,"description": "Tyto stránky se aktivují jednou ročně pro pro zajištění naší globální události "Zday", která se koná každoročně v březnu."
+    }
+    ,"global-redesign-institute": {
+    "title": "Global Redesign Institute"
+    ,"description": "Virtuální rozhraní projektu "Think Tank", používající mapové / datové modely pro vyjádření přímých technických změn v souladu s myšlenkovým proudem TZM."
+    }
+    ,"zeitgeist-movement-global-connect": {
+      "title": "Zeitgeist Movement Global Connect"
+      ,"description": "Klade si za cíl vytvořit on-line eko-systém ve kterém by myšlenky ekonomiky založené na zdrojích mohly vést k činům."
+    }
+    ,"media-festival": {
+      "title": "Media Festival"
+      ,"description": ""
+    }
+  }
+  ,"language_list": {
+    "de": "Deutsche"
+    ,"en": "English - UK"
+    ,"fr": "Français"
+    ,"jp": "日本語"
+    ,"pt": "Brasileiro"
+    ,"rs": "Србин"
+    ,"ru": "Русский"
+    ,"us": "English - US"
+  }
+  ,"official_sites": {
+    "title": "Oficiální stránky"
+    ,"tzm_global": "TZM Global"
+    ,"zeitgeist_media_project": "Zeitgeist Media Project"
+    ,"tzm_global_radio": "TZM Global Radio"
+    ,"zeitnews": "ZeitNews"
+    ,"blog": "The Zeitgeist Movement Blog"
+    ,"zeitgeist_brodcasting_network": "Zeitgeist Brodcasting Network"
+    ,"v_radio": "V-Radio"
+  }
+  ,"chapters": {
+    "international": "Medzinárodní chaptery"
+    ,"country": "Národní chaptery"
+    ,"regional": "Regionální chaptery"
+    ,"local": "Lokální chaptery"
+  }
+}
