@@ -1,0 +1,38 @@
+{
+  "menu": {
+    "projects": "Projekty"
+    ,"map": "Mapa"
+    ,"calendar": "Kalendář"
+    ,"forums": "Fóra"
+    ,"guide": "Příručka"
+  }
+  ,"search": {
+    "advanced": "Rozšířené"
+    ,"search": "Hledání"
+  }
+  ,"user": {
+    "gravatar": "Avatar"
+    ,"name": "Vaše meno"
+    ,"surname": "Vaše přízvisko"
+    ,"profile": "Profil"
+    ,"login": "Přihlásit"
+    ,"logout": "Odhlásit"
+    ,"contact": "Kontakt"
+    ,"help": "Pomoc"
+    ,"password": "Heslo"
+    ,"password_new": "Nové heslo"
+    ,"password_old": "Staré heslo"
+    ,"password_confirm": "Potvrdit heslo"
+  }
+  ,"footer": {
+    "network": "TZM Network"
+    ,"tools": "Nástroje"
+    ,"documentations": "Dokumentce"
+    ,"faq": "F.A.Q -Často kladené otázky"
+    ,"profile": "Profil"
+    ,"help": "Pomoc"
+    ,"recommend": "Doporučit"
+    ,"account": "Nastavení účtu..."
+    ,"logout": "Odhlásit"
+  }
+}
