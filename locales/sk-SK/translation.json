@@ -1,27 +1,27 @@
 {
   "tzm": "Chapters - Zeitgeist Movement"
   ,"welcome": [
-    "<p>The Zeitgeist Movement is an explicitly non-violent, global sustainability advocacy group currently working in over 1000 Regional Chapters across 70 countries.</p>"
-    ,"<p>The basic structure of The Movement consists of Chapters, Teams, Projects & Events. Overall, the Chapters are essentially what define the Movement and each Chapter works to not only spread awareness about the roots of our social problems today but also to express the logical, scientific solutions and methods we have at our disposal to update and correct the current social system and create a truly responsible, sustainable, peaceful, global society.</p>"
+    "<p>Hnutie Zeitgeist je výslovne nenásilná skupina obhajujúca globálnu udržateľnosť, ktorá momentálne pracuje vo viac ako 1000 regionálnych pobočkách (Chapters) v 70 krajinách.</p>"
+    ,"<p>Základná štrukltúra hnutia pozostáva z Pobočiek, Tímov, Projektov a Udalostí. Celkovo možno povedať, že pobočky sú v podstate to, čo definuje hnutie a každá pobočka (Chapter) pracuje nielen na šírení povedomia o koreňoch našich súčasných sociálnych problémov ale tiež poukazuje na logické a vedecké riešenia a metódy, ktoré máme k dispozícii pre vylepšenie a úpravu súčasného systému a vytvorenie skutočne zodpovednej, udržateľnej, mierovej, globálnej spoločnosti.</p>"
   ]
   ,"menu": {
-    "projects": "Projects"
-    ,"map": "Map"
-    ,"calendar": "Calendar"
-    ,"forums": "Forums"
-    ,"guide": "Guide"
+    "projects": "Projekty"
+    ,"map": "Mapa"
+    ,"calendar": "Kalendár"
+    ,"forums": "Fóra"
+    ,"guide": "Sprievodca"
   }
   ,"search": {
-    "advanced": "Advanced"
-    ,"search": "Search"
+    "advanced": "Rozšírené"
+    ,"search": "Hľadanie"
   }
   ,"user": {
-    "gravatar": "Gravatar"
-    ,"profile": "Profile"
-    ,"login": "Login"
-    ,"logout": "Log out"
-    ,"contact": "Contact"
-    ,"help": "Help"
+    "gravatar": "Avatar"
+    ,"profile": "Profil"
+    ,"login": "Prihlásiť"
+    ,"logout": "Odhlásiť"
+    ,"contact": "Kontakt"
+    ,"help": "Pomoc"
   }
   ,"language": {
     "de": "Deutsche"
@@ -34,30 +34,30 @@
     ,"us": "English - US"
   }
   ,"projects": {
-        "media-project": {"title": "Media Project", "description": "The Media Project Site hosts and links to various audio/visual/literary expressions of TZM Members.", "image_path": "/images/tzm-logo-media.png", "href": "#"}
-        ,"zeitgesit-day": {"title": "Zeitgeist Day", "description": "This site becomes active annually to facilitate our “Zday” Global Event, which occurs in March of each year.", "image_path": "http://zdayglobal.org/templates/theme417/images/logo.png", "href": "http://zdayglobal.org/"}
-        ,"global-redesign-institute": {"title": "Global Redesign Institute", "description": "Virtual interface “Think Tank” project using map/data models to express direct technical changes in line with TZM's train of thought.", "image_path": "/images/tzm-logo.png", "href": "http://www.globalredesigninstitute.org/"}
-        ,"zeitgeist-movement-global-connect": {"title": "Zeitgeist Movement Global Connect", "description": "Aims to create an on-line eco-system within which the ideas of Resource Based Economy can be galvanise into actions.", "image_path": "/images/tzm-zmgc-logo.png", "href": "http://zmgc.net"}
+        "media-project": {"title": "Media Project", "description": "Stránky The Media Project Site hostujú a odkazujú ma rôzne audio/vizuálne/písomné vyjadrenia členov TZM (Hnutia Zeitgeist).", "image_path": "/images/tzm-logo-media.png", "href": "#"}
+        ,"zeitgesit-day": {"title": "Zeitgeist Day", "description": "Tieto stránky sa aktivujú raz ročne pre pre zabezpečenie našej globálnej udalosti “Zday”, ktorá sa koná každoročne v marci.", "image_path": "http://zdayglobal.org/templates/theme417/images/logo.png", "href": "http://zdayglobal.org/"}
+        ,"global-redesign-institute": {"title": "Global Redesign Institute", "description": "Virtuálne rozhranie projektu “Think Tank”, používajúca mapové/dátové modely pre vyjadrenie priamych technických zmien v súlade s myšlienkovým prúdom TZM.", "image_path": "/images/tzm-logo.png", "href": "http://www.globalredesigninstitute.org/"}
+        ,"zeitgeist-movement-global-connect": {"title": "Zeitgeist Movement Global Connect", "description": "Kladie si za cieľ vytvoriť on-line eko-systém v ktorom by myšlienky ekonomiky založenej na zdrojoch mohli viesť k činom.", "image_path": "/images/tzm-zmgc-logo.png", "href": "http://zmgc.net"}
         ,"media-festival": {"title": "Media Festival", "description": "", "image_path": "/images/tzm-festival-logo.png", "href": "http://zeitgeistmediafestival.org/"}
   }
   ,"guide": {
     "sections": {
-        "the-basics": {"title": "The Basics",
-                        "contents": [{"title": "Introduction",
+        "the-basics": {"title": "Základy",
+                        "contents": [{"title": "Úvod",
                                         "content": {"p1": "", "p2": "", "p3": ""}}
-                                    ,{"title": "A Chapter in the Zeitgeist Movement",
+                                    ,{"title": "Pobočka hnutia Zeitgeist",
                                         "content": {"p1": "", "p2": "", "p3": ""}}
                                     ]
                         }
-        ,"setting-up-a-national-chapter": {"title": "Setting up a National Chapter",
-                        "contents": [{"title": "Gathering Volunteers & Social Media",
+        ,"setting-up-a-national-chapter": {"title": "Založiť národnú pobočku",
+                        "contents": [{"title": "Zhromažďovanie dobrovoľníkov a sociálnych médií",
                                         "content": {"p1": "", "p2": "", "p3": ""}}
                                     ]
                         }
     }
   }
   ,"footer": {
-    "chapters": "National Chapters"
+    "chapters": "Národné pobočky"
         ,"official_sites": {
             "official_sites": "Official Sites"
             ,"tzm_global": "TZM Global"
@@ -69,9 +69,9 @@
             ,"v_radio": "V-Radio"
         }
     ,"network": "TZM Network"
-    ,"tools": "Tools"
-    ,"documentations": "Documentations"
-    ,"faq": "F.A.Q"
+    ,"tools": "Nástroje"
+    ,"documentations": "Dokumentácia"
+    ,"faq": "F.A.Q - Často kladené otázky"
     ,"twitter": "Twitter"
   }
 }
