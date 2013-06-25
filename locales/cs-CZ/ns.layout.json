@@ -2,37 +2,37 @@
   "menu": {
     "projects": "Projekty"
     ,"map": "Mapa"
-    ,"calendar": "Kalendár"
+    ,"calendar": "Kalendář"
     ,"forums": "Fóra"
-    ,"guide": "Príručka"
+    ,"guide": "Příručka"
   }
   ,"search": {
-    "advanced": "Rozšírené"
-    ,"search": "Hľadanie"
+    "advanced": "Rozšířené"
+    ,"search": "Hledání"
   }
   ,"user": {
     "gravatar": "Avatar"
     ,"name": "Vaše meno"
-    ,"surname": "Vaše priezvisko"
+    ,"surname": "Vaše přízvisko"
     ,"profile": "Profil"
-    ,"login": "Prihlásiť"
-    ,"logout": "Odhlásiť"
+    ,"login": "Přihlásit"
+    ,"logout": "Odhlásit"
     ,"contact": "Kontakt"
     ,"help": "Pomoc"
     ,"password": "Heslo"
     ,"password_new": "Nové heslo"
     ,"password_old": "Staré heslo"
-    ,"password_confirm": "Potvrdiť heslo"
+    ,"password_confirm": "Potvrdit heslo"
   }
   ,"footer": {
     "network": "TZM Network"
     ,"tools": "Nástroje"
-    ,"documentations": "Dokumentácia"
+    ,"documentations": "Dokumentce"
     ,"faq": "F.A.Q -Často kladené otázky"
     ,"profile": "Profil"
     ,"help": "Pomoc"
-    ,"recommend": "Odporučiť"
-    ,"account": "Nastavenia účtu..."
-    ,"logout": "Odhlásiť"
+    ,"recommend": "Doporučit"
+    ,"account": "Nastavení účtu..."
+    ,"logout": "Odhlásit"
   }
 }

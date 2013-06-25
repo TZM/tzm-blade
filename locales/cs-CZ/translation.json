@@ -1,0 +1,77 @@
+{
+  "tzm": "Chapters - Zeitgeist Movement"
+  ,"welcome": [
+    <p>Hnutí Zeitgeist je výslovně nenásilná skupina hájící globální udržitelnost, která momentálně pracuje ve více než 1000 regionálních chapterů v 70 zemích.</p>"
+    ,"<p>Základní struktura hnutí sestává z CHapterů, Týmů, Projektů a událostí. Celkově lze říci, že chaptery jsou v podstatě to, co definuje hnutí a každý chapter pracuje nejen na šíření povědomí o kořenech našich současných sociálních problémů ale také poukazuje na logické a vědecké řešení a metody, které máme k dispozici pro vylepšení a úpravu současného systému a vytvoření skutečně odpovědné, udržitelné, mírové, globální společnosti.</p>"
+  ]
+  ,"menu": {
+    "projects": "Projekty"
+    ,"map": "Mapa"
+    ,"calendar": "Kalendář"
+    ,"forums": "Fóra"
+    ,"guide": "Průvodce"
+  }
+  ,"search": {
+    "advanced": "Rozšířené"
+    ,"search": "Hledání"
+  }
+  ,"user": {
+    "gravatar": "Avatar"
+    ,"profile": "Profil"
+    ,"login": "Přihlásit"
+    ,"logout": "Odhlásit"
+    ,"contact": "Kontakt"
+    ,"help": "Pomoc"
+  }
+  ,"language": {
+    "de": "Deutsche"
+    ,"en": "English - UK"
+    ,"fr": "Français"
+    ,"jp": "日本語"
+    ,"pt": "Brasileiro"
+    ,"rs": "Србин"
+    ,"ru": "Русский"
+    ,"us": "English - US"
+  }
+  ,"projects": {
+        "media-project": {"title": "Media Project", "description": "Stránky The Media Project Site hostují a odkazují na různé audio / vizuální / písemná vyjádření členů TZM (Hnutí Zeitgeist).", "image_path": "/images/tzm-logo-media.png", "href": "#"}
+        ,"zeitgesit-day": {"title": "Zeitgeist Day", "description": "Tyto stránky se aktivují jednou ročně pro pro zajištění naší globální události "Zday", která se koná každoročně v březnu.", "image_path": "http://zdayglobal.org/templates/theme417/images/logo.png", "href": "http://zdayglobal.org/"}
+        ,"global-redesign-institute": {"title": "Global Redesign Institute", "description": "Virtuální rozhraní projektu "Think Tank", používající mapové / datové modely pro vyjádření přímých technických změn v souladu s myšlenkovým proudem TZM.", "image_path": "/images/tzm-logo.png", "href": "http://www.globalredesigninstitute.org/"}
+        ,"zeitgeist-movement-global-connect": {"title": "Zeitgeist Movement Global Connect", "description": "Klade si za cíl vytvořit on-line eko-systém ve kterém by myšlenky ekonomiky založené na zdrojích mohly vést k činům.", "image_path": "/images/tzm-zmgc-logo.png", "href": "http://zmgc.net"}
+        ,"media-festival": {"title": "Media Festival", "description": "", "image_path": "/images/tzm-festival-logo.png", "href": "http://zeitgeistmediafestival.org/"}
+  }
+  ,"guide": {
+    "sections": {
+        "the-basics": {"title": "Základy",
+                        "contents": [{"title": "Úvod",
+                                        "content": {"p1": "", "p2": "", "p3": ""}}
+                                    ,{"title": "Chapter hnutí Zeitgeist",
+                                        "content": {"p1": "", "p2": "", "p3": ""}}
+                                    ]
+                        }
+        ,"setting-up-a-national-chapter": {"title": "Založit národní chapter",
+                        "contents": [{"title": "Shromažďování dobrovolníků a sociálních médií",
+                                        "content": {"p1": "", "p2": "", "p3": ""}}
+                                    ]
+                        }
+    }
+  }
+  ,"footer": {
+    "chapters": "Národní chaptery"
+        ,"official_sites": {
+            "official_sites": "Oficiální stránky"
+            ,"tzm_global": "TZM Global"
+            ,"zeitgeist_media_project": "Zeitgeist Media Project"
+            ,"tzm_global_radio": "TZM Global Radio"
+            ,"zeitnews": "ZeitNews"
+            ,"blog": "The Zeitgeist Movement Blog"
+            ,"zeitgeist_brodcasting_network": "Zeitgeist Brodcasting Network"
+            ,"v_radio": "V-Radio"
+        }
+    ,"network": "TZM Network"
+    ,"tools": "Nástroje"
+    ,"documentations": "Dokumentace"
+    ,"faq": "F.A.Q - Často kladené otázky"
+    ,"twitter": "Twitter"
+  }
+}

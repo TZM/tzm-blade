@@ -1,3 +1,4 @@
+<a href="http://chapter.zmgc.net/" target="_blank"><img src="https://raw.github.com/TZM/tzm-blade/master/assets/images/tzm-zmgc-logo.png" align="right"></a>
 #TZM Chapters code :: [![Build Status](https://travis-ci.org/TZM/tzm-blade.png)](https://travis-ci.org/TZM/tzm-blade)
 * [Node.js](http://nodejs.org/)
 * [Blade HTML Compiler](https://github.com/bminer/node-blade)

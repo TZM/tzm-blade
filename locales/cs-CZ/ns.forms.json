@@ -1,0 +1,25 @@
+{
+  "button": {
+    "login": "Přihlásit"
+    ,"register": "Zaregistrovat"
+    ,"email": "Email"
+    ,"password": "Heslo"
+    ,"save": "Uložit"
+    ,"continue": "Pokračovat"
+    ,"federated-login": "Přihlásení jiným účtem"
+    ,"reset-password-wrong": "Nesprávné potvrzené heslo"
+    ,"reset-password": "Resetuj heslo"
+    ,"remember-me": "Zaškrtněte toto políčko pokud nemáte heslo nebo jste ho zapomněli."
+    ,"create-new-account": "Vytvořit nový účet"
+    ,"sign-in": "Zaregistrovat"
+  },
+  "ph": {
+    "password": "Zadejte vaše heslo"
+    ,"email": "Zadejte váš email"
+    ,"confirm": "Zadejte znova vaše heslo"
+    ,"old": "Zadejte vaše staré heslo"
+    ,"new": "Zadejte nové heslo"
+    ,"name": "Zadejte vaše meno"
+    ,"surname": "Zadejte vaše přízvisko"
+  }
+}
