@@ -34,36 +34,32 @@ async.forever ((callback) ->
   url = 'https://api.trello.com/1/boards/4f15831919741c966505fb14/cards?fields=name,url,desc&key=4e2912efa3fa9e7a92d0557055ca3aa2'
   request url, (error, response, body)-> 
     unless error
-      cards = JSON.parse body
-      console.log 'cards', cards
+      
       newcontacts = {}
-      # items = {}
-      obj = {}
-
-      for i in [0..cards.length-1] 
-        desc = cards[i].desc.split '\n' 
-        
-        for j in [0..desc.length-1]
-          descvalue = desc[j].split('**')
-          # items[j] = descvalue
-          # console.log descvalue[1], descvalue[2]
-          if typeof(descvalue[1]) isnt 'undefined'
-            descvalue[1] = descvalue[1].substr(0, descvalue[1].length-1)
-            obj[descvalue[1]] = descvalue[2]
-            # items[j] = obj
-            newcontacts[i] = obj         
-
-      console.log newcontacts
-      newcontacts = JSON.stringify(newcontacts)
-      console.log newcontacts
-
+      cards = JSON.parse body
+      console.log(body);
+      for card in cards
+        obj = {}
+        if card.desc isnt ''
+          descriptions = card.desc.split '\n'
+          for description in descriptions
+            descvalue = description.split "**"
+            items = descvalue
+            if descvalue[1]?
+              descvalue[1] = descvalue[1].substr(0, descvalue[1].length - 1)
+              obj[descvalue[1]] = descvalue[2]
+              card.desc = obj
+              # console.log(card);
+          newcontacts[cards.indexOf(card)] = card
+   
+      console.log(newcontacts);
       io.sockets.on "connection", (socket) ->
         console.log 'socket connected'
         socket.emit "change",
           message: "changed"
           file: newcontacts
 
-      fs.writeFile "./data/chapters.json", newcontacts,(err) ->
+      fs.writeFile "./data/chapters.json", JSON.stringify(newcontacts,null,2),(err) ->
         console.log "It's saved!"
 ), (err) ->
   console.log err  if err
