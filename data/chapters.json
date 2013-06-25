@@ -1,1 +1,28 @@
-{}
+{
+  "0": {
+    "id": "51c19fc132a9eb41710030a2",
+    "desc": {
+      "WEBSITE": "http://www.mouvement-zeitgeist.fr/",
+      "CONTACT": "Elliaz (Laurent DUPUIS) <relations.etrangeres@mouvement-zeitgeist.fr>, <gnration.utopiste@gmail.com>, <administration@mouvement-zeitgeist.fr>, <France@mouvement-zeitgeist.fr>",
+      "YOUTUBE": "http://www.youtube.com/TZMFrancophone",
+      "GOOGLE+": "https://plus.google.com/102501276589348685192",
+      "TWITTER": "https://twitter.com/TZMFrancophone",
+      "FACEBOOK": "https://www.facebook.com/TZMFrancophone",
+      "TRELLO": "none",
+      "LOCALES": "fr-FR"
+    }
+  },
+  "1": {
+    "id": "51c1a1238710808771001d06",
+    "desc": {
+      "CHAPTER WEBSITE": "http://zeitgeistmovement.de",
+      "CONTACT": "Marius <marius@zeitgeistmovement.de>, Franky <frankysnatra@yahoo.de>, Sebastian <sebastian@zeitgeistmovement.de>, <spaulmann@gmx.de>",
+      "YOUTUBE": "none",
+      "GOOGLE+": "none",
+      "TWITTER": "none",
+      "FACEBOOK": "none",
+      "TRELLO": "none",
+      "LOCALES": "de-DE"
+    }
+  }
+}
