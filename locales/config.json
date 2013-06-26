@@ -1,4 +1,8 @@
 {
+  "cs": {
+    "locale": "cs",
+    "code": "cs-CZ"
+  },
   "de": {
     "locale": "de",
     "code": "de-DE"
@@ -30,7 +34,7 @@
   "sk": {
     "locale": "sk",
     "code": "sk-SK"
-  }, 
+  },
   "us": {
     "locale": "us",
     "code": "en-US"

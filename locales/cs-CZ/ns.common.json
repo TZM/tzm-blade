@@ -2,7 +2,7 @@
   "tzm": "Chaptery - Hnutí Zeitgeist"
   ,"welcome": [
     "<p>Hnutí Zeitgeist je výslovně nenásilná skupina hájící globální udržitelnost, která momentálně pracuje ve více než 1000 regionálních chapterů v 70 zemích.</p>"
-    ,
+    ,"<p>The basic structure of The Movement consists of Chapters, Teams, Projects & Events. Overall, the Chapters are essentially what define the Movement and each Chapter works to not only spread awareness about the roots of our social problems today but also to express the logical, scientific solutions and methods we have at our disposal to update and correct the current social system and create a truly responsible, sustainable, peaceful, global society.</p>"
   ]
   ,"projects": {
     "media-project": {
@@ -11,11 +11,11 @@
     }
     ,"zeitgesit-day": {
         "title": "Zeitgeist Day"
-        ,"description": "Tyto stránky se aktivují jednou ročně pro pro zajištění naší globální události "Zday", která se koná každoročně v březnu."
+        ,"description": "Tyto stránky se aktivují jednou ročně pro pro zajištění naší globální události 'Zday', která se koná každoročně v březnu."
     }
     ,"global-redesign-institute": {
     "title": "Global Redesign Institute"
-    ,"description": "Virtuální rozhraní projektu "Think Tank", používající mapové / datové modely pro vyjádření přímých technických změn v souladu s myšlenkovým proudem TZM."
+    ,"description": "Virtuální rozhraní projektu 'Think Tank', používající mapové / datové modely pro vyjádření přímých technických změn v souladu s myšlenkovým proudem TZM."
     }
     ,"zeitgeist-movement-global-connect": {
       "title": "Zeitgeist Movement Global Connect"
