@@ -1,18 +1,5 @@
 {
   "0": {
-    "id": "51c9dfb9fa7dcd723c00103f",
-    "desc": {
-      "WEBSITE": "http://www.zeitgeist-movement.at",
-      "CONTACT": "Tom <brightgeist@zeitgeist-movement.at>",
-      "YOUTUBE": "none",
-      "GOOGLE+": "none",
-      "TWITTER": "none",
-      "FACEBOOK": "none",
-      "TRELLO": "none",
-      "LOCALES": "de-AT"
-    }
-  },
-  "1": {
     "id": "51c1a1238710808771001d06",
     "desc": {
       "CHAPTER WEBSITE": "http://zeitgeistmovement.de",
@@ -25,12 +12,25 @@
       "LOCALES": "de-DE"
     }
   },
-  "2": {
+  "1": {
     "id": "51cad57905b153d50f00267e",
     "desc": {
       "WEBSITE": "asdadsasd.ru",
       "FACEBOOK": "dsdssd",
       "YOUTUBE": "sdadsda"
+    }
+  },
+  "2": {
+    "id": "51c19fbe7e573fbf0f001e5e",
+    "desc": {
+      "WEBSITE": "http://www.zeitgeistargentina.com",
+      "CONTACT": "<comunicacion@zeitgeistargentina.com>",
+      "YOUTUBE": "http://www.youtube.com/user/TZMArgentinaOficial",
+      "GOOGLE+": "none",
+      "TWITTER": "https://twitter.com/TZM",
+      "FACEBOOK": "https://www.facebook.com/groups/zeitgeistargentina/",
+      "TRELLO": "none",
+      "LOCALES": "es-AR"
     }
   }
 }

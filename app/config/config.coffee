@@ -16,7 +16,7 @@ exports.setEnvironment = (env) ->
   exports.EMAIL =
     registration: "gca-dev@zmgc.net"
     info: "info@zmgc.net"
-  exports.PARSE_INTERVAL = 2000
+  exports.PARSE_INTERVAL = 5000
   switch(env)
     when "development"
       exports.PORT = process.env.PORT or 3000

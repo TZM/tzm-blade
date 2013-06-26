@@ -41,7 +41,7 @@ get = (server)->
               file: newcontacts
           fs.readFile "./data/chapters.json", (err, oldcontacts)->
             if err
-              console.log err
+              console.log "cannot read file ./data/chapters.json", err
               throw err
             else
               jsonString = JSON.stringify(newcontacts,null,2)
