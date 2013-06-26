@@ -1,15 +1,15 @@
 {
   "0": {
-    "id": "51c19fc132a9eb41710030a2",
+    "id": "51c9dfb9fa7dcd723c00103f",
     "desc": {
-      "WEBSITE": "http://www.mouvement-zeitgeist.fr/",
-      "CONTACT": "Elliaz (Laurent DUPUIS) <relations.etrangeres@mouvement-zeitgeist.fr>, <gnration.utopiste@gmail.com>, <administration@mouvement-zeitgeist.fr>, <France@mouvement-zeitgeist.fr>",
-      "YOUTUBE": "http://www.youtube.com/TZMFrancophone",
-      "GOOGLE+": "https://plus.google.com/102501276589348685192",
-      "TWITTER": "https://twitter.com/TZMFrancophone",
-      "FACEBOOK": "https://www.facebook.com/TZMFrancophone",
+      "WEBSITE": "http://www.zeitgeist-movement.at",
+      "CONTACT": "Tom <brightgeist@zeitgeist-movement.at>",
+      "YOUTUBE": "none",
+      "GOOGLE+": "none",
+      "TWITTER": "none",
+      "FACEBOOK": "none",
       "TRELLO": "none",
-      "LOCALES": "fr-FR"
+      "LOCALES": "de-AT"
     }
   },
   "1": {
@@ -23,6 +23,14 @@
       "FACEBOOK": "none",
       "TRELLO": "none",
       "LOCALES": "de-DE"
+    }
+  },
+  "2": {
+    "id": "51cad57905b153d50f00267e",
+    "desc": {
+      "WEBSITE": "asdadsasd.ru",
+      "FACEBOOK": "dsdssd",
+      "YOUTUBE": "sdadsda"
     }
   }
 }
