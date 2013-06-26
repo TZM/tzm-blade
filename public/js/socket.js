@@ -2,9 +2,10 @@ jQuery(function($) {
 
     var socket;
 
-    socket = io.connect("http://localhost:3000");
+    socket = io.connect("http://localhost:3001");
 
     socket.on("change", function(data) {
+      console.log(arguments);
       var text;
       if (data.message) {
         console.log(data.message);

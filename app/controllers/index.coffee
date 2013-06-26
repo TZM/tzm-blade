@@ -8,6 +8,6 @@ exports.index = (req, res) ->
     res.render "index",
       _tmpl: tmpl
       user: req.user
-      port: 
+      port: 3001
       
     #res.send data
