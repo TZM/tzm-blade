@@ -34,25 +34,29 @@ async.forever ((callback) ->
   url = 'https://api.trello.com/1/boards/4f15831919741c966505fb14/cards?fields=name,url,desc&key=4e2912efa3fa9e7a92d0557055ca3aa2'
   request url, (error, response, body)-> 
     unless error
-      
+
+      # console.log(body);
       newcontacts = {}
       cards = JSON.parse body
-      console.log(body);
+      console.log(cards);
+      # console.log(cards);
       for card in cards
         obj = {}
         if card.desc isnt ''
           descriptions = card.desc.split '\n'
           for description in descriptions
             descvalue = description.split "**"
-            items = descvalue
+            # console.log(descvalue);
             if descvalue[1]?
               descvalue[1] = descvalue[1].substr(0, descvalue[1].length - 1)
-              obj[descvalue[1]] = descvalue[2]
-              card.desc = obj
-              # console.log(card);
-          newcontacts[cards.indexOf(card)] = card
+              if descvalue[2]?
+                obj[descvalue[1]] = descvalue[2]
+                card.desc = obj
+                contact = card
+                # console.log(card);
+          newcontacts[cards.indexOf(card)] = contact
    
-      console.log(newcontacts);
+      # console.log(newcontacts);
       io.sockets.on "connection", (socket) ->
         console.log 'socket connected'
         socket.emit "change",

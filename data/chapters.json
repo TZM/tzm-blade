@@ -1,1 +1,92 @@
-{}
+{
+  "0": {
+    "id": "51c19fc132a9eb41710030a2",
+    "name": "France",
+    "url": "https://trello.com/card/france/4f15831919741c966505fb14/20",
+    "desc": {
+      "WEBSITE": " http://www.mouvement-zeitgeist.fr/",
+      "CONTACT": " Elliaz (Laurent DUPUIS) <relations.etrangeres@mouvement-zeitgeist.fr>, <gnration.utopiste@gmail.com>, <administration@mouvement-zeitgeist.fr>, <France@mouvement-zeitgeist.fr>",
+      "YOUTUBE": " http://www.youtube.com/TZMFrancophone",
+      "GOOGLE+": " https://plus.google.com/102501276589348685192",
+      "TWITTER": " https://twitter.com/TZMFrancophone",
+      "FACEBOOK": " https://www.facebook.com/TZMFrancophone",
+      "TRELLO": " none",
+      "LOCALES": " fr-FR"
+    }
+  },
+  "1": {
+    "id": "51c1a1238710808771001d06",
+    "name": "Germany",
+    "url": "https://trello.com/card/germany/4f15831919741c966505fb14/21",
+    "desc": {
+      "CHAPTER WEBSITE": " http://zeitgeistmovement.de",
+      "CONTACT": " Marius <marius@zeitgeistmovement.de>, Franky <frankysnatra@yahoo.de>, Sebastian <sebastian@zeitgeistmovement.de>, <spaulmann@gmx.de>",
+      "YOUTUBE": " none",
+      "GOOGLE+": " none",
+      "TWITTER": " none",
+      "FACEBOOK": " none",
+      "TRELLO": " none",
+      "LOCALES": " de-DE"
+    }
+  },
+  "2": {
+    "id": "51c19fbe7e573fbf0f001e5e",
+    "name": "Argentina",
+    "url": "https://trello.com/card/argentina/4f15831919741c966505fb14/19",
+    "desc": {
+      "WEBSITE": " http://www.zeitgeistargentina.com",
+      "CONTACT": " <comunicacion@zeitgeistargentina.com>",
+      "YOUTUBE": " http://www.youtube.com/user/TZMArgentinaOficial",
+      "GOOGLE+": " none",
+      "TWITTER": " https://twitter.com/TZM",
+      "FACEBOOK": " https://www.facebook.com/groups/zeitgeistargentina/",
+      "TRELLO": " none",
+      "LOCALES": " es-AR"
+    }
+  },
+  "3": {
+    "id": "51c9dfb9fa7dcd723c00103f",
+    "name": "Austria",
+    "url": "https://trello.com/card/austria/4f15831919741c966505fb14/23",
+    "desc": {
+      "WEBSITE": " http://www.zeitgeist-movement.at",
+      "CONTACT": " Tom <brightgeist@zeitgeist-movement.at>",
+      "YOUTUBE": " none",
+      "GOOGLE+": " none",
+      "TWITTER": " none",
+      "FACEBOOK": " none",
+      "TRELLO": " none",
+      "LOCALES": " de-AT"
+    }
+  },
+  "4": {
+    "id": "51c9dfb9fa7dcd723c00103f",
+    "name": "Austria",
+    "url": "https://trello.com/card/austria/4f15831919741c966505fb14/23",
+    "desc": {
+      "WEBSITE": " http://www.zeitgeist-movement.at",
+      "CONTACT": " Tom <brightgeist@zeitgeist-movement.at>",
+      "YOUTUBE": " none",
+      "GOOGLE+": " none",
+      "TWITTER": " none",
+      "FACEBOOK": " none",
+      "TRELLO": " none",
+      "LOCALES": " de-AT"
+    }
+  },
+  "5": {
+    "id": "51c9dfb9fa7dcd723c00103f",
+    "name": "Austria",
+    "url": "https://trello.com/card/austria/4f15831919741c966505fb14/23",
+    "desc": {
+      "WEBSITE": " http://www.zeitgeist-movement.at",
+      "CONTACT": " Tom <brightgeist@zeitgeist-movement.at>",
+      "YOUTUBE": " none",
+      "GOOGLE+": " none",
+      "TWITTER": " none",
+      "FACEBOOK": " none",
+      "TRELLO": " none",
+      "LOCALES": " de-AT"
+    }
+  }
+}
