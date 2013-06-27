@@ -22,6 +22,7 @@ logger = require "./utils/logger"
 logCategory = "APP config"
 flash = require "connect-flash"
 
+
 # Create server and set environment
 app = express()
 app.configure ->

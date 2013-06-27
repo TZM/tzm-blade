@@ -1,5 +1,6 @@
 getCards = require "./utils/getcards"
 
+
 unless process.env.NODE_ENV?
   process.env.NODE_ENV = 'development'
 
@@ -8,11 +9,12 @@ if process.env.NODE_ENV is 'test'
   init = require("./index")()
   port = init.port
   server = init.listen(port)
-  getCards  3001
+
   console.log("Server running at http://127.0.0.1: "+ port  + "\nPress CTRL-C to stop server. ")
 else  
   cluster = require("cluster")
   numCPUs = require("os").cpus().length
+  
   if cluster.isMaster 
     # Fork workers.
     i = 0
@@ -30,7 +32,6 @@ else
     init = require("./index")()
     port = init.port
     server = init.listen(port)
-    
     console.log("Server running at http://127.0.0.1: "+ port  + "\nPress CTRL-C to stop server. ")
 
 
