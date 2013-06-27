@@ -62,9 +62,25 @@ get = (server)->
                       unless err
                         console.log "Official chapter list saved"
                         #push to github zmgc / dev (branch)
+                        os = require("os")
+                        exec = require("child_process").exec
+                        getCWD = (pid, callback) ->
+                          switch os.type()
+                            when "Linux"
+                              fs.readlink "/proc/" + pid + "/cwd", callback
+                            when "Darwin"
+                              exec "lsof -a -d cwd -p " + pid + " | tail -1 | awk '{print $9}'", callback
+                            else
+                              callback "unsupported OS"
+                        child1 = exec("some process that changes cwd using chdir syscall")
+
+                        # watch it changing cwd:
+                        i = setInterval(getCWD.bind(null, child1.pid, console.log), 100)
+                        child1.on "exit", clearInterval.bind(null, i)
+
                         spawn = require("child_process").spawn
                         
-                        gitAdd = spawn("git", ["add", "."])
+                        gitAdd = spawn("git", ["add", "data/chapters.json"], cwd: "/")
                         gitAdd.stdout.on "data", (data) ->
                           console.log "Git add stdout: " + data
                         gitAdd.stderr.on "Git add dataerr", (data) ->
