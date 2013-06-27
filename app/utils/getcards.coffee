@@ -51,35 +51,7 @@ get = (server)->
               console.log "cannot read file ./data/chapters.json", err
               throw err
             else
-              spawn = require("child_process").spawn
-                      
-              git = spawn("git", ["add", "."])
 
-              git.stdout.on "data", (data) ->
-                console.log "data arguments"+arguments
-                console.log "stdout: " + data
-
-              git.stderr.on "dataerr", (data) ->
-                console.log "data arguments"+arguments
-                console.log "stderr: " + data
-
-              git.on "close", (code) ->
-                console.log "close arguments"+arguments[0], arguments[1]
-                console.log "added files" + code
-
-              ls = spawn("ls")
-
-              ls.stdout.on "data", (data) ->
-                console.log "data arguments"+arguments
-                console.log "stdout: " + data
-
-              ls.stderr.on "dataerr", (data) ->
-                console.log "data arguments"+arguments
-                console.log "stderr: " + data
-
-              ls.on "close", (code) ->
-                console.log "close arguments"+arguments[0], arguments[1]
-                console.log "added files" + code  
 
 
               jsonString = JSON.stringify(newcontacts,null,2)
@@ -91,7 +63,41 @@ get = (server)->
                   fs.writeFile "./data/chapters.json", jsonString, (err) ->
                     unless err
                       console.log "Official chapter list saved"
+                      #push to github
+                      spawn = require("child_process").spawn
+                      
+                      gitStatus = spawn("git", ["status"])
+                      gitStatus.stdout.on "data", (data) ->
+                        console.log "stdout: " + data
+                      gitStatus.stderr.on "dataerr", (data) ->
+                        console.log "stderr: " + data
+                      gitStatus.on "close", (code) ->
+                        console.log "git closed with code: "+code
 
+                      gitAdd = spawn("git", ["add", "data/chapters.json"])
+                      gitAdd.stdout.on "data", (data) ->
+                        console.log "stdout: " + data
+                      gitAdd.stderr.on "dataerr", (data) ->
+                        console.log "stderr: " + data
+                      gitAdd.on "close", (code) ->
+                        console.log "git closed with code: "+code
+
+                      gitCommit = spawn("git", ["commit", "-m", "chapters.json update"])
+                      gitCommit.stdout.on "data", (data) ->
+                        console.log "stdout: " + data
+                      gitCommit.stderr.on "dataerr", (data) ->
+                        console.log "stderr: " + data
+                      gitCommit.on "close", (code) ->
+                        console.log "git closed with code: "+code 
+                      
+                      push = spawn("git", ["push", "zmgc", "dev"])
+                      push.stdout.on "data", (data) ->
+                        console.log "stdout: " + data
+                      push.stderr.on "dataerr", (data) ->
+                        console.log "stderr: " + data
+                      push.on "close", (code) ->
+                        console.log "git closed with code: "+code
+                      
                     else
                       console.log err
               else
