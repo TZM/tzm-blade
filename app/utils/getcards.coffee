@@ -76,28 +76,28 @@ get = (server)->
 
                       gitAdd = spawn("git", ["add", "data/chapters.json"])
                       gitAdd.stdout.on "data", (data) ->
-                        console.log "stdout: " + data
-                      gitAdd.stderr.on "dataerr", (data) ->
+                        console.log "Git add stdout: " + data
+                      gitAdd.stderr.on "Git add dataerr", (data) ->
                         console.log "stderr: " + data
                       gitAdd.on "close", (code) ->
-                        console.log "git closed with code: "+code
+                        console.log "Git add closed with code: "+code
 
                       gitCommit = spawn("git", ["commit", "-m", "chapters.json update"])
                       gitCommit.stdout.on "data", (data) ->
-                        console.log "stdout: " + data
+                        console.log "Git commit stdout: " + data
                       gitCommit.stderr.on "dataerr", (data) ->
-                        console.log "stderr: " + data
+                        console.log "Git commit stderr: " + data
                       gitCommit.on "close", (code) ->
-                        console.log "git closed with code: "+code 
+                        console.log "Git commit git closed with code: "+code 
                       
                       push = spawn("git", ["push", "zmgc", "dev"])
                       push.stdout.on "data", (data) ->
-                        console.log "stdout: " + data
+                        console.log "Git push stdout: " + data
                       push.stderr.on "dataerr", (data) ->
-                        console.log "stderr: " + data
+                        console.log "Git push stderr: " + data
                       push.on "close", (code) ->
-                        console.log "git closed with code: "+code
-                      
+                        console.log "Git push git closed with code: "+code
+
                     else
                       console.log err
               else

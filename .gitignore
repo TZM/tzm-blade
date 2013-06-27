@@ -22,7 +22,6 @@ node_modules
 builtAssets
 npm-shrinkwrap.json
 public/js/map2.js
-data/chapters.json
 .app
 server.old.js
 npm-debug.log
