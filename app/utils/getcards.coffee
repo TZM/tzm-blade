@@ -65,39 +65,31 @@ get = (server)->
                     fs.writeFile "./data/chapters.json", jsonString, (err) ->
                       unless err
                         console.log "Official chapter list saved"
-                        #push to github zmgc / dev (branch)
-                        
-
+                        #pushing to github origin / master (branch)
+                        #$git add data/chapters.json   first
                         gitAdd = spawn("git", ["add", "data/chapters.json"])
-                        gitCommit = spawn("git", ["commit", "-m", "chapters.json update"]) 
-                        gitPush = spawn("git", ["push", "origin", "master"])
-                        
                         gitAdd.stdout.on "data", (data) ->
                           console.log "Git add stdout: " + data
                         gitAdd.stderr.on "Git add dataerr", (data) ->
                           console.log "stderr: " + data
                         gitAdd.on "close", (code) ->
                           console.log "Git add closed with code: "+code
-                        
-                      
-                        
-                        gitCommit.stdout.on "data", (data) ->
-                          console.log "Git commit stdout: " + data
-                        gitCommit.stderr.on "dataerr", (data) ->
-                          console.log "Git commit stderr: " + data
-                        gitCommit.on "close", (code) ->
-                          console.log "Git commit git closed with code: "+code
-                        
-                      
-                        
-                        gitPush.stdout.on "data", (data) ->
-                          console.log "Git push stdout: " + data
-                        gitPush.stderr.on "dataerr", (data) ->
-                          console.log "Git push stderr: " + data
-                        gitPush.on "close", (code) ->
-                          console.log "Git push git closed with code: "+code
-                    
-
+                          #if added is done then $git commit -m "hapters.json update"
+                          gitCommit = spawn("git", ["commit", "-m", "chapters.json update"]) 
+                          gitCommit.stdout.on "data", (data) ->
+                            console.log "Git commit stdout: " + data
+                          gitCommit.stderr.on "dataerr", (data) ->
+                            console.log "Git commit stderr: " + data
+                          gitCommit.on "close", (code) ->
+                            console.log "Git commit git closed with code: "+code
+                            #if commited then $git push origin master
+                            gitPush = spawn("git", ["push", "origin", "master"])
+                            gitPush.stdout.on "data", (data) ->
+                              console.log "Git push stdout: " + data
+                            gitPush.stderr.on "dataerr", (data) ->
+                              console.log "Git push stderr: " + data
+                            gitPush.on "close", (code) ->
+                              console.log "Git push git closed with code: "+code
                       else
                         console.log err
                 else
