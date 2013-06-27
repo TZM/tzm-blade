@@ -1,4 +1,4 @@
-ioModule = require("socket.io")
+
 async = require("async")
 request = require("request")
 fs = require("fs")
@@ -16,12 +16,10 @@ to save only cards only from official chapter list
 
 
 
-get = (server)->
+get = (io)->
   
 
-  config.setEnvironment process.env.NODE_ENV
-  io = ioModule.listen(server)
-  
+ 
   async.forever ((callback) ->
     official_chapter_list = 'https://api.trello.com/1/lists/51c19fb532a9eb417100309d?cards=open&fields=name&card_fields=desc&key=4e2912efa3fa9e7a92d0557055ca3aa2'
     request official_chapter_list, (error, response, body)->
@@ -73,7 +71,8 @@ get = (server)->
                         gitAdd.stderr.on "Git add dataerr", (data) ->
                           console.log "stderr: " + data
                         gitAdd.on "close", (code) ->
-                          console.log "Git add closed with code: "+code
+                          console.log "file added" if code is 0
+                          console.log "Something wrong with add: ",code if code isnt 0
                           #if added is done then $git commit -m "hapters.json update"
                           gitCommit = spawn("git", ["commit", "-m", "chapters.json update"]) 
                           gitCommit.stdout.on "data", (data) ->
@@ -81,7 +80,8 @@ get = (server)->
                           gitCommit.stderr.on "dataerr", (data) ->
                             console.log "Git commit stderr: " + data
                           gitCommit.on "close", (code) ->
-                            console.log "Git commit git closed with code: "+code
+                            console.log "Commit success" if code is 0
+                            console.log "Something wrong with commit: ", code if code isnt 0
                             #if commited then $git push origin master
                             gitPush = spawn("git", ["push", "origin", "master"])
                             gitPush.stdout.on "data", (data) ->
@@ -89,7 +89,8 @@ get = (server)->
                             gitPush.stderr.on "dataerr", (data) ->
                               console.log "Git push stderr: " + data
                             gitPush.on "close", (code) ->
-                              console.log "Git push git closed with code: "+code
+                              console.log "Push success" if code is 0
+                              console.log "Something wrong with push: ", code if code isnt 0
                       else
                         console.log err
                 else
@@ -102,7 +103,7 @@ get = (server)->
   ), (err) ->
     console.log err  if err
 
-getCards = ()->
-  setInterval(get, config.PARSE_INTERVAL)
+getCards = (io)->
+  setInterval(get, config.PARSE_INTERVAL, io)
 
 exports = module.exports = getCards

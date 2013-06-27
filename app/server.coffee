@@ -1,4 +1,6 @@
 getCards = require "./utils/getcards"
+ioModule = require("socket.io")
+config = require "./config/config"
 
 
 unless process.env.NODE_ENV?
@@ -12,6 +14,7 @@ if process.env.NODE_ENV is 'test'
 
   console.log("Server running at http://127.0.0.1: "+ port  + "\nPress CTRL-C to stop server. ")
 else  
+  config.setEnvironment process.env.NODE_ENV
   cluster = require("cluster")
   numCPUs = require("os").cpus().length
   
@@ -22,7 +25,9 @@ else
     while i < numCPUs
       console.log("NOW USING CPU ::::::::::::::#",i);
       if i is 0
-        getCards 3001
+        console.log("PROCESS ENV+::::::::::::::::::::",config.PORT+1)
+        io = ioModule.listen(config.PORT+1)
+        getCards io
       cluster.fork()
       i++
     cluster.on "exit", (worker, code, signal) ->
