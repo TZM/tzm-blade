@@ -78,9 +78,9 @@ get = (server)->
                         i = setInterval(getCWD.bind(null, child1.pid, console.log), 100)
                         child1.on "exit", clearInterval.bind(null, i)
 
-                        spawn = require("child_process").spawn
+                        spawn = require("child_process").spawn(cwd: "/")
                         
-                        gitAdd = spawn("git", ["add", "data/chapters.json"], cwd: "/")
+                        gitAdd = spawn("git", ["add", "data/chapters.json"])
                         gitAdd.stdout.on "data", (data) ->
                           console.log "Git add stdout: " + data
                         gitAdd.stderr.on "Git add dataerr", (data) ->
