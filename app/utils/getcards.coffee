@@ -65,32 +65,32 @@ get = (io)->
                         console.log "Official chapter list saved"
                         #pushing to github origin / master (branch)
                         #$git add data/chapters.json   first
-                        gitAdd = spawn("git", ["add", "data/chapters.json"])
-                        gitAdd.stdout.on "data", (data) ->
-                          console.log "Git add stdout: " + data
-                        gitAdd.stderr.on "Git add dataerr", (data) ->
-                          console.log "stderr: " + data
-                        gitAdd.on "close", (code) ->
-                          console.log "file added" if code is 0
-                          console.log "Something wrong with add: ",code if code isnt 0
-                          #if added is done then $git commit -m "hapters.json update"
-                          gitCommit = spawn("git", ["commit", "-m", "chapters.json update"]) 
-                          gitCommit.stdout.on "data", (data) ->
-                            console.log "Git commit stdout: " + data
-                          gitCommit.stderr.on "dataerr", (data) ->
-                            console.log "Git commit stderr: " + data
-                          gitCommit.on "close", (code) ->
-                            console.log "Commit success" if code is 0
-                            console.log "Something wrong with commit: ", code if code isnt 0
-                            #if commited then $git push origin master
-                            gitPush = spawn("git", ["push", "origin", "master"])
-                            gitPush.stdout.on "data", (data) ->
-                              console.log "Git push stdout: " + data
-                            gitPush.stderr.on "dataerr", (data) ->
-                              console.log "Git push stderr: " + data
-                            gitPush.on "close", (code) ->
-                              console.log "Push success" if code is 0
-                              console.log "Something wrong with push: ", code if code isnt 0
+                        #gitAdd = spawn("git", ["add", "data/chapters.json"])
+                        #gitAdd.stdout.on "data", (data) ->
+                        #  console.log "Git add stdout: " + data
+                        #gitAdd.stderr.on "Git add dataerr", (data) ->
+                        #  console.log "stderr: " + data
+                        #gitAdd.on "close", (code) ->
+                        #  console.log "file added" if code is 0
+                        #  console.log "Something wrong with add: ",code if code isnt 0
+                        #  #if added is done then $git commit -m "hapters.json update"
+                        #  gitCommit = spawn("git", ["commit", "-m", "chapters.json update"]) 
+                        #  gitCommit.stdout.on "data", (data) ->
+                        #    console.log "Git commit stdout: " + data
+                        #  gitCommit.stderr.on "dataerr", (data) ->
+                        #    console.log "Git commit stderr: " + data
+                        #  gitCommit.on "close", (code) ->
+                        #    console.log "Commit success" if code is 0
+                        #    console.log "Something wrong with commit: ", code if code isnt 0
+                        #    #if commited then $git push origin master
+                        #    gitPush = spawn("git", ["push", "origin", "master"])
+                        #    gitPush.stdout.on "data", (data) ->
+                        #      console.log "Git push stdout: " + data
+                        #    gitPush.stderr.on "dataerr", (data) ->
+                        #      console.log "Git push stderr: " + data
+                        #    gitPush.on "close", (code) ->
+                        #      console.log "Push success" if code is 0
+                        #      console.log "Something wrong with push: ", code if code isnt 0
                       else
                         console.log err
                 else
