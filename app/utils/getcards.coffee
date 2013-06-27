@@ -67,8 +67,8 @@ get = (server)->
                         console.log "Official chapter list saved"
                         #push to github zmgc / dev (branch)
                         
-                        
-                        gitAdd = spawn("git", ["add", "data/chapters.json"], cwd: "/")
+
+                        gitAdd = spawn("git", ["add", "data/chapters.json"])
                         gitCommit = spawn("git", ["commit", "-m", "chapters.json update"]) 
                         gitPush = spawn("git", ["push", "origin", "master"])
                         
