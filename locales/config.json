@@ -16,16 +16,16 @@
     "code": "fr-FR"
   },
   "jp": {
-    "locale": "jp",
-    "code": "jp-JP"
+    "locale": "ja",
+    "code": "ja-JP"
   },
   "pt": {
     "locale": "pt",
     "code": "pt-BR"
   },
-  "rs": {
-    "locale": "rs",
-    "code": "rs-RS"
+  "sr": {
+    "locale": "sr",
+    "code": "sr-RS"
   },
   "ru": {
     "locale": "ru",
