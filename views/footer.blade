@@ -1,15 +1,15 @@
+
 - function sortByKey(key)
     - return function(a,b)
         - if (a[key] < b[key]) return -1
         - if (a[key] > b[key]) return 1
         - return 0
-- var chapters = locals.settings.chapters.rows
-    - var countries = [];
+- var countries = [];
+- var chapters = locals.settings.chapters
     - for(var i in chapters)
-        - var row = chapters[i]
-        - if (row[0] == 'Country')
-            - countries.push({link:row[2],contact:row[3],country:row[4]})
-- countries.sort(sortByKey('country'))
+        - var row = chapters[i].desc
+        - var code = row["LOCALES"].substr(3, 2)
+        - countries.push({link:row["WEBSITE"],contact:row["CONTACT"],country: allCountries[code]})
 - var guide = locals.settings.translation.guide
 footer
     .navbar.navbar-inverse.navbar-fixed-bottom

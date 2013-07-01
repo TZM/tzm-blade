@@ -24,13 +24,13 @@ get = (io)->
     official_chapter_list = 'https://api.trello.com/1/lists/51c19fb532a9eb417100309d?cards=open&fields=name&card_fields=desc&key=4e2912efa3fa9e7a92d0557055ca3aa2'
     request official_chapter_list, (error, response, body)->
       unless error
-        newcontacts = {}
+        newcontacts = []
+        # try to parse recieved list
         try
           chapter_cards = JSON.parse body
           cards = chapter_cards.cards
-          #console.log cards
+          # parsing string to JSON object
           for card in cards
-            #console.log card
             obj = {}
             if card.desc isnt ''
               descriptions = card.desc.split '\n'
@@ -40,26 +40,30 @@ get = (io)->
                   descvalue[1] = descvalue[1].substr(0, descvalue[1].length - 1)
                   obj[descvalue[1]] = descvalue[2].replace(/^\s+|\s+$/g, "")
                   card.desc = obj
-              newcontacts[cards.indexOf(card)] = card
-          
-          
+              # if chpter LOCALES not specified it sets to "en-EN"
+              if card.desc.LOCALES
+                newcontacts.push card 
+          # connect socket
           io.sockets.on "connection", (socket) ->
             console.log 'socket connected'
             socket.emit "change",
               message: "changed"
               file: newcontacts
+          #try to read chapters.json
           try
             fs.readFile "./data/chapters.json", (err, oldcontacts)->
               if err
                 console.log "cannot read file ./data/chapters.json", err
                 throw err
               else
+                # check for update
                 jsonString = JSON.stringify(newcontacts,null,2)
                 oldjson = JSON.parse(oldcontacts)
                 oldjsonString = JSON.stringify(oldjson,null,2)
-                console.log("Is new file equals old file?: ", jsonString is oldjsonString);
+                # console.log("Is new file equals old file?: ", jsonString is oldjsonString);
                 if jsonString isnt oldjsonString
                   # console.log JSON.parse jsonString
+                    # update json file
                     fs.writeFile "./data/chapters.json", jsonString, (err) ->
                       unless err
                         console.log "Official chapter list saved"
@@ -92,7 +96,7 @@ get = (io)->
                         #      console.log "Push success" if code is 0
                         #      console.log "Something wrong with push: ", code if code isnt 0
                       else
-                        console.log err
+                        console.log "cannot writeFile: "+err
                 else
                   console.log("nothing to to update");
           catch e
