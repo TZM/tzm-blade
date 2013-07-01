@@ -8,6 +8,7 @@ config = require "./config/config"
 models = require "./config/models"
 apps = require "./config/apps"
 routes = require "./config/routes"
+fs = require "fs"
 # passport = require "passport"
 # riak = require('riak-js').getClient(
 #   host: config.RIAK_DB.host, 
@@ -21,7 +22,10 @@ routes = require "./config/routes"
 logger = require "./utils/logger"
 logCategory = "APP config"
 flash = require "connect-flash"
-
+fs.open "./data/chapters.json", "w", (err, fd) ->
+  console.log("OPENING FILE ERROR: ",err)  if err
+  fs.writeFile "./data/chapters.json", "{}", (err) ->
+    console.log("WRITING FILE ERROR: ",err)  if err
 
 
 # Create server and set environment

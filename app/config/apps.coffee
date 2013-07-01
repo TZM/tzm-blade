@@ -10,6 +10,9 @@ i18n = require "i18next"
 logger = require "winston"
 passport = require "passport"
 LocalStrategy = require("passport-local").Strategy
+cldr = require "cldr"
+i18n = require "i18next"
+fs = require "fs"
 
 
 logCategory = "CONFIGURE"
@@ -71,9 +74,10 @@ module.exports = (app) ->
   app.configure ->
     try
       require ('./passport.coffee')
-      app.set("chapters", require(process.cwd() + "/data/chapters.json"))
       app.set "languages", require(process.cwd() + "/locales/config.json")
       app.set "translation", require(process.cwd() + "/locales/dev/translation.json")
+      # app.set "chapters", require(process.cwd() + "/data/chapters.json")
+
     catch e
       logger.warn "files not found " + e, logCategory
       require ('./passport.coffee')
@@ -118,16 +122,27 @@ module.exports = (app) ->
     .use(express.csrf())
     #Configure dynamic helpers
     .use (req, res, next) ->
-      formData = req.session.formData or {}
-      delete req.session.formData
-      res.locals
-        #for use in templates
-        appName: config.APP.name
-        #for connect-flash
-        message: req.flash("info")
-        # needed for csrf support
-        csrf_token: req.session._csrf
-      # res.cookie.
-      next()
+      
+      fs.readFile "./data/chapters.json", (err,chapterJSON) ->
+        console.log("read file error", err) if err
+        chapters = JSON.parse chapterJSON
+        formData = req.session.formData or {}
+        code = i18n.lng().substr(0, 2)
+        countries = cldr.extractTerritoryDisplayNames(code) 
+        delete req.session.formData
+        res.locals
+          #for use in templates
+          appName: config.APP.name
+          #for connect-flash
+          message: req.flash("info")
+          # needed for csrf support
+          csrf_token: req.session._csrf
+          # needed for coutry list localization
+          allCountries: countries
+
+          chapterJSON: chapters
+
+        # res.cookie.
+        next()
 
   app

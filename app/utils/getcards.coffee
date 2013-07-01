@@ -53,6 +53,9 @@ get = (io)->
           try
             fs.readFile "./data/chapters.json", (err, oldcontacts)->
               if err
+                fs.writeFile "/data/chapters.json", "{}", (err) ->
+                  throw err  if err
+                  console.log "It's saved!"
                 console.log "cannot read file ./data/chapters.json", err
                 throw err
               else

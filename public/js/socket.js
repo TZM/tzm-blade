@@ -1,3 +1,4 @@
+
 jQuery(function($) {
 
     var socket;
@@ -8,8 +9,8 @@ jQuery(function($) {
       // console.log(arguments);
       var text;
       if (data.message) {
-        // console.log(data.message);
-        // console.log(data.file);
+        document.cookie["cldr"] = data.file
+
       } else {
         return console.log("There is a problem:", data);
       }
