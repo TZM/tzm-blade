@@ -59,7 +59,8 @@
     "async": "*",
     "riakpbc": "~0.0.12",
     "traverse": "~0.6.3",
-    "baudio": "~1.0.0"
+    "baudio": "~1.0.0",
+    "coffee-script": "~1.6.3"
   },
   "devDependencies": {
     "assert": "~0.4.9",
