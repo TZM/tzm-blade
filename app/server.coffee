@@ -26,7 +26,7 @@ else
       console.log("NOW USING CPU: #",i);
       if i is 0
         console.log("socket io using port: ",config.PORT+1)
-        io = ioModule.listen(config.PORT+1, {log:false})
+        io = ioModule.listen(parseInt(config.PORT+1), {log:false})
         getCards io
       cluster.fork()
       i++
