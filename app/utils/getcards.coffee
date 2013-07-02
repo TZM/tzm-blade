@@ -51,12 +51,10 @@ get = (io)->
               file: newcontacts
           #try to read chapters.json
           try
+            file = fs.readFileSync "./data/chapters.json"
             fs.readFile "./data/chapters.json", (err, oldcontacts)->
               if err
-                fs.writeFile "/data/chapters.json", "{}", (err) ->
-                  throw err  if err
-                  console.log "It's saved!"
-                console.log "cannot read file ./data/chapters.json", err
+                console.log "./data/chapters.json does not exist"
                 throw err
               else
                 # check for update
@@ -103,7 +101,13 @@ get = (io)->
                 else
                   console.log("nothing to to update");
           catch e
-            console.log("invalid json file");        
+            fs.open "./data/chapters.json", "w", (err, fd) ->
+              console.log("OPENING FILE ERROR: ",err)  if err
+              unless err
+                jsonString = JSON.stringify(newcontacts,null,2)
+                fs.writeFile "./data/chapters.json", jsonString, (err)->
+                  console.log("WRITING FILE ERROR: ",err)  if err
+                  console.log("chapter.json created")  if !err         
         catch e
           console.log "Invalid JSON format error: ", e
           throw e          
