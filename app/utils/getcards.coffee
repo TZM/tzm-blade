@@ -16,10 +16,9 @@ to save only cards only from official chapter list
 
 
 
-get = (io)->
-  
-
- 
+# get = (io)->
+get = ()->
+  console.log("Getting chapter cards...");
   async.forever ((callback) ->
     official_chapter_list = 'https://api.trello.com/1/lists/51c19fb532a9eb417100309d?cards=open&fields=name&card_fields=desc&key=4e2912efa3fa9e7a92d0557055ca3aa2'
     request official_chapter_list, (error, response, body)->
@@ -43,12 +42,15 @@ get = (io)->
               # if chpter LOCALES not specified it sets to "en-EN"
               if card.desc.LOCALES
                 newcontacts.push card 
+          
+          # IS IT REALY NEEDED?
           # connect socket
-          io.sockets.on "connection", (socket) ->
-            console.log 'socket connected'
-            socket.emit "change",
-              message: "changed"
-              file: newcontacts
+          # io.sockets.on "connection", (socket) ->
+          #   console.log 'socket connected'
+          #   socket.emit "change",
+          #     message: "changed"
+          #     file: newcontacts
+          
           #try to read chapters.json
           try
             file = fs.readFileSync "./data/chapters.json"
@@ -113,8 +115,9 @@ get = (io)->
           throw e          
   ), (err) ->
     console.log err  if err
-
-getCards = (io)->
-  setInterval(get, config.PARSE_INTERVAL, io)
+getCards = ()->
+  setInterval(get, config.PARSE_INTERVAL)
+# getCards = (io)->
+#   setInterval(get, config.PARSE_INTERVAL, io)
 
 exports = module.exports = getCards

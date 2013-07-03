@@ -25,9 +25,10 @@ else
     while i < numCPUs
       console.log("NOW USING CPU: #",i);
       if i is 0
-        console.log("socket io using port: ",config.PORT+1)
-        io = ioModule.listen(parseInt(config.PORT+1), {log:false})
-        getCards io
+        # console.log("socket io using port: ",config.PORT+1)
+        # io = ioModule.listen(parseInt(config.PORT+1), {log:false})
+        # getCards io
+        getCards()
       cluster.fork()
       i++
     cluster.on "exit", (worker, code, signal) ->
