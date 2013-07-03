@@ -8,7 +8,7 @@ exports.index = (req, res) ->
   res.render "index",
     _tmpl: tmpl
     user: req.user
-    port: 3001
+    # port: 3001
     # chapters: official
       
     #res.send data

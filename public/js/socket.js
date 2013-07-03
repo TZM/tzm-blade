@@ -1,19 +1,19 @@
 
-jQuery(function($) {
+// jQuery(function($) {
 
-    var socket;
+//     var socket;
 
-    socket = io.connect("http://localhost:3001");
+//     socket = io.connect("http://localhost:3001");
 
-    socket.on("change", function(data) {
-      // console.log(arguments);
-      var text;
-      if (data.message) {
-        document.cookie["cldr"] = data.file
+//     socket.on("change", function(data) {
+//       // console.log(arguments);
+//       var text;
+//       if (data.message) {
+//         // document.cookie["cldr"] = data.file
 
-      } else {
-        return console.log("There is a problem:", data);
-      }
-    });
+//       } else {
+//         return console.log("There is a problem:", data);
+//       }
+//     });
 
-});
+// });
