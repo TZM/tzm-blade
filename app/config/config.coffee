@@ -10,13 +10,13 @@ exports.setEnvironment = (env) ->
     service: "Gmail"
     # user: process.env.SMTP_USER
     # pass: process.env.SMTP_PASSWD
-    user: process.env.SMTP_USER || 'gca@zmgc.net'
-    pass: process.env.SMTP_PASSWD || 'b0ff25e16d22'
+    user: process.env.SMTP_USER
+    pass: process.env.SMTP_PASSWD
 
   exports.EMAIL =
     registration: "gca-dev@zmgc.net"
     info: "info@zmgc.net"
-  exports.PARSE_INTERVAL = 5000
+  exports.PARSE_INTERVAL = 20000
   switch(env)
     when "development"
       exports.PORT = process.env.PORT or 3000

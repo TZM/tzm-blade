@@ -134,7 +134,7 @@ Route =
       unless err
         if user
           console.log 'activate. user', user
-          if user.activate is false
+          if user.active is true
             req.logIn user, (err) ->
               next(err)  if err
               req.flash('info', 'Activation success')

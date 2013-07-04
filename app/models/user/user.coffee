@@ -79,6 +79,14 @@ UserSchema = new Schema(
 
   tokenExpires:
     type: Number
+  
+  provider:
+    type: String
+    require: false
+  
+  uid:
+    type: String
+    require: false
 )
 
 # expose enum on the model, and provide an internal convenience reference
