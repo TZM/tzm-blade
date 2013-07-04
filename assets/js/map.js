@@ -304,7 +304,7 @@
         if (d.id !== "FRA") {
           k = 1/ratio - 1
         } else {
-          k = 1/ratio 
+          k = 1/ratio
         }
         console.log(k, ratio)
         centered = d

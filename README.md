@@ -191,6 +191,9 @@ The tests are now on Travis, for continuous integration see [![Build Status](htt
 - Continuous Integration - [[https://travis-ci.org/TZM/tzm-blade][Travis-CI]] :: [![Build Status](https://travis-ci.org/TZM/tzm-blade.png)](https://travis-ci.org/TZM/tzm-blade)
 - Documentation
 
+#Benchmarks
+See the [Benchmark page](BENCHMARK.md) for more information.
+
 #Warning
 This application is still a work in progress and is not ready for use yet.
 
