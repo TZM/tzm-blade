@@ -24,7 +24,7 @@ module.exports = (passport) ->
       return done(null, user)  if user
       if reason is 2
         done null, false,
-          message: "User account locked too many failed attempts!"
+          message: "User account locked cause too many failed attempts!"
 
       else
         done null, false,
