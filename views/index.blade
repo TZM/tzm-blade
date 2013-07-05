@@ -1,8 +1,8 @@
-- console.log(_tmpl)
-
 include "../layout/layout.blade"
 replace block page
     input(type='hidden', name='_csrf', value=csrf_token)
+    - if (user)
+        input(type='hidden', name='user', value=user.name)
     #notification
     #welcome!=t("ns.common:welcome")
     h3= message

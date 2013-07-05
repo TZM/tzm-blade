@@ -18,9 +18,9 @@ module.exports =
   mongo:
     unless boundServices
       if MONGO_DB_USER and MONGO_DB_PASS
-          MONGO_DB_URL: "mongodb://#{MONGO_DB_USER}:#{MONGO_DB_PASS}@#{DB_HOST}:#{MONGO_DB_PORT}/#{MONGO_DB_NAME}"
+          MONGO_DB_URL: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "mongodb://#{MONGO_DB_USER}:#{MONGO_DB_PASS}@#{DB_HOST}:#{MONGO_DB_PORT}/#{MONGO_DB_NAME}"
       else
-          MONGO_DB_URL: "mongodb://#{DB_HOST}:#{MONGO_DB_PORT}/#{MONGO_DB_NAME}"
+          MONGO_DB_URL: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "mongodb://#{DB_HOST}:#{MONGO_DB_PORT}/#{MONGO_DB_NAME}"
     else
       # MongoDB settings
       cfMongo = boundServices["mongodb-1.8"][0]["credentials"]

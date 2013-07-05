@@ -1,41 +1,45 @@
 .row
     .span4
-        .span1
-            //Github
-            a.btn(href="/social/github" role="button")
-                i.icon-github-alt.icon-large
-                //span="Sign in with Github"
-        .span1
-            //Google
-            a.btn.btn-danger(href="/social/google" role="button")
-                i.icon-google-plus-sign.icon-large
-                //span="Sign in with Google+"
-        .span1
-            //Twitter
-            a.btn.btn-info(href="/social/twitter" role="button")
-                i.icon-twitter-sign.icon-large
-                //span="Sign in with Twitter"
-.row
-    .span4
-        .span1
-            //LinkedIn
-            a.btn.btn-info(href="/social/linkedin" role="button")
-                i.icon-comment.icon-linkedin-sign.icon-large
-                //span="Sign in with LinkedIn"
-        .span1
-            //Facebook
-            a.btn.btn-success(href="/social/facebook" role="button")
-                i.icon-facebook-sign.icon-large
-                //span="Sign in with Facebook"
-        .span1
-            //Yahoo
-            a.btn.btn-primary(href="/social/yahoo" role="button")
-                i.icon-yahoo.icon-large
-                //span="Sign in with Yahoo"
-.row
-    .span4
-        .span1
-            //persona
-            a.btn.btn-info(href="/social/persona" role="button")
-                i.icon-comment.icon-persona-sign.icon-large
-                //span="Sign in with Mozzila Persona"
+        - if (locals.socials.indexOf("github") != -1)
+            .span1
+                //Github
+                a.btn(href="/social/github" role="button")
+                    i.icon-github-alt.icon-large
+                    //span="Sign in with Github"
+        - if (locals.socials.indexOf("google") != -1)
+            .span1
+                //Google
+                a.btn.btn-danger(href="/social/google" role="button")
+                    i.icon-google-plus-sign.icon-large
+                    //span="Sign in with Google+"
+        - if (locals.socials.indexOf("twitter") != -1)
+            .span1
+                //Twitter
+                a.btn.btn-info(href="/social/twitter" role="button")
+                    i.icon-twitter-sign.icon-large
+                    //span="Sign in with Twitter"
+        - if (locals.socials.indexOf("linkedin") != -1)
+            .span1
+                //LinkedIn
+                a.btn.btn-info(href="/social/linkedin" role="button")
+                    i.icon-comment.icon-linkedin-sign.icon-large
+                    //span="Sign in with LinkedIn"
+        - if (locals.socials.indexOf("facebook") != -1)    
+            .span1
+                //Facebook
+                a.btn.btn-success(href="/social/facebook" role="button")
+                    i.icon-facebook-sign.icon-large
+                    //span="Sign in with Facebook"
+        - if (locals.socials.indexOf("yahoo") != -1)    
+            .span1
+                //Yahoo
+                a.btn.btn-primary(href="/social/yahoo" role="button")
+                    i.icon-yahoo.icon-large
+                    //span="Sign in with Yahoo"
+        - if (locals.socials.indexOf("persona") != -1)
+            #persona.span1
+                //persona
+                .btn.btn-info
+                    input(type='hidden', name='_csrf', value=csrf_token)
+                    i.icon-comment.icon-persona-sign.icon-large
+                    //span="Sign in with Mozzila Persona"

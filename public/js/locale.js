@@ -15,6 +15,7 @@ jQuery(function($) {
         language = (language_complete[0]);
     }
 
+    
     $("#remember_me").click(function(e) {
       if ($("#remember_me").val() == "off"){
         $("#password").attr("disabled", true)
