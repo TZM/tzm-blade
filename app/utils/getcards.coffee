@@ -6,21 +6,19 @@ config = require "../config/config"
 config.setEnvironment process.env.NODE_ENV
 spawn = require("child_process").spawn
 
-
-
+TRELLO_LIST = process.env.TRELLO_LIST
+TRELLO_API_KEY = process.env.TRELLO_API_KEY
+TRELLO_TOKEN = process.env.TRELLO_TOKEN
 
 ###
 JSON parser
 to save only cards only from official chapter list
 ###
-
-
-
 # get = (io)->
 get = ()->
   console.log("Getting chapter cards...");
   async.forever ((callback) ->
-    official_chapter_list = 'https://api.trello.com/1/lists/51c19fb532a9eb417100309d?cards=open&fields=name&card_fields=desc&key=4e2912efa3fa9e7a92d0557055ca3aa2'
+    official_chapter_list = 'https://api.trello.com/1/lists/'+TRELLO_LIST+'?cards=open&fields=name&card_fields=desc&key='+TRELLO_API_KEY+'&token='+TRELLO_TOKEN+''
     request official_chapter_list, (error, response, body)->
       unless error
         newcontacts = []

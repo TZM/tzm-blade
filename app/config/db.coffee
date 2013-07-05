@@ -1,4 +1,5 @@
 boundServices = if process.env.VCAP_SERVICES then JSON.parse(process.env.VCAP_SERVICES) else null
+console.log boundServices
 DB_HOSTNAME = "localhost"
 DB_HOST = "127.0.0.1"
 MONGO_DB_PORT = 27017
@@ -11,9 +12,6 @@ RIAK_DB_HOST = "127.0.0.1"
 RIAK_DB_PORT = 8098
 # RIAK_DB_PORT = 10018
 
-#Riak settings
-
-
 module.exports =
   mongo:
     unless boundServices
@@ -24,8 +22,7 @@ module.exports =
     else
       # MongoDB settings
       cfMongo = boundServices["mongodb-1.8"][0]["credentials"]
-      MONGO_DB_URL = "mongodb://" + cfMongo["username"] + ":" + cfMongo["password"] + "@" + cfMongo["hostname"] + ":" + cfMongo["port"] + "/" + cfMongo["db"]
-
+      MONGO_DB_URL: "mongodb://" + cfMongo["username"] + ":" + cfMongo["password"] + "@" + cfMongo["hostname"] + ":" + cfMongo["port"] + "/" + cfMongo["db"]
   redis:
     unless boundServices
       # Redis settings

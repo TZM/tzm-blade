@@ -9,7 +9,6 @@ mongoose.set "debug", config.DEBUG_LOG
 logCategory = "DATABASE Connection"
 
 DB_URL = config.MONGO_DB_URL
-
 db_connect_mongo = init: (callback) ->
   self = this
   mongo_options = db:
