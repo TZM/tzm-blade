@@ -1,10 +1,15 @@
 passport = require "passport"
 LocalStrategy = require("passport-local").Strategy
-FacebookStrategy = require("passport-facebook").Strategy
-TwitterStrategy = require("passport-twitter").Strategy
+if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
+  FacebookStrategy = require("passport-facebook").Strategy
+if process.env.TT_APP_ID? and process.env.TT_APP_SEC?
+  TwitterStrategy = require("passport-twitter").Strategy
 GoogleStrategy = require("passport-google").Strategy
-GitHubStrategy = require("passport-github").Strategy
-LinkedInStrategy = require("passport-linkedin").Strategy
+if process.env.GITHUB_ID? and process.env.GITHUB_SEC? 
+  GitHubStrategy = require("passport-github").Strategy
+if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
+  LinkedInStrategy = require("passport-linkedin").Strategy
+
 YahooStrategy = require("passport-yahoo").Strategy
 PersonaStrategy = require('passport-persona').Strategy
 
@@ -49,70 +54,43 @@ passport.deserializeUser (id, done) ->
 
 console.log(url+"/social/facebookcallback")
 
-passport.use(new FacebookStrategy
-  clientID: process.env.FB_APP_ID
-  clientSecret: process.env.FB_APP_SEC
-  callbackURL: url+"/social/facebookcallback"
-  , (accessToken, refreshToken, profile, done) ->
-    process.nextTick ->
-      User.findOneAndUpdate(
-        'provider': profile.provider
-        'uid': profile.id
-      ,
-        name: profile.displayName
-        active: true
-      ,
-        upsert: true
-      , (err, user) ->
-        if err? then return done err, null, 
-          message: 'authorizationfailed',
-          data: '.',
-          message2: 'tryagain'
-        done null, user,
-          message: 'authorizationsuccess'
-          data: '.'
-          message2: 'welcome'
-      )
-  )
-
-passport.use(new PersonaStrategy
-  audience: url
-  , (email, done) ->
-    console.log("arguments in persona strategy");
-    console.log(arguments);
-    process.nextTick ->
-      User.findOneAndUpdate(
-        'provider': "persona"
-        'email': email
-      ,
-        # name: profile.displayName
-        active: true
-      ,
-        upsert: true
-      , (err, user) ->
-        if err? then return done err, null, 
-          message: 'authorizationfailed',
-          data: '.',
-          message2: 'tryagain'
-        done null, user,
-          message: 'authorizationsuccess'
-          data: '.'
-          message2: 'welcome'
-      )
-  )
-
-passport.use(new LinkedInStrategy
-  consumerKey: process.env.LI_APP_ID
-  consumerSecret: process.env.LI_APP_SEC
-  callbackURL: url+"/social/linkedincallback"
-, (accessToken, refreshToken, profile, done) ->
+if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
+  passport.use(new FacebookStrategy
+    clientID: process.env.FB_APP_ID
+    clientSecret: process.env.FB_APP_SEC
+    callbackURL: url+"/social/facebookcallback"
+    , (accessToken, refreshToken, profile, done) ->
+      process.nextTick ->
+        User.findOneAndUpdate(
+          'provider': profile.provider
+          'uid': profile.id
+        ,
+          name: profile.displayName
+          active: true
+        ,
+          upsert: true
+        , (err, user) ->
+          if err? then return done err, null, 
+            message: 'authorizationfailed',
+            data: '.',
+            message2: 'tryagain'
+          done null, user,
+            message: 'authorizationsuccess'
+            data: '.'
+            message2: 'welcome'
+        )
+    )
+#use google strategy
+passport.use(new GoogleStrategy
+  returnURL: url+"/social/googlecallback"
+  realm: url
+, (identifier, profile, done) ->
   User.findOneAndUpdate(
-    "uid": profile.id
-    "provider": profile.provider
+    "uid": identifier
+    "provider": "google"
   ,
     name: profile.name.givenName
     surname: profile.name.familyName
-    uid: profile.id
     active: true
     
   ,
@@ -129,32 +107,96 @@ passport.use(new LinkedInStrategy
   )
 )
 
-passport.use(new GitHubStrategy
-  clientID: process.env.GITHUB_ID
-  clientSecret: process.env.GITHUB_SEC
-  callbackURL: url+"/social/githubcallback"
-, (accessToken, refreshToken, profile, done) ->
-  User.findOneAndUpdate(
-    "uid": profile.id
-    "provider": profile.provider
-  ,
-    name: profile.displayName
-    uid: profile.id
-    active: true
-    
-  ,
-    upsert: true
-  , (err, user) ->
-    if err? then return done err, null,
-      message: 'authorizationfailed',
-      data: '.',
-      message2: 'tryagain'
-    done null, user,
-      message: 'authorizationsuccess'
-      data: '.'
-      message2: 'welcome'
+#use twitter strategy
+if process.env.TT_APP_ID? and process.env.TT_APP_SEC?
+  passport.use(new TwitterStrategy
+    consumerKey: process.env.TT_APP_ID
+    consumerSecret: process.env.TT_APP_SEC
+    callbackURL: url+"/social/twittercallback"
+  , (token, tokenSecret, profile, done) ->
+    displayName = profile.displayName.split(" ")
+
+    User.findOneAndUpdate(
+      "uid": profile.id
+      "provider": profile.provider
+    ,
+      name: displayName[0]
+      surname: displayName[1]
+      uid: profile.id
+      active: true
+    ,
+      upsert: true
+    , (err, user) ->
+      if err? then return done err, null, 
+        message: 'authorizationfailed',
+        data: '.',
+        message2: 'tryagain'
+      done null, user,
+        message: 'authorizationsuccess'
+        data: '.'
+        message2: 'welcome'
+    )
   )
-)
+#use github strategy
+if process.env.GITHUB_ID? and process.env.GITHUB_SEC?   
+  passport.use(new GitHubStrategy
+    clientID: process.env.GITHUB_ID
+    clientSecret: process.env.GITHUB_SEC
+    callbackURL: url+"/social/githubcallback"
+  , (accessToken, refreshToken, profile, done) ->
+    User.findOneAndUpdate(
+      "uid": profile.id
+      "provider": profile.provider
+    ,
+      name: profile.displayName
+      uid: profile.id
+      active: true
+      
+    ,
+      upsert: true
+    , (err, user) ->
+      if err? then return done err, null,
+        message: 'authorizationfailed',
+        data: '.',
+        message2: 'tryagain'
+      done null, user,
+        message: 'authorizationsuccess'
+        data: '.'
+        message2: 'welcome'
+    )
+  )
+
+if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
+  #use linked-in strategy
+  passport.use(new LinkedInStrategy
+    consumerKey: process.env.LI_APP_ID
+    consumerSecret: process.env.LI_APP_SEC
+    callbackURL: url+"/social/linkedincallback"
+  , (accessToken, refreshToken, profile, done) ->
+    User.findOneAndUpdate(
+      "uid": profile.id
+      "provider": profile.provider
+    ,
+      name: profile.name.givenName
+      surname: profile.name.familyName
+      uid: profile.id
+      active: true
+      
+    ,
+      upsert: true
+    , (err, user) ->
+      if err? then return done err, null,
+        message: 'authorizationfailed',
+        data: '.',
+        message2: 'tryagain'
+      done null, user,
+        message: 'authorizationsuccess'
+        data: '.'
+        message2: 'welcome'
+    )
+  )
+
+
 #use yahoo strategy
 passport.use(new YahooStrategy
   returnURL: url+"/social/yahoocallback"
@@ -184,61 +226,38 @@ passport.use(new YahooStrategy
       message2: 'welcome'
   )
 )
-#use google strategy
-passport.use(new GoogleStrategy
-  returnURL: url+"/social/googlecallback"
-  realm: url
-, (identifier, profile, done) ->
-  User.findOneAndUpdate(
-    "uid": identifier
-    "provider": "google"
-  ,
-    name: profile.name.givenName
-    surname: profile.name.familyName
-    active: true
-    
-  ,
-    upsert: true
-  , (err, user) ->
-    if err? then return done err, null,
-      message: 'authorizationfailed',
-      data: '.',
-      message2: 'tryagain'
-    done null, user,
-      message: 'authorizationsuccess'
-      data: '.'
-      message2: 'welcome'
-  )
-)
-#use twitter strategy
-passport.use(new TwitterStrategy
-  consumerKey: process.env.TT_APP_ID
-  consumerSecret: process.env.TT_APP_SEC
-  callbackURL: url+"/social/twittercallback"
-, (token, tokenSecret, profile, done) ->
-  displayName = profile.displayName.split(" ")
 
-  User.findOneAndUpdate(
-    "uid": profile.id
-    "provider": profile.provider
-  ,
-    name: displayName[0]
-    surname: displayName[1]
-    uid: profile.id
-    active: true
-  ,
-    upsert: true
-  , (err, user) ->
-    if err? then return done err, null, 
-      message: 'authorizationfailed',
-      data: '.',
-      message2: 'tryagain'
-    done null, user,
-      message: 'authorizationsuccess'
-      data: '.'
-      message2: 'welcome'
+
+# use persona strategy
+passport.use(new PersonaStrategy
+  audience: url
+  , (email, done) ->
+    console.log("arguments in persona strategy");
+    console.log(arguments);
+    process.nextTick ->
+      User.findOneAndUpdate(
+        'provider': "persona"
+        'uid': email
+      ,
+        name: email
+        active: true
+      ,
+        upsert: true
+      , (err, user) ->
+        if err? then return done err, null, 
+          message: 'authorizationfailed',
+          data: '.',
+          message2: 'tryagain'
+        # user.save(err)->
+        #   console.log err if err
+        done null, user,
+          message: 'authorizationsuccess'
+          data: '.'
+          message2: 'welcome'
+      )
   )
-)
+
+
 # use local strategy
 passport.use new LocalStrategy(
   usernameField: "email",

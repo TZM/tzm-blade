@@ -40,8 +40,8 @@ UserSchema = new Schema(
   email:
     type: String
     required: true
-    index:
-      unique: true
+    # index:
+    #   unique: true
 
   password:
     type: String
@@ -49,15 +49,15 @@ UserSchema = new Schema(
 
   active:
     type: Boolean
-    require: true
+    required: true
     default: false
   name:
     type: String
-    require: false
+    required: false
     default: 'user'
   surname:
     type: String
-    require: false
+    required: false
     default: ''
   #groups: [UserGroupSchema]
   groups: # [guest, member, reviewer, admin]
@@ -76,17 +76,19 @@ UserSchema = new Schema(
 
   tokenString:
     type: String
+    
 
   tokenExpires:
     type: Number
+    
   
   provider:
     type: String
-    require: false
+    required: false
   
   uid:
     type: String
-    require: false
+    required: false
 )
 
 # expose enum on the model, and provide an internal convenience reference
@@ -109,6 +111,7 @@ UserSchema.pre "save", (next) ->
   user = this
   # only hash the password if it has been modified (or is new)
   return next()  unless user.isModified("password")
+  
   # generate a salt
   bcrypt.genSalt SALT_WORK_FACTOR, (err, salt) ->
     return next(err)  if err

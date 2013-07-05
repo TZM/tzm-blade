@@ -3,7 +3,7 @@ config = require "../config/config"
 config.setEnvironment process.env.NODE_ENV
 
 logger = require "./logger"
-mongoose = require "mongoose" 
+mongoose = require "mongoose"
 mongoose.set "debug", config.DEBUG_LOG
 
 logCategory = "DATABASE Connection"
