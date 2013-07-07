@@ -52,9 +52,9 @@ options =
   session_secret: "f2e5a67d388ff2090dj7Q2nC53pF"
   cookie:
     maxAge: 86400000 * 1 # 30 days 
-
+console.log options
 module.exports = (app) ->
-  multipleRedisSessions = require("connect-multi-redis")(app, express.session)
+  #multipleRedisSessions = require("connect-multi-redis")(app, express.session)
   logger.info "Configure expressjs", logCategory
   # FIXME use _.each to loop for each dirs and Gzip
   dirs = ["/assets", "/public", "/locales", "/data/topo"]
