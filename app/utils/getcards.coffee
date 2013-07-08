@@ -40,15 +40,6 @@ get = ()->
               # if chpter LOCALES not specified it sets to "en-EN"
               if card.desc.LOCALES
                 newcontacts.push card 
-          
-          # IS IT REALY NEEDED?
-          # connect socket
-          # io.sockets.on "connection", (socket) ->
-          #   console.log 'socket connected'
-          #   socket.emit "change",
-          #     message: "changed"
-          #     file: newcontacts
-          
           #try to read chapters.json
           try
             file = fs.readFileSync "./data/chapters.json"

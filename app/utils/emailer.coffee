@@ -29,8 +29,8 @@ class Emailer
   
   send: (callback)->
     # console.log @data
-    html = "follow this <a href=#{@data.link}>link</a><br> to reset your password<img class='cid:logo@zmgc.net'></img>" if @options.template is 'reset'
-    html = "follow this <a href=#{@data.link}>link</a><br> to verify your email anddress and create account<br><img class='cid:logo@zmgc.net'></img>" if @options.template is "activation"
+    html = "follow this link: <a href=#{@data.link}>#{@data.link}</a><br> to reset your password<img class='cid:logo@zmgc.net'></img>" if @options.template is 'reset'
+    html = "follow this link: <a href=#{@data.link}>#{@data.link}</a><br> to verify your email anddress and create account<br><img class='cid:logo@zmgc.net'></img>" if @options.template is "activation"
 
     #FIXME doesnt work getHtml() cannot put @data to template, unexpected token '=' at (<h3><%= pass %></h3>)
     #html = @getHtml(@options.template, @data)
