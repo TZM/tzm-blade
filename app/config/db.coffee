@@ -3,7 +3,7 @@ console.log boundServices
 DB_HOSTNAME = "localhost"
 DB_HOST = "127.0.0.1"
 MONGO_DB_PORT = 27017
-MONGO_DB_NAME = "zmgc-mongo"
+MONGO_DB_NAME = "db"
 MONGO_DB_URL = null
 MONGO_DB_USER = null
 MONGO_DB_PASS = null

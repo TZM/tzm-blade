@@ -52,12 +52,13 @@ options =
   session_secret: "f2e5a67d388ff2090dj7Q2nC53pF"
   cookie:
     maxAge: 86400000 * 1 # 30 days 
-console.log options
+#console.log options.hosts
 module.exports = (app) ->
   #multipleRedisSessions = require("connect-multi-redis")(app, express.session)
   logger.info "Configure expressjs", logCategory
   # FIXME use _.each to loop for each dirs and Gzip
-  dirs = ["/assets", "/public", "/locales", "/data/topo"]
+  #dirs = ["/assets", "/public", "/locales", "/data/topo"]
+
   app.configure ->
       app.use assets(build : true)
       jsPaths assets, console.log
@@ -72,6 +73,7 @@ module.exports = (app) ->
             dumpException: true
             showStack: true
       ))
+      #app.use express.static(process.cwd() + folder, maxAge:maxAges) for folder in ["/assets", "/public", "/locales", "/data/topo"]
   #  Add template engine
   app.configure ->
     @set("views", process.cwd() + "/views")
@@ -107,7 +109,7 @@ module.exports = (app) ->
     @use(express.bodyParser())
     .use(express.methodOverride())
     .use(express.cookieParser('90dj7Q2nC53pFj2b0fa81a3f663fd64'))
-    .use(multipleRedisSessions(options))
+    #.use(multipleRedisSessions(options))
     .use(express.session(
       key: 'zmgc-connect.sid'
       store: options.hosts[0]
