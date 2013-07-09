@@ -61,23 +61,40 @@ if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
     callbackURL: url+"/social/facebookcallback"
     , (accessToken, refreshToken, profile, done) ->
       process.nextTick ->
+        console.log("arguments in facebook strategy");
+        console.log(arguments);
         User.findOneAndUpdate(
           'provider': profile.provider
           'uid': profile.id
         ,
           name: profile.displayName
           active: true
-        ,
-          upsert: true
         , (err, user) ->
           if err? then return done err, null, 
             message: 'authorizationfailed',
             data: '.',
             message2: 'tryagain'
-          done null, user,
-            message: 'authorizationsuccess'
-            data: '.'
-            message2: 'welcome'
+          unless user
+            User.create(
+              'provider': profile.provider
+              'uid': profile.id
+              'name': profile.displayName
+              'active': true
+            , (err,newUser)->
+              if err? then return done err, null, 
+                message: 'authorizationfailed',
+                data: '.',
+                message2: 'tryagain'
+              done null, newUser,
+                message: 'authorizationsuccess'
+                data: '.'
+                message2: 'welcome'
+            )
+          else
+            done null, user,
+              message: 'authorizationsuccess'
+              data: '.'
+              message2: 'welcome'
         )
     )
 #use google strategy
@@ -85,25 +102,38 @@ passport.use(new GoogleStrategy
   returnURL: url+"/social/googlecallback"
   realm: url
 , (identifier, profile, done) ->
-  User.findOneAndUpdate(
+  console.log("arguments in google strategy");
+  console.log(arguments);
+  User.findOne(
     "uid": identifier
     "provider": "google"
-  ,
-    name: profile.name.givenName
-    surname: profile.name.familyName
-    active: true
-    
-  ,
-    upsert: true
   , (err, user) ->
     if err? then return done err, null,
       message: 'authorizationfailed',
       data: '.',
       message2: 'tryagain'
-    done null, user,
-      message: 'authorizationsuccess'
-      data: '.'
-      message2: 'welcome'
+    unless user
+      User.create(
+        "uid": identifier
+        "provider": "google"
+        "name": profile.name.givenName
+        "surname": profile.name.familyName
+        "active": true
+      , (err,newUser)->
+        if err? then return done err, null, 
+          message: 'authorizationfailed',
+          data: '.',
+          message2: 'tryagain'
+        done null, newUser,
+          message: 'authorizationsuccess'
+          data: '.'
+          message2: 'welcome'
+      )
+    else
+      done null, user,
+        message: 'authorizationsuccess'
+        data: '.'
+        message2: 'welcome'
   )
 )
 
@@ -114,27 +144,40 @@ if process.env.TT_APP_ID? and process.env.TT_APP_SEC?
     consumerSecret: process.env.TT_APP_SEC
     callbackURL: url+"/social/twittercallback"
   , (token, tokenSecret, profile, done) ->
+    console.log("arguments in twitter strategy");
+    console.log(arguments);
     displayName = profile.displayName.split(" ")
 
-    User.findOneAndUpdate(
+    User.findOne(
       "uid": profile.id
       "provider": profile.provider
-    ,
-      name: displayName[0]
-      surname: displayName[1]
-      uid: profile.id
-      active: true
-    ,
-      upsert: true
     , (err, user) ->
       if err? then return done err, null, 
         message: 'authorizationfailed',
         data: '.',
         message2: 'tryagain'
-      done null, user,
-        message: 'authorizationsuccess'
-        data: '.'
-        message2: 'welcome'
+      unless user
+        User.create(
+          "uid": profile.id
+          "provider": profile.provider
+          "name": displayName[0]
+          "surname": displayName[1]
+          "active": true
+        , (err,newUser)->
+          if err? then return done err, null, 
+            message: 'authorizationfailed',
+            data: '.',
+            message2: 'tryagain'
+          done null, newUser,
+            message: 'authorizationsuccess'
+            data: '.'
+            message2: 'welcome'
+        )
+      else
+        done null, user,
+          message: 'authorizationsuccess'
+          data: '.'
+          message2: 'welcome'
     )
   )
 #use github strategy
@@ -144,25 +187,41 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
     clientSecret: process.env.GITHUB_SEC
     callbackURL: url+"/social/githubcallback"
   , (accessToken, refreshToken, profile, done) ->
-    User.findOneAndUpdate(
+    console.log("arguments in github strategy");
+    console.log(arguments);
+    User.findOne(
       "uid": profile.id
       "provider": profile.provider
-    ,
-      name: profile.displayName
-      uid: profile.id
-      active: true
-      
-    ,
-      upsert: true
     , (err, user) ->
+      console.log("user arguments at github strategy");
+      console.log(arguments);
       if err? then return done err, null,
         message: 'authorizationfailed',
         data: '.',
         message2: 'tryagain'
-      done null, user,
-        message: 'authorizationsuccess'
-        data: '.'
-        message2: 'welcome'
+      unless user
+        User.create(
+          "uid": profile.id
+          "provider": profile.provider
+          "name": profile.displayName
+          "surname": ""
+          "active": true
+        , (err,newUser)->
+
+          if err? then return done err, null, 
+            message: 'authorizationfailed',
+            data: '.',
+            message2: 'tryagain'
+          done null, newUser,
+            message: 'authorizationsuccess'
+            data: '.'
+            message2: 'welcome'
+        )
+      else
+        done null, user,
+          message: 'authorizationsuccess'
+          data: '.'
+          message2: 'welcome'
     )
   )
 
@@ -173,26 +232,38 @@ if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
     consumerSecret: process.env.LI_APP_SEC
     callbackURL: url+"/social/linkedincallback"
   , (accessToken, refreshToken, profile, done) ->
-    User.findOneAndUpdate(
+    console.log("arguments in linkedin strategy");
+    console.log(arguments);
+    User.findOne(
       "uid": profile.id
       "provider": profile.provider
-    ,
-      name: profile.name.givenName
-      surname: profile.name.familyName
-      uid: profile.id
-      active: true
-      
-    ,
-      upsert: true
     , (err, user) ->
       if err? then return done err, null,
         message: 'authorizationfailed',
         data: '.',
         message2: 'tryagain'
-      done null, user,
-        message: 'authorizationsuccess'
-        data: '.'
-        message2: 'welcome'
+      unless user
+        User.create(
+          "uid": profile.id
+          "provider": profile.provider
+          "name": profile.name.givenName
+          "surname": profile.name.familyName
+          "active": true
+        , (err,newUser)->
+          if err? then return done err, null, 
+            message: 'authorizationfailed',
+            data: '.',
+            message2: 'tryagain'
+          done null, newUser,
+            message: 'authorizationsuccess'
+            data: '.'
+            message2: 'welcome'
+        )
+      else
+        done null, user,
+          message: 'authorizationsuccess'
+          data: '.'
+          message2: 'welcome'
     )
   )
 
@@ -204,26 +275,39 @@ passport.use(new YahooStrategy
 , (identifier, profile, done) ->
   # for mail in profile.emails
   #   emails.push mail.value
+  console.log("arguments in yahoo strategy");
+  console.log(arguments);
   displayName = profile.displayName.split(" ")
-  User.findOneAndUpdate(
+  User.findOne(
     "uid": identifier
     "provider": "yahoo"
-  ,
-    name: displayName[0]
-    surname: displayName[1]
-    active: true
-    
-  ,
-    upsert: true
   , (err, user) ->
     if err? then return done err, null,
       message: 'authorizationfailed',
       data: '.',
       message2: 'tryagain'
-    done null, user,
-      message: 'authorizationsuccess'
-      data: '.'
-      message2: 'welcome'
+    unless user
+      User.create(
+        "uid": identifier
+        "provider": "yahoo"
+        "name": displayName[0]
+        "surname": displayName[1]
+        "active": true
+      , (err,newUser)->
+        if err? then return done err, null, 
+          message: 'authorizationfailed',
+          data: '.',
+          message2: 'tryagain'
+        done null, newUser,
+          message: 'authorizationsuccess'
+          data: '.'
+          message2: 'welcome'
+      )
+    else
+      done null, user,
+        message: 'authorizationsuccess'
+        data: '.'
+        message2: 'welcome'
   )
 )
 
@@ -238,22 +322,33 @@ passport.use(new PersonaStrategy
       User.findOneAndUpdate(
         'provider': "persona"
         'uid': email
-      ,
-        name: email
-        active: true
-      ,
-        upsert: true
+      
       , (err, user) ->
         if err? then return done err, null, 
           message: 'authorizationfailed',
           data: '.',
           message2: 'tryagain'
-        # user.save(err)->
-        #   console.log err if err
-        done null, user,
-          message: 'authorizationsuccess'
-          data: '.'
-          message2: 'welcome'
+        unless user
+          User.create(
+            "uid": email
+            "provider": "persona"
+            "name": email
+            "active": true
+          , (err,newUser)->
+            if err? then return done err, null, 
+              message: 'authorizationfailed',
+              data: '.',
+              message2: 'tryagain'
+            done null, newUser,
+              message: 'authorizationsuccess'
+              data: '.'
+              message2: 'welcome'
+          )
+        else
+          done null, user,
+            message: 'authorizationsuccess'
+            data: '.'
+            message2: 'welcome'
       )
   )
 
