@@ -29,6 +29,7 @@ switch (process.env.NODE_ENV)
 console.log 'passport'
 
 emails = []
+
 # serialize sessions
 passport.serializeUser (user, done) ->
   console.log 'serialize user'
@@ -54,6 +55,8 @@ passport.deserializeUser (id, done) ->
 
 console.log(url+"/social/facebookcallback")
 
+
+#not sure about facebook
 if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
   passport.use(new FacebookStrategy
     clientID: process.env.FB_APP_ID
@@ -63,7 +66,7 @@ if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
       process.nextTick ->
         console.log("arguments in facebook strategy");
         console.log(arguments);
-        User.findOneAndUpdate(
+        User.findOne(
           'provider': profile.provider
           'uid': profile.id
         ,
@@ -98,14 +101,17 @@ if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
         )
     )
 #use google strategy
+#google returns email in array profile.emails[]
 passport.use(new GoogleStrategy
   returnURL: url+"/social/googlecallback"
   realm: url
-, (identifier, profile, done) ->
-  console.log("arguments in google strategy");
-  console.log(arguments);
+, (token, profile, done) ->
+  # console.log("arguments in google strategy");
+  # console.log(arguments);
+  for mail in profile.emails
+    emails.push mail.value
   User.findOne(
-    "uid": identifier
+    "uid": {$in: emails}
     "provider": "google"
   , (err, user) ->
     if err? then return done err, null,
@@ -114,7 +120,7 @@ passport.use(new GoogleStrategy
       message2: 'tryagain'
     unless user
       User.create(
-        "uid": identifier
+        "uid": emails[0]
         "provider": "google"
         "name": profile.name.givenName
         "surname": profile.name.familyName
@@ -138,16 +144,16 @@ passport.use(new GoogleStrategy
 )
 
 #use twitter strategy
+# Twitter doed not return user's email!
 if process.env.TT_APP_ID? and process.env.TT_APP_SEC?
   passport.use(new TwitterStrategy
     consumerKey: process.env.TT_APP_ID
     consumerSecret: process.env.TT_APP_SEC
     callbackURL: url+"/social/twittercallback"
   , (token, tokenSecret, profile, done) ->
-    console.log("arguments in twitter strategy");
-    console.log(arguments);
+    # console.log("arguments in twitter strategy");
+    # console.log(arguments);
     displayName = profile.displayName.split(" ")
-
     User.findOne(
       "uid": profile.id
       "provider": profile.provider
@@ -181,14 +187,15 @@ if process.env.TT_APP_ID? and process.env.TT_APP_SEC?
     )
   )
 #use github strategy
+#gitgub returs email in profile.emails[]
 if process.env.GITHUB_ID? and process.env.GITHUB_SEC?   
   passport.use(new GitHubStrategy
     clientID: process.env.GITHUB_ID
     clientSecret: process.env.GITHUB_SEC
     callbackURL: url+"/social/githubcallback"
   , (accessToken, refreshToken, profile, done) ->
-    console.log("arguments in github strategy");
-    console.log(arguments);
+    # console.log("arguments in github strategy");
+    # console.log(arguments);
     User.findOne(
       "uid": profile.id
       "provider": profile.provider
@@ -232,8 +239,8 @@ if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
     consumerSecret: process.env.LI_APP_SEC
     callbackURL: url+"/social/linkedincallback"
   , (accessToken, refreshToken, profile, done) ->
-    console.log("arguments in linkedin strategy");
-    console.log(arguments);
+    # # console.log("arguments in linkedin strategy");
+    # console.log(arguments);
     User.findOne(
       "uid": profile.id
       "provider": profile.provider
@@ -273,13 +280,13 @@ passport.use(new YahooStrategy
   returnURL: url+"/social/yahoocallback"
   realm: url
 , (identifier, profile, done) ->
-  # for mail in profile.emails
-  #   emails.push mail.value
-  console.log("arguments in yahoo strategy");
-  console.log(arguments);
+  for mail in profile.emails
+    emails.push mail.value
+  # console.log("arguments in yahoo strategy");
+  # console.log(arguments);
   displayName = profile.displayName.split(" ")
   User.findOne(
-    "uid": identifier
+    "uid": {$in: emails}
     "provider": "yahoo"
   , (err, user) ->
     if err? then return done err, null,
@@ -288,7 +295,7 @@ passport.use(new YahooStrategy
       message2: 'tryagain'
     unless user
       User.create(
-        "uid": identifier
+        "uid": emails[0]
         "provider": "yahoo"
         "name": displayName[0]
         "surname": displayName[1]
@@ -316,13 +323,12 @@ passport.use(new YahooStrategy
 passport.use(new PersonaStrategy
   audience: url
   , (email, done) ->
-    console.log("arguments in persona strategy");
-    console.log(arguments);
+    # console.log("arguments in persona strategy");
+    # console.log(arguments);
     process.nextTick ->
-      User.findOneAndUpdate(
+      User.findOne(
         'provider': "persona"
         'uid': email
-      
       , (err, user) ->
         if err? then return done err, null, 
           message: 'authorizationfailed',
