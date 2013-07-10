@@ -6,6 +6,7 @@ validation = require("../utils/validation")
 messages = require "../utils/messages"
 Emailer = require ("../utils/emailer")
 passport = require("passport")
+config.setEnvironment app.settings.env
 
 validationEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
 
