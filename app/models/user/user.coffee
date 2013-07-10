@@ -39,17 +39,17 @@ Schema = mongoose.Schema
 UserSchema = new Schema(
   email:
     type: String
-    required: true
+    
     # index:
     #   unique: true
 
   password:
     type: String
-    required: true
+    
 
   active:
     type: Boolean
-    required: true
+    
     default: false
   name:
     type: String
@@ -67,7 +67,6 @@ UserSchema = new Schema(
   
   loginAttempts:
     type: Number
-    required: true
     default: 0
 
   lockUntil:
