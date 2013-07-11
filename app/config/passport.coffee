@@ -106,8 +106,8 @@ passport.use(new GoogleStrategy
   returnURL: url+"/social/googlecallback"
   realm: url
 , (token, profile, done) ->
-  # console.log("arguments in google strategy");
-  # console.log(arguments);
+  console.log("arguments in google strategy");
+  console.log(arguments);
   for mail in profile.emails
     emails.push mail.value
   User.findOne(
@@ -151,8 +151,8 @@ if process.env.TT_APP_ID? and process.env.TT_APP_SEC?
     consumerSecret: process.env.TT_APP_SEC
     callbackURL: url+"/social/twittercallback"
   , (token, tokenSecret, profile, done) ->
-    # console.log("arguments in twitter strategy");
-    # console.log(arguments);
+    console.log("arguments in twitter strategy");
+    console.log(arguments);
     displayName = profile.displayName.split(" ")
     User.findOne(
       "uid": profile.id
@@ -194,8 +194,8 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
     clientSecret: process.env.GITHUB_SEC
     callbackURL: url+"/social/githubcallback"
   , (accessToken, refreshToken, profile, done) ->
-    # console.log("arguments in github strategy");
-    # console.log(arguments);
+    console.log("arguments in github strategy");
+    console.log(arguments);
     User.findOne(
       "uid": profile.id
       "provider": profile.provider
@@ -207,10 +207,15 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
         data: '.',
         message2: 'tryagain'
       unless user
+        Name = ''
+        if profile.displayName?
+          Name = profile.displayName
+        else 
+          Name = profile.username
         User.create(
           "uid": profile.id
           "provider": profile.provider
-          "name": profile.displayName
+          "name": Name
           "surname": ""
           "active": true
         , (err,newUser)->
@@ -232,6 +237,7 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
     )
   )
 
+#linked-in does not returns email
 if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
   #use linked-in strategy
   passport.use(new LinkedInStrategy
@@ -239,8 +245,8 @@ if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
     consumerSecret: process.env.LI_APP_SEC
     callbackURL: url+"/social/linkedincallback"
   , (accessToken, refreshToken, profile, done) ->
-    # # console.log("arguments in linkedin strategy");
-    # console.log(arguments);
+    console.log("arguments in linkedin strategy");
+    console.log(arguments);
     User.findOne(
       "uid": profile.id
       "provider": profile.provider
@@ -276,14 +282,15 @@ if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
 
 
 #use yahoo strategy
+#Yahoo returns users emal
 passport.use(new YahooStrategy
   returnURL: url+"/social/yahoocallback"
   realm: url
 , (identifier, profile, done) ->
   for mail in profile.emails
     emails.push mail.value
-  # console.log("arguments in yahoo strategy");
-  # console.log(arguments);
+  console.log("arguments in yahoo strategy");
+  console.log(arguments);
   displayName = profile.displayName.split(" ")
   User.findOne(
     "uid": {$in: emails}
@@ -320,6 +327,7 @@ passport.use(new YahooStrategy
 
 
 # use persona strategy
+# Persona returns only email
 passport.use(new PersonaStrategy
   audience: url
   , (email, done) ->
