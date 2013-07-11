@@ -237,13 +237,22 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
     )
   )
 
-#linked-in does not returns email
+#linked-in 
+# profile:
+#   provider: 
+#   id: 
+#   displayName: 
+#   name: 
+#     familyName: 
+#     givenName: 
+#   emails: [ [Object] ]
 if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
   #use linked-in strategy
   passport.use(new LinkedInStrategy
     consumerKey: process.env.LI_APP_ID
     consumerSecret: process.env.LI_APP_SEC
     callbackURL: url+"/social/linkedincallback"
+    profileFields: ['id', 'first-name', 'last-name', 'email-address', 'headline']
   , (accessToken, refreshToken, profile, done) ->
     console.log("arguments in linkedin strategy");
     console.log(arguments);
