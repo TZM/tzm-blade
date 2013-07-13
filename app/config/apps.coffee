@@ -1,6 +1,6 @@
 #Load dependencies
 express = require "express"
-# csrf = express.csrf()
+csrf = express.csrf()
 assets = require "connect-assets"
 jsPaths = require "connect-assets-jspaths"
 flash = require "connect-flash"
@@ -54,7 +54,6 @@ options =
     maxAge: 86400000 * 1 # 30 days 
 #console.log options.hosts
 module.exports = (app) ->
-  #multipleRedisSessions = require("connect-multi-redis")(app, express.session)
   logger.info "Configure expressjs", logCategory
   # FIXME use _.each to loop for each dirs and Gzip
   #dirs = ["/assets", "/public", "/locales", "/data/topo"]
@@ -103,13 +102,13 @@ module.exports = (app) ->
 
   # arr = [];
   
-
+  multipleRedisSessions = require("connect-multi-redis")(app, express.session)
   # Set sessions and middleware
   app.configure ->
     @use(express.bodyParser())
     .use(express.methodOverride())
     .use(express.cookieParser('90dj7Q2nC53pFj2b0fa81a3f663fd64'))
-    #.use(multipleRedisSessions(options))
+    .use(multipleRedisSessions(options))
     .use(express.session(
       key: 'zmgc-connect.sid'
       store: options.hosts[0]
