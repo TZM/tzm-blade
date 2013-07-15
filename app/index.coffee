@@ -31,7 +31,7 @@ app.configure ->
 #   app.use(passport.initialize())
 #   app.use(passport.session())
 #   app.use(require "./config/passport")
-
+app.settings.env = process.env.NODE_ENV if process.env.NODE_ENV
 app.configure "production", "development", "test", ->
   config.setEnvironment app.settings.env
   console.log 'environment is: ', app.settings.env

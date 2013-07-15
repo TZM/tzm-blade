@@ -42,6 +42,7 @@ header
                                     span!=t("ns.layout:footer.profile")
                                     b.caret
                                 .dropdown-menu.well.pull-right(background-color="gray")
+                                    input(type='hidden', name='user', value=user.name)
                                     b.pull-right=user.name +" "+ user.surname                                    
                                     br
                                     include "forms/profile-form.blade"

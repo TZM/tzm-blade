@@ -30,7 +30,7 @@ logCategory = "CONFIGURE"
 maxAges = 86400000 * 30
 
 config = require "../config/config"
-config.setEnvironment process.env.NODE_ENV
+config.setEnvironment process.env.NODE_ENV or "development"
 
 # Redis session stores
 options =

@@ -1,5 +1,4 @@
 getCards = require "./utils/getcards"
-ioModule = require("socket.io")
 config = require "./config/config"
 
 
