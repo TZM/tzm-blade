@@ -1,5 +1,5 @@
 jQuery(function($) {
-  console.log($());
+  
   var user = $('[name="user"]').val();
   var csrf = $('[name="_csrf"]').val()
   
