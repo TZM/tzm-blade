@@ -52,6 +52,7 @@ Route =
       password = randomPassword(26)
       req.body.password = password if !req.body.password 
       req.body.email = req.body.email.toLowerCase()
+      req.body.provider = ["local"]
       if validationEmail.test(req.body.email)
         # check if user email exists
         User.findOne { email:req.body.email }, (err,user) ->

@@ -17,8 +17,8 @@ fs = require "fs"
 thirdParty = ["google","yahoo","persona"]
 if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
   thirdParty.push("facebook")
-if process.env.TT_APP_ID? and process.env.TT_APP_SEC?
-  thirdParty.push("twitter")
+# if process.env.TT_APP_ID? and process.env.TT_APP_SEC?
+#   thirdParty.push("twitter")
 if process.env.GITHUB_ID? and process.env.GITHUB_SEC? 
   thirdParty.push("github")
 if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
@@ -65,6 +65,7 @@ module.exports = (app) ->
       .use(express.compress())
       .use(express.static(process.cwd() + "/assets", {maxAge:maxAges}))
       .use(express.static(process.cwd() + "/public", {maxAge:maxAges}))
+      .use(express.static(process.cwd() + "/js", {maxAge:maxAges}))
       .use(express.static(process.cwd() + "/locales", {maxAge:maxAges}))
       .use(express.static(process.cwd() + "/data/topo", {maxAge:maxAges}))
       .use(express.logger('dev'))
