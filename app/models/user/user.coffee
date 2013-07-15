@@ -39,9 +39,9 @@ Schema = mongoose.Schema
 UserSchema = new Schema(
   email:
     type: String
-    
+    unique: true
     # index:
-    #   unique: true
+     
 
   password:
     type: String
@@ -82,12 +82,10 @@ UserSchema = new Schema(
     
   
   provider:
-    type: String
+    type: Array
+    enum: ["facebook", "google", "yahoo", "local", "github", "persona", "linkedin", "twitter"]
     required: false
-  
-  uid:
-    type: String
-    required: false
+    default: "local"
 )
 
 # expose enum on the model, and provide an internal convenience reference
@@ -127,6 +125,7 @@ UserSchema.pre "save", (next) ->
         user.tokenString = base64url(buf)
         user.tokenExpires = Date.now() + TOKEN_TIME
         next()
+
 
 # Password verfication
 UserSchema.methods.comparePassword = (userPassword, cb) ->

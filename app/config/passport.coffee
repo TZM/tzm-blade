@@ -28,7 +28,7 @@ switch (process.env.NODE_ENV)
 
 console.log 'passport'
 
-emails = []
+
 
 # serialize sessions
 passport.serializeUser (user, done) ->
@@ -64,14 +64,17 @@ if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
     callbackURL: url+"/social/facebookcallback"
     , (accessToken, refreshToken, profile, done) ->
       process.nextTick ->
+         emails = []
+        for mail in profile.emails
+          emails.push mail.value
         console.log("arguments in facebook strategy");
         console.log(arguments);
-        User.findOne(
-          'provider': profile.provider
-          'uid': profile.id
+        User.findOneAndUpdate(
+          'email': 
+            $in: emails
         ,
-          name: profile.displayName
-          active: true
+          $addToSet:
+            'provider': profile.provider
         , (err, user) ->
           if err? then return done err, null, 
             message: 'authorizationfailed',
@@ -80,7 +83,7 @@ if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
           unless user
             User.create(
               'provider': profile.provider
-              'uid': profile.id
+              'email': emails[0]
               'name': profile.displayName
               'active': true
               "groups": "member"
@@ -108,21 +111,25 @@ passport.use(new GoogleStrategy
   realm: url
 , (token, profile, done) ->
   console.log("arguments in google strategy");
+  console.log(profile.emails);
   console.log(arguments);
+  emails = []
   for mail in profile.emails
     emails.push mail.value
-  User.findOne(
-    "uid": {$in: emails}
-    "provider": "google"
-  , (err, user) ->
+  User.findOneAndUpdate(
+    "email": {$in: emails}
+  ,
+    $addToSet:
+      "provider": "google" 
+  ,(err, user) ->
     if err? then return done err, null,
       message: 'authorizationfailed',
       data: '.',
       message2: 'tryagain'
     unless user
       User.create(
-        "uid": emails[0]
-        "provider": "google"
+        "email": emails[0]
+        "provider": ["google"]
         "name": profile.name.givenName
         "surname": profile.name.familyName
         "active": true
@@ -138,57 +145,62 @@ passport.use(new GoogleStrategy
           message2: 'welcome'
       )
     else
-      done null, user,
-        message: 'authorizationsuccess'
-        data: '.'
-        message2: 'welcome'
+      unless err
+        if err? then return done err, null, 
+          message: 'authorizationfailed',
+          data: '.',
+          message2: 'tryagain'
+        done null, user,
+          message: 'authorizationsuccess'
+          data: '.'
+          message2: 'welcome'
   )
 )
 
 #use twitter strategy
 # Twitter doed not return user's email!
-if process.env.TT_APP_ID? and process.env.TT_APP_SEC?
-  passport.use(new TwitterStrategy
-    consumerKey: process.env.TT_APP_ID
-    consumerSecret: process.env.TT_APP_SEC
-    callbackURL: url+"/social/twittercallback"
-  , (token, tokenSecret, profile, done) ->
-    console.log("arguments in twitter strategy");
-    console.log(arguments);
-    displayName = profile.displayName.split(" ")
-    User.findOne(
-      "uid": profile.id
-      "provider": profile.provider
-    , (err, user) ->
-      if err? then return done err, null, 
-        message: 'authorizationfailed',
-        data: '.',
-        message2: 'tryagain'
-      unless user
-        User.create(
-          "uid": profile.id
-          "provider": profile.provider
-          "name": displayName[0]
-          "surname": displayName[1]
-          "active": true
-          "groups": "member"
-        , (err,newUser)->
-          if err? then return done err, null, 
-            message: 'authorizationfailed',
-            data: '.',
-            message2: 'tryagain'
-          done null, newUser,
-            message: 'authorizationsuccess'
-            data: '.'
-            message2: 'welcome'
-        )
-      else
-        done null, user,
-          message: 'authorizationsuccess'
-          data: '.'
-          message2: 'welcome'
-    )
-  )
+# if process.env.TT_APP_ID? and process.env.TT_APP_SEC?
+#   passport.use(new TwitterStrategy
+#     consumerKey: process.env.TT_APP_ID
+#     consumerSecret: process.env.TT_APP_SEC
+#     callbackURL: url+"/social/twittercallback"
+#   , (token, tokenSecret, profile, done) ->
+#     console.log("arguments in twitter strategy");
+#     console.log(arguments);
+#     displayName = profile.displayName.split(" ")
+#     User.findOneAndUpdate(
+#       "uid": profile.id
+#       "provider": profile.provider
+#     , (err, user) ->
+#       if err? then return done err, null, 
+#         message: 'authorizationfailed',
+#         data: '.',
+#         message2: 'tryagain'
+#       unless user
+#         User.create(
+#           "uid": profile.id
+#           "provider": profile.provider
+#           "name": displayName[0]
+#           "surname": displayName[1]
+#           "active": true
+#           "groups": "member"
+#         , (err,newUser)->
+#           if err? then return done err, null, 
+#             message: 'authorizationfailed',
+#             data: '.',
+#             message2: 'tryagain'
+#           done null, newUser,
+#             message: 'authorizationsuccess'
+#             data: '.'
+#             message2: 'welcome'
+#         )
+#       else
+#         done null, user,
+#           message: 'authorizationsuccess'
+#           data: '.'
+#           message2: 'welcome'
+#     )
+#   )
 #use github strategy
 #gitgub returs email in profile.emails[]
 if process.env.GITHUB_ID? and process.env.GITHUB_SEC?   
@@ -198,10 +210,20 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
     callbackURL: url+"/social/githubcallback"
   , (accessToken, refreshToken, profile, done) ->
     console.log("arguments in github strategy");
+    console.log("profile.emails", profile.emails);
+    console.log(profile.emails[0].value);
     console.log(arguments);
-    User.findOne(
-      "uid": profile.id
-      "provider": profile.provider
+    emails = []
+    for mail in profile.emails
+      emails.push mail.value
+    if !emails[0]
+      emails[0] = profile.id
+    User.findOneAndUpdate(
+      "email": 
+        $in: emails
+    ,  
+      $addToSet:
+        "provider": profile.provider
     , (err, user) ->
       console.log("user arguments at github strategy");
       console.log(arguments);
@@ -216,8 +238,8 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
         else 
           Name = profile.username
         User.create(
-          "uid": profile.id
-          "provider": profile.provider
+          "email": emails[0]
+          "provider": [profile.provider]
           "name": Name
           "surname": ""
           "active": true
@@ -260,9 +282,18 @@ if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
   , (accessToken, refreshToken, profile, done) ->
     console.log("arguments in linkedin strategy");
     console.log(arguments);
-    User.findOne(
-      "uid": profile.id
-      "provider": profile.provider
+    console.log(profile.emails);
+    emails = []
+    for mail in profile.emails
+      emails.push mail.value
+    if !emails[0]
+      emails[0] = profile.id
+    User.findOneAndUpdate(
+      "email": 
+        $in: emails
+    ,  
+      $addToSet:
+        "provider": profile.provider
     , (err, user) ->
       if err? then return done err, null,
         message: 'authorizationfailed',
@@ -270,10 +301,10 @@ if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
         message2: 'tryagain'
       unless user
         User.create(
-          "uid": profile.id
-          "provider": profile.provider
-          "name": profile.name.givenName
-          "surname": profile.name.familyName
+          "email": emails[0]
+          "provider": ["linkedin"]
+          "name": profile.name.givenName if profile.name.givenName
+          "surname": profile.name.familyName if profile.name.familyName
           "active": true
           "groups": "member"
         , (err,newUser)->
@@ -301,14 +332,18 @@ passport.use(new YahooStrategy
   returnURL: url+"/social/yahoocallback"
   realm: url
 , (identifier, profile, done) ->
+  emails = []
   for mail in profile.emails
     emails.push mail.value
   console.log("arguments in yahoo strategy");
+  console.log(profile.emails);
   console.log(arguments);
   displayName = profile.displayName.split(" ")
-  User.findOne(
-    "uid": {$in: emails}
-    "provider": "yahoo"
+  User.findOneAndUpdate(
+    "emails": {$in: emails}
+  , 
+    $addToSet:
+      "provider": "yahoo"
   , (err, user) ->
     if err? then return done err, null,
       message: 'authorizationfailed',
@@ -316,8 +351,8 @@ passport.use(new YahooStrategy
       message2: 'tryagain'
     unless user
       User.create(
-        "uid": emails[0]
-        "provider": "yahoo"
+        "email": emails[0]
+        "provider": ["yahoo"]
         "name": displayName[0]
         "surname": displayName[1]
         "active": true
@@ -349,9 +384,11 @@ passport.use(new PersonaStrategy
     # console.log("arguments in persona strategy");
     # console.log(arguments);
     process.nextTick ->
-      User.findOne(
-        'provider': "persona"
-        'uid': email
+      User.findOneAndUpdate(
+        'email': email
+      ,
+        $addToSet:
+          'provider': "persona"
       , (err, user) ->
         if err? then return done err, null, 
           message: 'authorizationfailed',
@@ -359,7 +396,7 @@ passport.use(new PersonaStrategy
           message2: 'tryagain'
         unless user
           User.create(
-            "uid": email
+            "email": email
             "provider": "persona"
             "name": email
             "active": true

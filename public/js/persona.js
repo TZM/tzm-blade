@@ -1,5 +1,5 @@
 jQuery(function($) {
-  
+
   var user = $('[name="user"]').val();
   var csrf = $('[name="_csrf"]').val()
   
@@ -7,12 +7,13 @@ jQuery(function($) {
     navigator.id.watch({
       loggedInUser: user,
       onlogin: function(assertion) {
-        if (user) return;
+          if (user) return;
           $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
             type: 'POST',
             url: '/social/persona', // This is a URL on your website.
             data: {assertion: assertion, _csrf: csrf},
             success: function(res, status, xhr) { 
+              
               window.location.reload(); },
             error: function(xhr, status, err) {
               navigator.id.logout();
@@ -21,19 +22,16 @@ jQuery(function($) {
           });
         
       },
-      onlogout: function() {
+      onlogout: function(assertion) {
         if (!user) return;
-        $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
-            type: 'get',
-            url: '/logout', // This is a URL on your website.
-            success: function(res, status, xhr) { 
-              window.location.reload() 
-            },
-            error: function(xhr, status, err) { 
-              alert("Logout failure: " + err) 
-            }
-          });
+        var signoutLink = document.getElementById('logout');
+        if (signoutLink){
+          signoutLink.onclick = function() {
+            window.location.href = "/logout"
+          }
+          
         }
+      }
     })
   }
 
@@ -41,9 +39,11 @@ jQuery(function($) {
   var signinLink = document.getElementById('persona');
   if (signinLink) {
     signinLink.onclick = function() {
+      console.log("button pressed");
       navigator.id.request(); }
+  }else{
+    "button not defined"
   }
-
   var signoutLink = document.getElementById('logout');
   if (signoutLink) {
     signoutLink.onclick = function() { navigator.id.logout(); };
