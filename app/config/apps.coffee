@@ -104,14 +104,22 @@ module.exports = (app) ->
       require ('./passport.coffee')
       app.set "languages", require(process.cwd() + "/locales/config.json")
       app.set "translation", require(process.cwd() + "/locales/dev/translation.json")
-      # app.set "chapters", require(process.cwd() + "/data/chapters.json")
+      app.set "chapters", require(process.cwd() + "/data/chapters.json")
       fs.readdir "./locales", (err,locales) ->
         #console.log locales
-        results = []
-        __.reject locales, (value, index, list) ->
-          console.log value, index, list
-          results.push value
-        console.log results
+        #results = []
+        EXCLUDE = [ 'dev', 'README.md', 'config.json' ]
+        languages = {}
+        results = __.reject locales, (value, index, list) ->
+          return EXCLUDE.indexOf(value) != -1
+        locales = __.each results, (value, index, list) ->
+          locale = value.split("-")[0]
+          #console.log locale
+          language = cldr.extractLanguageDisplayNames(locale)[locale]
+          #console.log language
+          #languages.locale = language
+          #languages.push[{locale: language}]
+        console.log languages
     catch e
       logger.warn "files not found " + e, logCategory
       require ('./passport.coffee')
