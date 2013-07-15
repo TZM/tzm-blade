@@ -7,9 +7,7 @@ jQuery(function($) {
     navigator.id.watch({
       loggedInUser: user,
       onlogin: function(assertion) {
-        console.log(user);
         if (user) return;
-          console.log("persona login");
           $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
             type: 'POST',
             url: '/social/persona', // This is a URL on your website.
@@ -23,17 +21,19 @@ jQuery(function($) {
           });
         
       },
-      onlogout: function(assertion) {
-        console.log("persona logout")
+      onlogout: function() {
         if (!user) return;
-        var signoutLink = document.getElementById('logout');
-        if (signoutLink){
-          signoutLink.onclick = function() {
-            window.location.href = "/logout"
-          }
-          
+        $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
+            type: 'get',
+            url: '/logout', // This is a URL on your website.
+            success: function(res, status, xhr) { 
+              window.location.reload() 
+            },
+            error: function(xhr, status, err) { 
+              alert("Logout failure: " + err) 
+            }
+          });
         }
-      }
     })
   }
 
@@ -41,10 +41,7 @@ jQuery(function($) {
   var signinLink = document.getElementById('persona');
   if (signinLink) {
     signinLink.onclick = function() {
-      console.log("button pressed");
       navigator.id.request(); }
-  }else{
-    "button not defined"
   }
 
   var signoutLink = document.getElementById('logout');
