@@ -6,8 +6,9 @@ validation = require("../utils/validation")
 messages = require "../utils/messages"
 Emailer = require ("../utils/emailer")
 passport = require("passport")
-config.setEnvironment app.settings.env
-
+  
+logger = require "../utils/logger"
+logCat = "USER controller"
 validationEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
 
 randomPassword = (length) ->
@@ -220,6 +221,7 @@ Route =
         token: req.body.token
         user: req.user
   get: (req, res) ->
+    logger.info "controller start", logCat
     if req.session.passport.user?
       User.findById req.session.passport.user, (err, user) ->
         unless err

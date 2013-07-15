@@ -33,6 +33,9 @@ mongourl = generate_mongo_url(mongo)
 
 #DB_URL = config.MONGO_DB_URL
 console.log mongourl
+DB_URL = config.MONGO_DB_URL
+
+logger.info "MONGO DB URL: ", config.MONGO_DB_URL
 db_connect_mongo = init: (callback) ->
   self = this
   mongo_options = db:

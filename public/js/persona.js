@@ -1,5 +1,5 @@
 jQuery(function($) {
-
+  
   var user = $('[name="user"]').val();
   var csrf = $('[name="_csrf"]').val()
   
@@ -7,12 +7,14 @@ jQuery(function($) {
     navigator.id.watch({
       loggedInUser: user,
       onlogin: function(assertion) {
+        console.log(user);
+        if (user) return;
+          console.log("persona login");
           $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
             type: 'POST',
             url: '/social/persona', // This is a URL on your website.
             data: {assertion: assertion, _csrf: csrf},
             success: function(res, status, xhr) { 
-              navigator.id.request(); 
               window.location.reload(); },
             error: function(xhr, status, err) {
               navigator.id.logout();
@@ -22,6 +24,7 @@ jQuery(function($) {
         
       },
       onlogout: function(assertion) {
+        console.log("persona logout")
         if (!user) return;
         var signoutLink = document.getElementById('logout');
         if (signoutLink){
@@ -43,6 +46,7 @@ jQuery(function($) {
   }else{
     "button not defined"
   }
+
   var signoutLink = document.getElementById('logout');
   if (signoutLink) {
     signoutLink.onclick = function() { navigator.id.logout(); };

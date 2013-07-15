@@ -83,6 +83,7 @@ if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
               'uid': profile.id
               'name': profile.displayName
               'active': true
+              "groups": "member"
             , (err,newUser)->
               if err? then return done err, null, 
                 message: 'authorizationfailed',
@@ -125,6 +126,7 @@ passport.use(new GoogleStrategy
         "name": profile.name.givenName
         "surname": profile.name.familyName
         "active": true
+        "groups": "member"
       , (err,newUser)->
         if err? then return done err, null, 
           message: 'authorizationfailed',
@@ -169,6 +171,7 @@ if process.env.TT_APP_ID? and process.env.TT_APP_SEC?
           "name": displayName[0]
           "surname": displayName[1]
           "active": true
+          "groups": "member"
         , (err,newUser)->
           if err? then return done err, null, 
             message: 'authorizationfailed',
@@ -218,6 +221,7 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
           "name": Name
           "surname": ""
           "active": true
+          "groups": "member"
         , (err,newUser)->
 
           if err? then return done err, null, 
@@ -271,6 +275,7 @@ if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
           "name": profile.name.givenName
           "surname": profile.name.familyName
           "active": true
+          "groups": "member"
         , (err,newUser)->
           if err? then return done err, null, 
             message: 'authorizationfailed',
@@ -316,6 +321,7 @@ passport.use(new YahooStrategy
         "name": displayName[0]
         "surname": displayName[1]
         "active": true
+        "groups": "member"
       , (err,newUser)->
         if err? then return done err, null, 
           message: 'authorizationfailed',
@@ -357,6 +363,7 @@ passport.use(new PersonaStrategy
             "provider": "persona"
             "name": email
             "active": true
+            "groups": "member"
           , (err,newUser)->
             if err? then return done err, null, 
               message: 'authorizationfailed',
