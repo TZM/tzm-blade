@@ -93,7 +93,7 @@ Route =
 
   github: (req,res,next) ->
     if process.env.GITHUB_ID? and process.env.GITHUB_SEC? 
-      passport.authenticate('github', { failureRedirect: '/' }) req,res,next
+      passport.authenticate('github', { failureRedirect: '/' , scope: ["user:email"]}) req,res,next
     else
       req.flash('info', "GITHUB_ID and GITHUB_SEC are required")
       res.statusCode = 401 

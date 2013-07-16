@@ -211,7 +211,7 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
   , (accessToken, refreshToken, profile, done) ->
     console.log("arguments in github strategy");
     console.log("profile.emails", profile.emails);
-    console.log(profile.emails[0].value);
+    
     console.log(arguments);
     emails = []
     for mail in profile.emails
