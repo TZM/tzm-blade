@@ -227,6 +227,7 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
     , (err, user) ->
       console.log("user arguments at github strategy");
       console.log(arguments);
+      console.log("email at passport callback:", profile.emails);
       if err? then return done err, null,
         message: 'authorizationfailed',
         data: '.',

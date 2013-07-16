@@ -11,16 +11,7 @@ logger = require "../utils/logger"
 logCat = "USER controller"
 validationEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
 
-randomPassword = (length) ->
-    chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz".split("")
-    length = Math.floor(Math.random() * chars.length)  unless length
-    str = ""
-    i = 0
 
-    while i < length
-        str += chars[Math.floor(Math.random() * chars.length)]
-        i++
-    return str
 # User model's CRUD controller.
 Route = 
   # Lists all users
@@ -43,16 +34,15 @@ Route =
         res.statusCode = 400
         req.flash('info', req.i18n.t('ns.msg:flash.sendererror')+".")
         res.redirect "index"
+  
   # Creates new user with data from `req.body`
+  # Or reset his password and send link to email
   create: (req, res, next) ->
     # FIXME - have a better error page
     delete req.body.remember_me
     console.log("server csrf: "+ req.session._csrf);
     if req.body?
-      password = randomPassword(26)
-      req.body.password = password if !req.body.password 
       req.body.email = req.body.email.toLowerCase()
-      req.body.provider = ["local"]
       if validationEmail.test(req.body.email)
         # check if user email exists
         User.findOne { email:req.body.email }, (err,user) ->
