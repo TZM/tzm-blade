@@ -64,7 +64,7 @@ if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
     callbackURL: url+"/social/facebookcallback"
     , (accessToken, refreshToken, profile, done) ->
       process.nextTick ->
-         emails = []
+        emails = []
         for mail in profile.emails
           emails.push mail.value
         console.log("arguments in facebook strategy");
