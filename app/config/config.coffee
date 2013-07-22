@@ -22,7 +22,7 @@ exports.setEnvironment = (env) ->
       exports.PORT = process.env.PORT or 3000
       exports.APP =
         name: "ZMGC Dev"
-        hostname: "localhost"
+        hostname: process.env.HOSTNAME || "localhost"
         host: "127.0.0.1"
       exports.DEBUG_LOG = true
       exports.DEBUG_WARN = true
