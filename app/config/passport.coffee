@@ -18,14 +18,16 @@ bcrypt = require "bcrypt"
 config = require "../config/config"
 config.setEnvironment process.env.NODE_ENV
 
-switch (process.env.NODE_ENV)
-  when "development"
-    url = "http://"+config.APP.hostname+":"+config.PORT
-  when "production"
-    url = "http://"+config.APP.hostname
-  when "test"
-    url = "http://"+config.APP.hostname+":"+config.PORT
-
+if !process.env.HOSTNAME
+  switch (process.env.NODE_ENV)
+    when "development"
+      url = "http://"+config.APP.hostname+":"+config.PORT
+    when "production"
+      url = "http://"+config.APP.hostname
+    when "test"
+      url = "http://"+config.APP.hostname+":"+config.PORT
+else
+  url = process.env.HOSTNAME
 console.log 'passport'
 
 

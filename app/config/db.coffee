@@ -1,3 +1,5 @@
+url = require('url')
+
 boundServices = if process.env.VCAP_SERVICES then JSON.parse(process.env.VCAP_SERVICES) else null
 console.log boundServices
 DB_HOSTNAME = "localhost"
@@ -10,6 +12,15 @@ MONGO_DB_PASS = null
 # MongoDB settings
 RIAK_DB_HOST = "127.0.0.1"
 RIAK_DB_PORT = 8098
+if process.env.REDISTOGO_URL
+  try 
+    redurl = url.parse(process.env.REDISTOGO_URL)
+  catch e
+    redurl = url.parse("redis://redistogo:5cc5cc379727f8913be12722de841452@beardfish.redistogo.com:9858/")
+
+  redisUrl = redurl
+  redisAuth = redisUrl.auth.split(':')
+ 
 # RIAK_DB_PORT = 10018
 
 module.exports =
@@ -26,12 +37,21 @@ module.exports =
   redis:
     unless boundServices
       # Redis settings
-      cfRedis =
-        hostname: "localhost"
-        host: "127.0.0.1"
-        port: 6379
-        name: "zmgc-redis"
-        password: null
+      if process.env.REDISTOGO_URL?
+        cfRedis = 
+          hostname: redisUrl.hostname
+          port: redisUrl.port
+          name: redisAuth[0]
+          password: redisAuth[1]  
+          maxAge: 86400000 * 30
+      else
+        cfRedis =
+          hostname: "localhost"
+          host: "127.0.0.1"
+          port: 6379
+          name: "zmgc-redis"
+          password: null
+          maxAge: 86400000 * 30
     else
       # Redis settings
       cfRedis: boundServices["redis-2.2"][0]["credentials"]

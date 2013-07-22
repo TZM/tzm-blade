@@ -12,13 +12,16 @@ if process.env.VCAP_SERVICES
   env = JSON.parse(process.env.VCAP_SERVICES)
   mongo = env["mongodb-1.8"][0]["credentials"]
 else
-  mongo =
-    hostname: "localhost"
-    port: 27017
-    username: ""
-    password: ""
-    name: ""
-    db: "zmgc-mongo"
+  if process.env.MONGOLAB_URI
+    mongo = process.env.MONGOLAB_URI
+  else
+    mongo =
+      hostname: "localhost"
+      port: 27017
+      username: ""
+      password: ""
+      name: ""
+      db: "zmgc-mongo"
 
 generate_mongo_url = (obj) ->
   obj.hostname = (obj.hostname or "localhost")
@@ -29,7 +32,7 @@ generate_mongo_url = (obj) ->
   else
     "mongodb://" + obj.hostname + ":" + obj.port + "/" + obj.db
 
-mongourl = generate_mongo_url(mongo)
+mongourl = process.env.MONGOLAB_URI || generate_mongo_url(mongo)
 
 #DB_URL = config.MONGO_DB_URL
 console.log mongourl

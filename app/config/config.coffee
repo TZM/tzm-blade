@@ -22,7 +22,7 @@ exports.setEnvironment = (env) ->
       exports.PORT = process.env.PORT or 3000
       exports.APP =
         name: "ZMGC Dev"
-        hostname: "localhost"
+        hostname: process.env.HOSTNAME || "localhost"
         host: "127.0.0.1"
       exports.DEBUG_LOG = true
       exports.DEBUG_WARN = true
@@ -33,7 +33,6 @@ exports.setEnvironment = (env) ->
       exports.RIAK_DB = db.riak
       i18next.debug = true
       exports.I18N = i18next
-
     when "test"
       exports.PORT = process.env.PORT or 3000
       exports.APP =

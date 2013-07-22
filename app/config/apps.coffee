@@ -1,4 +1,3 @@
-#Load dependencies
 express = require "express"
 csrf = express.csrf()
 assets = require "connect-assets"
@@ -33,26 +32,41 @@ config = require "../config/config"
 config.setEnvironment process.env.NODE_ENV or "development"
 
 # Redis session stores
+rediska = (if process.env.REDISTOGO_URL? then require("redis-url").connect(process.env.REDISTOGO_URL) else require("redis").createClient())
+
+
 options =
-  hosts: [new RedisStore(
-    hostname: config.REDIS_DB.hostname
-    host: config.REDIS_DB.host
-    port: config.REDIS_DB.port
-    name: config.REDIS_DB.name
-    password: config.REDIS_DB.password
-    maxAge: 86400000 * 30 # 30 days
-  ), new RedisStore(
-    hostname: config.REDIS_DB.hostname
-    host: config.REDIS_DB.host
-    port: config.REDIS_DB.port
-    name: config.REDIS_DB.name
-    password: config.REDIS_DB.password
-    maxAge: 86400000 * 30 # 30 days
-  )]
-  session_secret: "f2e5a67d388ff2090dj7Q2nC53pF"
-  cookie:
-    maxAge: 86400000 * 1 # 30 days 
-#console.log options.hosts
+  if !process.env.REDISTOGO_URL
+    hosts: [new RedisStore(
+      hostname: config.REDIS_DB.hostname
+      host: config.REDIS_DB.host
+      port: config.REDIS_DB.port
+      name: config.REDIS_DB.name
+      password: config.REDIS_DB.password
+      maxAge: config.REDIS_DB.maxAge # 30 days
+    ), new RedisStore(
+      hostname: config.REDIS_DB.hostname
+      host: config.REDIS_DB.host
+      port: config.REDIS_DB.port
+      name: config.REDIS_DB.name
+      password: config.REDIS_DB.password
+      maxAge: config.REDIS_DB.maxAge # 30 days
+    )]
+    session_secret: "f2e5a67d388ff2090dj7Q2nC53pF"
+    cookie:
+      maxAge: 86400000 * 1 # 30 days 
+  else
+    hosts: [new RedisStore(
+      client: rediska
+    ),new RedisStore(
+      client: rediska
+    )]
+    session_secret: "f2e5a67d388ff2090dj7Q2nC53pF"
+    cookie:
+      maxAge: 86400000 * 1 # 30 days 
+    
+
+console.log "options: ",options.hosts[0]
 module.exports = (app) ->
   logger.info "Configure expressjs", logCategory
   # FIXME use _.each to loop for each dirs and Gzip
