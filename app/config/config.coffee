@@ -33,7 +33,6 @@ exports.setEnvironment = (env) ->
       exports.RIAK_DB = db.riak
       i18next.debug = true
       exports.I18N = i18next
-
     when "test"
       exports.PORT = process.env.PORT or 3000
       exports.APP =
