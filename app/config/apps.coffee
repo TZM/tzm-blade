@@ -32,7 +32,7 @@ config = require "../config/config"
 config.setEnvironment process.env.NODE_ENV or "development"
 
 # Redis session stores
-rediska = (if process.env.REDISTOGO_URL then require("redis-url").connect(process.env.REDISTOGO_URL) else require("redis").createClient())
+rediska = (if process.env.REDISTOGO_URL? then require("redis-url").connect(process.env.REDISTOGO_URL) else require("redis").createClient())
 
 
 options =
