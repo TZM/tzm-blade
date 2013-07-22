@@ -6,7 +6,7 @@
 #Background
 The Zeitgeist Movement Global Connect (ZMGC) aims to create an on-line eco-system within which the ideas of Resource Based Economy can be galvanise into actions that can be used in the real world.
 
-It equips members with on-line tools, by providing the infrastructure necessary to easily exchange, analyse and disseminate information in a highly scalable and non-blocking manner using only Open Source software build by the community.
+It equips members with on-line tools, by providing the infrastructure necessary to easily exchange, analyse and disseminate information in a highly scalable and non-blocking manner using only Free Software build by the community.
 
 Please refer to the [wiki](https://github.com/TZM/tzm-blade/wiki) for deeper understanding of what this project is hoping to achieve. We also have a public [trello](https://trello.com/zmgc) board. 
 
@@ -167,6 +167,19 @@ The tests are now on Travis, for continuous integration see [![Build Status](htt
     -------------------------------------------------------------------------------
     SUM:                            50            587            698           4514
     -------------------------------------------------------------------------------
+
+#Versioning
+ZMGC will be maintained under the Semantic Versioning guidelines as much as possible. Releases will be numbered with the following format:
+
+`<major>.<minor>.<patch>`
+
+And constructed with the following guidelines:
+
+- Breaking backward compatibility bumps the major (and resets the minor and patch)
+- New additions, such as new functionality, without breaking backward compatibility bumps the minor (and resets the patch)
+- Bug fixes and miscellaneous changes will bump the patch number
+
+For more information on SemVer, visit [http://semver.org](http://semver.org).
 
 #Todo
  - Mocha BDD api and frontend tests

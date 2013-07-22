@@ -21,9 +21,10 @@ fs = require "fs"
 #Load and intitialize logger
 logger = require "./utils/logger"
 logCategory = "APP config"
+# TODO store log messages in the db
+logger.configure()
+
 flash = require "connect-flash"
-
-
 # Create server and set environment
 app = express()
 app.configure ->
@@ -34,19 +35,16 @@ app.configure ->
 app.settings.env = process.env.NODE_ENV if process.env.NODE_ENV
 app.configure "production", "development", "test", ->
   config.setEnvironment app.settings.env
-  console.log 'environment is: ', app.settings.env
 
-
-# TODO store log messages in the RIAK db
-logger.configure()
-logger.info "--- App server created and local env set to: "+app.settings.env+" ---", logCategory
+logger.info "--- App server created and local env set to: "+app.settings.env, logCategory
 
 #Define Port
 app.port = config.PORT
-logger.info "--- Server running on port: "+app.port+" --- ", logCategory
+logger.info "--- Server running on port: "+app.port, logCategory
 
 #Connect to database
 dbconnection = require "./utils/dbconnect"
+
 dbconnection.init (result) ->
   if result
     logger.info "Database initialized: " + result, logCategory
@@ -65,8 +63,5 @@ module.exports = ->
   # 
   app
 # register i18next helpers
-
-
 i18next.registerAppHelper(app)
 logger.info "--- Modules loaded into namespace ---", logCategory
-

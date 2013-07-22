@@ -22,3 +22,6 @@ Please replace `languageCode-countryCode` with the ones for your language and co
 	☺ cp -r locales/dev locales/languageCode-countryCode
 	☺ subl locales/languageCode-countryCode
 See the wiki for further details [https://github.com/TZM/tzm-blade/wiki/Localization-and-Intrenationalization-of-ZMGC-application](https://github.com/TZM/tzm-blade/wiki/Localization-and-Intrenationalization-of-ZMGC-application)
+
+## TODO
+[http://www.languageicon.org/](http://www.languageicon.org/) - use the langiage icon.
