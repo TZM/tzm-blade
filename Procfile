@@ -1,1 +1,1 @@
-web: node run.js
+web: cake dev
