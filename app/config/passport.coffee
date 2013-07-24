@@ -28,6 +28,7 @@ if !process.env.HOSTNAME
       url = "http://"+config.APP.hostname+":"+config.PORT
 else
   url = process.env.HOSTNAME
+
 console.log 'passport'
 
 
@@ -54,8 +55,6 @@ passport.deserializeUser (id, done) ->
     else
       console.log "error: ", err
       done err, false
-
-console.log(url+"/social/facebookcallback")
 
 
 #not sure about facebook

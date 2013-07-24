@@ -31,13 +31,13 @@ maxAges = 86400000 * 30
 
 config = require "../config/config"
 config.setEnvironment process.env.NODE_ENV or "development"
-
+redisService =  process.env.REDISTOGO_URL || process.env.REDISCLOUD_URL
 # Redis session stores
-rediska = (if process.env.REDISTOGO_URL? then require("redis-url").connect(process.env.REDISTOGO_URL) else require("redis").createClient())
+rediska = (if redisService? then require("redis-url").connect(redisService) else require("redis").createClient())
 
 
 options =
-  if !process.env.REDISTOGO_URL
+  unless redisService
     hosts: [new RedisStore(
       hostname: config.REDIS_DB.hostname
       host: config.REDIS_DB.host
