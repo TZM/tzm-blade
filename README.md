@@ -182,27 +182,27 @@ And constructed with the following guidelines:
 For more information on SemVer, visit [http://semver.org](http://semver.org).
 
 #Todo
- - Mocha BDD api and frontend tests
- - Stylus css - update the css
- - Riak
-    - Riak cluster setup and deployment
-    - Riak administration
-    - Riak backup
- - [DocPad integration](https://github.com/TZM/tzm-blade/issues/12) - [DocPad](https://github.com/bevry/docpad)
- - [AppFog Manifest](https://docs.appfog.com/getting-started/af-cli/manifests) for appfog deployment
- - Heroku Procfile and instructions for heroku deployments
- - [Vagrant](http://www.vagrantup.com/) - create a dev environment with Riak cluster and and use the Chef provisioning tool to:
-    - install packages, [riak](https://github.com/basho/riak-chef-cookbook), zmgc (node.js, express etc... through npm)
-    - create user accounts, as specified in included JSON config files
-    - setup riak
-    - configure firewalls
+ - `[ ]` Mocha BDD api and frontend tests
+ - `[ ]` Stylus css - update the css
+ - `[ ]` Riak
+    - `[ ]` Riak cluster setup and deployment
+    - `[ ]` Riak administration
+    - `[ ]` Riak backup
+ - `[ ]` [DocPad integration](https://github.com/TZM/tzm-blade/issues/12) - [DocPad](https://github.com/bevry/docpad)
+ - `[ ]` [AppFog Manifest](https://docs.appfog.com/getting-started/af-cli/manifests) for appfog deployment
+ - `[✓]` <del>Heroku Procfile and instructions for heroku deployments</del>
+ - `[ ]` [Vagrant](http://www.vagrantup.com/) - create a dev environment with Riak cluster and and use the Chef provisioning tool to:
+    - `[ ]` install packages, [riak](https://github.com/basho/riak-chef-cookbook), zmgc (node.js, express etc... through npm)
+    - `[ ]` create user accounts, as specified in included JSON config files
+    - `[ ]` setup riak
+    - `[ ]` configure firewalls
     - etc...
  - Production hardening
-    - Cluster
-    - Error handling
-    - Monitoring
-- Continuous Integration - [[https://travis-ci.org/TZM/tzm-blade][Travis-CI]] :: [![Build Status](https://travis-ci.org/TZM/tzm-blade.png)](https://travis-ci.org/TZM/tzm-blade)
-- Documentation
+    - `[ ]` Cluster
+    - `[ ]` Error handling
+    - `[ ]` Monitoring
+- `[ ]` Continuous Integration - [[https://travis-ci.org/TZM/tzm-blade][Travis-CI]] :: [![Build Status](https://travis-ci.org/TZM/tzm-blade.png)](https://travis-ci.org/TZM/tzm-blade)
+- `[ ]` [Documentation](https://github.com/TZM/tzm-blade/wiki)
 
 #Benchmarks
 See the [Benchmark page](BENCHMARK.md) for more information.

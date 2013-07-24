@@ -12,6 +12,7 @@ LocalStrategy = require("passport-local").Strategy
 cldr = require "cldr"
 i18n = require "i18next"
 fs = require "fs"
+__ = require "underscore"
 
 thirdParty = ["google","yahoo","persona"]
 if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
@@ -104,7 +105,13 @@ module.exports = (app) ->
       app.set "languages", require(process.cwd() + "/locales/config.json")
       app.set "translation", require(process.cwd() + "/locales/dev/translation.json")
       # app.set "chapters", require(process.cwd() + "/data/chapters.json")
-
+      fs.readdir "./locales", (err,locales) ->
+        #console.log locales
+        results = []
+        __.reject locales, (value, index, list) ->
+          console.log value, index, list
+          results.push value
+        console.log results
     catch e
       logger.warn "files not found " + e, logCategory
       require ('./passport.coffee')
@@ -173,5 +180,4 @@ module.exports = (app) ->
 
         # res.cookie.
         next()
-
   app
