@@ -109,7 +109,8 @@ module.exports = (app) ->
         #console.log locales
         #results = []
         EXCLUDE = [ 'dev', 'README.md', 'config.json' ]
-        languages = {}
+        languages = new Array()
+        #languages = {}
         results = __.reject locales, (value, index, list) ->
           return EXCLUDE.indexOf(value) != -1
         locales = __.each results, (value, index, list) ->
@@ -118,7 +119,7 @@ module.exports = (app) ->
           language = cldr.extractLanguageDisplayNames(locale)[locale]
           #console.log language
           #languages.locale = language
-          #languages.push[{locale: language}]
+          languages.push[locale: language]
         console.log languages
     catch e
       logger.warn "files not found " + e, logCategory

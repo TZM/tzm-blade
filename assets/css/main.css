@@ -619,4 +619,15 @@ path.skill-share-icon {
             column-count:4;
 }
 
+div.statBlock {
+    border: 3px solid #d5d5d5;
+    width: 120px;
+    -webkit-border-radius: 8px;
+    float: left;
+    margin-top: 20px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-top: 5px;
+}
+
 @media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}
