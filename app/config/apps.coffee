@@ -104,7 +104,7 @@ module.exports = (app) ->
       require ('./passport.coffee')
       app.set "languages", require(process.cwd() + "/locales/config.json")
       app.set "translation", require(process.cwd() + "/locales/dev/translation.json")
-      app.set "chapters", require(process.cwd() + "/data/chapters.json")
+      #app.set "chapters", require(process.cwd() + "/data/chapters.json")
       fs.readdir "./locales", (err,locales) ->
         #console.log locales
         #results = []
