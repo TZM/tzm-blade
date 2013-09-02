@@ -6,7 +6,8 @@ config = require "../config/config"
 config.setEnvironment process.env.NODE_ENV
 spawn = require("child_process").spawn
 
-TRELLO_LIST = process.env.TRELLO_LIST
+#TRELLO_LIST = process.env.TRELLO_LIST
+TRELLO_LIST = '5171a5a18be394b63d005eed'
 TRELLO_API_KEY = process.env.TRELLO_API_KEY
 TRELLO_TOKEN = process.env.TRELLO_TOKEN
 
