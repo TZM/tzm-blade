@@ -97,8 +97,6 @@ module.exports = (app) ->
     #  src: process.cwd() + "/assets"
     #  compile: compile
     #))
-
-  # FIXME - see if we can do this differently
   app.configure ->
     try
       require ('./passport.coffee')
@@ -114,6 +112,12 @@ module.exports = (app) ->
           language = cldr.extractLanguageDisplayNames(locale)[locale]
           languages[value] = language
         app.set "languages", languages
+        #console.log locales
+        results = []
+        __.reject locales, (value, index, list) ->
+          console.log value, index, list
+          results.push value
+        console.log results
     catch e
       logger.warn "files not found " + e, logCategory
       require ('./passport.coffee')
