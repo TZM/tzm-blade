@@ -1,5 +1,21 @@
 [
   {
+    "id": "4f19a035ad628ffa66018fa5",
+    "desc": {
+      "WEBSITE": "http://www.zeitgeistargentina.com",
+      "CONTACT": "<comunicacion@zeitgeistargentina.com>",
+      "COORDINATION": "Damián Ferrero <damianferrero1@gmail.com>, Carolina N. Marguero <carolinanmarguero@gmail.com>, Javier Rodriguez <jrodriguez@zeitgeistargentina.com>, Cristopher Giagoupian <neo_z@hotmail.com.ar>",
+      "PUBLIC SUPPORT": "<contacto@zeitgeistargentina.com>",
+      "YOUTUBE": "http://www.youtube.com/user/tzmargentinaoficial",
+      "GOOGLE+": "https://plus.google.com/u/0/113018368805571084754",
+      "TWITTER": "",
+      "FACEBOOK": "http://www.facebook.com/ZArgentina",
+      "TRELLO": "https://trello.com/mzacoordinacion",
+      "OTHERS": "http://www.facebook.com/groups/zeitgeistargentina/",
+      "LOCALES": "es-AR"
+    }
+  },
+  {
     "id": "4f199ec0ad628ffa660093b3",
     "desc": {
       "CHAPTER WEBSITE": "http://www.thezeitgeistmovement.be",
@@ -12,6 +28,22 @@
       "TRELLO": "",
       "OTHERS": "",
       "LOCALES": "fr-BE"
+    }
+  },
+  {
+    "id": "4f19a037ad628ffa6601927a",
+    "desc": {
+      "WEBSITE": "www.zchile.cl",
+      "CONTACT": "Cristian Diaz <cristian@zchile.cl>, Joseto Dominguez <joseto@zchile.cl>, Valeria Leiva <valeria@zchile.cl>",
+      "COORDINATION": "<zchile@zchile.cl>",
+      "PUBLIC SUPPORT": "<zchile@zchile.cl>",
+      "YOUTUBE": "http://www.youtube.com/user/TZMChileOficial",
+      "GOOGLE+": "",
+      "TWITTER": "https://twitter.com/TZMChile",
+      "FACEBOOK": "https://www.facebook.com/TZMChile",
+      "TRELLO": "https://trello.com/board/chapter-chile/",
+      "OTHERS": "",
+      "LOCALES": "es-CL"
     }
   },
   {
