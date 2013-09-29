@@ -49,7 +49,18 @@ $(function($) {
       e.preventDefault(); $(this).tab('show');
   });
   $('.user-login-form a:first').tab('show');
-  
+  // SPA page loads
+  $('.forums').on('click', function() {
+    console.log('click on forums button');
+    //ZmgcClient();
+    blade.Runtime.loadTemplate("guide/page0.blade", function(err, tmpl) {
+        tmpl({}, function(err, html) {
+            if(err) throw err;
+                console.log(html);
+                $('#page:first').empty().html(html);
+        });
+    });
+  });
   // footer navigation
   var slide = false;
   var height = $('#footer').height();

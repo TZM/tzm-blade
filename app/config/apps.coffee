@@ -117,7 +117,7 @@ module.exports = (app) ->
         __.reject locales, (value, index, list) ->
           console.log value, index, list
           results.push value
-        console.log results
+        #console.log results
     catch e
       logger.warn "files not found " + e, logCategory
       require ('./passport.coffee')
