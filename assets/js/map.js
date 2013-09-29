@@ -268,6 +268,7 @@
               d3.select(this)
                 .style("fill", "orange")
                 .append("svg:title")
+                //use CLDR to localize country name
                 .text(d.properties.name)
             //self.activateTooltip(d.properties.name)
           })

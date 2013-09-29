@@ -1,7 +1,7 @@
 {
   "author": "Norman Khine <norman@zmgc.net> (http://zmgc.net)",
   "name": "zmgc",
-  "description": "[Node.js](http://nodejs.org/)",
+  "description": "The ZMGC Application aims to create an on-line eco-system within which the ideas of Resource Based Economy can be galvanise into actions that can be used in the real world.",
   "private": true,
   "version": "0.0.1",
   "homepage": "http://zmgc.net",

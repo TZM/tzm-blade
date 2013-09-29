@@ -36,7 +36,7 @@ $(function($) {
   //don't close login form
   $(".forgot-password").click(function(e){
   //do something
-  console.log("click XXX")
+  console.log("click")
   //e.preventDefault();
   });
 
