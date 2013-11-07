@@ -159,6 +159,22 @@
     }
   },
   {
+    "id": "4fdedcce84643e2f2ead7b0e",
+    "desc": {
+      "WEBSITE": "http:http://www.thezeitgeistmovement.kz",
+      "COORDINATION": "Vitalina Breussova <vitalina@thezeitgeistmovement.kz>,< tzmkaz@gmail.com>",
+      "CONTACT": "Vitalina Breussova vitalina@thezeitgeistmovement.kz, tzmkaz@gmail.com",
+      "PUBLIC SUPPORT": "vitalina@thezeitgeistmovement.kz, tzmkaz@gmail.com",
+      "YOUTUBE": "http://www.youtube.com/user/TZMKazakhstan",
+      "GOOGLE+": "",
+      "TWITTER": "https://twitter.com/TZMkz",
+      "FACEBOOK": "https://www.facebook.com/tzmkazakhstan",
+      "TRELLO": "https://trello.com/b/HERr3dxq/tzm-kazakhstan",
+      "OTHERS": "http://vk.com/tzmrussia",
+      "LOCALES": "kk-KZ"
+    }
+  },
+  {
     "id": "4fcacc08502add91107a6e60",
     "desc": {
       "WEBSITE": "www.zeitgeistmalaysia.wordpress.com",
@@ -219,6 +235,54 @@
       "TRELLO": "",
       "OTHERS": "https://www.facebook.com/groups/tzmvolunteers/",
       "LOCALES": "phi-PH"
+    }
+  },
+  {
+    "id": "4f199d9b4a4a6d070f107e68",
+    "desc": {
+      "CHAPTER WEBSITE": "http://www.zeitgeistportugal.org",
+      "CHAPTER CONTACT": "Darr <darr@zeitgeistportugal.org>, Miguel Olivera <moliveira@thezeitgeistmovement.com>, Nuno Neocent <joaofsantosj@gmail.com>, João Santos <rodrigopntcardoso@yahoo.com.br>, <coord@zeitgeistportugal.org>",
+      "CHAPTER SITE CONTACT": "<info@zeitgeistportugal.org>",
+      "PUBLIC SUPPORT": "<info@zeitgeistportugal.org>",
+      "YOUTUBE": "http://www.youtube.com/user/ZeitgeistPortugal",
+      "GOOGLE+": "",
+      "TWITTER": "",
+      "FACEBOOK": "https://www.facebook.com/tzmportugal",
+      "TRELLO": "",
+      "OTHERS": "",
+      "LOCALES": "pt-PT"
+    }
+  },
+  {
+    "id": "4f199fd3ad628ffa66014386",
+    "desc": {
+      "WEBSITE": "http:www.zeitgeistsrbija.org",
+      "COORDINATION": "Milos Radovanovic<info@zeitgeistsrbija.org>,Adrijan Popovic , Milana Veselinovic",
+      "CONTACT": "Milos Radovanovic<info@zeitgeistsrbija.org>",
+      "PUBLIC SUPPORT": "Public Support <info@zeitgeistsrbija.org>",
+      "YOUTUBE": "http://www.youtube.com/user/zeitgeistsrbija",
+      "GOOGLE+": "https://plus.google.com/u/0/communities/108165078187690848107",
+      "TWITTER": "",
+      "FACEBOOK": "https://www.facebook.com/ZeitgeistSrbija",
+      "TRELLO": "",
+      "OTHERS": "",
+      "LOCALES": "sr-RS"
+    }
+  },
+  {
+    "id": "4f199ff1ad628ffa6601557c",
+    "desc": {
+      "WEBSITE": "http://www.zgm.se/",
+      "COORDINATION": "Jonas <jonas@liljegren.org>, Lelle<nest999@gmail.com>, Jonathan Andersson <jonte790@gmail.com>",
+      "CONTACT": "Jonas <jonas@liljegren.org>",
+      "PUBLIC SUPPORT": "Public Support <info@zgm.se>",
+      "YOUTUBE": "http://www.youtube.com/user/tzmse",
+      "GOOGLE+": "https://plus.google.com/b/106770937637795709840/106770937637795709840/",
+      "TWITTER": "",
+      "FACEBOOK": "https://www.facebook.com/ZeitgeistrorelsenISverige, https://www.facebook.com/groups/thezeitgeistmovement.se/",
+      "TRELLO": "",
+      "OTHERS": "",
+      "LOCALES": "sv-SE"
     }
   },
   {
