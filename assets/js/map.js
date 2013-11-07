@@ -167,7 +167,7 @@
         var s = 0.70
         var iconHolder = self.svg.append("g")
             .attr("class", "map-tools")
-            .attr("transform", "scale(" + s + ")translate(" + width * 1.37 + "," + 0 + ")")
+            .attr("transform", "scale(" + s + ")translate(" + width * 1.355 + "," + 0 + ")")
 
         iconHolder.append("svg:path")
             .attr("class", "group-icon")
