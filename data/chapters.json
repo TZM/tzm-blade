@@ -18,8 +18,8 @@
   {
     "id": "4f199ec0ad628ffa660093b3",
     "desc": {
-      "CHAPTER WEBSITE": "http://www.thezeitgeistmovement.be",
-      "CHAPTER CONTACT": "Gilles Cenni <gillesadrien.cenni@gmail.com>, Joris Swalus <karelgabriel@yahoo.com>, Arne Dumarey <replacement87@gmail.com>",
+      "WEBSITE": "http://www.thezeitgeistmovement.be",
+      "CONTACT": "Gilles Cenni <gillesadrien.cenni@gmail.com>, Joris Swalus <karelgabriel@yahoo.com>, Arne Dumarey <replacement87@gmail.com>",
       "CHAPTER SITE CONTACT": "<admin@thezeitgeistmovement.be>, <info@thezeitgeistmovement.be>",
       "YOUTUBE": "https://www.youtube.com/tzmbelgium",
       "GOOGLE+": "http://gplus.to/tzmbelgium,",
@@ -33,7 +33,7 @@
   {
     "id": "4f19a037ad628ffa6601927a",
     "desc": {
-      "WEBSITE": "www.zchile.cl",
+      "WEBSITE": "http://www.zchile.cl",
       "CONTACT": "Cristian Diaz <cristian@zchile.cl>, Joseto Dominguez <joseto@zchile.cl>, Valeria Leiva <valeria@zchile.cl>",
       "COORDINATION": "<zchile@zchile.cl>",
       "PUBLIC SUPPORT": "<zchile@zchile.cl>",
@@ -60,6 +60,23 @@
       "TRELLO": "",
       "OTHERS": "",
       "LOCALES": "zh-CN"
+    }
+  },
+  {
+    "id": "4f19a02bad628ffa66018245",
+    "desc": {
+      "CARD NAME": "Ecuador",
+      "WEBSITE": "http://www.zeitgeistec.com",
+      "COORDINATION": "Andrés Delgado <andres@thezeitgeistmovement.com>, <andres@zeitgeistec.com>, <jordel77@hotmail.com>",
+      "CONTACT": "<zecuador.com@gmail.com>",
+      "PUBLIC SUPPORT": "<zecuador.com@gmail.com>",
+      "YOUTUBE": "www.youtube.com/aganon77",
+      "GOOGLE+": "",
+      "TWITTER": "@ZeitgeistEc",
+      "FACEBOOK": "fb.me/zecuadorcom",
+      "TRELLO": "https://trello.com/board/movimiento-zeitgeist-en-ecuador/4f98c340a50ceb52620c8d5e",
+      "OTHERS": "",
+      "LOCALES": "es-EC"
     }
   },
   {
@@ -108,6 +125,24 @@
       "TRELLO": "",
       "OTHERS": "Thoughts about installing diaspora.",
       "LOCALES": "el-GR"
+    }
+  },
+  {
+    "id": "4f19a07bad628ffa6601c0f9",
+    "desc": {
+      "CARD NAME": "Guatemala",
+      "WEBSITE": "http://www.zeitgeistguatemala.com",
+      "COORDINATION": "Giancarlo Melini <giancarlo@melini.com>",
+      "CONTACT": "contacto@zeitgeistguatemala.com",
+      "PUBLIC SUPPORT": "contacto@zeitgeistguatemala.com",
+      "YOUTUBE": "",
+      "GOOGLE+": "",
+      "TWITTER": "",
+      "FACEBOOK": "www.facebook.com/ZeitgeistGuatemala",
+      "TRELLO": "",
+      "OTHERS": "",
+      "CODE": "",
+      "LOCALES": "es-GT"
     }
   },
   {
@@ -161,7 +196,7 @@
   {
     "id": "4fdedcce84643e2f2ead7b0e",
     "desc": {
-      "WEBSITE": "http:http://www.thezeitgeistmovement.kz",
+      "WEBSITE": "http://www.thezeitgeistmovement.kz",
       "COORDINATION": "Vitalina Breussova <vitalina@thezeitgeistmovement.kz>,< tzmkaz@gmail.com>",
       "CONTACT": "Vitalina Breussova vitalina@thezeitgeistmovement.kz, tzmkaz@gmail.com",
       "PUBLIC SUPPORT": "vitalina@thezeitgeistmovement.kz, tzmkaz@gmail.com",
@@ -177,7 +212,7 @@
   {
     "id": "4fcacc08502add91107a6e60",
     "desc": {
-      "WEBSITE": "www.zeitgeistmalaysia.wordpress.com",
+      "WEBSITE": "http://www.zeitgeistmalaysia.wordpress.com",
       "COORDINATION": "Richard Hii,<tzmnetwork1@gmail.com>",
       "CONTACT": "Richard,<tzmnetwork1@gmail.com>",
       "PUBLIC SUPPORT": "<tzmnetwork1@gmail.com>",
@@ -191,9 +226,27 @@
     }
   },
   {
+    "id": "4f19a08fad628ffa6601c96b",
+    "desc": {
+      "CARD NAME": "Mexico",
+      "WEBSITE": "http://www.zeitgeist.com.mx",
+      "COORDINATION": "Daniel Ibars. <contacto@zeitgeist.com.mx>.Carsten S. <jalisco@zeitgeist.com.mx>, Arturo V. <quintana.roo@zeitgeist.com.mx>",
+      "CONTACT": "Carsten S. <contacto@zeitgeist.com.mx>",
+      "PUBLIC SUPPORT": "<contacto@zeitgeist.com.mx>",
+      "YOUTUBE": "http://www.youtube.com/emzmexico",
+      "GOOGLE+": "",
+      "TWITTER": "http://twitter.com/zmexico",
+      "FACEBOOK": "http://www.facebook.com/TZMMEXICOOFICIAL",
+      "TRELLO": "https://trello.com/board/capitulos-de-mexico/4fe25c11f9f166271d140912",
+      "OTHERS": "",
+      "CODE": "",
+      "LOCALES": "es-MX"
+    }
+  },
+  {
     "id": "4f19a0bead628ffa6601e269",
     "desc": {
-      "WEBSITE": "www.zeitgeistmorocco.com",
+      "WEBSITE": "http://www.zeitgeistmorocco.com",
       "COORDINATION": "Omar Zyami,<omar.zyami@hotmail.fr>,driss bounouar <bounouar.driss@gmail.com>",
       "CONTACT": "<admin@zeitgeistmorocco.com>",
       "PUBLIC SUPPORT": "<tzm.morocco@gmail.com>",
@@ -240,8 +293,8 @@
   {
     "id": "4f199d9b4a4a6d070f107e68",
     "desc": {
-      "CHAPTER WEBSITE": "http://www.zeitgeistportugal.org",
-      "CHAPTER CONTACT": "Darr <darr@zeitgeistportugal.org>, Miguel Olivera <moliveira@thezeitgeistmovement.com>, Nuno Neocent <joaofsantosj@gmail.com>, João Santos <rodrigopntcardoso@yahoo.com.br>, <coord@zeitgeistportugal.org>",
+      "WEBSITE": "http://www.zeitgeistportugal.org",
+      "CONTACT": "Darr <darr@zeitgeistportugal.org>, Miguel Olivera <moliveira@thezeitgeistmovement.com>, Nuno Neocent <joaofsantosj@gmail.com>, João Santos <rodrigopntcardoso@yahoo.com.br>, <coord@zeitgeistportugal.org>",
       "CHAPTER SITE CONTACT": "<info@zeitgeistportugal.org>",
       "PUBLIC SUPPORT": "<info@zeitgeistportugal.org>",
       "YOUTUBE": "http://www.youtube.com/user/ZeitgeistPortugal",
@@ -254,9 +307,24 @@
     }
   },
   {
+    "id": "4f199fc2ad628ffa66013d02",
+    "desc": {
+      "WEBSITE": "http://thezeitgeistmovement.ru/",
+      "COORDINATION": "Dimitry Fox,<fox@thezeitgeistmovement.ru>",
+      "CONTACT": "Dimitry Fox,<fox@thezeitgeistmovement.ru>",
+      "PUBLIC SUPPORT": "fox@thezeitgeistmovement.ru",
+      "YOUTUBE": "http://www.youtube.com/channel/UC1RhNoDTmtl7GDCiXiE23CQ",
+      "GOOGLE+": "",
+      "TWITTER": "",
+      "TRELLO": "",
+      "OTHERS": "",
+      "LOCALES": "ru-RU"
+    }
+  },
+  {
     "id": "4f199fd3ad628ffa66014386",
     "desc": {
-      "WEBSITE": "http:www.zeitgeistsrbija.org",
+      "WEBSITE": "http://www.zeitgeistsrbija.org",
       "COORDINATION": "Milos Radovanovic<info@zeitgeistsrbija.org>,Adrijan Popovic , Milana Veselinovic",
       "CONTACT": "Milos Radovanovic<info@zeitgeistsrbija.org>",
       "PUBLIC SUPPORT": "Public Support <info@zeitgeistsrbija.org>",
@@ -288,7 +356,7 @@
   {
     "id": "503befd06ee60eb20a51d843",
     "desc": {
-      "WEBSITE": "www.thezeitgeistmovement.org.ua",
+      "WEBSITE": "http://www.thezeitgeistmovement.org.ua",
       "COORDINATION": "Olexiy Siriy,<Siveria7@ukr.net>, Anna Trepez,<secret_sickert@meta.ua>Pavlo Tutunnik <nik2314@mail.ru>Olexandr Genkulenko,<alexgan_81@mail.ru>Dmitro Nevazhnov,<6orus9@gmail.com>",
       "CONTACT": "Olexiy Siriy,<Siveria7@ukr.net><SiriyOlexiy@gmail.com>",
       "PUBLIC SUPPORT": "info@thezeitgeistmovement.org.ua",
@@ -299,6 +367,23 @@
       "TRELLO": "",
       "OTHERS": "http://vk.com/tzmua",
       "LOCALES": "uk-UA"
+    }
+  },
+  {
+    "id": "4f199e03ad628ffa660045d1",
+    "desc": {
+      "CARD NAME": "United States",
+      "WEBSITE": "http://www.thezeitgeistmovement.com",
+      "COORDINATION": "Jen Wilding <jen@thezeitgeistmovement.com>",
+      "CONTACT": "Jen Wild <jen@thezeitgeistmovement.com>",
+      "PUBLIC SUPPORT": "<jen@thezeitgeistmovement.com>",
+      "YOUTUBE": "",
+      "GOOGLE+": "",
+      "TWITTER": "TZMusa",
+      "FACEBOOK": "",
+      "TRELLO": "",
+      "OTHERS": "http://tzm-usa.org/ (only coordinators)",
+      "LOCALES": "en-US"
     }
   }
 ]

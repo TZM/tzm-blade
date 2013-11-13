@@ -1,6 +1,11 @@
 include "../layout/layout.blade"
 replace block page
-    input(type='hidden', name='_csrf', value=csrf_token)
-    #notification
-    #welcome!=t("ns.common:welcome")
-    h3= message
+	input(type='hidden', name='_csrf', value=csrf_token)
+	#notification
+	#welcome!=t("ns.common:welcome")
+	#div
+		input(type='button', value='Click me!')
+			{clicks}
+				clicks++;
+	- var plural = clicks == 1 ? "" : "s"
+	p You clicked the button #{clicks} time#{plural}
