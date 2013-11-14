@@ -133,7 +133,8 @@ module.exports = (app) ->
   multipleRedisSessions = require("connect-multi-redis")(app, express.session)
   # Set sessions and middleware
   app.configure ->
-    @use(express.bodyParser())
+    @use(express.urlencoded())
+    .use(express.json())
     .use(express.methodOverride())
     .use(express.cookieParser('90dj7Q2nC53pFj2b0fa81a3f663fd64'))
     .use(multipleRedisSessions(options))
