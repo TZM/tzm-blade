@@ -163,7 +163,6 @@ module.exports = (app) ->
     .use(express.csrf())
     #Configure dynamic helpers
     .use (req, res, next) ->
-      
       fs.readFile "./data/chapters.json", (err,chapterJSON) ->
         console.log("read file error", err) if err
         chapters = JSON.parse chapterJSON

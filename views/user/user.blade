@@ -2,7 +2,7 @@ include "../../layout/layout.blade"
 replace block page
   #user
     p="User profile page" 
-    b.text-success= message
+    b.text-success=message
     br
     form#user_edit_profile.form-horizontal(method="post" action="/user/update")
       input(type='hidden', name='_csrf', value=csrf_token)

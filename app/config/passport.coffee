@@ -31,8 +31,6 @@ else
 
 console.log 'passport'
 
-
-
 # serialize sessions
 passport.serializeUser (user, done) ->
   console.log 'serialize user'

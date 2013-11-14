@@ -359,7 +359,7 @@ body aside#nav-container h3 {
 }
 
 body aside#nav-container {
-    background: url('../images/nav-container.jpeg') left top repeat #4f4f50;
+    background: url('/images/nav-container.jpeg') left top repeat #4f4f50;
     width: 232px;
     height: 85%;
     overflow: auto;
@@ -381,7 +381,7 @@ body aside#nav-container {
 }
 
 #nav-container h3, #nav-container h4 {
-    background: url('../images/nav-bkg.jpeg');
+    background: url('/images/nav-bkg.jpeg');
     border-left: 4px solid #5a7772;
     padding: 5px 8px 5px 10px;
     overflow: visible;
@@ -395,7 +395,7 @@ nav ul, nav ol {
 }
 
 #nav-container ul {
-    background: url('../images/nav-ul-bkg.jpeg') left top repeat #393939;
+    background: url('/images/nav-ul-bkg.jpeg') left top repeat #393939;
     border-left: 4px solid #5a7772;
 }
 
@@ -432,7 +432,7 @@ div[role="main"] .mainarticle #nav-toggle {
 }
 
 div[role="main"] .mainarticle #nav-toggle {
-    background: url('../images/nav-close.png') no-repeat;
+    background: url('/images/nav-close.png') no-repeat;
     z-index: 2;
 }
 
@@ -441,7 +441,7 @@ div[role="main"] .mainarticle #nav-toggle:hover {
 }
 
 div[role="main"] .mainarticle #nav-toggle.active {
-    background: url('../images/nav-open.png') no-repeat;
+    background: url('/images/nav-open.png') no-repeat;
 }
 
 /**************************************************************************/
@@ -464,7 +464,7 @@ div[role="main"] .mainarticle #nav-toggle.active {
 }
 
 #nav-container span.menu-toggle, #nav-container span.menu-toggle:hover, #nav-container span.menu-toggle.open,#nav-container span.menu-toggle.open:hover {
-    background: url(../images/nav-arrows-sprite.png) no-repeat;
+    background: url(/images/nav-arrows-sprite.png) no-repeat;
 }
 
 #nav-container span.menu-toggle {
@@ -530,7 +530,7 @@ div[role="main"] .mainarticle .content .guide_navigation {
 }
 
 div[role="main"] .mainarticle .content .guide_navigation {
-    background: url('../images/nav-open.png') no-repeat;
+    background: url('/images/nav-open.png') no-repeat;
 }
 
 div[role="main"] .mainarticle .content .guide_navigation:hover {
