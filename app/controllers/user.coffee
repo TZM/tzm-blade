@@ -31,6 +31,7 @@ Route =
         res.redirect "index"
           
       else
+        console.log err
         res.statusCode = 400
         req.flash('info', req.i18n.t('ns.msg:flash.sendererror')+".")
         res.redirect "index"
@@ -129,9 +130,10 @@ Route =
           console.log 'activate. user', user
           if user.active is true
             req.logIn user, (err) ->
+              console.log('login err') if err
               next(err)  if err
               req.flash('info', 'Activation success')
-              res.redirect "user/resetpassword/"+req.params.id
+              res.redirect "user/resetpassword/"+user.tokenString
           else
             res.statusCode = 400
             req.flash('info', req.i18n.t('ns.msg:flash.alreadyactivated'))
