@@ -9,7 +9,6 @@
 - var chapters = chapterJSON
     - for(var i in chapters)
         - var row = chapters[i].desc
-        //- var code = row["LOCALES"].substr(3, 2)
         - var code = row["LOCALES"].split("-")[1]
         - countries.push({link:row["WEBSITE"],contact:row["CONTACT"],country: allCountries[code]})
 - var guide = locals.settings.translation.guide

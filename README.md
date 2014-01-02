@@ -1,14 +1,16 @@
 <a href="http://www.zmgc.net/" target="_blank"><img src="https://raw.github.com/TZM/tzm-blade/master/public/images/tzm-zmgc-logo-black-bg.png" align="right"></a>
-#TZM Chapters code :: [![Build Status](https://travis-ci.org/TZM/tzm-blade.png)](https://travis-ci.org/TZM/tzm-blade)
-* [Node.js](http://nodejs.org/)
-* [Blade HTML Compiler](https://github.com/bminer/node-blade)
+#TZM Chapters code :: 
+[![Build Status][1]][2] [![Dependency Status][3]][4][![browser support][5]][6]
+
+* [Node.js][5]
+* [Blade HTML Compiler][6]
 
 #Background
 The Zeitgeist Movement Global Connect (ZMGC) aims to create an on-line eco-system within which the ideas of Resource Based Economy can be galvanise into actions that can be used in the real world.
 
 It equips members with on-line tools, by providing the infrastructure necessary to easily exchange, analyse and disseminate information in a highly scalable and non-blocking manner using only Free Software build by the community.
 
-Please refer to the [wiki](https://github.com/TZM/tzm-blade/wiki) for deeper understanding of what this project is hoping to achieve. We also have a public [trello](https://trello.com/zmgc) board. 
+Please refer to the [wiki][7] for deeper understanding of what this project is hoping to achieve. We also have a public [trello][8] board. 
 
 #Setup
 Before running this application we will need to setup couple of environmental settings, in order not to add any private data within the code.
@@ -51,7 +53,7 @@ Now you can navigate to http://127.0.0.1:9080/ and see the website.
 #Deployment
 The application can be deployed anywhere where you have Nodejs installed, meaning that you can run this on your local machine and setup P2P; For now, this application is running on AppFog at zero cost, as AppFog provides you with a decent enough server to run this application.
 
-To deploy on AppFog, you will need to first create an account and then setup your machine to talk to AppFog, see the [Documentation](https://docs.appfog.com/getting-started/af-cli)
+To deploy on AppFog, you will need to first create an account and then setup your machine to talk to AppFog, see the [Documentation][9]
 
     ☺  npm install
 
@@ -117,7 +119,7 @@ To run locally for development use:
     ....
 
 #Testing
-The tests are now on Travis, for continuous integration see [![Build Status](https://travis-ci.org/TZM/tzm-blade.png)](https://travis-ci.org/TZM/tzm-blade) and to run localy you do:
+The tests are now on Travis, for continuous integration see [![Build Status][1]][2] and to run localy you do:
 
      ☺  cake test
      Assetizing footer
@@ -169,7 +171,7 @@ The tests are now on Travis, for continuous integration see [![Build Status](htt
     -------------------------------------------------------------------------------
 
 #Versioning
-ZMGC will be maintained under the Semantic Versioning guidelines as much as possible. Releases will be numbered with the following format:
+ZMGC will be maintained under the [Semantic Versioning Guidelines][10] as much as possible. Releases will be numbered with the following format:
 
 `<major>.<minor>.<patch>`
 
@@ -179,7 +181,7 @@ And constructed with the following guidelines:
 - New additions, such as new functionality, without breaking backward compatibility bumps the minor (and resets the patch)
 - Bug fixes and miscellaneous changes will bump the patch number
 
-For more information on SemVer, visit [http://semver.org](http://semver.org).
+For more information on SemVer, visit [http://semver.org][10].
 
 #Todo
  - `[ ]` Mocha BDD api and frontend tests
@@ -188,11 +190,11 @@ For more information on SemVer, visit [http://semver.org](http://semver.org).
     - `[ ]` Riak cluster setup and deployment
     - `[ ]` Riak administration
     - `[ ]` Riak backup
- - `[ ]` [DocPad integration](https://github.com/TZM/tzm-blade/issues/12) - [DocPad](https://github.com/bevry/docpad)
- - `[ ]` [AppFog Manifest](https://docs.appfog.com/getting-started/af-cli/manifests) for appfog deployment
+ - `[ ]` [DocPad integration](https://github.com/TZM/tzm-blade/issues/12) - [DocPad][11]
+ - `[ ]` [AppFog Manifest][12] for appfog deployment
  - `[✓]` <del>Heroku Procfile and instructions for heroku deployments</del>
- - `[ ]` [Vagrant](http://www.vagrantup.com/) - create a dev environment with Riak cluster and and use the Chef provisioning tool to:
-    - `[ ]` install packages, [riak](https://github.com/basho/riak-chef-cookbook), zmgc (node.js, express etc... through npm)
+ - `[ ]` [Vagrant][13] - create a dev environment with Riak cluster and and use the Chef provisioning tool to:
+    - `[ ]` install packages, [riak][14], zmgc (node.js, express etc...) through npm
     - `[ ]` create user accounts, as specified in included JSON config files
     - `[ ]` setup riak
     - `[ ]` configure firewalls
@@ -201,8 +203,8 @@ For more information on SemVer, visit [http://semver.org](http://semver.org).
     - `[ ]` Cluster
     - `[ ]` Error handling
     - `[ ]` Monitoring
-- `[ ]` Continuous Integration - [[https://travis-ci.org/TZM/tzm-blade][Travis-CI]] :: [![Build Status](https://travis-ci.org/TZM/tzm-blade.png)](https://travis-ci.org/TZM/tzm-blade)
-- `[ ]` [Documentation](https://github.com/TZM/tzm-blade/wiki)
+- `[ ]` Continuous Integration - [[https://travis-ci.org/TZM/tzm-blade][2]] :: [![Build Status][1]][2]
+- `[ ]` [Documentation][7]
 
 #Benchmarks
 See the [Benchmark page](BENCHMARK.md) for more information.
@@ -217,3 +219,18 @@ We need javascript developers, specifically members who know Node.js, Express. H
 
   - Development - html5, javascript template development - see [views/](views/) and [assets/](assets/) directory
   - Localization/Translation - we use the i18next library to localize and internationalize this application - see README.md in [locales/](locales/README.md) directory
+
+[1]: https://api.travis-ci.org/TZM/tzm-blade.png
+[2]: https://travis-ci.org/TZM/tzm-blade
+[3]: https://david-dm.org/TZM/tzm-blade.png
+[4]: https://david-dm.org/TZM/tzm-blade
+[5]: http://nodejs.org/
+[6]: https://github.com/bminer/node-blade
+[7]: https://github.com/TZM/tzm-blade/wiki
+[8]: https://trello.com/zmgc
+[9]: https://docs.appfog.com/getting-started/af-cli
+[10]: http://semver.org/
+[11]: https://github.com/bevry/docpad
+[12]: https://docs.appfog.com/getting-started/af-cli/manifests
+[13]: http://www.vagrantup.com/
+[14]: https://github.com/basho/riak-chef-cookbook

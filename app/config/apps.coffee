@@ -126,9 +126,6 @@ module.exports = (app) ->
       app.set "translation", []
       next()
       return
-
-
-  # arr = [];
   
   multipleRedisSessions = require("connect-multi-redis")(app, express.session)
   # Set sessions and middleware
@@ -168,7 +165,7 @@ module.exports = (app) ->
         chapters = JSON.parse chapterJSON
         formData = req.session.formData or {}
         code = i18n.lng().substr(0, 2)
-        countries = cldr.extractTerritoryDisplayNames(code) 
+        countries = cldr.extractTerritoryDisplayNames(code)
         delete req.session.formData
         res.locals
           #for use in templates
@@ -177,13 +174,14 @@ module.exports = (app) ->
           message: req.flash("info")
           # needed for csrf support
           csrf_token: req.session._csrf
-          # needed for coutry list localization
-          allCountries: countries
-
+          # list the 'Official Chapters' from the trello board
           chapterJSON: chapters
+          # localize the country list based on user's browser locale
+          allCountries: countries
           #socials
           socials: thirdParty
 
         # res.cookie.
         next()
   app
+  console.log app
