@@ -17,5 +17,6 @@ console.log map
 worldJsonData = require('../../data/topo/world.json')
 
 exports.map = (req, res) ->
-    res.render("map", { worldJsonData: worldJsonData})
-    user: req.user
+    res.render "map"
+    	user: req.user
+    	worldJsonData: worldJsonData
