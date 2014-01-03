@@ -111,6 +111,15 @@
             .duration(800)
     }
     
+    this.hideLegendLabel = function(){
+      d3.select(".LegendLabel").attr("display", "none");
+    }
+    
+    
+    this.showLegendLabel = function(){
+      d3.select(".LegendLabel").attr("display", "null");
+    }
+    
     this.drawTooltip = function() {
         "use strict"
         console.log("drawTooltip")
@@ -182,6 +191,7 @@
             .on("mouseout", function(d) {
                 d3.select(this)
                 .style("fill", "#000")
+                d3.select(this).select("title").remove()
                 //self.deactivateTooltip()
             })
 
@@ -198,6 +208,7 @@
             .on("mouseout", function(d) {
                 d3.select(this)
                 .style("fill", "#000")
+                 d3.select(this).select("title").remove()
                 //self.deactivateTooltip()
             })
       
@@ -214,6 +225,7 @@
             .on("mouseout", function(d) {
                 d3.select(this)
                 .style("fill", "#000")
+                 d3.select(this).select("title").remove()
                 //self.deactivateTooltip()
             })
         }
@@ -229,6 +241,8 @@
         .attr("height", "88%")
         .attr("viewBox", "0 0 " + width + "  "+ height)
         .attr("preserveAspectRatio", "xMidYMid")
+        .on("mouseout", self.hideLegendLabel)
+        .on("mouseover", self.showLegendLabel)
 
       // Add a transparent rect so that zoomMap works if user clicks on SVG
       self.svg.append("rect")
@@ -274,6 +288,7 @@
           .on("mouseout", function(d) {
             d3.select(this)
             .style("fill", "#aaa")
+             d3.select(this).select("title").remove()
             //self.deactivateTooltip()
           })
           .on("click", function(d) {
@@ -314,7 +329,7 @@
         x = width / 2
         y = height / 2
         k = 1
-        self.centered = null
+        centered = null
         // as we zoom out we want to remove the country layer
         self.svg.selectAll("#"+self.country).style("opacity", 1)
         self.svg.selectAll("#country").remove()
@@ -373,6 +388,7 @@
             .on("mouseout", function(d) {
               d3.select(this)
               .style("fill", "#000000")
+              d3.select(this).select("title").remove()
             })
             .on("click", function(d) {
               console.log('clicked on country')
