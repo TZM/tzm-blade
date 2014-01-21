@@ -1,6 +1,6 @@
 <a href="http://www.zmgc.net/" target="_blank"><img src="https://raw.github.com/TZM/tzm-blade/master/public/images/tzm-zmgc-logo-black-bg.png" align="right"></a>
 #TZM Chapters code :: 
-[![Build Status][1]][2] [![Dependency Status][3]][4][![browser support][5]][6]
+[![Build Status][1]][2] [![Dependency Status][3]][4][![Bitdeli Badge][15]][16]
 
 * [Node.js][5]
 * [Blade HTML Compiler][6]
@@ -151,24 +151,25 @@ The tests are now on Travis, for continuous integration see [![Build Status][1]]
 * /views          : Blade views / pages
 
 #Stats
-    ☺  cloc --exclude-dir=.app,buildAssets,data,public/css/font,public/css/fonts,public/css/vendor,public/js/vendor,node_modules .                    ruby-2.0.0-p195 master a6f469a""
-         107 text files.
-          99 unique files.
-       14125 files ignored.
+    ☺  cloc --exclude-dir=.app,buildAssets,data,public/css/font,public/css/fonts,public/css/vendor,public/js/vendor,node_modules .
+      173 text files.
+      169 unique files.
+      13245 files ignored.
 
-    http://cloc.sourceforge.net v 1.56  T=5.0 s (10.0 files/s, 1159.8 lines/s)
-    -------------------------------------------------------------------------------
-    Language                     files          blank        comment           code
-    -------------------------------------------------------------------------------
-    CSS                              5            278            242           2460
-    CoffeeScript                    31            224            314           1362
-    Javascript                      10             70            129            649
-    Bourne Shell                     1              0              0             19
-    make                             1             12             13             18
-    HTML                             2              3              0              6
-    -------------------------------------------------------------------------------
-    SUM:                            50            587            698           4514
-    -------------------------------------------------------------------------------
+      http://cloc.sourceforge.net v 1.56  T=9.0 s (11.2 files/s, 1515.6 lines/s)
+      -------------------------------------------------------------------------------
+      Language                     files          blank        comment           code
+      -------------------------------------------------------------------------------
+      CSS                             13           1013            498           6783
+      CoffeeScript                    41            453            788           2865
+      Javascript                      42            110            226            802
+      YAML                             1              0              4             27
+      Bourne Shell                     1              0              0             19
+      make                             1             12             13             18
+      HTML                             2              3              0              6
+      -------------------------------------------------------------------------------
+      SUM:                           101           1591           1529          10520
+      -------------------------------------------------------------------------------
 
 #Versioning
 ZMGC will be maintained under the [Semantic Versioning Guidelines][10] as much as possible. Releases will be numbered with the following format:
@@ -234,3 +235,5 @@ We need javascript developers, specifically members who know Node.js, Express. H
 [12]: https://docs.appfog.com/getting-started/af-cli/manifests
 [13]: http://www.vagrantup.com/
 [14]: https://github.com/basho/riak-chef-cookbook
+[15]: https://d2weczhvl823v0.cloudfront.net/TZM/tzm-blade/trend.png
+[16]: https://bitdeli.com/free

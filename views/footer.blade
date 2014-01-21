@@ -66,19 +66,19 @@ footer
                     li.dropdown
                         a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
                             span.icon-wrench
-                            span="Tools"
+                            span=t("ns.layout:footer.tools")
                             b.caret
                     li.divider-vertical
                     li.dropdown
                         a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
                             span.icon-folder-open
-                            span="Documentation"
+                            span=t("ns.layout:footer.documentations")
                             b.caret
                     li.divider-vertical
                     li.dropdown
                         a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
                             span.icon-eye-open
-                            span="F.A.Q."
+                            span=t("ns.layout:footer.faq")
                             b.caret
                 // Langauages select menu
                 ul.nav.pull-right
@@ -86,7 +86,7 @@ footer
                     li.dropdown
                         a.dropdown-toggle(href="#" role="button" data-toggle="dropdown")
                             span.icon-flag
-                            span="Langues"
+                            span=t("ns.layout:footer.language")
                             b.caret
                         .dropdown-menu.well.pull-right
                             - var langFile = locals.settings.languages

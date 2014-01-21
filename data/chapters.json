@@ -16,6 +16,21 @@
     }
   },
   {
+    "id": "4f199ec0ad628ffa660093b3",
+    "desc": {
+      "WEBSITE": "http://www.thezeitgeistmovement.be",
+      "CONTACT": "Gilles Cenni <gillesadrien.cenni@gmail.com>, Joris Swalus <karelgabriel@yahoo.com>, Arne Dumarey <replacement87@gmail.com>",
+      "CHAPTER SITE CONTACT": "<admin@thezeitgeistmovement.be>, <info@thezeitgeistmovement.be>",
+      "YOUTUBE": "https://www.youtube.com/tzmbelgium",
+      "GOOGLE+": "http://gplus.to/tzmbelgium,",
+      "TWITTER": "https://twitter.com/tzmbelgium",
+      "FACEBOOK": "https://www.facebook.com/groups/tzmbelgium/, https://www.facebook.com/groups/tzmbelgium.od/",
+      "TRELLO": "",
+      "OTHERS": "",
+      "LOCALES": "fr-BE"
+    }
+  },
+  {
     "id": "4f19a026ad628ffa66017ead",
     "desc": {
       "WEBSITE": "http://movimentozeitgeist.com.br/",
@@ -29,21 +44,6 @@
       "TRELLO": "",
       "OTHERS": "http://www.timelinguistico.com.br, http://www.youtube.com/user/BrazilianLingTeam, http://movimentozeitgeist.com.br/participar/cadastre-se",
       "LOCALES": "pt-BR"
-    }
-  },
-  {
-    "id": "4f199ec0ad628ffa660093b3",
-    "desc": {
-      "WEBSITE": "http://www.thezeitgeistmovement.be",
-      "CONTACT": "Gilles Cenni <gillesadrien.cenni@gmail.com>, Joris Swalus <karelgabriel@yahoo.com>, Arne Dumarey <replacement87@gmail.com>",
-      "CHAPTER SITE CONTACT": "<admin@thezeitgeistmovement.be>, <info@thezeitgeistmovement.be>",
-      "YOUTUBE": "https://www.youtube.com/tzmbelgium",
-      "GOOGLE+": "http://gplus.to/tzmbelgium,",
-      "TWITTER": "https://twitter.com/tzmbelgium",
-      "FACEBOOK": "https://www.facebook.com/groups/tzmbelgium/, https://www.facebook.com/groups/tzmbelgium.od/",
-      "TRELLO": "",
-      "OTHERS": "",
-      "LOCALES": "fr-BE"
     }
   },
   {

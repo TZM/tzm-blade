@@ -7,13 +7,19 @@
         return new arguments.callee(arguments)
     }
     var self = this
-    var width = 960,
-        height = 500,
-        centered, data, country
+    var margin = {top: 20, left: 20, bottom: 20, right: 20}
+        , width = parseInt(d3.select('#map').style('width'))
+        , width = width - margin.left - margin.right
+        , mapRatio = 0.5
+        , height = width * mapRatio
+        , centered, data, country
+
+    var urls = {world: "/world.json"}
 
     var parent = document.getElementById('map')
-        parent.addEventListener('mousemove', self.mouseMoveOverMap, false)
-        parent.addEventListener('mouseout', self.mouseOutOfMap, false)
+    
+    parent.addEventListener('mousemove', self.mouseMoveOverMap, false)
+    parent.addEventListener('mouseout', self.mouseOutOfMap, false)
 
     //this.mouseMoveOverMap = function(e) {
     //    var canvasXY = mouseToCanvasCoordinates(e, parent);
@@ -220,77 +226,99 @@
 
     // Map code
     this.drawMap = function() {
-      "use strict"
-      var map = d3.geo.equirectangular().scale(150)
-      self.path = d3.geo.path().projection(map)
+        "use strict"
+        var projection = d3.geo.equirectangular().scale(width)
+        self.path = d3.geo.path().projection(projection)
 
-      self.svg = d3.select("#map").append("svg")
-        .attr("width", "100%")
-        .attr("height", "88%")
-        .attr("viewBox", "0 0 " + width + "  "+ height)
-        .attr("preserveAspectRatio", "xMidYMid")
-
+        var map = d3.select('#map').append('svg')
+                .style('height', height + 'px')
+                .style('width', width + 'px')
+        queue()
+            .defer(d3.json, urls.world)
+            .await(self.render)
+        // catch the resize
+        d3.select(window).on('resize', self.resize)
+      //self.svg = d3.select("#map").append("svg")
+      //  .attr("width", width)
+      //  .attr("height", height)
+      //  .attr("viewBox", "0 0 " + width + "  "+ height)
+      //  .attr("preserveAspectRatio", "xMidYMid")
+//
       // Add a transparent rect so that zoomMap works if user clicks on SVG
-      self.svg.append("rect")
-        .attr("class", "background")
-        .attr("width", width)
-        .attr("height", height)
-        .on("click", self.zoomMap)
-        .on("mousemove", function(d) {
-            var lonlat = map.invert(d3.mouse(this))
-            var lonText = formatLongitude(lonlat[0])
-            var latText = formatLatitude(lonlat[1])
-            self.writeMouseLonLat(lonText, latText)
-        })
+      //self.map.append("rect")
+      //  .attr("class", "background")
+      //  .attr("width", width)
+      //  .attr("height", height)
+      //  //.on("click", self.zoomMap)
+      //  .on("mousemove", function(d) {
+      //      var lonlat = map.invert(d3.mouse(this))
+      //      var lonText = formatLongitude(lonlat[0])
+      //      var latText = formatLatitude(lonlat[1])
+      //      self.writeMouseLonLat(lonText, latText)
+      //  })
 
       // Add g element to load country paths
-      self.g = self.svg.append("g")
-        .attr("id", "countries")
-      // Load topojson data
-      d3.json("/world.json", function(topology) {
-        self.g.selectAll("path")
-        //.data(topology.features)
-        .data(topojson.object(topology, topology.objects.countries).geometries)
-          .enter().append("path")
-          .attr("d", self.path)
-          .attr("id", function(d) {
-            return d.properties.name.replace(/ /g,"_")
-          })
-          //.attr("class", data ? self.quantize : null)
-          .on("mousemove", function(d) {
-              var lonlat = map.invert(d3.mouse(this))
-              var lonText = formatLongitude(lonlat[0])
-              var latText = formatLatitude(lonlat[1])
-              self.writeMouseLonLat(lonText, latText)
-          })
-          .on("mouseover", function(d) {
-              d3.select(this)
-                .style("fill", "orange")
-                .append("svg:title")
-                //use CLDR to localize country name
-                .text(d.properties.name)
-            //self.activateTooltip(d.properties.name)
-          })
-          .on("mouseout", function(d) {
-            d3.select(this)
-            .style("fill", "#aaa")
-            //self.deactivateTooltip()
-          })
-          .on("click", function(d) {
-            var b = self.getBBox(d3.select(this))
-            self.svg.selectAll("#"+self.country).style("opacity", 1)
-            self.country = d.properties.name.replace(/ /g,"_")
-            self.svg.selectAll("#"+self.country).style("opacity", 0)
-            self.zoomMap(d, b)
-          })
-          // Remove Antarctica
-          //self.g.select("#Antarctica").remove()
-        })
-      // Add icons - these go last as we want them to sit on top layer
-      self.initLegendLabel()
-      self.drawIcons()
+      //self.g = self.svg.append("g")
+      //  .attr("id", "countries")
+      //// Load topojson data
+      //d3.json("/world.json", function(topology) {
+      //  self.g.selectAll("path")
+      //  //.data(topology.features)
+      //  .data(topojson.object(topology, topology.objects.countries).geometries)
+      //    .enter().append("path")
+      //    .attr("d", self.path)
+      //    .attr("id", function(d) {
+      //      return d.properties.name.replace(/ /g,"_")
+      //    })
+      //    //.attr("class", data ? self.quantize : null)
+      //    .on("mousemove", function(d) {
+      //        var lonlat = map.invert(d3.mouse(this))
+      //        var lonText = formatLongitude(lonlat[0])
+      //        var latText = formatLatitude(lonlat[1])
+      //        self.writeMouseLonLat(lonText, latText)
+      //    })
+      //    .on("mouseover", function(d) {
+      //        d3.select(this)
+      //          .style("fill", "orange")
+      //          .append("svg:title")
+      //          //use CLDR to localize country name
+      //          .text(d.properties.name)
+      //      //self.activateTooltip(d.properties.name)
+      //    })
+      //    .on("mouseout", function(d) {
+      //      d3.select(this)
+      //      .style("fill", "#aaa")
+      //      //self.deactivateTooltip()
+      //    })
+      //    .on("click", function(d) {
+      //      var b = self.getBBox(d3.select(this))
+      //      self.svg.selectAll("#"+self.country).style("opacity", 1)
+      //      self.country = d.properties.name.replace(/ /g,"_")
+      //      self.svg.selectAll("#"+self.country).style("opacity", 0)
+      //      self.zoomMap(d, b)
+      //    })
+      //    // Remove Antarctica
+      //    //self.g.select("#Antarctica").remove()
+      //  })
+      //// Add icons - these go last as we want them to sit on top layer
+      //self.initLegendLabel()
+      //self.drawIcons()
     } // end drawMap
+    this.render = function(err, world) {
+      "use strict"
+      console.log("we render")
+      var countries = topojson.mesh(world, world.objects.countries)
+      window.world = world
+      //map.append('path')
+      //  .datum(world)
+      //  .attr('class', 'world')
+      //  .attr('d', path)
 
+    }
+    this.resize = function() {
+      "use strict"
+      console.log("we resize")
+    }
     this.zoomMap = function(d, b) {
       "use strict"
       // get the ratio of the ViewBox height in relation to the country bbox height
