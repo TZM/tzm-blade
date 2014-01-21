@@ -1,6 +1,6 @@
 <a href="http://www.zmgc.net/" target="_blank"><img src="https://raw.github.com/TZM/tzm-blade/master/public/images/tzm-zmgc-logo-black-bg.png" align="right"></a>
 #TZM Chapters code :: 
-[![Build Status][1]][2] [![Dependency Status][3]][4][![Bitdeli Badge][15]][16]
+[![Build Status][1]][2] [![Dependency Status][3]][4] [![Bitdeli Badge][15]][16]
 
 * [Node.js][5]
 * [Blade HTML Compiler][6]
