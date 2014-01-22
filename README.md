@@ -2,6 +2,8 @@
 #TZM Chapters code :: 
 [![Build Status][1]][2] [![Dependency Status][3]][4] [![Bitdeli Badge][15]][16]
 
+[![Browser Support][17]][18]
+
 * [Node.js][5]
 * [Blade HTML Compiler][6]
 
@@ -237,3 +239,5 @@ We need javascript developers, specifically members who know Node.js, Express. H
 [14]: https://github.com/basho/riak-chef-cookbook
 [15]: https://d2weczhvl823v0.cloudfront.net/TZM/tzm-blade/trend.png
 [16]: https://bitdeli.com/free
+[17]: http://ci.testling.com/TZM/tzm-blade.png
+[18]: http://ci.testling.com/TZM/tzm-blade
