@@ -1,5 +1,6 @@
 express = require "express"
 csrf = express.csrf()
+cors = require "cors"
 assets = require "connect-assets"
 jsPaths = require "connect-assets-jspaths"
 flash = require "connect-flash"
@@ -76,6 +77,7 @@ module.exports = (app) ->
   app.configure ->
       app.use assets(build : true)
       jsPaths assets, console.log
+      app.use cors()
       @use(express.favicon(process.cwd() + "/assets/images/favicon.ico", {maxAge:maxAges}))
       .use(express.compress())
       .use(express.static(process.cwd() + "/assets", {maxAge:maxAges}))

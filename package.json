@@ -65,7 +65,8 @@
     "passport-google": "~0.3.0",
     "passport-yahoo": "~0.3.0",
     "passport-persona": "~0.1.7",
-    "redis-url": "~0.2.0"
+    "redis-url": "~0.2.0",
+    "cors": "~2.1.1"
   },
   "devDependencies": {
     "assert": "~0.4.9",
