@@ -9,14 +9,10 @@ models = require "./config/models"
 apps = require "./config/apps"
 routes = require "./config/routes"
 fs = require "fs"
-# passport = require "passport"
 # riak = require('riak-js').getClient(
 #   host: config.RIAK_DB.host, 
 #   port: config.RIAK_DB.port, 
 #   debug: true)
-
-# console.log "riak hostname: ", config.RIAK_DB.host
-# console.log "riak port: ", config.RIAK_DB.port
 
 #Load and intitialize logger
 logger = require "./utils/logger"
@@ -29,9 +25,6 @@ flash = require "connect-flash"
 app = express()
 app.configure ->
   app.use( flash() )
-#   app.use(passport.initialize())
-#   app.use(passport.session())
-#   app.use(require "./config/passport")
 app.settings.env = process.env.NODE_ENV if process.env.NODE_ENV
 app.configure "production", "development", "test", ->
   config.setEnvironment app.settings.env
@@ -51,7 +44,6 @@ dbconnection.init (result) ->
 
 #Exports
 module.exports = ->
-  
   #  Load Mongoose Models
   models app
   # Init i18next

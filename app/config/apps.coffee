@@ -1,6 +1,5 @@
 express = require "express"
 csrf = express.csrf()
-cors = require "cors"
 assets = require "connect-assets"
 jsPaths = require "connect-assets-jspaths"
 flash = require "connect-flash"
@@ -25,8 +24,6 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
 if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
   thirdParty.push("linkedin")
 
-
-
 logCategory = "CONFIGURE"
 maxAges = 86400000 * 30
 
@@ -35,7 +32,6 @@ config.setEnvironment process.env.NODE_ENV or "development"
 redisService =  process.env.REDISTOGO_URL || process.env.REDISCLOUD_URL
 # Redis session stores
 rediska = (if redisService? then require("redis-url").connect(redisService) else require("redis").createClient())
-
 
 options =
   unless redisService
@@ -66,9 +62,7 @@ options =
     session_secret: "f2e5a67d388ff2090dj7Q2nC53pF"
     cookie:
       maxAge: 86400000 * 1 # 30 days 
-    
 
-console.log "options: ",options.hosts[0]
 module.exports = (app) ->
   logger.info "Configure expressjs", logCategory
   # FIXME use _.each to loop for each dirs and Gzip
@@ -77,7 +71,6 @@ module.exports = (app) ->
   app.configure ->
       app.use assets(build : true)
       jsPaths assets, console.log
-      app.use cors()
       @use(express.favicon(process.cwd() + "/assets/images/favicon.ico", {maxAge:maxAges}))
       .use(express.compress())
       .use(express.static(process.cwd() + "/assets", {maxAge:maxAges}))
@@ -182,8 +175,6 @@ module.exports = (app) ->
           allCountries: countries
           #socials
           socials: thirdParty
-
         # res.cookie.
         next()
   app
-  console.log app

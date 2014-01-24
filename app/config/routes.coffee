@@ -48,8 +48,9 @@ module.exports = (app) ->
 
 # render the page based on controller name, method and id
 routeMvc = (controllerName, methodName, req, res, next) ->
-  res.header "Access-Control-Allow-Origin", "*"
-  res.header "Access-Control-Allow-Headers", "X-Requested-With"
+  #res.header "Access-Control-Allow-Origin", "*"
+  #res.header "Access-Control-Allow-Headers", "X-Requested-With"
+  #res.header "Access-Control-Allow-Methods", "GET,POST"
   controllerName = "index" if not controllerName?
   controller = null
   try
