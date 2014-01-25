@@ -630,4 +630,45 @@ div.statBlock {
     padding-top: 5px;
 }
 
+/*******************************************************************************/
+/* Activity box */
+/*******************************************************************************/
+.activity-box h3 {
+    margin: 10px 0 0;
+    color: #6C0;
+    font-size: 118%;
+    font-weight: 400;
+}
+.activity-box ul.activity-box-list {
+    list-style: none;
+    font-size: 11px;
+    margin: 7px 0 0;
+    padding: 0;
+}
+.activity-box ul.activity-box-list li {
+    float: left;
+    width: 180px;
+    display: list-item;
+    text-align: -webkit-match-parent;
+    outline-style: none;
+}
+.activity-box ul.activity-box-list li img {
+    float: left;
+    margin: 0 8px 7px 0;
+}
+.activity-box ul.activity-box-list li p {
+    font: 11px Verdana, Arial, Helvetica, sans-serif;
+    height: 1%;
+    overflow: hidden;
+    margin: 0;
+}
+.activity-box ul.activity-box-list li a {
+    float: left;
+    clear: both;
+    background: url(/images/bg-more.gif) no-repeat 0 center;
+    padding: 0 0 0 20px;
+    color: #333;
+    line-height: 16px;
+}
+
 @media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}

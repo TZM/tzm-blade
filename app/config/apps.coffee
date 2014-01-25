@@ -24,8 +24,6 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
 if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
   thirdParty.push("linkedin")
 
-
-
 logCategory = "CONFIGURE"
 maxAges = 86400000 * 30
 
@@ -34,7 +32,6 @@ config.setEnvironment process.env.NODE_ENV or "development"
 redisService =  process.env.REDISTOGO_URL || process.env.REDISCLOUD_URL
 # Redis session stores
 rediska = (if redisService? then require("redis-url").connect(redisService) else require("redis").createClient())
-
 
 options =
   unless redisService
@@ -65,9 +62,7 @@ options =
     session_secret: "f2e5a67d388ff2090dj7Q2nC53pF"
     cookie:
       maxAge: 86400000 * 1 # 30 days 
-    
 
-console.log "options: ",options.hosts[0]
 module.exports = (app) ->
   logger.info "Configure expressjs", logCategory
   # FIXME use _.each to loop for each dirs and Gzip
@@ -126,9 +121,6 @@ module.exports = (app) ->
       app.set "translation", []
       next()
       return
-
-
-  # arr = [];
   
   multipleRedisSessions = require("connect-multi-redis")(app, express.session)
   # Set sessions and middleware
@@ -168,7 +160,7 @@ module.exports = (app) ->
         chapters = JSON.parse chapterJSON
         formData = req.session.formData or {}
         code = i18n.lng().substr(0, 2)
-        countries = cldr.extractTerritoryDisplayNames(code) 
+        countries = cldr.extractTerritoryDisplayNames(code)
         delete req.session.formData
         res.locals
           #for use in templates
@@ -177,13 +169,12 @@ module.exports = (app) ->
           message: req.flash("info")
           # needed for csrf support
           csrf_token: req.session._csrf
-          # needed for coutry list localization
-          allCountries: countries
-
+          # list the 'Official Chapters' from the trello board
           chapterJSON: chapters
+          # localize the country list based on user's browser locale
+          allCountries: countries
           #socials
           socials: thirdParty
-
         # res.cookie.
         next()
   app
