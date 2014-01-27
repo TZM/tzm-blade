@@ -587,7 +587,7 @@ svg > text > .city-name {
 .Blues .q9-9{fill:rgb(7,46,106)}
 
 
-.background {fill: none;
+.background {fill: none/*#336699*/;
   pointer-events: all;
 }
 
@@ -670,5 +670,4 @@ div.statBlock {
     color: #333;
     line-height: 16px;
 }
-
 @media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}

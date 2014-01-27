@@ -117,6 +117,15 @@
             .duration(800)
     }
     
+    this.hideLegendLabel = function(){
+      d3.select(".LegendLabel").attr("display", "none");
+    }
+    
+    
+    this.showLegendLabel = function(){
+      d3.select(".LegendLabel").attr("display", "null");
+    }
+    
     this.drawTooltip = function() {
         "use strict"
         console.log("drawTooltip")
@@ -188,6 +197,7 @@
             .on("mouseout", function(d) {
                 d3.select(this)
                 .style("fill", "#000")
+                d3.select(this).select("title").remove()
                 //self.deactivateTooltip()
             })
 
@@ -204,6 +214,7 @@
             .on("mouseout", function(d) {
                 d3.select(this)
                 .style("fill", "#000")
+                 d3.select(this).select("title").remove()
                 //self.deactivateTooltip()
             })
       
@@ -220,15 +231,24 @@
             .on("mouseout", function(d) {
                 d3.select(this)
                 .style("fill", "#000")
+                 d3.select(this).select("title").remove()
                 //self.deactivateTooltip()
             })
         }
 
     // Map code
     this.drawMap = function() {
-        "use strict"
-        var projection = d3.geo.equirectangular().scale(width)
-        self.path = d3.geo.path().projection(projection)
+      "use strict"
+      var map = d3.geo.equirectangular().scale(150)
+      self.path = d3.geo.path().projection(map)
+
+      self.svg = d3.select("#map").append("svg")
+        .attr("width", "100%")
+        .attr("height", "88%")
+        .attr("viewBox", "0 0 " + width + "  "+ height)
+        .attr("preserveAspectRatio", "xMidYMid")
+        .on("mouseout", self.hideLegendLabel)
+        .on("mouseover", self.showLegendLabel)
 
         var map = d3.select('#map').append('svg')
                 .style('height', height + 'px')
@@ -258,51 +278,53 @@
       //  })
 
       // Add g element to load country paths
-      //self.g = self.svg.append("g")
-      //  .attr("id", "countries")
-      //// Load topojson data
-      //d3.json("/world.json", function(topology) {
-      //  self.g.selectAll("path")
-      //  //.data(topology.features)
-      //  .data(topojson.object(topology, topology.objects.countries).geometries)
-      //    .enter().append("path")
-      //    .attr("d", self.path)
-      //    .attr("id", function(d) {
-      //      return d.properties.name.replace(/ /g,"_")
-      //    })
-      //    //.attr("class", data ? self.quantize : null)
-      //    .on("mousemove", function(d) {
-      //        var lonlat = map.invert(d3.mouse(this))
-      //        var lonText = formatLongitude(lonlat[0])
-      //        var latText = formatLatitude(lonlat[1])
-      //        self.writeMouseLonLat(lonText, latText)
-      //    })
-      //    .on("mouseover", function(d) {
-      //        d3.select(this)
-      //          .style("fill", "orange")
-      //          .append("svg:title")
-      //          //use CLDR to localize country name
-      //          .text(d.properties.name)
-      //      //self.activateTooltip(d.properties.name)
-      //    })
-      //    .on("mouseout", function(d) {
-      //      d3.select(this)
-      //      .style("fill", "#aaa")
-      //      //self.deactivateTooltip()
-      //    })
-      //    .on("click", function(d) {
-      //      var b = self.getBBox(d3.select(this))
-      //      self.svg.selectAll("#"+self.country).style("opacity", 1)
-      //      self.country = d.properties.name.replace(/ /g,"_")
-      //      self.svg.selectAll("#"+self.country).style("opacity", 0)
-      //      self.zoomMap(d, b)
-      //    })
-      //    // Remove Antarctica
-      //    //self.g.select("#Antarctica").remove()
-      //  })
-      //// Add icons - these go last as we want them to sit on top layer
-      //self.initLegendLabel()
-      //self.drawIcons()
+      self.g = self.svg.append("g")
+        .attr("id", "countries")
+      // Load topojson data
+      d3.json("/world.json", function(topology) {
+        self.g.selectAll("path")
+        //.data(topology.features)
+        .data(topojson.object(topology, topology.objects.countries).geometries)
+          .enter().append("path")
+          .attr("d", self.path)
+          .attr("id", function(d) {
+            return d.properties.name.replace(/ /g,"_")
+          })
+          //.attr("class", data ? self.quantize : null)
+          .on("mousemove", function(d) {
+              var lonlat = map.invert(d3.mouse(this))
+              var lonText = formatLongitude(lonlat[0])
+              var latText = formatLatitude(lonlat[1])
+              self.writeMouseLonLat(lonText, latText)
+          })
+          .on("mouseover", function(d) {
+              d3.select(this)
+                .style("fill", "orange")
+                .append("svg:title")
+                //use CLDR to localize country name
+                .text(d.properties.name)
+            //self.activateTooltip(d.properties.name)
+          })
+          .on("mouseout", function(d) {
+            d3.select(this)
+            .style("fill", "#aaa")
+             d3.select(this).select("title").remove()
+            //self.deactivateTooltip()
+          })
+          .on("click", function(d) {
+            var b = self.getBBox(d3.select(this))
+            self.svg.selectAll("#"+self.country).style("opacity", 1)
+            self.country = d.properties.name.replace(/ /g,"_")
+            self.svg.selectAll("#"+self.country).style("opacity", 0)
+            self.zoomMap(d, b)
+          })
+          // Remove Antarctica
+          //self.g.select("#Antarctica").remove()
+        })
+      // Add icons - these go last as we want them to sit on top layer
+      self.initLegendLabel()
+      self.drawIcons()
+
     } // end drawMap
     this.render = function(err, world) {
       "use strict"
@@ -342,7 +364,7 @@
         x = width / 2
         y = height / 2
         k = 1
-        self.centered = null
+        centered = null
         // as we zoom out we want to remove the country layer
         self.svg.selectAll("#"+self.country).style("opacity", 1)
         self.svg.selectAll("#country").remove()
@@ -401,6 +423,7 @@
             .on("mouseout", function(d) {
               d3.select(this)
               .style("fill", "#000000")
+              d3.select(this).select("title").remove()
             })
             .on("click", function(d) {
               console.log('clicked on country')
