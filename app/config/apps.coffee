@@ -175,6 +175,8 @@ module.exports = (app) ->
           allCountries: countries
           #socials
           socials: thirdParty
+          #user
+          user: req.user
         # res.cookie.
         next()
   app
