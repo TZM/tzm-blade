@@ -239,6 +239,9 @@
     // Map code
     this.drawMap = function() {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d12c0cde93e9c61ab8514d7d938ec2ed44cf474d
       "use strict"
       var map = d3.geo.equirectangular().scale(150)
       self.path = d3.geo.path().projection(map)
@@ -250,11 +253,14 @@
         .attr("preserveAspectRatio", "xMidYMid")
         .on("mouseout", self.hideLegendLabel)
         .on("mouseover", self.showLegendLabel)
+<<<<<<< HEAD
 =======
         "use strict"
         var projection = d3.geo.equirectangular().scale(width)
         self.path = d3.geo.path().projection(projection)
 >>>>>>> tzm/master
+=======
+>>>>>>> d12c0cde93e9c61ab8514d7d938ec2ed44cf474d
 
         var map = d3.select('#map').append('svg')
                 .style('height', height + 'px')
@@ -285,6 +291,9 @@
 
       // Add g element to load country paths
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d12c0cde93e9c61ab8514d7d938ec2ed44cf474d
       self.g = self.svg.append("g")
         .attr("id", "countries")
       // Load topojson data
@@ -331,6 +340,7 @@
       // Add icons - these go last as we want them to sit on top layer
       self.initLegendLabel()
       self.drawIcons()
+<<<<<<< HEAD
 =======
       //self.g = self.svg.append("g")
       //  .attr("id", "countries")
@@ -378,6 +388,9 @@
       //self.initLegendLabel()
       //self.drawIcons()
 >>>>>>> tzm/master
+=======
+
+>>>>>>> d12c0cde93e9c61ab8514d7d938ec2ed44cf474d
     } // end drawMap
     this.render = function(err, world) {
       "use strict"
