@@ -3,13 +3,9 @@
 db = require "./db"
 i18next = require "./i18n"
 exports.setEnvironment = (env) ->
-
-  #I18N = require "./i18n"
   # General settings
   exports.SMTP =
     service: "Gmail"
-    # user: process.env.SMTP_USER
-    # pass: process.env.SMTP_PASSWD
     user: process.env.SMTP_USER
     pass: process.env.SMTP_PASSWD
 
@@ -47,7 +43,6 @@ exports.setEnvironment = (env) ->
       exports.MONGO_DB_URL = db.mongo.MONGO_DB_URL
       exports.RIAK_DB = db.riak
       exports.I18N = i18next
-
     when "production"
       exports.PORT = process.env.PORT or process.env.VMC_APP_PORT or process.env.VCAP_APP_PORT
       exports.APP =

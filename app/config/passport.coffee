@@ -108,6 +108,7 @@ if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
 passport.use(new GoogleStrategy
   returnURL: url+"/social/googlecallback"
   realm: url
+  stateless: true
 , (token, profile, done) ->
   console.log("arguments in google strategy");
   console.log(profile.emails);

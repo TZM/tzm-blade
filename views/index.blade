@@ -1,5 +1,80 @@
 include "../layout/layout.blade"
 replace block page
 	input(type='hidden', name='_csrf', value=csrf_token)
-	#welcome!=t("ns.common:welcome")
-	h3= message
+	.row
+		.span6
+			#welcome!=t("ns.common:welcome")
+			.row
+				.span6
+					.activity-box
+						h3="Latest activities..."
+						ul.activity-box-list
+							li.activity-box-list
+								img(src="/images/icons/ico-wrote-petition.gif" alt="wrote-petition")
+								p="Katia signed up to help with the Z-Day Festival: London"
+								a(href="#")=t("ns.forms:button.federated-login")
+							li
+								img(src="/images/icons/ico-donate.gif" alt="wrote-petition")
+								p="Luisa donated 5 € towards the Occupy London Fund"
+								a(href="#")=t("ns.forms:button.federated-login")
+							li
+								img(src="/images/icons/ico-wrote-petition.gif" alt="wrote-petition")
+								p="Muriel signed up to help with the Z-Day Festival: London"
+								a(href="#")=t("ns.forms:button.federated-login")
+		h3=message
+		.span6
+			p="right"
+	.row
+		.span7.tabbable.well.tabs-left
+			ul.nav.nav-tabs.user-login-register-form
+				li
+					a(href="#login-tab" data-toggle="tab")=t("ns.forms:button.login")
+				li
+					a(href="#register" data-toggle="tab")=t("ns.forms:button.register")
+				li
+					a(href="#reset-password" data-toggle="tab")=t("ns.forms:button.reset-password")
+			.tab-content
+				#login-tab.tab-pane.fade.in
+					.tabbable
+						ul.nav.nav-tabs.user-login-form
+							li
+								a(href="#federated-login" data-toggle="tab")=t("ns.forms:button.federated-login")
+							li
+								a(href="#login-form" data-toggle="tab")=t("ns.forms:button.login")
+					.tab-content
+						#federated-login.tab-pane.fade.in
+							include "forms/federated-form.blade"
+						#login-form.tab-pane.fade.in
+							include "forms/login-form.blade"
+				#register.tab-pane.fade.in
+					p=t("ns.forms:button.register")
+						include "forms/registration-form.blade"
+				#reset-password.tab-pane.fade.in
+					form#form_reset_password.auth-at-dropdown(method="post" action="/user/changepassword")
+						input(id="token" type="hidden" name="token" value="token")
+						p=t("ns.forms:button.reset-password")
+						.control-group
+							.controls
+								.input-prepend
+									.add-on
+										i.icon-key
+									input.input-xlarge.focused.required(id="password_new" name="password_new" type="password" placeholder='#{t("ns.forms:ph.new")}')
+						.control-group
+							.controls
+								.input-prepend
+									.add-on
+										i.icon-key
+									input.input-xlarge.focused.required(id="password_confirm" name="password_confirm" type="password" placeholder='#{t("ns.forms:ph.confirm")}')
+						.control-group.row-fluid
+							.controls
+								.span2
+									button#reset.btn.btn-block.btn-primary.btn-small(type="submit")=t("ns.forms:button.reset-password")
+						.control-group.row-fluid
+							.controls    
+								#passreq.hide=t("ns.msg:error.passreq.hide")
+								#confirmpassreq=t("ns.msg:error.confirmpassreq")
+								#passlength.hide=t("ns.msg:error.passlength")
+								#passequal.hide=t("ns.msg:error.passequal")
+
+								label.error.text-info(for="password_new")
+								label.error.text-success(for="password_confirm")

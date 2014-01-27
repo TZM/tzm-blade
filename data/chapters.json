@@ -31,6 +31,22 @@
     }
   },
   {
+    "id": "4f19a026ad628ffa66017ead",
+    "desc": {
+      "WEBSITE": "http://movimentozeitgeist.com.br/",
+      "COORDINATION": "Linguistic team:",
+      "CONTACT": "Michael Marques -michaelycus@gmail.com",
+      "PUBLIC SUPPORT": "contato@movimentozeitgeist.com.br",
+      "YOUTUBE": "http://www.youtube.com/user/MovimentoZeitgeist",
+      "GOOGLE+": "",
+      "TWITTER": "https://twitter.com/tzmediabr",
+      "FACEBOOK": "https://www.facebook.com/mzbrasil",
+      "TRELLO": "",
+      "OTHERS": "http://www.timelinguistico.com.br, http://www.youtube.com/user/BrazilianLingTeam, http://movimentozeitgeist.com.br/participar/cadastre-se",
+      "LOCALES": "pt-BR"
+    }
+  },
+  {
     "id": "4f19a037ad628ffa6601927a",
     "desc": {
       "WEBSITE": "http://www.zchile.cl",
@@ -276,6 +292,21 @@
     }
   },
   {
+    "id": "4f199fa0ad628ffa6601283f",
+    "desc": {
+      "WEBSITE": "http://zeitgeistbevegelsen.no/",
+      "COORDINATION": "Stina jacobson,<stina.jakobsen@gmail.com>",
+      "CONTACT": "Stina jacobson,<stina.jakobsen@gmail.com>",
+      "PUBLIC SUPPORT": "kontakt@zeitgeistbevegelsen.no",
+      "YOUTUBE": "http://www.youtube.com/user/TZMNorge/videos",
+      "TWITTER": "",
+      "FACEBOOK": "Zeitgeist national: https://www.facebook.com/groups/210954822893/",
+      "TRELLO": "https://trello.com/forressursbasert",
+      "OTHERS": "",
+      "LOCALES": "nn-NO"
+    }
+  },
+  {
     "id": "4f3319f29c1aea7460412984",
     "desc": {
       "WEBSITE": "http://www.tzmpilipinas.com/",
@@ -288,6 +319,22 @@
       "TRELLO": "",
       "OTHERS": "https://www.facebook.com/groups/tzmvolunteers/",
       "LOCALES": "phi-PH"
+    }
+  },
+  {
+    "id": "4f199d974a4a6d070f107b63",
+    "desc": {
+      "WEBSITE": "http://www.tzmpolska.org",
+      "COORDINATION": "Jasiek Łuszczki <the-jester@tlen.pl>, Piotrek Koczorski <piorasso@tzmpolska.org>, Łukasz Jagodziński <luke.jagodzinski@gmail.com>,",
+      "CONTACT": "Jasiek Łuszczki <the-jester@tlen.pl>, Łukasz Jagodziński <luke.jagodzinski@gmail.com>",
+      "PUBLIC SUPPORT": "Public Support <media@tzmpolska.org>",
+      "YOUTUBE": "http://www.youtube.com/user/TZMPoland",
+      "GOOGLE+": "https://plus.google.com/u/0/118239145574027639646/posts",
+      "TWITTER": "https://twitter.com/TZMPoland",
+      "FACEBOOK": "https://www.facebook.com/tzmpolska",
+      "TRELLO": "https://trello.com/tzmpolska",
+      "OTHERS": "",
+      "LOCALES": "pl-PL"
     }
   },
   {

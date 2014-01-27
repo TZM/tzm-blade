@@ -43,12 +43,13 @@ $(function($) {
   $('.user-login-register-form').click(function (e) {
       e.preventDefault(); $(this).tab('show');
   });
-  $('.user-login-register-form a:last').tab('show');
+  $('.user-login-register-form a:first').tab('show');
   
-  $('.user-login-form').click(function (e) {
-      e.preventDefault(); $(this).tab('show');
-  });
-  $('.user-login-form a:first').tab('show');
+  //$('.user-login-form').click(function (e) {
+  //    e.preventDefault(); $(this).tab('show');
+  //});
+  //$('.user-login-form a:first').tab('show');
+
   // SPA page loads
   $('.forums').on('click', function() {
     console.log('click on forums button');

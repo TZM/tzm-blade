@@ -12,7 +12,7 @@ tags
 
 # OsX
 .DS_Store
-Icon?
+#Icon?
 ._*
 .Spotlight-V100
 .Trashes

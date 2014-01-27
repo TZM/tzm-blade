@@ -39,7 +39,7 @@ Route =
       res.redirect "/"
 
   google: (req,res,next) ->
-    passport.authenticate('google', { failureRedirect: '/' }) req,res,next
+    passport.authenticate('google') req,res,next
   
   googlecallback: (req, res, next) ->
     passport.authenticate("google", (err, user, info)->
@@ -187,6 +187,7 @@ Route =
             console.log("user login error: ", err);
             req.flash('info', req.i18n.t('ns.msg:flash.authorizationfailed'))
             res.statusCode = 403
+            res.redirect "/"
             
             
     ) req,res,next
