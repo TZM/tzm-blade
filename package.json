@@ -77,7 +77,8 @@
     "supertest": "*",
     "mocha": ">=1.6.0",
     "should": ">=1.2.0",
-    "tap": "~0.3.0"
+    "tap": "~0.3.0",
+    "coffeelint": "*"
   },
   "optionalDependencies": {},
   "testling": {
