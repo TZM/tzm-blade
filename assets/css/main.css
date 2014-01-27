@@ -587,7 +587,7 @@ svg > text > .city-name {
 .Blues .q9-9{fill:rgb(7,46,106)}
 
 
-.background {fill: none;
+.background {fill: none/*#336699*/;
   pointer-events: all;
 }
 

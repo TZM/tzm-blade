@@ -9,10 +9,6 @@ models = require "./config/models"
 apps = require "./config/apps"
 routes = require "./config/routes"
 fs = require "fs"
-# riak = require('riak-js').getClient(
-#   host: config.RIAK_DB.host, 
-#   port: config.RIAK_DB.port, 
-#   debug: true)
 
 #Load and intitialize logger
 logger = require "./utils/logger"
@@ -24,10 +20,10 @@ flash = require "connect-flash"
 # Create server and set environment
 app = express()
 app.configure ->
-  app.use( flash() )
+    app.use( flash() )
 app.settings.env = process.env.NODE_ENV if process.env.NODE_ENV
 app.configure "production", "development", "test", ->
-  config.setEnvironment app.settings.env
+    config.setEnvironment app.settings.env
 
 logger.info "--- App server created and local env set to: "+app.settings.env, logCategory
 
@@ -39,21 +35,20 @@ logger.info "--- Server running on port: "+app.port, logCategory
 dbconnection = require "./utils/dbconnect"
 
 dbconnection.init (result) ->
-  if result
-    logger.info "Database initialized: " + result, logCategory
-
+    if result
+        logger.info "Database initialized: " + result, logCategory
 #Exports
 module.exports = ->
-  #  Load Mongoose Models
-  models app
-  # Init i18next
-  i18next.init(config.I18N)
-  # Load Expressjs config
-  apps app
-  #  Load routes config
-  routes app
-  # 
-  app
+    #  Load Mongoose Models
+    models app
+    # Init i18next
+    i18next.init(config.I18N)
+    # Load Expressjs config
+    apps app
+    # Load routes config
+    routes app
+    #
+    app
 # register i18next helpers
 i18next.registerAppHelper(app)
 logger.info "--- Modules loaded into namespace ---", logCategory
