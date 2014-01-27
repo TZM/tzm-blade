@@ -630,9 +630,6 @@ div.statBlock {
     padding-top: 5px;
 }
 
-<<<<<<< HEAD
-
-=======
 /*******************************************************************************/
 /* Activity box */
 /*******************************************************************************/
@@ -673,5 +670,5 @@ div.statBlock {
     color: #333;
     line-height: 16px;
 }
->>>>>>> d12c0cde93e9c61ab8514d7d938ec2ed44cf474d
+
 @media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}
