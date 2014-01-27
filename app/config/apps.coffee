@@ -1,5 +1,6 @@
 express = require "express"
 csrf = express.csrf()
+cors = require('../utils/cors')
 assets = require "connect-assets"
 jsPaths = require "connect-assets-jspaths"
 flash = require "connect-flash"
