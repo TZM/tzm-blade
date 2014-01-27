@@ -16,13 +16,13 @@ __ = require "underscore"
 
 thirdParty = ["google","yahoo","persona"]
 if process.env.FB_APP_ID? and  process.env.FB_APP_SEC?
-  thirdParty.push("facebook")
+    thirdParty.push("facebook")
 # if process.env.TT_APP_ID? and process.env.TT_APP_SEC?
 #   thirdParty.push("twitter")
 if process.env.GITHUB_ID? and process.env.GITHUB_SEC? 
-  thirdParty.push("github")
+    thirdParty.push("github")
 if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
-  thirdParty.push("linkedin")
+    thirdParty.push("linkedin")
 
 logCategory = "CONFIGURE"
 maxAges = 86400000 * 30
