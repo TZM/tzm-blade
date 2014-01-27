@@ -1,0 +1,123 @@
+include "../../layout/layout.blade"
+replace block page
+    style(type='text/css')
+        |!
+            .user-state-active:after {
+                content: 'Active';
+            }
+            .user-state-inactive:after {
+                content: 'Disabled';
+            }
+            .user-state-email:after {
+                content: 'Email';
+            }
+    #search(style="margin:30px 40px;")
+        form#user-search(method='post', action='/user/list')
+            input#_csrf(type="hidden", name="_csrf", value="#{csrf_token}")
+            input(type='text', id='user-search-q', class='textinput searchinput', name='q', placeholder='filter by email or name')
+            select(id='user-search-filter', name='filter')
+                option(value='email', selected='selected') Email (Default)
+                option(value='name') Name
+            input#user-search-submit(type='submit', value='Filter')
+    - var groups = ['admin', 'member', 'reviewers', 'guest'];
+    - var groupLabels = ['Administrator', 'Member', 'Reviewer', 'Not verified'];
+    table
+        thead
+            tr
+                th
+                    input(type='checkbox' id='user-checkall')
+                th Email
+                th Firstname
+                th Lastname
+                th Group
+                th State
+        tbody#user-list
+            - for( var i=0, len=users.length; i<0; i++ )
+                - var user = users[i];
+                tr(id='user-#{i}')
+                    td
+                        input(type='checkbox')
+                    td
+                        input(type='hidden', class='user-orig-email', value='#{user.email||""}')
+                        input(type='text', class='user-email', value='#{user.email||"not.verified@domain.tld"}')
+                    td
+                        input(type='hidden', class='user-orig-firstname', value='#{user.name||""}')
+                        input(type='text', class='user-firstname', value='#{user.name||(user.group==="guest"&&"Not")||""}')
+                    td
+                        input(type='hidden', class='user-orig-lastname', value='#{user.surname||""}')
+                        input(type='text', class='user-lastname', value='#{user.surname||(user.group==="guest"&&"Verified")||""}')
+                    td
+                        input(type='hidden', class='user-orig-group', value='#{user.groups||""}')
+                        select
+                            - for( var j=0, len2=groups.length; j<len2; j++ )
+                                - var group = groups[j];
+                                - if (user.groups === group)
+                                    option(value='#{group}', selected='selected') #{groupLabels[j]}
+                                - else
+                                    option(value='#{group}') #{groupLabels[j]}
+                    td
+                        input(type='hidden', class='user-orig-active', value='#{user.active?"true":"false"}')
+                        input(type='hidden', class='user-active', value='#{user.active?"true":"false"}')
+                        - if (user.groups==='guest' && user.email)
+                            span(class='user-state user-state-email')
+                        - else if (user.active)
+                            span(class='user-state user-state-active')
+                        - else
+                            span(class='user-state user-state-inactive')
+                    td
+                        input(type='submit', value='Update', class='user-update')
+        tfoot
+            tr#user-create
+                td
+                td
+                    input(type='text', class='user-email', placeholder='email@domain.tld')
+                td
+                    input(type='text', class='user-firstname', placeholder='Firstname')
+                td
+                    input(type='text', class='user-lastname', placeholder='Lastname')
+                td
+                    select
+                        - for( var j=0, len2=groups.length; j<len2; j++ )
+                            - var group = groups[j];
+                            - if (group === 'guest')
+                                option(value='#{group}', selected='selected') #{groupLabels[j]}
+                            - else
+                                option(value='#{group}') #{groupLabels[j]}
+                td
+                td
+                    input(type='submit', value='Add new user', class='user-create')
+            tr#user-baserow(style='display:none')
+                td
+                    input(type='checkbox')
+                td
+                    input(type='hidden', class='user-orig-email', value='')
+                    input(type='text', class='user-email', value='')
+                td
+                    input(type='hidden', class='user-orig-firstname', value='')
+                    input(type='text', class='user-firstname', value='')
+                td
+                    input(type='hidden', class='user-orig-lastname', value='')
+                    input(type='text', class='user-lastname', value='')
+                td
+                    input(type='hidden', class='user-orig-group', value='guest')
+                    select
+                        - for( var j=0, len2=groups.length; j<len2; j++ )
+                            - var group = groups[j];
+                            - if (group==='guest')
+                                option(value='#{group}', selected='selected') #{groupLabels[j]}
+                            - else
+                                option(value='#{group}') #{groupLabels[j]}
+                td
+                    input(type='hidden', class='user-provider', value='')
+                    input(type='hidden', class='user-orig-state', value='inactive')
+                    input(type='hidden', class='user-new-state', value='inactive')
+                    span(class='user-state user-state-inactive')
+                td
+                    input(type='submit', value='Update', class='user-update')
+    input#user-updateall(type='submit', value='Update Selected')
+    input#user-updateall-group(type='submit', value='Update Group for Selected')
+    input#user-updateall-state(type='submit', value='Update States for Selected')
+    input#user-resendall(type='submit', value='Re-send confirmation for Selected')
+    #user-count(style='display:none') #{i}
+    #user-last(style='display:none') #{i<20}
+    script(type='text/javascript', src='/js/user-list.js')

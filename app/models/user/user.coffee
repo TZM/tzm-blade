@@ -86,7 +86,9 @@ UserSchema = new Schema(
     type: Array
     enum: ["facebook", "google", "yahoo", "local", "github", "persona", "linkedin", "twitter"]
     required: false
-    default: "local"
+
+  awaitConfirm:
+    type: Boolean
 )
 
 # expose enum on the model, and provide an internal convenience reference
@@ -174,6 +176,7 @@ UserSchema.methods.resetLoginAttempts = (cb) ->
 # Register new user
 UserSchema.statics.register = (user, cb) ->
   self = new this(user)
+  self.awaitConfirm = true;
   user.email = sanitize(user.email.toLowerCase().trim()).xss()
   validator.check(user.email, messages.VALIDATE_EMAIL).isEmail()
   errors = validator.getErrors()
@@ -276,9 +279,11 @@ UserSchema.statics.activate = (token, cb) ->
   , (err, existingUser) ->
     return cb(err)  if err
     if existingUser
-      if existingUser.tokenExpires > Date.now()
+      if existingUser.tokenExpires > Date.now() and existingUser.awaitConfirm
         existingUser.active = true
+        delete existingUser.awaitConfirm
         existingUser.groups = "member"
+        (existingUser.provider = existingUser.provider || []).push('local')
         existingUser.save (err, user)->
           unless err
             cb null, user
