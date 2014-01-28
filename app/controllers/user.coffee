@@ -360,8 +360,8 @@ Route =
         user: req.user
       res.statusCode = 403
   list: (req, res, next) ->
-    if !req.user || req.user.groups isnt 'admin'
-      return res.send(403)
+    #if !req.user || req.user.groups isnt 'admin'
+    #  return res.send(403)
 
     console.log 'list', req.user
 
