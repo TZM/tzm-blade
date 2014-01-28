@@ -8,12 +8,15 @@ exports.chapters = (req, res, err) ->
 	fs.readFile "./data/chapters.json", (err, chapterJSON) ->
 		console.log("read file error", err) if err
 		tzmChapters = JSON.parse chapterJSON
+		currentLng = req.locale
+		console.log i18n
+		console.log currentLng
 		try
 			# ...
 			lngCode = req.query.setLng.split("-")[0]
 		catch e
 			# fallback to user locale
-			lngCode = i18n.lng().split("-")[1]
+			lngCode = req.locale.split("-")[1]
 		allCountries = cldr.extractTerritoryDisplayNames(lngCode)
 		flags = cldr.extractTerritoryDisplayNames('en')
 		tzmNetwork = []
