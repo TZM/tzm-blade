@@ -13,7 +13,8 @@ exports.chapters = (req, res, err) ->
 			lngCode = req.query.setLng.split("-")[0]
 		catch e
 			# fallback to user locale
-			lngCode = i18n.lng().split("-")[1]
+			lngCode = req.locale.split("-")[1]
+		console.log lngCode
 		allCountries = cldr.extractTerritoryDisplayNames(lngCode)
 		flags = cldr.extractTerritoryDisplayNames('en')
 		tzmNetwork = []
