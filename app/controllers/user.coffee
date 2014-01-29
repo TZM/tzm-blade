@@ -360,10 +360,10 @@ Route =
         user: req.user
       res.statusCode = 403
   list: (req, res, next) ->
+    console.log 'list', req.user && req.user.groups
+
     if !req.user || req.user.groups isnt 'admin'
       return res.send(403)
-
-    console.log 'list', req.user
 
     if req.method is 'POST'
 
@@ -428,6 +428,8 @@ Route =
       #if req.users.groups is 'admin'
       q = req.query.q
       filter = req.query.filter
+      sort = req.query.sort
+      order = req.query.order
 
       data = {}
 
@@ -440,7 +442,27 @@ Route =
       limit = Math.max(req.query.limit ? 20, 200)
       skip = req.query.skip ? 0
 
-      User.find(data, listFields).skip(skip).limit(limit).exec (err, users) ->
+      query = User.find(data, listFields).skip(skip).limit(limit)
+
+      if sort and order
+        key = false
+        sortObj = {}
+
+        order = 1 if order is 'asc'
+        order = -1 if order is 'desc'
+
+        key = 'email' if sort is 'email'
+        key = 'name' if sort is 'firstname'
+        key = 'surname' if sort is 'lastname'
+        key = 'groups' if sort is 'group'
+
+        if sort is 'state'
+          query.sort({active:order, awaitConfirm:order});
+        else if key
+          sortObj[key] = order
+          query.sort(sortObj)
+
+      query.exec (err, users) ->
         return res.send 500, err.message || err if err
 
         if req.xhr
@@ -515,8 +537,12 @@ listUpdateUser = (data, cb) ->
   update.name = data.firstname if data.firstname?
   update.surname = data.lastname if data.lastname?
   update.groups = data.group if data.group?
-  update.active = data.active is 'active'
-  update.awaitConfirm = true if data.active is 'email'
+  update.awaitConfirm = true if data.state is 'email'
+
+  if data.state is 'active'
+    update.active = true
+  else if data.state is 'inactive'
+    update.active = false
 
   console.log 'pre update', where, update
 

@@ -1,6 +1,8 @@
 jQuery(function($) {
 	var csrf = $('#_csrf').val(),
-		userList = $('#user-list');
+		userList = $('#user-list'),
+		sort = $('#user-sort'),
+		order = $('#user-sort-order');
 
 	loadMore();
 
@@ -13,11 +15,46 @@ jQuery(function($) {
 		$('#user-list > tr > td > input[type=checkbox]').prop('checked', this.checked);
 	});
 
+	var sorter = $('#user-table > thead > tr').on('click', 'th.sort', function() {
+		var th = $(this),
+			all = sorter.find('th.sort'),
+			type = this.id.replace('head-', '');
+
+		// Cycle through ascending, descending, and no sort.
+		if (th.hasClass('sort-asc')) {
+			all.removeClass('sort-asc sort-desc');
+			th.addClass('sort-desc');
+			sort.html(type);
+			order.html('desc');
+		}
+		else if (th.hasClass('sort-desc')) {
+			all.removeClass('sort-asc sort-desc');
+			sort.html('');
+			order.html('');
+		}
+		else {
+			all.removeClass('sort-asc sort-desc');
+			th.addClass('sort-asc');
+			sort.html(type);
+			order.html('asc');
+		}
+
+		clear();
+		loadMore();
+	});
+
+	function clear() {
+		$('#user-count').html('0');
+		userList.find('> .user').remove();
+	}
+
 	function loadMore() {
 		var skip = parseInt($('#user-count').html()),
 			limit = 20,
 			q = $('#user-search-q').val(),
-			filter = $('user-search-filter option:selected').val();
+			filter = $('user-search-filter option:selected').val(),
+			s = sort.html(),
+			o = order.html();
 
 		var data = {
 			skip: skip,
@@ -27,6 +64,11 @@ jQuery(function($) {
 		if (q) {
 			data.q = q;
 			data.filter = filter;
+		}
+
+		if (s) {
+			data.sort = s;
+			data.order = o;
 		}
 
 		$.get('/user/list', data, function(data, textStatus) {
