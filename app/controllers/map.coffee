@@ -11,9 +11,9 @@ chartSvg = chartDiv.append("svg").attr("id", "chartsvg").attr("width", 750).attr
 rect = chartSvg.append("rect").attr("class", "background").attr("width", 750).attr("height", 750)
 iconGroup = chartSvg.append("g").attr("class", "map-tools").attr("transform", "translate(300 500) scale(0.5)")
 
-iconGroup.append("svg:path").attr("class", "group-icon").attr("d", mapHelper.groupIcon)
-iconGroup.append("svg:path").attr("class", "projects-icons").attr("d", mapHelper.projectsIcon).attr("transform", "translate(100)")
-iconGroup.append("svg:path").attr("class", "skill-share-icon").attr("d", mapHelper.skillShareIcon).attr("transform", "translate(220)")
+iconGroup.append("svg:path").attr("class", "group-icon").attr("d", mapHelper.groupIcon).attr("title", "groups")
+iconGroup.append("svg:path").attr("class", "projects-icons").attr("d", mapHelper.projectsIcon).attr("transform", "translate(100)").attr("title", "projects")
+iconGroup.append("svg:path").attr("class", "skill-share-icon").attr("d", mapHelper.skillShareIcon).attr("transform", "translate(220)").attr("title", "share your skills with tzm")
 
 worldJsonData = require('../../data/topo/world.json')
 
