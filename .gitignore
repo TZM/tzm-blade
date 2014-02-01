@@ -25,4 +25,5 @@ public/js/map2.js
 .app
 server.old.js
 npm-debug.log
+run.js
 #data/chapters.json
