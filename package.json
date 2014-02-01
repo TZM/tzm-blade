@@ -21,6 +21,7 @@
     "start": "node run.js"
   },
   "dependencies": {
+    "coffee-script": ">=1.7.0",
     "express": "*",
     "mongoose": "*",
     "bcrypt": "*",
@@ -57,7 +58,6 @@
     "async": "*",
     "traverse": "~0.6.3",
     "baudio": "~1.1.3",
-    "coffee-script": "~1.6.3",
     "passport-facebook": "~1.0.2",
     "passport-github": "~0.1.5",
     "passport-linkedin": "~0.1.3",
@@ -72,7 +72,6 @@
     "assert": "~0.4.9",
     "imap": "~0.7.12",
     "mailparser": "~0.3.6",
-    "coffee-script": ">=1.7.0",
     "jasmine-node": ">=1.3.1",
     "supertest": "*",
     "mocha": ">=1.6.0",
