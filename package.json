@@ -72,7 +72,7 @@
     "assert": "~0.4.9",
     "imap": "~0.7.12",
     "mailparser": "~0.3.6",
-    "coffee-script": ">=1.6.2",
+    "coffee-script": ">=1.7.0",
     "jasmine-node": ">=1.3.1",
     "supertest": "*",
     "mocha": ">=1.6.0",

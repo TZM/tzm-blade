@@ -96,6 +96,21 @@
     }
   },
   {
+    "id": "4f199f05ad628ffa6600c4b9",
+    "desc": {
+      "WEBSITE": "http://www.zeitgeist.fi/joomla/",
+      "CONTACT": "Teemu Koskimäki<koskimaki.teemu@gmail.com>,",
+      "PUBLIC SUPPOR": "Public Support<zeitgeistfinland@gmail.com>",
+      "YOUTUBE": "http://www.youtube.com/user/Zeitgeistliike?feature=watch",
+      "GOOGLE+": "",
+      "TWITTER": "",
+      "FACEBOOK": "https://www.facebook.com/groups/59402472740/",
+      "TRELLO": "",
+      "OTHERS": "",
+      "LOCALES": "fi-FI"
+    }
+  },
+  {
     "id": "4f199f08ad628ffa6600c877",
     "desc": {
       "WEBSITE": "http://www.mouvement-zeitgeist.fr/",
