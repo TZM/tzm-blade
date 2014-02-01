@@ -288,9 +288,8 @@ if process.env.LI_APP_ID? and process.env.LI_APP_SEC?
         User.findOneAndUpdate(
             "email":
                 $in: emails
-        ,
-            $addToSet:
-                "provider": profile.provider
+        , $addToSet:
+            "provider": profile.provider
         , (err, user) ->
             if err? then return done err, null,
                 message: "authorizationfailed",
@@ -338,9 +337,8 @@ passport.use(new YahooStrategy
     displayName = profile.displayName.split(" ")
     User.findOneAndUpdate(
         "emails": {$in: emails}
-    ,
-        $addToSet:
-            "provider": "yahoo"
+    , $addToSet:
+        "provider": "yahoo"
     , (err, user) ->
         if err? then return done err, null,
             message: "authorizationfailed",
@@ -372,120 +370,117 @@ passport.use(new YahooStrategy
     )
 )
 
-
 # use persona strategy
 # Persona returns only email
 passport.use(new PersonaStrategy
-  audience: url
-  , (email, done) ->
+    audience: url
+, (email, done) ->
     # console.log "arguments in persona strategy"
     # console.log arguments
     process.nextTick ->
-      User.findOneAndUpdate(
-        "email": email
-      ,
-        $addToSet:
-          "provider": "persona"
-      , (err, user) ->
-        if err? then return done err, null,
-          message: "authorizationfailed",
-          data: ".",
-          message2: "tryagain"
-        unless user
-          User.create(
+        User.findOneAndUpdate(
             "email": email
+        , $addToSet:
             "provider": "persona"
-            "name": email
-            "active": true
-            "groups": "member"
-          , (err,newUser)->
+        , (err, user) ->
             if err? then return done err, null,
-              message: "authorizationfailed",
-              data: ".",
-              message2: "tryagain"
-            done null, newUser,
-              message: "authorizationsuccess"
-              data: "."
-              message2: "welcome"
-          )
-        else
-          done null, user,
-            message: "authorizationsuccess"
-            data: "."
-            message2: "welcome"
-      )
-  )
-
+                message: "authorizationfailed",
+                data: ".",
+                message2: "tryagain"
+            unless user
+                User.create(
+                    "email": email
+                    "provider": "persona"
+                    "name": email
+                    "active": true
+                    "groups": "member"
+                , (err,newUser)->
+                    if err? then return done err, null,
+                        message: "authorizationfailed",
+                        data: ".",
+                        message2: "tryagain"
+                    done null, newUser,
+                        message: "authorizationsuccess"
+                        data: "."
+                        message2: "welcome"
+                )
+            else
+                done null, user,
+                    message: "authorizationsuccess"
+                    data: "."
+                    message2: "welcome"
+        )
+)
 
 # use local strategy
 passport.use new LocalStrategy(
-  usernameField: "email",
-  passwordField: "password"
-  , (email, password, done) ->
+    usernameField: "email",
+    passwordField: "password"
+, (email, password, done) ->
     console.log "local strategy"
     User.findOne email: email, (err, user) ->
-      unless err
-        if user
-          if user.active is true
-            attempts = user.loginAttempts
-            if ((5 - attempts) > 1)
-              remaining = "attemptsrem"
-            else
-              remaining = "attemptrem"
-            if user.lockUntil < Date.now()
-              user.comparePassword password, (err,isMatch)->
-                unless err
-                  if isMatch
-                    console.log "authorization success"
-                    user.resetLoginAttempts (cb) ->
-                      done(null,user,
-                        message: "authorizationsuccess"
-                        data: "."
-                        message2: "welcome")
-                  else
-                    if user.loginAttempts < 5
-                      console.log "pass not match"
-                      user.incLoginAttempts (cb)->
-                        done(null,false,
-                          message: "invalidpass",
-                          data: ". " + (5 - attempts),
-                          message2: remaining )
+        unless err
+            if user
+                if user.active is true
+                    attempts = user.loginAttempts
+                    if ((5 - attempts) > 1)
+                        remaining = "attemptsrem"
                     else
-                      done(null,false,
-                        message: "lockedafter",
-                        data: attempts,
-                        message2: "wrongattempts")
+                        remaining = "attemptrem"
+                    if user.lockUntil < Date.now()
+                        user.comparePassword password, (err,isMatch)->
+                            unless err
+                                if isMatch
+                                    console.log "authorization success"
+                                    user.resetLoginAttempts (cb) ->
+                                        done(null,user,
+                                            message: "authorizationsuccess"
+                                            data: "."
+                                            message2: "welcome")
+                                else
+                                    if user.loginAttempts < 5
+                                        console.log "pass not match"
+                                        user.incLoginAttempts (cb)->
+                                            done(null,false,
+                                                message: "invalidpass",
+                                                data: ". " + (5 - attempts),
+                                                message2: remaining )
+                                    else
+                                        done(null,false,
+                                            message: "lockedafter",
+                                            data: attempts,
+                                            message2: "wrongattempts")
+                            else
+                                console.log "pass not match"
+                                attempts = user.loginAttempts
+                                if user.loginAttempts < 5
+                                    user.incLoginAttempts (cb)->
+                                        done(null,false,
+                                            message: "invalidpass",
+                                            data: ". " + (5 - attempts),
+                                            message2: remaining )
+                    else
+                        console.log "user is locked"
+                        date = new Date(user.lockUntil)
+                        done(err,false,
+                            message: "lockeduntil",
+                            data: ": " + date + ".",
+                            message2:"tryagainlater")
                 else
-                  console.log "pass not match"
-                  attempts = user.loginAttempts
-                  if user.loginAttempts < 5
-                    user.incLoginAttempts (cb)->
-                      done(null,false,
-                        message: "invalidpass",
-                        data: ". " + (5 - attempts),
-                        message2: remaining )
+                    console.log "user is " + user.name
+                    done(err,false,
+                        message: "inactiveuser",
+                        data: ". ",
+                        message2:"requestlinkagain")
             else
-              console.log "user is locked"
-              date = new Date(user.lockUntil)
-              done(err,false,
-                message: "lockeduntil",
-                data: ": " + date + ".",
-                message2:"tryagainlater")
-          else
-            console.log "user is " + user.name
-            done(err,false,
-              message: "inactiveuser",
-              data: ". ",
-              message2:"requestlinkagain")
+                done(null, false,
+                    message: "inactiveuser",
+                    data: ". ",
+                    message2:"requestlinkagain")
         else
-          done(null, false,
-            message: "inactiveuser",
-            data: ". ",
-            message2:"requestlinkagain")
-      else
-        console.log "user find error"
-        done(err,false,
-          message: "authorizationfailed",
-          data: ".",
-          message2: "tryagain")
+            console.log "user find error"
+            done(err,false,
+                message: "authorizationfailed",
+                data: ".",
+                message2: "tryagain")
 )

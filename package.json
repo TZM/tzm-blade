@@ -77,7 +77,10 @@
     "mocha": ">=1.6.0",
     "should": ">=1.2.0",
     "tap": "~0.3.0",
-    "coffeelint": "*"
+    "coffeelint": "*",
+    "wrench": "~1.5.6",
+    "which": "~1.0.5",
+    "supervisor": "~0.5.6"
   },
   "optionalDependencies": {},
   "testling": {

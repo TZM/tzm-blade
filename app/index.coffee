@@ -25,11 +25,12 @@ app.settings.env = process.env.NODE_ENV if process.env.NODE_ENV
 app.configure "production", "development", "test", ->
     config.setEnvironment app.settings.env
 
-logger.info "--- App server created and local env set to: "+app.settings.env, logCategory
+logger.info "--- App server created and local env set to: " \
+    + app.settings.env, logCategory
 
 #Define Port
 app.port = config.PORT
-logger.info "--- Server running on port: "+app.port, logCategory
+logger.info "--- Server running on port: " + app.port, logCategory
 
 #Connect to database
 dbconnection = require "./utils/dbconnect"
