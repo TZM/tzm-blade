@@ -182,7 +182,7 @@
                 d3.select(this)
                 .style("fill", "orange")
                 .append("svg:title")
-                .text(d3.select(this).attr("title"))
+                .text(d3.select(this).attr("name"))
             })
             .on("mouseout", function(d) {
                 d3.select(this)
