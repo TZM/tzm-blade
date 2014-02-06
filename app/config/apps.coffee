@@ -11,7 +11,6 @@ logger = require "winston"
 passport = require "passport"
 LocalStrategy = require("passport-local").Strategy
 cldr = require "cldr"
-i18n = require "i18next"
 fs = require "fs"
 __ = require "underscore"
 
