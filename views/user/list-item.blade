@@ -1,0 +1,28 @@
+tr#user-baserow.user(style='display:none')
+    td
+        input(type='checkbox')
+    td
+        input(type='hidden', class='user-orig-email', value='')
+        input(type='text', class='user-email', value='')
+    td
+        input(type='hidden', class='user-orig-firstname', value='')
+        input(type='text', class='user-firstname', value='')
+    td
+        input(type='hidden', class='user-orig-lastname', value='')
+        input(type='text', class='user-lastname', value='')
+    td
+        input(type='hidden', class='user-orig-group', value='guest')
+        select
+            - for( var j=0, len2=groups.length; j<len2; j++ )
+                - var group = groups[j];
+                - if (group==='guest')
+                    option(value='#{group}', selected='selected') #{groupLabels[j]}
+                - else
+                    option(value='#{group}') #{groupLabels[j]}
+    td
+        input(type='hidden', class='user-provider', value='')
+        input(type='hidden', class='user-orig-state', value='inactive')
+        input(type='hidden', class='user-new-state', value='inactive')
+        span(class='user-state user-state-inactive')
+    td
+        input(type='submit', value='Update', class='user-update')
