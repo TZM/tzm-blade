@@ -467,8 +467,11 @@ Route =
         if req.xhr
           res.json users
         else
+          listHelper = require('./listHelper')
           res.render 'user/list'
             users: users
+            iconDefs: listHelper.defs.html()
+            icons: listHelper.icons
 
 listFields = 'email name surname groups active provider awaitConfirm -_id'
 
