@@ -14,7 +14,6 @@ pkg = JSON.parse fs.readFileSync('./package.json')
 testCmd = pkg.scripts.test
 startCmd = pkg.scripts.start
 
-
 log = (message, color, explanation) ->
   console.log color + message + reset + ' ' + (explanation or '')
 
@@ -55,7 +54,18 @@ test = (callback) ->
     log err.message, red
     log 'Mocha is not installed - try npm install mocha -g', red
 
-#
+task 'coffeelint', 'check code style with coffeelint', ->
+  try
+    cmd ='./node_modules/coffeelint/bin/coffeelint'
+    options = ['-f', 'test/lint.json', '-r', 'app']
+    coffeelint = spawn cmd, options
+    coffeelint.stdout.pipe process.stdout
+    coffeelint.stderr.pipe process.stderr
+    coffeelint.on 'exit', (status) -> callback?() if status is 0
+  catch err
+    log err.message, red
+    log 'Coffeelint is not installed - try npm install coffeelint -g', red
+
 task 'apidoc', 'generate API documentation', ->
   exec "./node_modules/coffeedoc/bin/coffeedoc -o docs html src"
   
@@ -72,7 +82,6 @@ task 'docs', 'Generate annotated source code with Doccco-Husky', ->
   catch err
     log err.message, red
     log 'Docco is not installed - try npm install docco -g', red
-
 
 task 'build', ->
   build -> log "✓ Build complete, now run `cake dev`", green
@@ -137,7 +146,3 @@ task 'scaffold', 'scaffold model/controller/test', (options) ->
   log "Scaffolding `#{options.name}`", green
   scaffold = require './scaffold'
   scaffold options.name
-  
-
-
-  

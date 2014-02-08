@@ -1,0 +1,13 @@
+include "../layout/layout.blade"
+replace block page
+	h3= message
+	#lol
+	script
+		|!
+			//Define a model
+			var model = new blade.Model({
+				"clicks": 0
+			});
+			blade.Runtime.renderTo(document.getElementById("lol"), "btnclick.blade", model, function(err) {
+				if (err) console.log(err);
+			});
