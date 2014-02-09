@@ -48,7 +48,7 @@ exports.setEnvironment = (env) ->
             exports.PORT = process.env.PORT or process.env.VMC_APP_PORT or process.env.VCAP_APP_PORT
             exports.APP =
                 name: "ZMGC"
-                hostname: process.env.HOSTNAME || "chapter.zmgc.net"
+                hostname: process.env.HOSTNAME || "www.zmgc.net"
             exports.DEBUG_LOG = false
             exports.DEBUG_WARN = false
             exports.DEBUG_ERROR = true

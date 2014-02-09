@@ -29,6 +29,7 @@
     "i18next": "~1.7.1",
     "blade": "git://github.com/bminer/node-blade.git",
     "d3": "~3.4.0",
+	"topojson": "*",
     "cldr": "*",
     "underscore": "*",
     "nodewatch": "~0.3.1",

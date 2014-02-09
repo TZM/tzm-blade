@@ -1,4 +1,4 @@
-# Return the chapters.json based on the language
+#Return the chapters.json based on the language
 i18n = require "i18next"
 fs = require "fs"
 cldr = require "cldr"
