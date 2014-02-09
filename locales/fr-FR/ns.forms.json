@@ -1,6 +1,7 @@
 {
   "button": {
     "login": "Se Connecter"
+    ,"remember-me": "Cochez cette case si vous n'avez pas un mot de passe ou vous l'avez oublié."
   },
   "ph": {
     "password": "Mot de passe"

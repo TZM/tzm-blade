@@ -79,6 +79,22 @@
     }
   },
   {
+    "id": "4f199ef4ad628ffa6600b7ab",
+    "desc": {
+      "WEBSITE": "http://www.thezeitgeistmovement.dk/",
+      "COORDINATION": "Stefan Kengen <stevenkeen@thezeitgeistmovement.dk>, Mads Rasmussen <madsras42@gmail.com>",
+      "CONTACT": "Stefan Kengen <stevenkeen@thezeitgeistmovement.dk> ,<admin@thezeitgeistmovement.dk>",
+      "PUBLIC SUPPORT": "Public Support <info@thezeitgeistmovement.dk>",
+      "YOUTUBE": "http://www.youtube.com/channel/UCRgonk-IV1TbViDqTN1Oahg",
+      "GOOGLE+": "",
+      "TWITTER": "",
+      "FACEBOOK": "https://www.facebook.com/tzmdk",
+      "TRELLO": "",
+      "OTHERS": "",
+      "LOCALES": "da-DK"
+    }
+  },
+  {
     "id": "4f19a02bad628ffa66018245",
     "desc": {
       "CARD NAME": "Ecuador",
