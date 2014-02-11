@@ -1,138 +1,66 @@
 include "../../layout/layout.blade"
 replace block page
-    style(type='text/css')
-        |!
-            .user-state .icon-state {
-                display:block;
-                margin:0 auto;
-            }
-            .user-state path {
-                display:none;
-                margin:0 auto;
-            }
-            .user-state-active .icon-check {
-                display:block;
-                fill:green;
-            }
-            .user-state-inactive .icon-cross {
-                display:block;
-                fill:red;
-            }
-            .user-state-email .icon-mail {
-                display:block;
-                fill:purple;
-            }
-            .icon-sort {
-                position:relative;
-                display:block;
-                margin:0 auto;
-            }
-            .sort .icon-arrowup, .sort .icon-arrowdown {
-                fill:#666666;
-            }
-            .sort-asc .icon-arrowup {
-                fill: red;
-            }
-            .sort-desc .icon-arrowdown {
-                fill: red;
-            }
-            #user-table {
-                border-collapse:separate;
-                border-spacing:10px;
-            }
-            #user-table thead th.sort {
-                background:#DDDDDD;
-                color:#666666;
-                font-weight:normal;
-                padding:5px 5px 0;
-            }
     #svg-icons(style='display:none')
         != iconDefs
-    #search(style="margin:30px 40px;")
-        form#user-search(method='post', action='/user/list')
+    #search(style="margin:30px 40px")
+        form.form-inline#user-search(method='post', action='/user/list', role='form')
             input#_csrf(type="hidden", name="_csrf", value="#{csrf_token}")
-            input(type='text', id='user-search-q', class='textinput searchinput', name='q', placeholder='filter by email or name')
-            select(id='user-search-filter', name='filter')
-                option(value='email', selected='selected') Email (Default)
-                option(value='name') Name
-            input#user-search-submit(type='submit', value='Filter')
+            input#user-search-q.form-control.textinput.searchinput(type='text', name='q', placeholder='#{t("ns.forms:ph.user-filter")}')
+            select#user-search-filter.form-control(name='filter')
+                option(value='email', selected='selected')= t('ns.forms:option.email')
+                option(value='name')= t('ns.forms:option.name')
+            button#user-search-submit.btn.btn-default(type='submit')= t('ns.forms:button.user-filter')
     - var groups = ['admin', 'member', 'reviewers', 'guest'];
-    - var groupLabels = ['Administrator', 'Member', 'Reviewer', 'Not verified'];
+    - var groupLabels = [t('ns.forms:option.admin'), t('ns.forms:option.member'), t('ns.forms:option.reviewer'), t('ns.forms:option.guest')];
     table#user-table
         thead
+            tr#user-unsynced(style='display:none')
+                td(colspan='6')
+                    .alert.alert-warning= t('ns.msg:flash.unsynced')
+                        button#user-sync.btn.btn-info.btn-small(type='button') Sync
+            tr#user-noprovider(style='display:none')
+                td(colspan='6')
+                    .alert.alert-error.alert-dismissable= t('ns.msg:flash.noprovider')
+                        button#user-noprovider-dismiss.close(type='button', aria-hidden='true', data-dismiss='alert') &times;
             tr
                 th
                     input(type='checkbox' id='user-checkall')
                 th#head-email.sort
-                    | Email
+                    != t('ns.forms:label.email')
                     != icons.sort.html()
-                th#head-firstname.sort
-                    | Firstname
+                th#head-name.sort
+                    != t('ns.forms:label.name')
                     != icons.sort.html()
-                th#head-lastname.sort
-                    | Lastname
+                th#head-surname.sort
+                    != t('ns.forms:label.surname')
                     != icons.sort.html()
-                th#head-group.sort
-                    | Group
+                th#head-groups.sort
+                    != t('ns.forms:label.groups')
                     != icons.sort.html()
                 th#head-state.sort
-                    | State
+                    != t('ns.forms:label.state')
                     != icons.sort.html()
         tbody#user-list
-            - for( var i=0, len=users.length; i<0; i++ )
-                - var user = users[i];
-                tr.user(id='user-#{i}')
-                    td
-                        input(type='checkbox')
-                    td
-                        input(type='hidden', class='user-orig-email', value='#{user.email||""}')
-                        input(type='text', class='user-email', value='#{user.email||"not.verified@domain.tld"}')
-                    td
-                        input(type='hidden', class='user-orig-firstname', value='#{user.name||""}')
-                        input(type='text', class='user-firstname', value='#{user.name||(user.group==="guest"&&"Not")||""}')
-                    td
-                        input(type='hidden', class='user-orig-lastname', value='#{user.surname||""}')
-                        input(type='text', class='user-lastname', value='#{user.surname||(user.group==="guest"&&"Verified")||""}')
-                    td
-                        input(type='hidden', class='user-orig-group', value='#{user.groups||""}')
-                        select
-                            - for( var j=0, len2=groups.length; j<len2; j++ )
-                                - var group = groups[j];
-                                - if (user.groups === group)
-                                    option(value='#{group}', selected='selected') #{groupLabels[j]}
-                                - else
-                                    option(value='#{group}') #{groupLabels[j]}
-                    td
-                        input(type='hidden', class='user-orig-active', value='#{user.active?"true":"false"}')
-                        input(type='hidden', class='user-active', value='#{user.active?"true":"false"}')
-                        - if (user.groups==='guest' && user.email)
-                            span(class='user-state user-state-email')
-                        - else if (user.active)
-                            span(class='user-state user-state-active')
-                        - else
-                            span(class='user-state user-state-inactive')
-                    td
-                        input(type='submit', value='Update', class='user-update')
         tfoot
             tr#user-create
                 td
                 td
-                    input(type='text', class='user-email', placeholder='email@domain.tld')
+                    input(type='text', class='user-email', placeholder='#{t("ns.forms:ph.user-email")}')
                 td
-                    input(type='text', class='user-firstname', placeholder='Firstname')
+                    input(type='text', class='user-name', placeholder='#{t("ns.forms:ph.user-name")}')
                 td
-                    input(type='text', class='user-lastname', placeholder='Lastname')
+                    input(type='text', class='user-surname', placeholder='#{t("ns.forms:ph.user-surname")}')
                 td
                     select
                         - for( var j=0, len2=groups.length; j<len2; j++ )
                             - var group = groups[j];
                             - if (group === 'guest')
-                                option(value='#{group}', selected='selected') #{groupLabels[j]}
+                                option(value='#{group}', selected='selected')= groupLabels[j]
                             - else
-                                option(value='#{group}') #{groupLabels[j]}
+                                option(value='#{group}')= groupLabels[j]
                 td
                 td
-                    button.user-create.btn.btn-success(type='button') Add New User
+                    button.user-create.btn.btn-success(type='button')= t('ns.forms:button.user-create')
             tr#user-baserow.user(style='display:none')
                 td
                     input(type='checkbox')
@@ -140,20 +68,20 @@ replace block page
                     input(type='hidden', class='user-orig-email', value='')
                     input(type='text', class='user-email', value='')
                 td
-                    input(type='hidden', class='user-orig-firstname', value='')
-                    input(type='text', class='user-firstname', value='')
+                    input(type='hidden', class='user-orig-name', value='')
+                    input(type='text', class='user-name', value='')
                 td
-                    input(type='hidden', class='user-orig-lastname', value='')
-                    input(type='text', class='user-lastname', value='')
+                    input(type='hidden', class='user-orig-surname', value='')
+                    input(type='text', class='user-surname', value='')
                 td
-                    input(type='hidden', class='user-orig-group', value='guest')
+                    input(type='hidden', class='user-orig-groups', value='guest')
                     select
                         - for( var j=0, len2=groups.length; j<len2; j++ )
                             - var group = groups[j];
                             - if (group==='guest')
-                                option(value='#{group}', selected='selected') #{groupLabels[j]}
+                                option(value='#{group}', selected='selected')= groupLabels[j]
                             - else
-                                option(value='#{group}') #{groupLabels[j]}
+                                option(value='#{group}')= groupLabels[j]
                 td
                     input(type='hidden', class='user-provider', value='')
                     input(type='hidden', class='user-orig-state', value='inactive')
@@ -161,14 +89,14 @@ replace block page
                     span(class='user-state user-state-inactive')
                         != icons.state.html()
                 td
-                    button.user-update.btn.btn-primary(type='button') Update
-    .btn-group
-        button#user-updateall.btn.btn-primary(type='button') Update Selected
-        button#user-updateall-group.btn.btn-primary(type='button') Update Group for Selected
-        //button#user-updateall-state.btn.btn-primary(type='button') Update States for Selected
-        button#user-resendall.btn.btn-primary(type='button') Re-send confirmation for Selected
+                    button.user-update.btn.btn-primary(type='button')= t('ns.forms:button.user-update')
+    .btn-toolbar
+        button#user-updateall.btn.btn-primary(type='button')= t('ns.forms:button.user-updateall')
+        button#user-updateall-groups.btn.btn-primary(type='button')= t('ns.forms:button.user-updateall-groups')
+        button#user-resendall.btn.btn-primary(type='button')= t('ns.forms:button.user-resendall')
     #user-sort(style='display:none')
     #user-sort-order(style='display:none')
-    #user-count(style='display:none') #{i}
-    #user-last(style='display:none') #{i<20}
+    #user-count(style='display:none') 0
+    #user-total(style='display:none') 0
+    #user-last(style='display:none') false
     script(type='text/javascript', src='/js/user-list.js')

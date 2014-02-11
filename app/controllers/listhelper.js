@@ -24,11 +24,9 @@ iconStateGroup.append('svg:path').attr('id', 'path-mail').attr('class', 'icon-ma
 
 icons.sort = d3.select('body').append('div');
 
-var iconsSortSvg = icons.sort.append('svg').attr({width:20, height:10, class:'icon-sort'}); // #iconsSvg.append('svg:g') #.append('svg').attr('width', 40).attr('height', 40).attr('class', 'icon-sort');
-iconsSortSvg.append('svg:use').attr('xlink:xlink:href', '#svg-sort');
+var iconsSortSvg = icons.sort.append('svg').attr({width:20, height:10, class:'icon-sort'});
 // Need this xlink:xlink stuff due to bug in D3 stripping namespaces.
-//iconsSortSvg.append('svg:use').attr('xlink:xlink:href', '#path-arrowup');
-//iconsSortSvg.append('svg:use').attr('xlink:xlink:href', '#path-arrowdown').attr('x', 6);
+iconsSortSvg.append('svg:use').attr('xlink:xlink:href', '#svg-sort');
 
 icons.state = d3.select('body').append('div');
 
