@@ -14,20 +14,28 @@ replace block page
     - var groupLabels = [t('ns.forms:option.admin'), t('ns.forms:option.member'), t('ns.forms:option.reviewer'), t('ns.forms:option.guest')];
     table#user-table
         thead
+            tr#user-unsynced(style='display:none')
+                td(colspan='6')
+                    .alert.alert-warning= t('ns.msg:flash.unsynced')
+                        button#user-sync.btn.btn-info.btn-small(type='button') Sync
+            tr#user-noprovider(style='display:none')
+                td(colspan='6')
+                    .alert.alert-error.alert-dismissable= t('ns.msg:flash.noprovider')
+                        button#user-noprovider-dismiss.close(type='button', aria-hidden='true', data-dismiss='alert') &times;
             tr
                 th
                     input(type='checkbox' id='user-checkall')
                 th#head-email.sort
                     != t('ns.forms:label.email')
                     != icons.sort.html()
-                th#head-firstname.sort
+                th#head-name.sort
                     != t('ns.forms:label.name')
                     != icons.sort.html()
-                th#head-lastname.sort
+                th#head-surname.sort
                     != t('ns.forms:label.surname')
                     != icons.sort.html()
-                th#head-group.sort
-                    != t('ns.forms:label.group')
+                th#head-groups.sort
+                    != t('ns.forms:label.groups')
                     != icons.sort.html()
                 th#head-state.sort
                     != t('ns.forms:label.state')
@@ -39,9 +47,9 @@ replace block page
                 td
                     input(type='text', class='user-email', placeholder='#{t("ns.forms:ph.user-email")}')
                 td
-                    input(type='text', class='user-firstname', placeholder='#{t("ns.forms:ph.user-name")}')
+                    input(type='text', class='user-name', placeholder='#{t("ns.forms:ph.user-name")}')
                 td
-                    input(type='text', class='user-lastname', placeholder='#{t("ns.forms:ph.user-surname")}')
+                    input(type='text', class='user-surname', placeholder='#{t("ns.forms:ph.user-surname")}')
                 td
                     select
                         - for( var j=0, len2=groups.length; j<len2; j++ )
@@ -60,13 +68,13 @@ replace block page
                     input(type='hidden', class='user-orig-email', value='')
                     input(type='text', class='user-email', value='')
                 td
-                    input(type='hidden', class='user-orig-firstname', value='')
-                    input(type='text', class='user-firstname', value='')
+                    input(type='hidden', class='user-orig-name', value='')
+                    input(type='text', class='user-name', value='')
                 td
-                    input(type='hidden', class='user-orig-lastname', value='')
-                    input(type='text', class='user-lastname', value='')
+                    input(type='hidden', class='user-orig-surname', value='')
+                    input(type='text', class='user-surname', value='')
                 td
-                    input(type='hidden', class='user-orig-group', value='guest')
+                    input(type='hidden', class='user-orig-groups', value='guest')
                     select
                         - for( var j=0, len2=groups.length; j<len2; j++ )
                             - var group = groups[j];
@@ -84,10 +92,11 @@ replace block page
                     button.user-update.btn.btn-primary(type='button')= t('ns.forms:button.user-update')
     .btn-toolbar
         button#user-updateall.btn.btn-primary(type='button')= t('ns.forms:button.user-updateall')
-        button#user-updateall-group.btn.btn-primary(type='button')= t('ns.forms:button.user-updateall-group')
+        button#user-updateall-groups.btn.btn-primary(type='button')= t('ns.forms:button.user-updateall-groups')
         button#user-resendall.btn.btn-primary(type='button')= t('ns.forms:button.user-resendall')
     #user-sort(style='display:none')
     #user-sort-order(style='display:none')
     #user-count(style='display:none') 0
+    #user-total(style='display:none') 0
     #user-last(style='display:none') false
     script(type='text/javascript', src='/js/user-list.js')

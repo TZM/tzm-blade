@@ -689,6 +689,10 @@ div.statBlock {
 }
 .user-state-email .icon-mail {
     display:block;
+    fill:gray;
+}
+.user-state-email-recent .icon-mail {
+    display:block;
     fill:purple;
 }
 .icon-sort {
@@ -708,6 +712,7 @@ div.statBlock {
 #user-table {
     border-collapse:separate;
     border-spacing:10px;
+    clear:both;
 }
 #user-table thead th.sort {
     background:#DDDDDD;
@@ -720,5 +725,8 @@ div.statBlock {
 }
 .user-create, .user-update {
     white-space:nowrap;
+}
+#user-sync {
+    margin-left:10px;
 }
 @media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}

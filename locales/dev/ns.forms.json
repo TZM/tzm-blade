@@ -16,7 +16,7 @@
     ,"user-create": "Add New User"
     ,"user-filter": "Filter"
     ,"user-updateall": "Update Selected"
-    ,"user-updateall-group": "Update Group for Selected"
+    ,"user-updateall-groups": "Update Group for Selected"
     ,"user-resendall": "Re-send confirmation for Selected"
   },
   "ph": {
@@ -45,7 +45,7 @@
     "email": "Email"
     ,"name": "Firstname"
     ,"surname": "Lastname"
-    ,"group": "Group"
+    ,"groups": "Group"
     ,"state": "State"
   }
 }
