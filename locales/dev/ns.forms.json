@@ -12,6 +12,12 @@
     ,"remember-me": "Check this box if you don't have a password or you forgot it."
     ,"create-new-account": "Create New Account"
     ,"sign-in": "Sign in"
+    ,"user-update": "Update"
+    ,"user-create": "Add New User"
+    ,"user-filter": "Filter"
+    ,"user-updateall": "Update Selected"
+    ,"user-updateall-group": "Update Group for Selected"
+    ,"user-resendall": "Re-send confirmation for Selected"
   },
   "ph": {
     "password": "Enter your password"
@@ -21,5 +27,25 @@
     ,"new": "Enter now password"
     ,"name": "Enter your name"
     ,"surname": "Enter your surname"
+    ,"user-filter": "Search by email or name"
+    ,"user-email": "email@domain.tld"
+    ,"user-name": "Firstname"
+    ,"user-surname": "Surname"
+  },
+  "option": {
+    "email": "Email"
+    ,"name": "Name"
+    ,"state": "State"
+    ,"admin": "Administrator"
+    ,"member": "Member"
+    ,"reviewer": "Reviewer"
+    ,"guest": "Not verified"
+  },
+  "label": {
+    "email": "Email"
+    ,"name": "Firstname"
+    ,"surname": "Lastname"
+    ,"group": "Group"
+    ,"state": "State"
   }
 }

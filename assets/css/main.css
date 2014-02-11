@@ -671,4 +671,54 @@ div.statBlock {
     line-height: 16px;
 }
 
+.user-state .icon-state {
+    display:block;
+    margin:0 auto;
+}
+.user-state path {
+    display:none;
+    margin:0 auto;
+}
+.user-state-active .icon-check {
+    display:block;
+    fill:green;
+}
+.user-state-inactive .icon-cross {
+    display:block;
+    fill:red;
+}
+.user-state-email .icon-mail {
+    display:block;
+    fill:purple;
+}
+.icon-sort {
+    position:relative;
+    display:block;
+    margin:0 auto;
+}
+.sort .icon-arrowup, .sort .icon-arrowdown {
+    fill:#666666;
+}
+.sort-asc .icon-arrowup {
+    fill: red;
+}
+.sort-desc .icon-arrowdown {
+    fill: red;
+}
+#user-table {
+    border-collapse:separate;
+    border-spacing:10px;
+}
+#user-table thead th.sort {
+    background:#DDDDDD;
+    color:#666666;
+    font-weight:normal;
+    padding:5px 5px 0;
+}
+.form-inline .form-control {
+    margin-right:10px;
+}
+.user-create, .user-update {
+    white-space:nowrap;
+}
 @media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}
