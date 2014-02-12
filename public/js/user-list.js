@@ -11,7 +11,8 @@ jQuery(function($) {
 		noprovider = $('#user-noprovider');
 
 	var updateTime = 10000,
-		updateId;
+		updateId,
+		loading = false;
 
 	loadMore(true);
 	resetAutoUpdate();
@@ -58,9 +59,13 @@ jQuery(function($) {
 	}
 
 	function loadMore(reset) {
+		if (loading) return;
+
 		if (reset) count = 0;
 
 		if (count > 0 && count === total) return;
+
+		loading = true;
 
 		var skip = count,
 			limit = 20,
@@ -102,6 +107,15 @@ jQuery(function($) {
 			count = skip;
 			resetAutoUpdate();
 			unsynced.hide();
+
+			if (count === total) {
+				$('#user-loadmorerow').hide();
+			}
+			else {
+				$('#user-loadmorerow').show();
+			}
+
+			loading = false;
 		});
 	}
 
@@ -142,6 +156,10 @@ jQuery(function($) {
 
 	$('#user-sync').click(function() {
 		loadMore(true);
+	});
+
+	$('#user-loadmore').click(function() {
+		loadMore();
 	});
 
 	userList.on('click', '.user-state', function() {

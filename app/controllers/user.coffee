@@ -464,7 +464,7 @@ Route =
       if count
         query = User.count data
       else
-        limit = Math.max(req.query.limit ? 20, 200)
+        limit = Math.min(req.query.limit ? 20, 200)
         skip = req.query.skip ? 0
 
         query = User.find(data, listFields).skip(skip).limit(limit)
@@ -483,23 +483,23 @@ Route =
         else
           query.sort {_id:1}
 
-      query.exec (err, users) ->
+      query.exec (err, results) ->
         return res.send 500, err.message || err if err
 
         if count
-          return res.json {count:users}
+          return res.json {count:results}
 
         User.count(data).exec (err, count) ->
           return res.send 500, err.message || err if err
 
           if req.xhr
             res.json
-              users: users
+              users: results
               count: count
           else
             listHelper = require('./listHelper')
             res.render 'user/list'
-              users: users
+              users: results
               count: count
               iconDefs: listHelper.defs.html()
               icons: listHelper.icons

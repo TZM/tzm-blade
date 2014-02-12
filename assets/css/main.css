@@ -729,4 +729,8 @@ div.statBlock {
 #user-sync {
     margin-left:10px;
 }
+#user-loadmore {
+    position:relative;
+    left:50%;
+}
 @media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}

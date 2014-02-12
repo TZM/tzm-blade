@@ -42,6 +42,9 @@ replace block page
                     != icons.sort.html()
         tbody#user-list
         tfoot
+            tr#user-loadmorerow(style='display:none')
+                td(colspan='7')
+                    button#user-loadmore.btn.btn-default(type='button')= t('ns.forms:button.user-loadmore')
             tr#user-create
                 td
                 td
