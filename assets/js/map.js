@@ -66,6 +66,7 @@
         //    self.drawMarker(message)
         //}
             self.drawMap()
+			self.setMapStyle("bone");//see colormap.css for possible options: posneg, copper, greenwhitelila, posneg, jet
         //
         //var color_legend = d3.select("#color-legend-svg")
         //  .append("svg:svg")
@@ -177,16 +178,17 @@
     // Add Icons
     this.drawIcons = function() {
 		var mapTools = $(".map-tools");
+		mapTools.attr("class", "greenwhitelila");
 		mapTools.children()
             .on("mouseover", function(d) {
                 d3.select(this)
-                .style("fill", "orange")
+                .attr("class", "q30")
                 .append("svg:title")
                 .text(d3.select(this).attr("name"))
             })
             .on("mouseout", function(d) {
                 d3.select(this)
-                .style("fill", "#000")
+                .attr("class", "q4")
                 d3.select(this).select("title").remove()
                 //self.deactivateTooltip()
             })
@@ -243,28 +245,30 @@
         .data(topojson.object(topology, topology.objects.countries).geometries)
           .enter().append("path")
           .attr("d", self.path)
+          .attr("class", "q40")
           .attr("id", function(d) {
             return d.properties.name.replace(/ /g,"_")
           })
           //.attr("class", data ? self.quantize : null)
           .on("mousemove", function(d) {
-              var lonlat = map.invert(d3.mouse(this))
-              var lonText = formatLongitude(lonlat[0])
-              var latText = formatLatitude(lonlat[1])
-              self.writeMouseLonLat(lonText, latText)
+             // var lonlat = map.invert(d3.mouse(this))
+            //  var lonText = formatLongitude(lonlat[0])
+            //  var latText = formatLatitude(lonlat[1])
+            //  self.writeMouseLonLat(lonText, latText)
+console.log("on mouse move");
           })
           .on("mouseover", function(d) {
               d3.select(this)
-                .style("fill", "orange")
-                .append("svg:title")
+                .attr("class", "q90")
+       //         .append("svg:title")
                 //use CLDR to localize country name
-                .text(d.properties.name)
+       //         .text(d.properties.name)
             //self.activateTooltip(d.properties.name)
           })
           .on("mouseout", function(d) {
             d3.select(this)
-            .style("fill", "#aaa")
-             d3.select(this).select("title").remove()
+            .attr("class", "q40")
+      //       d3.select(this).select("title").remove()
             //self.deactivateTooltip()
           })
           .on("click", function(d) {
@@ -280,62 +284,12 @@
       // Add icons - these go last as we want them to sit on top layer
       self.initLegendLabel()
       self.drawIcons()
-      //self.g = self.svg.append("g")
-      //  .attr("id", "countries")
-      //// Load topojson data
-      //d3.json("/world.json", function(topology) {
-      //  self.g.selectAll("path")
-      //  //.data(topology.features)
-      //  .data(topojson.object(topology, topology.objects.countries).geometries)
-      //    .enter().append("path")
-      //    .attr("d", self.path)
-      //    .attr("id", function(d) {
-      //      return d.properties.name.replace(/ /g,"_")
-      //    })
-      //    //.attr("class", data ? self.quantize : null)
-      //    .on("mousemove", function(d) {
-      //        var lonlat = map.invert(d3.mouse(this))
-      //        var lonText = formatLongitude(lonlat[0])
-      //        var latText = formatLatitude(lonlat[1])
-      //        self.writeMouseLonLat(lonText, latText)
-      //    })
-      //    .on("mouseover", function(d) {
-      //        d3.select(this)
-      //          .style("fill", "orange")
-      //          .append("svg:title")
-      //          //use CLDR to localize country name
-      //          .text(d.properties.name)
-      //      //self.activateTooltip(d.properties.name)
-      //    })
-      //    .on("mouseout", function(d) {
-      //      d3.select(this)
-      //      .style("fill", "#aaa")
-      //      //self.deactivateTooltip()
-      //    })
-      //    .on("click", function(d) {
-      //      var b = self.getBBox(d3.select(this))
-      //      self.svg.selectAll("#"+self.country).style("opacity", 1)
-      //      self.country = d.properties.name.replace(/ /g,"_")
-      //      self.svg.selectAll("#"+self.country).style("opacity", 0)
-      //      self.zoomMap(d, b)
-      //    })
-      //    // Remove Antarctica
-      //    //self.g.select("#Antarctica").remove()
-      //  })
-      //// Add icons - these go last as we want them to sit on top layer
-      //self.initLegendLabel()
-      //self.drawIcons()
     } // end drawMap
     this.render = function(err, world) {
       "use strict"
       console.log("we render")
       var countries = topojson.mesh(world, world.objects.countries)
       window.world = world
-      //map.append('path')
-      //  .datum(world)
-      //  .attr('class', 'world')
-      //  .attr('d', path)
-
     }
     this.resize = function() {
       "use strict"
@@ -416,14 +370,14 @@
             .style("stroke-width", 1.5 / k + "px")
             .on("mouseover", function(d) {
               d3.select(this)
-              .style("fill", "#6C0")
-              .append("svg:title")
-              .text(d.properties.NAME_1)
+         //     .style("fill", "#6C0")
+           //   .append("svg:title")
+             // .text(d.properties.NAME_1)
             })
             .on("mouseout", function(d) {
               d3.select(this)
-              .style("fill", "#000000")
-              d3.select(this).select("title").remove()
+       //       .style("fill", "#000000")
+         //     d3.select(this).select("title").remove()
             })
             .on("click", function(d) {
               console.log('clicked on country')
@@ -490,27 +444,11 @@
             cityName.style("fill", "red")
             cityName.transition().delay(4000)
             .style("opacity", "0")
-
-        //console.log($(member.node))
-        //var hoverFunc = function () {
-        //    console.log('hoverFunc')
-        //    //person.attr({
-        //    //    fill: 'white'
-        //    //})
-        //    //$(title.node).fadeIn('fast')
-        //    //$(subtitle.node).fadeIn('fast')
-        //}
-        //
-        //var hideFunc = function () {
-        //    console.log('hideFunc')
-        //    //person.attr({
-        //    //    fill: '#ff9'
-        //    //})
-        //    //$(title.node).fadeOut('slow')
-        //    //$(subtitle.node).fadeOut('slow')
-        //}
-        //$(member.node).hover(hoverFunc, hideFunc)
     }
+
+	this.setMapStyle = function (style_name) {
+		$("#countries").attr("class", style_name);
+	}
     // Initialise
     this.init()
 }).call(this);
