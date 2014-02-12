@@ -672,3 +672,10 @@ div.statBlock {
 }
 
 @media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}
+
+/* map section */
+g#countries path {
+	fill: pink;
+}
+
+/* map section ends */

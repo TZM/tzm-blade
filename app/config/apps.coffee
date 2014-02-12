@@ -69,7 +69,7 @@ module.exports = (app) ->
     #dirs = ["/assets", "/public", "/locales", "/data/topo"]
 
     app.configure ->
-        app.use assets(build : true)
+        app.use assets(build : false)
         jsPaths assets, console.log
         @use(express.favicon(process.cwd() + "/assets/images/favicon.ico", {maxAge:maxAges}))
         .use(express.compress())
