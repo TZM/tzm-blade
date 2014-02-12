@@ -497,7 +497,7 @@ Route =
               users: results
               count: count
           else
-            listHelper = require('./listHelper')
+            listHelper = require('./listhelper')
             res.render 'user/list'
               users: results
               count: count
