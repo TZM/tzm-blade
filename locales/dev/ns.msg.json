@@ -42,5 +42,7 @@
     ,"userdeleted": "User has been deleted"
     ,"wait": "Please wait..."
     ,"wrongattempts": "wrong attempts"
+    ,"unsynced": "List may be out of date from user registration."
+    ,"noprovider": "That user has no login method. Resend confirmation email so they can set a password."
   }
 }

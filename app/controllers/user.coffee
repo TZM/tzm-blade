@@ -420,6 +420,28 @@ Route =
           return res.send 500, err.message || err if err
 
           res.send results
+      else if action is 'state'
+        email = body.email
+        state = body.state
+
+        return res.send 400, 'Must provide valid email address.' unless email
+
+        if state is email
+          return listSendMail email, (err, result) ->
+            return res.send 500, err.message || err if err
+
+            res.send result
+
+        return res.send 400, 'Must set a proper state.' unless state in ['active', 'inactive']
+
+        data = email:email
+
+        data.active = state is 'active'
+
+        return listUpdateUser data, (err, result) ->
+          return res.send 500, err.message || err if err
+
+          res.send result
       else
         return res.send 400, 'Invalid action type.'
 
@@ -429,6 +451,7 @@ Route =
       filter = req.query.filter
       sort = req.query.sort
       order = req.query.order
+      count = req.query.count
 
       data = {}
 
@@ -438,40 +461,48 @@ Route =
         else if filter is 'name'
           data.$or = [ {name: new RegExp('^'+q, 'i')}, {surname: new RegExp('^'+q, 'i')}]
 
-      limit = Math.max(req.query.limit ? 20, 200)
-      skip = req.query.skip ? 0
+      if count
+        query = User.count data
+      else
+        limit = Math.min(req.query.limit ? 20, 200)
+        skip = req.query.skip ? 0
 
-      query = User.find(data, listFields).skip(skip).limit(limit)
+        query = User.find(data, listFields).skip(skip).limit(limit)
 
-      if sort and order
-        key = false
-        sortObj = {}
+        if order and sort in ['email', 'name', 'surname', 'groups', 'state']
+          sortObj = {}
 
-        order = 1 if order is 'asc'
-        order = -1 if order is 'desc'
+          order = 1 if order is 'asc'
+          order = -1 if order is 'desc'
 
-        key = 'email' if sort is 'email'
-        key = 'name' if sort is 'firstname'
-        key = 'surname' if sort is 'lastname'
-        key = 'groups' if sort is 'group'
+          if sort is 'state'
+            query.sort({active:order, awaitConfirm:order});
+          else
+            sortObj[sort] = order
+            query.sort(sortObj)
+        else
+          query.sort {_id:1}
 
-        if sort is 'state'
-          query.sort({active:order, awaitConfirm:order});
-        else if key
-          sortObj[key] = order
-          query.sort(sortObj)
-
-      query.exec (err, users) ->
+      query.exec (err, results) ->
         return res.send 500, err.message || err if err
 
-        if req.xhr
-          res.json users
-        else
-          listHelper = require('./listHelper')
-          res.render 'user/list'
-            users: users
-            iconDefs: listHelper.defs.html()
-            icons: listHelper.icons
+        if count
+          return res.json {count:results}
+
+        User.count(data).exec (err, count) ->
+          return res.send 500, err.message || err if err
+
+          if req.xhr
+            res.json
+              users: results
+              count: count
+          else
+            listHelper = require('./listHelper')
+            res.render 'user/list'
+              users: results
+              count: count
+              iconDefs: listHelper.defs.html()
+              icons: listHelper.icons
 
 listFields = 'email name surname groups active provider awaitConfirm -_id'
 
@@ -536,9 +567,9 @@ listUpdateUser = (data, cb) ->
   if errors.length
     return cb errors[0]
 
-  update.name = data.firstname if data.firstname?
-  update.surname = data.lastname if data.lastname?
-  update.groups = data.group if data.group?
+  update.name = data.name if data.name?
+  update.surname = data.surname if data.surname?
+  update.groups = data.groups if data.groups?
   update.awaitConfirm = true if data.state is 'email'
 
   if data.state is 'active'

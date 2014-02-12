@@ -2,13 +2,24 @@ jQuery(function($) {
 	var csrf = $('#_csrf').val(),
 		userList = $('#user-list'),
 		sort = $('#user-sort'),
-		order = $('#user-sort-order');
+		order = $('#user-sort-order'),
+		count = parseInt($('#user-count').html()),
+		total = parseInt($('#user-total').html()),
+		searchQ = $('#user-search-q'),
+		searchF = $('#user-search-filter'),
+		unsynced = $('#user-unsynced'),
+		noprovider = $('#user-noprovider');
 
-	loadMore();
+	var updateTime = 10000,
+		updateId,
+		loading = false;
+
+	loadMore(true);
+	resetAutoUpdate();
 
 	$('#user-search').submit(function(ev) {
 		ev.preventDefault();
-		loadMore();
+		loadMore(true);
 	});
 
 	$('#user-checkall').change(function() {
@@ -39,20 +50,27 @@ jQuery(function($) {
 			order.html('asc');
 		}
 
-		clear();
-		loadMore();
+		loadMore(true);
 	});
 
 	function clear() {
-		$('#user-count').html('0');
+		count = 0;
 		userList.find('> .user').remove();
 	}
 
-	function loadMore() {
-		var skip = parseInt($('#user-count').html()),
+	function loadMore(reset) {
+		if (loading) return;
+
+		if (reset) count = 0;
+
+		if (count > 0 && count === total) return;
+
+		loading = true;
+
+		var skip = count,
 			limit = 20,
-			q = $('#user-search-q').val(),
-			filter = $('user-search-filter option:selected').val(),
+			q = searchQ.val(),
+			filter = searchF.find('option:selected').val(),
 			s = sort.html(),
 			o = order.html();
 
@@ -72,38 +90,110 @@ jQuery(function($) {
 		}
 
 		$.get('/user/list', data, function(data, textStatus) {
+			if (reset) userList.find('> .user').remove();
 
-			var baseRow = $('#user-baserow');
+			var baseRow = $('#user-baserow'),
+				users = data.users || [],
+				c = data.count || 0;
 
-			//console.log('get', userList, baseRow);
-
-			for( var i= 0, len=data.length; i<len; i++ ) {
+			for( var i= 0, len=users.length; i<len; i++ ) {
 				var row = baseRow.clone().attr('id', 'user-'+(skip++)).prop('style', false);
 
-				updateRow(row, data[i]);
-
-				//console.log(row);
-
+				updateRow(row, users[i]);
 				row.appendTo(userList);
 			}
 
-			$('#user-count').html(skip);
+			total = c;
+			count = skip;
+			resetAutoUpdate();
+			unsynced.hide();
+
+			if (count === total) {
+				$('#user-loadmorerow').hide();
+			}
+			else {
+				$('#user-loadmorerow').show();
+			}
+
+			loading = false;
 		});
 	}
+
+	function resetAutoUpdate() {
+		if (updateId) {
+			window.clearInterval(updateId);
+		}
+
+		updateId = window.setInterval(autoUpdate, updateTime);
+	}
+
+	function autoUpdate() {
+		var q = searchQ.val(),
+			filter = searchF.find('option:selected').val();
+
+		var data = {count:true};
+
+		if (q) {
+			data.q = q;
+			data.filter = filter;
+		}
+
+		$.get('/user/list', data, function(data, textStatus) {
+			var t = total;
+
+			if (t !== data.count) {
+				total = data.count;
+
+				if (sort.html() || data.count < t) {
+					unsynced.show();
+				}
+				else if (t === count) {
+					loadMore();
+				}
+			}
+		});
+	}
+
+	$('#user-sync').click(function() {
+		loadMore(true);
+	});
+
+	$('#user-loadmore').click(function() {
+		loadMore();
+	});
 
 	userList.on('click', '.user-state', function() {
 		var th = $(this),
 			tr = th.closest('tr'),
 			newState = tr.find('.user-new-state'),
 			provider = tr.find('.user-provider').val(),
-			state = newState.val() === 'inactive' ? 'active' : 'inactive';
+			state = newState.val();
 
-		if (state === 'active' && !provider) {
-			state = 'email';
+		if (state === 'active') {
+			state = 'inactive';
+		}
+		else if (state === 'inactive') {
+			state = 'active';
+
+			if (!provider) {
+				noprovider.show();
+				return;
+			}
 		}
 
-		newState.val(state);
-		th.attr('class', 'user-state user-state-'+state);
+		var data = {
+			action: 'state',
+			_csrf: csrf,
+			state: state,
+			email: tr.find('.user-orig-email').val()
+		};
+
+		$.post('/user/list', data, function(data, textStatus) {
+			if (state === 'email') state = 'email-recent';
+
+			newState.val(state);
+			th.attr('class', 'user-state user-state-'+state);
+		});
 	});
 
 	$('#user-updateall').click(function() {
@@ -116,33 +206,16 @@ jQuery(function($) {
 		updateall(users);
 	});
 
-	$('#user-updateall-group').click(function() {
+	$('#user-updateall-groups').click(function() {
 		var users = [];
 
 		$('#user-list > tr > td > input[type=checkbox]:checked').closest('tr').each(function() {
 			var row = getRowData($(this));
 
 			delete row.newEmail;
-			delete row.firstname;
-			delete row.lastname;
+			delete row.name;
+			delete row.surname;
 			delete row.state;
-
-			users.push(row);
-		});
-
-		updateall(users);
-	});
-
-	$('#user-updateall-state').click(function() {
-		var users = [];
-
-		userList.find('> tr > td > input[type=checkbox]:checked').closest('tr').each(function() {
-			var row = getRowData($(this));
-
-			delete row.newEmail;
-			delete row.firstname;
-			delete row.lastname;
-			delete row.group;
 
 			users.push(row);
 		});
@@ -164,7 +237,22 @@ jQuery(function($) {
 		};
 
 		$.post('/user/list', data, function(data, textStatus) {
-			//console.log('resendall', data);
+			noprovider.hide();
+
+			var row;
+
+			for (var i= 0, len=emails.length; i<len; i++) {
+				var row = userList.find('.user-orig-email[value="'+emails[i]+'"]').closest('tr'),
+					provider = row.find('.user-provider').val(),
+					state = row.find('.user-orig-state').val();
+
+				if (state === 'email' || (state === 'inactive' && !provider)) {
+					state = 'email-recent';
+
+					row.find('.user-orig-state, .user-new-state').val(state);
+					row.find('.user-state').attr('class', 'user-state user-state-'+state);
+				}
+			}
 		});
 	});
 
@@ -220,10 +308,10 @@ jQuery(function($) {
 		$.post('/user/list', data, function(data, textStatus) {
 			//console.log('success', data, textStatus);
 
-			var count = parseInt($('#user-count').html()),
+			var c = parseInt(count.html()),
 				baseRow = $('#user-baserow');
 
-			var newRow = baseRow.clone().attr('id', 'user-'+count).prop('style', false);
+			var newRow = baseRow.clone().attr('id', 'user-'+c).prop('style', false);
 
 			updateRow(newRow, data);
 
@@ -231,7 +319,7 @@ jQuery(function($) {
 
 			newRow.appendTo(userList);
 
-			$('#user-count').html(count+1);
+			count = c+1;
 
 			row.find('input[type=text]').val('');
 			row.find('select option').prop('selected', false);
@@ -241,21 +329,21 @@ jQuery(function($) {
 
 	function getRowData(row) {
 		var oEmail = row.find('.user-orig-email').val(),
-			oFirstname = row.find('.user-orig-firstname').val(),
-			oLastname = row.find('.user-orig-lastname').val(),
-			oGroup = row.find('.user-orig-group').val(),
+			oName = row.find('.user-orig-name').val(),
+			oSurname = row.find('.user-orig-surname').val(),
+			oGroups = row.find('.user-orig-groups').val(),
 			oState = row.find('.user-orig-state').val(),
 			email = row.find('.user-email').val(),
-			firstname = row.find('.user-firstname').val(),
-			lastname = row.find('.user-lastname').val(),
-			group = row.find('select option:selected').val(),
+			name = row.find('.user-name').val(),
+			surname = row.find('.user-surname').val(),
+			groups = row.find('select option:selected').val(),
 			state = row.find('.user-new-state').val(),
 			data = {email: oEmail};
 
 		if (email && email !== oEmail) data.newEmail = email;
-		if (firstname !== oFirstname) data.firstname = firstname;
-		if (lastname !== oLastname) data.lastname = lastname;
-		if (group !== oGroup) data.group = group;
+		if (name !== oName) data.name = name;
+		if (surname !== oSurname) data.surname = surname;
+		if (groups !== oGroups) data.groups = groups;
 		if (state !== oState) data.state = state;
 
 		return data;
@@ -263,9 +351,9 @@ jQuery(function($) {
 
 	function updateRow(row, data) {
 		row.find('.user-orig-email, .user-email').val(data.email);
-		row.find('.user-orig-firstname, .user-firstname').val(data.name);
-		row.find('.user-orig-lastname, .user-lastname').val(data.surname);
-		row.find('.user-orig-group').val(data.groups);
+		row.find('.user-orig-name, .user-name').val(data.name);
+		row.find('.user-orig-surname, .user-surname').val(data.surname);
+		row.find('.user-orig-groups').val(data.groups);
 
 		row.find('select option').prop('selected', false);
 		row.find('select option[value="'+data.groups+'"]').prop('selected', true);
