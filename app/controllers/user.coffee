@@ -429,7 +429,7 @@ Route =
 
         return res.send 400, 'Must provide valid email address.' unless email
 
-        if state is email
+        if state is 'email'
           return listSendMail email, (err, result) ->
             return res.send 500, err.message || err if err
 
@@ -574,13 +574,13 @@ listUpdateUser = (data, cb) ->
   update.surname = data.surname if data.surname?
   update.groups = data.groups if data.groups?
   update.awaitConfirm = true if data.state is 'email'
+  update.active = data.active if data.active?
 
-  if data.state is 'active'
-    update.active = true
-  else if data.state is 'inactive'
-    update.active = false
-
-  console.log 'pre update', where, update
+  if !update.active?
+    if data.state is 'active'
+      update.active = true
+    else if data.state is 'inactive'
+      update.active = false
 
   User.findOneAndUpdate where, update, {select: listFields}, (err, user) ->
     return cb(err) if err
