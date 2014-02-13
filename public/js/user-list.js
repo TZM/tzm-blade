@@ -331,6 +331,9 @@ jQuery(function($) {
 			row.find('input[type=text]').val('');
 			row.find('select option').prop('selected', false);
 			row.find('select option[value=guest]').prop('selected', true);
+
+			count++;
+			total++;
 		}, 'json').fail(handleError);
 	});
 
