@@ -20,8 +20,13 @@ replace block page
                         button#user-sync.btn.btn-info.btn-small(type='button') Sync
             tr#user-noprovider(style='display:none')
                 td(colspan='6')
-                    .alert.alert-error.alert-dismissable= t('ns.msg:flash.noprovider')
-                        button#user-noprovider-dismiss.close(type='button', aria-hidden='true', data-dismiss='alert') &times;
+                    .alert.alert-error= t('ns.msg:flash.noprovider')
+                        button.close(type='button') &times;
+            tr#user-errormsg(style='display:none')
+                td(colspan='6')
+                    .alert.alert-error
+                        span
+                        button.close(type='button') &times;
             tr
                 th
                     input(type='checkbox' id='user-checkall')
@@ -45,7 +50,7 @@ replace block page
             tr#user-loadmorerow(style='display:none')
                 td(colspan='7')
                     button#user-loadmore.btn.btn-default(type='button')= t('ns.forms:button.user-loadmore')
-            tr#user-create
+            tr#user-createrow
                 td
                 td
                     input(type='text', class='user-email', placeholder='#{t("ns.forms:ph.user-email")}')
@@ -63,7 +68,7 @@ replace block page
                                 option(value='#{group}')= groupLabels[j]
                 td
                 td
-                    button.user-create.btn.btn-success(type='button')= t('ns.forms:button.user-create')
+                    button#user-create.btn.btn-success(type='button')= t('ns.forms:button.user-create')
             tr#user-baserow.user(style='display:none')
                 td
                     input(type='checkbox')
