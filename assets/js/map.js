@@ -152,15 +152,6 @@
         //console.log(index)
         self.tooltip
             .text(function() {
-                //var display_string
-                
-                //if (typeof index.id === 'undefined') {
-                //    display_string = index.properties.region
-                //} else if (ZMGC.admin_level === 0) {
-                //    display_string = index.properties.CONTINENT
-                //} else if (ZMGC.admin_level === 1 || ZMGC.admin_level === 2) {
-                //    display_string = index.properties.NAME
-                //}
                 return index
             })
             .transition()
@@ -260,16 +251,16 @@ console.log("on mouse move");
           .on("mouseover", function(d) {
               d3.select(this)
                 .attr("class", "q90")
-       //         .append("svg:title")
+                .append("svg:title")
                 //use CLDR to localize country name
-       //         .text(d.properties.name)
-            //self.activateTooltip(d.properties.name)
+                .text(d.properties.name)
+   
           })
           .on("mouseout", function(d) {
             d3.select(this)
             .attr("class", "q40")
-      //       d3.select(this).select("title").remove()
-            //self.deactivateTooltip()
+             d3.select(this).select("title").remove()
+      
           })
           .on("click", function(d) {
             var b = self.getBBox(d3.select(this))
