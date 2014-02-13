@@ -6,6 +6,8 @@
 @import "/css/vendor/font-awesome-social.css";
 @import "/css/vendor/famfam/cus-icons.css";
 
+
+
 html,body,body div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,figure,footer,header,hgroup,menu,nav,section,time,mark,audio,video {
     border: 0;
     outline: 0;
@@ -543,6 +545,8 @@ svg path.country {
     z-index: -1;
 }
 
+
+
 .member {
     z-index: 10;
 }
@@ -550,6 +554,10 @@ svg path.country {
 svg > text > .city-name {
     font-size: 77%;
 }
+
+path, rect, circle { -webkit-transition-duration: 0.4s; 
+transition-duration: 0.4s;  }
+
 #tooltip {
     background: #4F4F4F;
     border: 1px solid #2C2929;
