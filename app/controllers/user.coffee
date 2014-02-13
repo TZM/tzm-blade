@@ -407,10 +407,13 @@ Route =
         return res.send 400, 'Missing user data.' unless user
         return res.send 400, 'Invalid email address.' unless user.email
 
-        listCreateUser user, (err, result) ->
+        listCreateUser user, (err, result1) ->
           return res.send 500, err.message || err if err
 
-          res.send result
+          listSendMail user.email, (err, result2) ->
+            return res.send 500, err.message || err if err
+
+            res.send result1
       else if action is 'resendall'
         emails = body.emails
 
