@@ -65,8 +65,8 @@
         //    // FIXME only push markers depending on the country/adm1 level
         //    self.drawMarker(message)
         //}
-            self.drawMap()
-			self.setMapStyle("bone");//see colormap.css for possible options: posneg, copper, greenwhitelila, posneg, jet
+          self.drawMap()
+          self.setMapStyle("bone");//see colormap.css for possible options: posneg, copper, greenwhitelila, posneg, jet
         //
         //var color_legend = d3.select("#color-legend-svg")
         //  .append("svg:svg")
@@ -208,20 +208,12 @@
         .on("mouseout", self.hideLegendLabel)
         .on("mouseover", self.showLegendLabel)
 
-        var map = d3.select('#map').append('svg')
-                .style('height', height + 'px')
-                .style('width', width + 'px')
         queue()
             .defer(d3.json, urls.world)
             .await(self.render)
         // catch the resize
         d3.select(window).on('resize', self.resize)
-      //self.svg = d3.select("#map").append("svg")
-      //  .attr("width", width)
-      //  .attr("height", height)
-      //  .attr("viewBox", "0 0 " + width + "  "+ height)
-      //  .attr("preserveAspectRatio", "xMidYMid")
-//
+
       // Add a transparent rect so that zoomMap works if user clicks on SVG
       //self.map.append("rect")
       //  .attr("class", "background")
@@ -255,7 +247,7 @@
             //  var lonText = formatLongitude(lonlat[0])
             //  var latText = formatLatitude(lonlat[1])
             //  self.writeMouseLonLat(lonText, latText)
-console.log("on mouse move");
+          console.log("on mouse move");
           })
           .on("mouseover", function(d) {
               d3.select(this)
