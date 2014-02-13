@@ -601,18 +601,6 @@ svg > text > .city-name {
   fill: orange;
 }
 
-path.group-icon {
-    fill: #000;
-}
-
-path.projects-icon {
-    fill: #000;
-}
-
-path.skill-share-icon {
-    fill: #000;
-}
-
 .chapters-network-list {
     -webkit-column-count:4;
        -moz-column-count:4;
@@ -629,6 +617,17 @@ div.statBlock {
     margin-left: 5px;
     padding-top: 5px;
 }
+
+rect.icon_background { stroke:#006600; fill: green ;}
+.map-tools g:hover rect.icon_background { stroke:#006600; fill: lime ;}
+
+.map-tools path{ fill: blue;}
+.map-tools g:hover path{ fill: yellow;}
+
+#countries path {fill:rgb(126,78,50);}
+#countries path:hover {fill:rgb(255,179,114);}
+
+/* map section ends */
 
 /*******************************************************************************/
 /* Activity box */
@@ -733,8 +732,12 @@ div.statBlock {
     position:relative;
     left:50%;
 }
-@media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}
 
-/* map section */
+@media print{
+	{text-shadow:none !important;} 
+body{overflow:visible !important;} 
+#header{display:none;} 
+#notification {display:none !important;}
+}
 
-/* map section ends */
+

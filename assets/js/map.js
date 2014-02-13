@@ -18,16 +18,6 @@
     parent.addEventListener('mousemove', self.mouseMoveOverMap, false)
     parent.addEventListener('mouseout', self.mouseOutOfMap, false)
 
-    //this.mouseMoveOverMap = function(e) {
-    //    var canvasXY = mouseToCanvasCoordinates(e, parent);
-    //    var lonLat = map.canvasXY2LonLat(canvasXY.x, canvasXY.y);
-    //    var lon = adjlon(lonLat[0]), lat = lonLat[1];
-    //    if (lon > Math.PI || lon < -Math.PI || lat > Math.PI / 2 || lat < -Math.PI / 2) {
-    //        writeMouseLonLat("&ndash;", "&ndash;");
-    //    }
-    //    writeMouseLonLat(formatLongitude(lon), formatLatitude(lat));
-    //}
-
     this.writeMouseLonLat = function(lonText, latText) {
         var infoText = ""
         infoText += "Latitude: " + latText + " Longitude: " + lonText;
@@ -42,20 +32,13 @@
     }
     
     this.getBBox = function(selection) {
-        // get the DOM element from a D3 selection
-        // you could also use "this" inside .each()
         var element = selection.node()
-            // use the native SVG interface to get the bounding box
         return element.getBBox()
     }
 
     this.getCentroid = function(selection) {
-        // get the DOM element from a D3 selection
-        // you could also use "this" inside .each()
         var element = selection.node(),
-            // use the native SVG interface to get the bounding box
             bbox = element.getBBox()
-        // return the center of the bounding box
         return [bbox.x + bbox.width/2, bbox.y + bbox.height/2]
     }
 
@@ -67,14 +50,6 @@
         //}
             self.drawMap()
 			self.setMapStyle("bone");//see colormap.css for possible options: posneg, copper, greenwhitelila, posneg, jet
-        //
-        //var color_legend = d3.select("#color-legend-svg")
-        //  .append("svg:svg")
-        //  .attr("width", 225)
-        //  .attr("height", 180);
-        //color_legend.append("svg:rect")
-        //  .attr("width", 80)
-        //  .attr("height", 160)
     }
 
     self.tooltip = undefined
@@ -84,7 +59,6 @@
         var placeHolder = self.svg.append("g")
             .attr("class", "LegendLabel")
             .attr("transform", "scale(" + 0.7 + ")translate(" + 0 + "," + 0 + ")")
-            
         //placeHolder.attr('transform', 'translate(250, 150)')
             
         var fo = placeHolder.append("svg:foreignObject")
@@ -115,14 +89,8 @@
             .duration(800)
     }
     
-    this.hideLegendLabel = function(){
-      d3.select(".LegendLabel").attr("display", "none");
-    }
-    
-    
-    this.showLegendLabel = function(){
-      d3.select(".LegendLabel").attr("display", "null");
-    }
+    this.hideLegendLabel = function(){ d3.select(".LegendLabel").attr("display", "none"); }
+    this.showLegendLabel = function(){ d3.select(".LegendLabel").attr("display", "null"); }
     
     this.drawTooltip = function() {
         "use strict"
@@ -169,17 +137,17 @@
     // Add Icons
     this.drawIcons = function() {
 		var mapTools = $(".map-tools");
-		mapTools.attr("class", "greenwhitelila");
+		//mapTools.attr("class", "map-tools greenwhitelila");
 		mapTools.children()
             .on("mouseover", function(d) {
                 d3.select(this)
-                .attr("class", "q30")
+               // .attr("class", "q30")
                 .append("svg:title")
                 .text(d3.select(this).attr("name"))
             })
             .on("mouseout", function(d) {
-                d3.select(this)
-                .attr("class", "q4")
+               // d3.select(this)
+              //  .attr("class", "q4")
                 d3.select(this).select("title").remove()
                 //self.deactivateTooltip()
             })
@@ -236,7 +204,6 @@
         .data(topojson.object(topology, topology.objects.countries).geometries)
           .enter().append("path")
           .attr("d", self.path)
-          .attr("class", "q40")
           .attr("id", function(d) {
             return d.properties.name.replace(/ /g,"_")
           })
@@ -250,15 +217,12 @@ console.log("on mouse move");
           })
           .on("mouseover", function(d) {
               d3.select(this)
-                .attr("class", "q90")
                 .append("svg:title")
                 //use CLDR to localize country name
                 .text(d.properties.name)
    
           })
           .on("mouseout", function(d) {
-            d3.select(this)
-            .attr("class", "q40")
              d3.select(this).select("title").remove()
       
           })
@@ -356,18 +320,19 @@ console.log("on mouse move");
             .attr("id", function(d) {
               return d.properties.NAME_1
             })
+            .attr("title", function(d) {
+              return d.properties.NAME_1
+            })
             .classed("country", true)
             .attr("class", "country")
             .style("stroke-width", 1.5 / k + "px")
             .on("mouseover", function(d) {
               d3.select(this)
-         //     .style("fill", "#6C0")
            //   .append("svg:title")
              // .text(d.properties.NAME_1)
             })
             .on("mouseout", function(d) {
               d3.select(this)
-       //       .style("fill", "#000000")
          //     d3.select(this).select("title").remove()
             })
             .on("click", function(d) {
