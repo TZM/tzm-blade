@@ -33,7 +33,7 @@ mapSvg = chartDiv.append("svg").attr("width", "100%")
 iconGroup = chartSvg.append("g").attr("class", "map-tools").attr("transform", "translate(0 0) scale(0.5)")
 
 addRect = (group) ->
-    group.append("svg:rect").attr("width", 100).attr("height", 100).attr("style", "stroke:#006600; fill: #00cc00" )
+    group.append("svg:rect").attr("width", 100).attr("height", 100).attr("class", "icon_background" )
 
 g = iconGroup.append("g").attr("class", "group-icon")
     .attr("name", "groups")
@@ -66,4 +66,6 @@ chartSvg.append("g").attr("id", "countries")
 exports.map = (req, res) ->
     res.render "map"
         user: req.user
+        chart: chartDiv.html()
+        worldJsonData: worldJsonData
         chart: chartDiv.html()
