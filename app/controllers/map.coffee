@@ -13,27 +13,21 @@ margin =
   bottom: 20
   right: 20
 
-console.log parseInt(margin.top)
-width = parseInt(d3.select("#map").style("width"))
-console.log "xxxx"
-console.log width
-console.log "xxxx"
-width = width - margin.left - margin.right
-mapRatio = 0.5
-height = width * mapRatio
-console.log "xxxx"
-console.log height
+#width = parseInt(d3.select("#map").style("width"))
+#width = width - margin.left - margin.right
+#mapRatio = 0.5
+#height = width * mapRatio
 
 chartDiv = d3.select("body").append("div").attr("id", "chart")
 chartSvg = chartDiv.append("svg").attr("id", "chartsvg").attr("height", 100)
-mapSvg = chartDiv.append("svg").attr("width", "100%")
-        .attr("height", "88%")
-        .attr("viewBox", "0 0 " + width + "  "+ height)
-        .attr("preserveAspectRatio", "xMidYMid")
+#mapSvg = chartDiv.append("svg").attr("width", "100%")
+#        .attr("height", "88%")
+#        .attr("viewBox", "0 0 " + width + "  "+ height)
+#        .attr("preserveAspectRatio", "xMidYMid")
 iconGroup = chartSvg.append("g").attr("class", "map-tools").attr("transform", "translate(0 0) scale(0.5)")
 
 addRect = (group) ->
-    group.append("svg:rect").attr("width", 100).attr("height", 100).attr("style", "stroke:#006600; fill: #00cc00" )
+    group.append("svg:rect").attr("width", 100).attr("height", 100).attr("class", "icon_background" )
 
 g = iconGroup.append("g").attr("class", "group-icon")
     .attr("name", "groups")
@@ -58,7 +52,7 @@ g.append("svg:path").attr("d", mapHelper.skillShareIcon)
 #pd = (d) -> d.properties.name.replace (/ /g, "_")
 
 worldJsonData = require('../../data/topo/world.json')
-chartSvg.append("g").attr("id", "countries")
+#chartSvg.append("g").attr("id", "countries")
 #.data(topojson.object(worldJsonData, worldJsonData.objects.countries).geometries)
 #.enter().append("path").attr("d", self.path)
 #.attr "id", pd d

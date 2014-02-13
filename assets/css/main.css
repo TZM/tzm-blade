@@ -6,6 +6,8 @@
 @import "/css/vendor/font-awesome-social.css";
 @import "/css/vendor/famfam/cus-icons.css";
 
+
+
 html,body,body div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,figure,footer,header,hgroup,menu,nav,section,time,mark,audio,video {
     border: 0;
     outline: 0;
@@ -543,6 +545,8 @@ svg path.country {
     z-index: -1;
 }
 
+
+
 .member {
     z-index: 10;
 }
@@ -550,6 +554,10 @@ svg path.country {
 svg > text > .city-name {
     font-size: 77%;
 }
+
+path, rect, circle { -webkit-transition-duration: 0.4s; 
+transition-duration: 0.4s;  }
+
 #tooltip {
     background: #4F4F4F;
     border: 1px solid #2C2929;
@@ -601,18 +609,6 @@ svg > text > .city-name {
   fill: orange;
 }
 
-path.group-icon {
-    fill: #000;
-}
-
-path.projects-icon {
-    fill: #000;
-}
-
-path.skill-share-icon {
-    fill: #000;
-}
-
 .chapters-network-list {
     -webkit-column-count:4;
        -moz-column-count:4;
@@ -629,6 +625,17 @@ div.statBlock {
     margin-left: 5px;
     padding-top: 5px;
 }
+
+rect.icon_background { stroke:#006600; fill: green ;}
+.map-tools g:hover rect.icon_background { stroke:#006600; fill: lime ;}
+
+.map-tools path{ fill: blue;}
+.map-tools g:hover path{ fill: yellow;}
+
+#countries path {fill:rgb(126,78,50);}
+#countries path:hover {fill:rgb(255,179,114);}
+
+/* map section ends */
 
 /*******************************************************************************/
 /* Activity box */
@@ -733,11 +740,12 @@ div.statBlock {
     position:relative;
     left:50%;
 }
-@media print{*{text-shadow:none !important;} body{overflow:visible !important;} #header{display:none;} #notification{display:none !important;}
 
-/* map section */
-g#countries path {
-	fill: pink;
+@media print{
+	{text-shadow:none !important;} 
+body{overflow:visible !important;} 
+#header{display:none;} 
+#notification {display:none !important;}
 }
 
-/* map section ends */
+
