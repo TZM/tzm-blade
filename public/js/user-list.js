@@ -68,7 +68,7 @@ jQuery(function($) {
 		loading = true;
 
 		var skip = count,
-			limit = 20,
+			limit = 10,
 			q = searchQ.val(),
 			filter = searchF.find('option:selected').val(),
 			s = sort.html(),
@@ -116,7 +116,7 @@ jQuery(function($) {
 			}
 
 			loading = false;
-		});
+		}).fail(handleError);
 	}
 
 	function resetAutoUpdate() {
@@ -151,7 +151,7 @@ jQuery(function($) {
 					loadMore();
 				}
 			}
-		});
+		}).fail(handleError);
 	}
 
 	$('#user-sync').click(function() {
@@ -160,6 +160,10 @@ jQuery(function($) {
 
 	$('#user-loadmore').click(function() {
 		loadMore();
+	});
+
+	$('button.close').click(function() {
+		$(this).closest('tr').hide();
 	});
 
 	userList.on('click', '.user-state', function() {
@@ -177,6 +181,12 @@ jQuery(function($) {
 
 			if (!provider) {
 				noprovider.show();
+
+				var scroll = noprovider.offset().top - 50;
+
+				if ($(document).scrollTop() > scroll) {
+					$('html, body').animate({scrollTop:scroll}, 250);
+				}
 				return;
 			}
 		}
@@ -193,7 +203,7 @@ jQuery(function($) {
 
 			newState.val(state);
 			th.attr('class', 'user-state user-state-'+state);
-		});
+		}).fail(handleError);
 	});
 
 	$('#user-updateall').click(function() {
@@ -253,7 +263,7 @@ jQuery(function($) {
 					row.find('.user-state').attr('class', 'user-state user-state-'+state);
 				}
 			}
-		});
+		}).fail(handleError);
 	});
 
 	function updateall(users) {
@@ -271,7 +281,7 @@ jQuery(function($) {
 
 				updateRow(row, data[i]);
 			}
-		}, 'json');
+		}, 'json').fail(handleError);
 	}
 
 	userList.on('click', '.user-update', function(event) {
@@ -290,11 +300,11 @@ jQuery(function($) {
 			//console.log('success', data, textStatus);
 
 			updateRow(row, data);
-		}, 'json');
+		}, 'json').fail(handleError);
 	});
 
-	$('#user-create .user-create').click(function(event) {
-		var row = $('#user-create'),
+	$('#user-create').click(function(event) {
+		var row = $('#user-createrow'),
 			update = getRowData(row);
 
 		update.email = update.newEmail;
@@ -308,10 +318,9 @@ jQuery(function($) {
 		$.post('/user/list', data, function(data, textStatus) {
 			//console.log('success', data, textStatus);
 
-			var c = parseInt(count.html()),
-				baseRow = $('#user-baserow');
+			var baseRow = $('#user-baserow');
 
-			var newRow = baseRow.clone().attr('id', 'user-'+c).prop('style', false);
+			var newRow = baseRow.clone().attr('id', 'user-'+count++).prop('style', false);
 
 			updateRow(newRow, data);
 
@@ -319,12 +328,10 @@ jQuery(function($) {
 
 			newRow.appendTo(userList);
 
-			count = c+1;
-
 			row.find('input[type=text]').val('');
 			row.find('select option').prop('selected', false);
 			row.find('select option[value=guest]').prop('selected', true);
-		}, 'json');
+		}, 'json').fail(handleError);
 	});
 
 	function getRowData(row) {
@@ -366,5 +373,18 @@ jQuery(function($) {
 
 		row.find('.user-orig-state, .user-new-state').val(state);
 		row.find('.user-state').attr('class', 'user-state user-state-'+state);
+	}
+
+	function handleError(err) {
+		var box = $('#user-errormsg');
+
+		box.find('span').text(err.responseText);
+		box.show();
+
+		var scroll = box.offset().top - 50;
+
+		if ($(document).scrollTop() > scroll) {
+			$('html, body').animate({scrollTop:scroll}, 250);
+		}
 	}
 });
