@@ -8,6 +8,8 @@ paths.check = 'M2.379,14.729 5.208,11.899 12.958,19.648 25.877,6.733 28.707,9.56
 paths.cross = 'M24.778,21.419 19.276,15.917 24.777,10.415 21.949,7.585 16.447,13.087 10.945,7.585 8.117,10.415 13.618,15.917 8.116,21.419 10.946,24.248 16.447,18.746 21.948,24.248z';
 paths.mail = 'M28.516,7.167H3.482l12.517,7.108L28.516,7.167zM16.74,17.303C16.51,17.434,16.255,17.5,16,17.5s-0.51-0.066-0.741-0.197L2.5,10.06v14.773h27V10.06L16.74,17.303z';
 
+// Problem in Chrome and Opera with <use> and CSS, so don't use defs.
+/*
 var iconDefsDiv = exports.defs = d3.select('body').append('div'),
 	iconsSvg = iconDefsDiv.append('svg').attr('width', 0).attr('height', 0),
 	iconDefs = iconsSvg.append('defs');
@@ -21,14 +23,20 @@ var iconStateGroup = iconDefs.append('svg:g').attr({id:'svg-state',width:30, hei
 iconStateGroup.append('svg:path').attr('id', 'path-check').attr('class', 'icon-check').attr('d', paths.check);
 iconStateGroup.append('svg:path').attr('id', 'path-cross').attr('class', 'icon-cross').attr('d', paths.cross);
 iconStateGroup.append('svg:path').attr('id', 'path-mail').attr('class', 'icon-mail').attr('d', paths.mail);
-
+*/
 icons.sort = d3.select('body').append('div');
 
 var iconsSortSvg = icons.sort.append('svg').attr({width:20, height:10, class:'icon-sort'});
+iconsSortSvg.append('svg:path').attr('class', 'icon-arrowup').attr('d', paths.arrowup).attr('transform', 'matrix(0.4,0,0,0.35,0,0)');
+iconsSortSvg.append('svg:path').attr('class', 'icon-arrowdown').attr('d', paths.arrowdown).attr('transform', 'matrix(0.4,0,0,0.35,5.5,0)');
 // Need this xlink:xlink stuff due to bug in D3 stripping namespaces.
-iconsSortSvg.append('svg:use').attr('xlink:xlink:href', '#svg-sort');
+//iconsSortSvg.append('svg:use').attr('xlink:xlink:href', '#svg-sort')
+
 
 icons.state = d3.select('body').append('div');
 
 var iconsStateSvg = icons.state.append('svg').attr({width:30, height:30, class:'icon-state'});
-iconsStateSvg.append('svg:use').attr('xlink:xlink:href', '#svg-state');
+iconsStateSvg.append('svg:path').attr('class', 'icon-check').attr('d', paths.check);
+iconsStateSvg.append('svg:path').attr('class', 'icon-cross').attr('d', paths.cross);
+iconsStateSvg.append('svg:path').attr('class', 'icon-mail').attr('d', paths.mail);
+//iconsStateSvg.append('svg:use').attr('xlink:xlink:href', '#svg-state');

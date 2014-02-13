@@ -504,7 +504,7 @@ Route =
             res.render 'user/list',
               users: results
               count: count
-              iconDefs: listHelper.defs.html()
+              # iconDefs: listHelper.defs.html()
               icons: listHelper.icons
 
 listFields = 'email name surname groups active provider awaitConfirm -_id'

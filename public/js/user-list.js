@@ -97,7 +97,7 @@ jQuery(function($) {
 				c = data.count || 0;
 
 			for( var i= 0, len=users.length; i<len; i++ ) {
-				var row = baseRow.clone().attr('id', 'user-'+(skip++)).prop('style', false);
+				var row = baseRow.clone().attr('id', 'user-'+(skip++)).show();
 
 				updateRow(row, users[i]);
 				row.appendTo(userList);
@@ -320,7 +320,7 @@ jQuery(function($) {
 
 			var baseRow = $('#user-baserow');
 
-			var newRow = baseRow.clone().attr('id', 'user-'+count++).prop('style', false);
+			var newRow = baseRow.clone().attr('id', 'user-'+count++).show();
 
 			updateRow(newRow, data);
 
