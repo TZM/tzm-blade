@@ -1,6 +1,6 @@
 include "../../layout/layout.blade"
 replace block page
-    #svg-icons(style='display:none')
+    //- #svg-icons(style='display:none')
         != iconDefs
     #search(style="margin:30px 40px")
         form.form-inline#user-search(method='post', action='/user/list', role='form')
