@@ -18,7 +18,7 @@ Route =
   # Lists all users
   index: (req, res) ->
     # FIXME set permissions to see this - only admins
-    if req.user.groups is 'admin'
+    if req.user and req.user.groups is 'admin'
       User.find {}, (err, users) ->
         res.send users
 
@@ -498,7 +498,7 @@ Route =
               count: count
           else
             listHelper = require('./listhelper')
-            res.render 'user/list'
+            res.render 'user/list',
               users: results
               count: count
               iconDefs: listHelper.defs.html()
