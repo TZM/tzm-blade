@@ -1,6 +1,6 @@
 express = require "express"
 csrf = express.csrf()
-cors = require('../utils/cors')
+cors = require "../utils/cors"
 assets = require "connect-assets"
 jsPaths = require "connect-assets-jspaths"
 flash = require "connect-flash"
@@ -11,7 +11,6 @@ logger = require "winston"
 passport = require "passport"
 LocalStrategy = require("passport-local").Strategy
 cldr = require "cldr"
-i18n = require "i18next"
 fs = require "fs"
 __ = require "underscore"
 
@@ -79,7 +78,7 @@ module.exports = (app) ->
         .use(express.static(process.cwd() + "/js", {maxAge:maxAges}))
         .use(express.static(process.cwd() + "/locales", {maxAge:maxAges}))
         .use(express.static(process.cwd() + "/data/topo", {maxAge:maxAges}))
-        .use(express.logger('dev'))
+        .use(express.logger("dev"))
         .use(express.errorHandler(
             dumpException: true
             showStack: true
@@ -96,11 +95,11 @@ module.exports = (app) ->
         #))
     app.configure ->
         try
-            require ('./passport.coffee')
+            require ("./passport.coffee")
             app.set "translation", require(process.cwd() + "/locales/dev/translation.json")
             app.set "chapters", require(process.cwd() + "/data/chapters.json")
             fs.readdir "./locales", (err,locales) ->
-                EXCLUDE = [ 'dev', 'README.md', 'config.json' ]
+                EXCLUDE = [ "dev", "README.md", "config.json" ]
                 languages = []
                 results = __.reject locales, (value, index, list) ->
                     return EXCLUDE.indexOf(value) != -1
@@ -117,7 +116,7 @@ module.exports = (app) ->
                 #console.log results
         catch e
             logger.warn "files not found " + e, logCategory
-            require ('./passport.coffee')
+            require ("./passport.coffee")
             app.set("chapters", [])
             app.set "languages", []
             app.set "translation", []
@@ -131,12 +130,12 @@ module.exports = (app) ->
         .use(cors)
         .use(express.json())
         .use(express.methodOverride())
-        .use(express.cookieParser('90dj7Q2nC53pFj2b0fa81a3f663fd64'))
+        .use(express.cookieParser("90dj7Q2nC53pFj2b0fa81a3f663fd64"))
         .use(multipleRedisSessions(options))
         .use(express.session(
-            key: 'zmgc-connect.sid'
+            key: "zmgc-connect.sid"
             store: options.hosts[0]
-            secret: 'f2e5a67d388ff2090dj7Q2nC53pF'
+            secret: "f2e5a67d388ff2090dj7Q2nC53pF"
             cookie:
                 maxAge: 86400000 * 30 #90 days
         ))
@@ -178,6 +177,8 @@ module.exports = (app) ->
                     allCountries: countries
                     #socials
                     socials: thirdParty
+                    #user
+                    user: req.user
                     # res.cookie.
                 next()
         app

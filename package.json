@@ -3,7 +3,7 @@
   "name": "zmgc",
   "description": "The ZMGC Application aims to create an on-line eco-system within which the ideas of Resource Based Economy can be galvanise into actions that can be used in the real world.",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "http://zmgc.net",
   "license": "GPL",
   "readmeFilename": "README.md",
@@ -21,6 +21,7 @@
     "start": "node run.js"
   },
   "dependencies": {
+    "coffee-script": ">=1.7.0",
     "express": "*",
     "mongoose": "*",
     "bcrypt": "*",
@@ -58,7 +59,6 @@
     "async": "*",
     "traverse": "~0.6.3",
     "baudio": "~1.1.3",
-    "coffee-script": "~1.6.3",
     "passport-facebook": "~1.0.2",
     "passport-github": "~0.1.5",
     "passport-linkedin": "~0.1.3",
@@ -73,13 +73,15 @@
     "assert": "~0.4.9",
     "imap": "~0.7.12",
     "mailparser": "~0.3.6",
-    "coffee-script": ">=1.6.2",
     "jasmine-node": ">=1.3.1",
     "supertest": "*",
     "mocha": ">=1.6.0",
     "should": ">=1.2.0",
     "tap": "~0.3.0",
-    "coffeelint": "*"
+    "coffeelint": "*",
+    "wrench": "~1.5.6",
+    "which": "~1.0.5",
+    "supervisor": "~0.5.6"
   },
   "optionalDependencies": {},
   "testling": {

@@ -79,6 +79,22 @@
     }
   },
   {
+    "id": "4f199ef4ad628ffa6600b7ab",
+    "desc": {
+      "WEBSITE": "http://www.thezeitgeistmovement.dk/",
+      "COORDINATION": "Stefan Kengen <stevenkeen@thezeitgeistmovement.dk>, Mads Rasmussen <madsras42@gmail.com>",
+      "CONTACT": "Stefan Kengen <stevenkeen@thezeitgeistmovement.dk> ,<admin@thezeitgeistmovement.dk>",
+      "PUBLIC SUPPORT": "Public Support <info@thezeitgeistmovement.dk>",
+      "YOUTUBE": "http://www.youtube.com/channel/UCRgonk-IV1TbViDqTN1Oahg",
+      "GOOGLE+": "",
+      "TWITTER": "",
+      "FACEBOOK": "https://www.facebook.com/tzmdk",
+      "TRELLO": "",
+      "OTHERS": "",
+      "LOCALES": "da-DK"
+    }
+  },
+  {
     "id": "4f19a02bad628ffa66018245",
     "desc": {
       "CARD NAME": "Ecuador",
@@ -93,6 +109,21 @@
       "TRELLO": "https://trello.com/board/movimiento-zeitgeist-en-ecuador/4f98c340a50ceb52620c8d5e",
       "OTHERS": "",
       "LOCALES": "es-EC"
+    }
+  },
+  {
+    "id": "4f199f05ad628ffa6600c4b9",
+    "desc": {
+      "WEBSITE": "http://www.zeitgeist.fi/joomla/",
+      "CONTACT": "Teemu Koskimäki<koskimaki.teemu@gmail.com>,",
+      "PUBLIC SUPPOR": "Public Support<zeitgeistfinland@gmail.com>",
+      "YOUTUBE": "http://www.youtube.com/user/Zeitgeistliike?feature=watch",
+      "GOOGLE+": "",
+      "TWITTER": "",
+      "FACEBOOK": "https://www.facebook.com/groups/59402472740/",
+      "TRELLO": "",
+      "OTHERS": "",
+      "LOCALES": "fi-FI"
     }
   },
   {
@@ -351,6 +382,20 @@
       "TRELLO": "",
       "OTHERS": "",
       "LOCALES": "pt-PT"
+    }
+  },
+  {
+    "id": "4f199fbfad628ffa66013b6f",
+    "desc": {
+      "WEBSITE": "http://ro.zeitgeist-movement.com/",
+      "COORDINATION": "Valentin Ionescu <ionescubvalentin@yahoo.com>,Mircea D <mircea85@yahoo.com>",
+      "CONTACT": "Valentin Ionescu<ionescubvalentin@yahoo.com>",
+      "YOUTUBE": "",
+      "GOOGLE+": "",
+      "TWITTER": "",
+      "FACEBOOK": "https://www.facebook.com/miscarea.z.romania",
+      "OTHERS": "",
+      "LOCALES": "ro-RO"
     }
   },
   {

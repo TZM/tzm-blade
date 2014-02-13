@@ -6,6 +6,7 @@ validation = require("../utils/validation")
 messages = require "../utils/messages"
 Emailer = require ("../utils/emailer")
 passport = require("passport")
+async = require('async')
   
 logger = require "../utils/logger"
 logCat = "USER controller"
@@ -41,7 +42,7 @@ Route =
   create: (req, res, next) ->
     # FIXME - have a better error page
     delete req.body.remember_me
-    console.log("server csrf: "+ req.session._csrf);
+    console.log("server csrf: "+ req.csrfToken());
     if req.body?
       req.body.email = req.body.email.toLowerCase()
       if validationEmail.test(req.body.email)
@@ -151,7 +152,7 @@ Route =
     console.log 'resetpass'
     console.log(req.params.id);
     if req.params.id?
-      
+
       User.findOne {tokenString: req.params.id}, (err,user)->
         unless err
           if user
@@ -188,6 +189,7 @@ Route =
             user.password = req.body.password_new
             user.loginAttempts = 0
             user.lockUntil = 0
+            delete user.awaitConfirm
             user.save (err) ->
               unless err
                 req.logIn user, (err) ->
@@ -259,23 +261,23 @@ Route =
                             req.flash('info', req.i18n.t('ns.msg:flash.profilesaved'))
                             res.redirect '/user/get'
                           else
-                            res.statusCode = 500
+                            #res.statusCode = 500
                             req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err)
                             res.redirect '/user/get'
                       else
                         console.log('1');
                         req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
                         res.redirect "/user/get"
-                        res.statusCode = 400
+                        #res.statusCode = 400
                     else
                       console.log('2');
                       req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
                       res.redirect "/user/get"
-                      res.statusCode = 400
+                      #res.statusCode = 400
                 else
                   console.log('3');
                   req.flash('info', req.i18n.t('ns.msg:flash.invalidconfirmpass'))
-                  res.statusCode = 400
+                  #res.statusCode = 400
                   res.redirect "/user/get"
               else if req.body.name isnt '' or req.body.surname isnt ''
                 user.name = req.body.name if req.body.name
@@ -286,24 +288,24 @@ Route =
                     req.flash('info', req.i18n.t('ns.msg:flash.profilesaved'))
                     res.redirect '/user/get'
                   else 
-                    res.statusCode = 500
+                    #res.statusCode = 500
                     req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err)
                     res.redirect '/user/get'
               else
                 console.log('5');
                 req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
                 res.redirect '/user/get'
-                res.statusCode = 400
+                #res.statusCode = 400
         else
           console.log('6');
           req.flash('info', err)
           res.redirect "index"
-          res.statusCode = 400
+          #res.statusCode = 400
     else
       console.log('7');
       req.flash('info', req.i18n.t('ns.msg:flash.saveerr'))
       res.redirect '/user/get'
-      res.statusCode = 400
+      #res.statusCode = 400
       console.log("body is not valid");
   # Deletes user by id
   delete: (req, res) ->
@@ -357,5 +359,232 @@ Route =
       res.redirect "index",
         user: req.user
       res.statusCode = 403
+  list: (req, res, next) ->
+    console.log 'list', req.user && req.user.groups
+    #if !req.user || req.user.groups isnt 'admin'
+    #  return res.send(403)
+
+    if req.method is 'POST'
+
+      body = req.body
+      if !body?
+        return res.send 400, 'Must provide data.'
+
+      action = body.action
+      user = body.user
+      users = body.users
+
+      console.log 'list post', body
+
+      return res.send 400, 'Must provide valid action type.' unless action
+
+      if action is 'update'
+        user = body.user
+
+        return res.send 400, 'Missing user data.' unless user
+        return res.send 400, 'Must provide valid email address.' unless user.email
+
+        return listUpdateUser user, (err, result) ->
+          return res.send 500, err.message || err if err
+
+          res.send result
+      else if action is 'updateall'
+        users = body.users
+
+        if !users
+          return res.send 400, 'Invalid user data.'
+
+        for user in users
+          return res.send 400, 'Invalid email address.' unless user.email
+
+        return async.map users, listUpdateUser, (err, results) ->
+          return res.send 500, err.message || err if err
+
+          res.send results
+      else if action is 'create'
+        user = body.user
+
+        return res.send 400, 'Missing user data.' unless user
+        return res.send 400, 'Invalid email address.' unless user.email
+
+        listCreateUser user, (err, result) ->
+          return res.send 500, err.message || err if err
+
+          res.send result
+      else if action is 'resendall'
+        emails = body.emails
+
+        return res.send 400, 'Need emails.' unless emails and emails.length
+
+        async.map emails, listSendMail, (err, results) ->
+          return res.send 500, err.message || err if err
+
+          res.send results
+      else if action is 'state'
+        email = body.email
+        state = body.state
+
+        return res.send 400, 'Must provide valid email address.' unless email
+
+        if state is email
+          return listSendMail email, (err, result) ->
+            return res.send 500, err.message || err if err
+
+            res.send result
+
+        return res.send 400, 'Must set a proper state.' unless state in ['active', 'inactive']
+
+        data = email:email
+
+        data.active = state is 'active'
+
+        return listUpdateUser data, (err, result) ->
+          return res.send 500, err.message || err if err
+
+          res.send result
+      else
+        return res.send 400, 'Invalid action type.'
+
+    else if req.method is 'GET'
+      #if req.users.groups is 'admin'
+      q = req.query.q
+      filter = req.query.filter
+      sort = req.query.sort
+      order = req.query.order
+      count = req.query.count
+
+      data = {}
+
+      if q
+        if filter is 'email'
+          data.email = new RegExp('^'+q, 'i')
+        else if filter is 'name'
+          data.$or = [ {name: new RegExp('^'+q, 'i')}, {surname: new RegExp('^'+q, 'i')}]
+
+      if count
+        query = User.count data
+      else
+        limit = Math.min(req.query.limit ? 20, 200)
+        skip = req.query.skip ? 0
+
+        query = User.find(data, listFields).skip(skip).limit(limit)
+
+        if order and sort in ['email', 'name', 'surname', 'groups', 'state']
+          sortObj = {}
+
+          order = 1 if order is 'asc'
+          order = -1 if order is 'desc'
+
+          if sort is 'state'
+            query.sort({active:order, awaitConfirm:order});
+          else
+            sortObj[sort] = order
+            query.sort(sortObj)
+        else
+          query.sort {_id:1}
+
+      query.exec (err, results) ->
+        return res.send 500, err.message || err if err
+
+        if count
+          return res.json {count:results}
+
+        User.count(data).exec (err, count) ->
+          return res.send 500, err.message || err if err
+
+          if req.xhr
+            res.json
+              users: results
+              count: count
+          else
+            listHelper = require('./listhelper')
+            res.render 'user/list'
+              users: results
+              count: count
+              iconDefs: listHelper.defs.html()
+              icons: listHelper.icons
+
+listFields = 'email name surname groups active provider awaitConfirm -_id'
+
+listSendMail = (email, cb) ->
+  User.findOneAndUpdate {email:email}, {awaitConfirm:true}, (err, user) ->
+    return cb err if err
+    return cb if !user
+
+    options =
+      template: "reset"
+      subject: "reseting your password"
+      to:
+        name: user.name
+        surname: user.surname
+        email: user.email
+    #check if user is already active then reset password if not then send activation link again
+    if user.active is true
+      action = '/user/resetpassword/'
+    else
+      action = '/user/activate/'
+      options.template = "activation"
+      options.subject = "account activation"
+
+    if config.APP.hostname is 'localhost'
+      data =
+        link: "http://"+config.APP.hostname+":"+config.PORT+action+user.tokenString
+    else
+      data =
+        link: config.APP.hostname+action+user.tokenString
+    user.resetLoginAttempts (cb) ->
+      console.log("login attempts reset to 0");
+
+    console.log("sending message to: ", options.to.email);
+    mailer = new Emailer(options, data);
+    mailer.send (err,message)->
+      return cb err if err
+
+      cb null, message
+
+
+listCreateUser = (data, cb) ->
+  User.register data, (err, result) ->
+    return cb err if err
+
+    listUpdateUser data, cb
+
+listUpdateUser = (data, cb) ->
+  email = data?.email
+  if !email
+    return cb(new Error('Must provide valid email address to update.'));
+
+  validator.check(email, messages.VALIDATE_EMAIL).isEmail()
+
+  where = {email: email};
+  update = {}
+
+  if data.newEmail?
+    validator.check(data.newEmail, messages.VALIDATE_EMAIL).isEmail()
+    update.email = data.newEmail
+
+  errors = validator.getErrors()
+  if errors.length
+    return cb errors[0]
+
+  update.name = data.name if data.name?
+  update.surname = data.surname if data.surname?
+  update.groups = data.groups if data.groups?
+  update.awaitConfirm = true if data.state is 'email'
+
+  if data.state is 'active'
+    update.active = true
+  else if data.state is 'inactive'
+    update.active = false
+
+  console.log 'pre update', where, update
+
+  User.findOneAndUpdate where, update, {select: listFields}, (err, user) ->
+    return cb(err) if err
+
+    obj = user.toObject()
+    obj.origEmail = email
+
+    cb(null, obj)
 
 module.exports = Route
