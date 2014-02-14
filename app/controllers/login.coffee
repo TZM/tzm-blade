@@ -1,8 +1,8 @@
 #Just renders login.blade
 #exports.login = (req, res) ->
-  #console.log (_csrf: req.session._csrf)
+  #console.log (_csrf: req.csrfToken())
   #console.log 'REQ.BODY!!!!!!!!!!!!!!!!!',req.body
-  #res.render "user/login", _csrf: req.session._csrf
+  #res.render "user/login", _csrf: req.csrfToken()
 exports.login = (req, res, next) ->
   console.log('LOGIN');
   if req.isAuthenticated()
@@ -81,11 +81,11 @@ exports.login = (req, res, next) ->
            signed: true
            httpOnly: true
   
-         res.redirect "login", _csrf: req.session._csrf
+         res.redirect "login", _csrf: req.csrfToken()
   
      else
        console.log 'redirect login'
-       res.redirect "login", _csrf: req.session._csrf
+       res.redirect "login", _csrf: req.csrfToken()
   
   else
     console.log 'last next'

@@ -146,8 +146,8 @@ module.exports = (app) ->
           # Only use CSRF if user is logged in
           # if req.session.passport and req.session.passport and req.session.passport.user
           #   console.log('session');
-          #   # console.log(req.session._csrf);
-          #   arr.push(req.session._csrf);
+          #   # console.log(req.csrfToken());
+          #   arr.push(req.csrfToken());
           #   console.log(arr);
           #   csrf req, res, next
           # else
@@ -170,7 +170,7 @@ module.exports = (app) ->
                     #for connect-flash
                     message: req.flash("info")
                     # needed for csrf support
-                    csrf_token: req.session._csrf
+                    csrf_token: req.csrfToken()
                     # list the 'Official Chapters' from the trello board
                     chapterJSON: chapters
                     # localize the country list based on user's browser locale

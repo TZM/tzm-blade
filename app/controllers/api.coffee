@@ -19,6 +19,6 @@ router.get '/me', (req, res) ->
 
 router.get '/me/csrf', (req, res) ->
   res.json
-    csrf: req.session._csrf
+    csrf: req.csrfToken()
 
 module.exports = router
