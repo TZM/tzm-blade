@@ -10,6 +10,9 @@ jQuery(function($) {
 		unsynced = $('#user-unsynced'),
 		noprovider = $('#user-noprovider');
 
+	var q = searchQ.val(),
+		f = searchF.find('option:selected').val();
+
 	var updateTime = 10000,
 		updateId,
 		loading = false;
@@ -19,6 +22,8 @@ jQuery(function($) {
 
 	$('#user-search').submit(function(ev) {
 		ev.preventDefault();
+		q = searchQ.val();
+		f = searchF.find('option:selected').val();
 		loadMore(true);
 	});
 
@@ -69,8 +74,6 @@ jQuery(function($) {
 
 		var skip = count,
 			limit = 10,
-			q = searchQ.val(),
-			filter = searchF.find('option:selected').val(),
 			s = sort.html(),
 			o = order.html();
 
@@ -81,7 +84,7 @@ jQuery(function($) {
 
 		if (q) {
 			data.q = q;
-			data.filter = filter;
+			data.filter = f;
 		}
 
 		if (s) {
@@ -128,14 +131,11 @@ jQuery(function($) {
 	}
 
 	function autoUpdate() {
-		var q = searchQ.val(),
-			filter = searchF.find('option:selected').val();
-
 		var data = {count:true};
 
 		if (q) {
 			data.q = q;
-			data.filter = filter;
+			data.filter = f;
 		}
 
 		$.get('/user/list', data, function(data, textStatus) {
@@ -378,10 +378,15 @@ jQuery(function($) {
 		row.find('.user-state').attr('class', 'user-state user-state-'+state);
 	}
 
-	function handleError(err) {
+	function handleError(jqXHR, textStatus, errorThrown) {
 		var box = $('#user-errormsg');
 
-		box.find('span').text(err.responseText);
+		var err = jqXHR;
+
+		var msg = err.status +' '+ err.statusText;
+		if (err.responseText) msg += ': ' + err.responseText;
+
+		box.find('span').text(msg);
 		box.show();
 
 		var scroll = box.offset().top - 50;

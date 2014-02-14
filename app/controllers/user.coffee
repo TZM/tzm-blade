@@ -407,6 +407,8 @@ Route =
         return res.send 400, 'Missing user data.' unless user
         return res.send 400, 'Invalid email address.' unless user.email
 
+        user.email = user.email.toLowerCase()
+
         listCreateUser user, (err, result1) ->
           return res.send 500, err.message || err if err
 
