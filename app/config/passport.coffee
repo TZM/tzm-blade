@@ -203,19 +203,61 @@ passport.use(new GoogleStrategy
 #use github strategy
 #gitgub returs email in profile.emails[]
 if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
-    passport.use(new GitHubStrategy
+    passport.use(github = new GitHubStrategy
         clientID: process.env.GITHUB_ID
         clientSecret: process.env.GITHUB_SEC
         callbackURL: url + "/social/githubcallback"
+        scope: ["user:email"]
     , (accessToken, refreshToken, profile, done) ->
         console.log "arguments in github strategy"
         console.log("profile.emails", profile.emails)
         console.log arguments
         emails = []
         for mail in profile.emails
-            emails.push mail.value
+            emails.push mail.value if mail.value?
+
         if !emails[0]
-            emails[0] = profile.id
+            # non-public key that points to oauth2
+            github._oauth2._request 'GET', 'https://api.github.com/user/emails', {Accept: 'application/vnd.github.v3'}, '', accessToken, (err, raw) ->
+                return gitNext err, null, done if err
+
+                try
+                    json = JSON.parse raw
+                catch e
+                    return gitNext e, null, done
+
+                emails = []
+                for mail, i in json
+                    if i and mail.primary
+                        emails.unshift mail.email
+                    else
+                        emails.push mail.email
+
+                profile.emails = emails
+
+                gitNext null, profile, done
+        else
+            profile.emails = emails
+            gitNext null, profile, done
+    )
+
+    gitNext = (err, profile, done) ->
+        if err then return done err, null,
+            message: "authorizationfailed",
+            data: ".",
+            message2: "tryagain"
+
+        emails = profile.emails
+
+        console.log 'github emails', emails
+
+        unless emails?[0] then return done err, null,
+            message: "authorizationfailed",
+            data: ".",
+            message2: "noemail"
+
+        console.log('gitNext', emails)
+
         User.findOneAndUpdate(
             "email":
                 $in: emails
@@ -258,7 +300,6 @@ if process.env.GITHUB_ID? and process.env.GITHUB_SEC?
                     data: "."
                     message2: "welcome"
         )
-    )
 
 #linked-in
 # profile:
