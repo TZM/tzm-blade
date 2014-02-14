@@ -249,6 +249,11 @@ We need javascript developers, specifically members who know Node.js, Express. H
   - Development - html5, javascript template development - see [views/](views/) and [assets/](assets/) directory
   - Localization/Translation - we use the i18next library to localize and internationalize this application - see README.md in [locales/](locales/README.md) directory
 
+#Donate
+
+[![Donate weekly to this project using Gittip][19]][20]
+[![Flattr donate button][21]][22]
+
 [1]: https://api.travis-ci.org/TZM/tzm-blade.png
 [2]: https://travis-ci.org/TZM/tzm-blade
 [3]: https://david-dm.org/TZM/tzm-blade.png
@@ -267,3 +272,7 @@ We need javascript developers, specifically members who know Node.js, Express. H
 [16]: https://bitdeli.com/free
 [17]: http://ci.testling.com/TZM/tzm-blade.png
 [18]: http://ci.testling.com/TZM/tzm-blade
+[19]: http://img.shields.io/gittip/zmgc.png
+[20]: https://www.gittip.com/zmgc/
+[21]: http://api.flattr.com/button/flattr-badge-large.png
+[22]: https://flattr.com/submit/auto?user_id=zmgc&url=https%3A%2F%2Fgithub.com%2FTZM%2Ftzm-blade
