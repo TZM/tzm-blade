@@ -92,7 +92,13 @@ task 'spec', 'Run Mocha tests', ->
 task 'test', 'Run Mocha tests', ->
   build -> test -> log "✓ Mocha tests complete", green
 
-task 'dev', 'start dev env', ->
+option '-v', '--version', "show app's version number"
+#option '-h', '--help', "show this help message and exit"
+option '-e', '--email [EMAIL]', "add an admin email address for `cake dev`"
+option '-p', '--port [PORT]', "listen on a specific port for `cake dev`"
+task 'dev', 'Creates a new instance of zmgc.', (options) ->
+  console.log 'dev options', options
+  return console.log 'tzm-blade version ' + pkg.version if options.version
   # watch_coffee
   # options = ['-c', '-b', '-w', '-o', '.app', 'src']
   # cmd = which.sync 'coffee'  
@@ -101,13 +107,17 @@ task 'dev', 'start dev env', ->
   # coffee.stderr.pipe process.stderr
   log 'Watching coffee files', green
   # watch_js
+
+  process.env.EMAIL = options.email if options.email
+  process.env.PORT = options.port if options.port
+
   supervisor = spawn 'node', [
     './node_modules/supervisor/lib/cli-wrapper.js',
     '-w',
-    'app,views', 
-    '-e', 
-    'js|blade', 
-    'run'
+    'app,views',
+    '-e',
+    'js|blade',
+    'run',
   ]
   supervisor.stdout.pipe process.stdout
   supervisor.stderr.pipe process.stderr
