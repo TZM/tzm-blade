@@ -1,4 +1,19 @@
 jQuery(function($) {
+	var socket = new eio.Socket();
+	socket.on('open', function() {
+		console.log('open');
+	});
+	socket.on('message', function(data) {
+		console.log('message', data);
+	});
+	socket.on('close', function() {
+		console.log('close');
+
+		setTimeout(function() {
+			socket.open();
+		}, 5000);
+	});
+
 	var csrf = $('#_csrf').val(),
 		userList = $('#user-list'),
 		sort = $('#user-sort'),
@@ -18,7 +33,7 @@ jQuery(function($) {
 		loading = false;
 
 	loadMore(true);
-	resetAutoUpdate();
+	//resetAutoUpdate();
 
 	$('#user-search').submit(function(ev) {
 		ev.preventDefault();
@@ -108,7 +123,7 @@ jQuery(function($) {
 
 			total = c;
 			count = skip;
-			resetAutoUpdate();
+			//resetAutoUpdate();
 			unsynced.hide();
 
 			if (count === total) {

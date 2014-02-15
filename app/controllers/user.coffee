@@ -440,7 +440,6 @@ Route =
         return res.send 400, 'Must set a proper state.' unless state in ['active', 'inactive']
 
         data = email:email
-
         data.active = state is 'active'
 
         return listUpdateUser data, (err, result) ->
@@ -451,65 +450,67 @@ Route =
         return res.send 400, 'Invalid action type.'
 
     else if req.method is 'GET'
-      #if req.users.groups is 'admin'
-      q = req.query.q
-      filter = req.query.filter
-      sort = req.query.sort
-      order = req.query.order
-      count = req.query.count
+      listGet req.query, (err, data) ->
+        res.send 500, err.message || err if err
 
-      data = {}
-
-      if q
-        if filter is 'email'
-          data.email = new RegExp('^'+q, 'i')
-        else if filter is 'name'
-          data.$or = [ {name: new RegExp('^'+q, 'i')}, {surname: new RegExp('^'+q, 'i')}]
-
-      if count
-        query = User.count data
-      else
-        limit = Math.min(req.query.limit ? 20, 200)
-        skip = req.query.skip ? 0
-
-        query = User.find(data, listFields).skip(skip).limit(limit)
-
-        if order and sort in ['email', 'name', 'surname', 'groups', 'state']
-          sortObj = {}
-
-          order = 1 if order is 'asc'
-          order = -1 if order is 'desc'
-
-          if sort is 'state'
-            query.sort({active:order, awaitConfirm:order});
-          else
-            sortObj[sort] = order
-            query.sort(sortObj)
+        if req.xhr
+          res.json data
         else
-          query.sort {_id:1}
-
-      query.exec (err, results) ->
-        return res.send 500, err.message || err if err
-
-        if count
-          return res.json {count:results}
-
-        User.count(data).exec (err, count) ->
-          return res.send 500, err.message || err if err
-
-          if req.xhr
-            res.json
-              users: results
-              count: count
-          else
-            listHelper = require('./listhelper')
-            res.render 'user/list',
-              users: results
-              count: count
-              # iconDefs: listHelper.defs.html()
-              icons: listHelper.icons
+          listHelper = require('./listhelper')
+          data.icons = listHelper.icons
+          res.render 'user/list', data
 
 listFields = 'email name surname groups active provider awaitConfirm -_id'
+
+listGet = Route.listGet = (body, cb) ->
+  q = body.q
+  filter = body.filter
+  sort = body.sort
+  order = body.order
+  count = body.count
+
+  data = {}
+
+  if q
+    if filter is 'email'
+      data.email = new RegExp('^'+q, 'i')
+    else if filter is 'name'
+      data.$or = [ {name: new RegExp('^'+q, 'i')}, {surname: new RegExp('^'+q, 'i')}]
+
+  if count
+    query = User.count data
+  else
+    limit = Math.min(body.limit ? 20, 200)
+    skip = body.skip ? 0
+
+    query = User.find(data, listFields).skip(skip).limit(limit)
+
+    if order and sort in ['email', 'name', 'surname', 'groups', 'state']
+      sortObj = {}
+
+      order = 1 if order is 'asc'
+      order = -1 if order is 'desc'
+
+      if sort is 'state'
+        query.sort({active:order, awaitConfirm:order});
+      else
+        sortObj[sort] = order
+        query.sort(sortObj)
+    else
+      query.sort {_id:1}
+
+  query.exec (err, results) ->
+    return cb err if err
+
+    if count
+      return cb null, {count:results}
+
+    User.count(data).exec (err, count) ->
+      return cb err if err
+
+      return cb null,
+        users: results
+        count: count
 
 listSendMail = (email, cb) ->
   User.findOneAndUpdate {email:email}, {awaitConfirm:true}, (err, user) ->
