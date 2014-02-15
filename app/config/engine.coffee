@@ -6,7 +6,7 @@ app = null
 
 handler = module.exports = new (require('events').EventEmitter)
 
-handler.use(_app) ->
+handler.use = (_app) ->
   app = _app
   app.use (req, res, next) ->
     req.io = io
