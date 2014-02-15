@@ -190,6 +190,7 @@ Route =
             user.password = req.body.password_new
             user.loginAttempts = 0
             user.lockUntil = 0
+            user.provider.push 'local' unless 'local' in user.provider
             delete user.awaitConfirm
             user.save (err) ->
               unless err
