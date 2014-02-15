@@ -62,7 +62,6 @@ jQuery(function($) {
 				var xhr = $.ajaxSettings.xhr();
 				if (xhr.upload) {
 					xhr.upload.addEventListener('progress', function(ev) {
-						console.log('progress', ev.loaded);
 						if (ev.lengthComputable) {
 							progress.attr({value:ev.loaded,max:ev.total});
 						}
