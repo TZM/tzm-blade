@@ -71,7 +71,8 @@
     "engine.io": "~0.9.0",
     "engine.io-rooms": "~0.1.1",
     "engine.io-client": "~0.9.0",
-    "engine.io-session": "0.0.4"
+    "engine.io-session": "0.0.4",
+    "formidable": "~1.0.14"
   },
   "devDependencies": {
     "assert": "~0.4.9",

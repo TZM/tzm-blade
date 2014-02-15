@@ -7,7 +7,8 @@ messages = require "../utils/messages"
 Emailer = require ("../utils/emailer")
 passport = require("passport")
 async = require('async')
-  
+formidable = require 'formidable'
+fs = require 'fs'
 logger = require "../utils/logger"
 logCat = "USER controller"
 validationEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
@@ -359,18 +360,17 @@ Route =
       res.redirect "index",
         user: req.user
       res.statusCode = 403
-  list: (req, res, next) ->
+  list: (req, res) ->
     console.log 'list', req.user && req.user.groups
     #if !req.user || req.user.groups isnt 'admin'
     #  return res.send(403)
 
     if req.method is 'POST'
-
       body = req.body
       if !body?
         return res.send 400, 'Must provide data.'
 
-      action = body.action
+      action = body.action || req.query.action
       user = body.user
       users = body.users
 
@@ -446,12 +446,34 @@ Route =
           return res.send 500, err.message || err if err
 
           res.send result
+      else if action is 'upload'
+        console.log 'upload'
+        form = new formidable.IncomingForm
+
+        form.uploadDir = 'uploads'
+
+        form.onPart = (part) ->
+          # reject any unexpected file, to prevent exploit.
+          return form.handlePart(part) unless part.filename and part.name isnt 'file'
+
+        form.parse req, (err, fields, files) ->
+          delete files.file._writeStream # only delete so it doesn't clutter the log.
+          console.log 'upload', err, files.file
+
+          # delete file after we're done.
+          fs.unlink files.file.path, (err) ->
+            res.end require('util').inspect {fields:fields, files:files}
       else
         return res.send 400, 'Invalid action type.'
 
     else if req.method is 'GET'
+      csrf = req.csrfToken()
+      res.cookie 'X-CSRF-Token', csrf
+
       listGet req.query, (err, data) ->
         res.send 500, err.message || err if err
+
+        data._csrf = csrf
 
         if req.xhr
           res.json data

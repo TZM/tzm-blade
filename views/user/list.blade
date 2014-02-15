@@ -10,6 +10,12 @@ replace block page
                 option(value='email', selected='selected')= t('ns.forms:option.email')
                 option(value='name')= t('ns.forms:option.name')
             button#user-search-submit.btn.btn-default(type='submit')= t('ns.forms:button.user-filter')
+    #upload(style='margin:30px 40px')
+        form.form-inline#user-upload(method='post', action='/user/list', enctype='multipart/form-data', role='form')
+            input.form-control(name='file', type='file')
+            button.btn.btn-default(type='submit') Upload
+        progress#user-upload-progress
+
     - var groups = ['admin', 'member', 'reviewers', 'guest'];
     - var groupLabels = [t('ns.forms:option.admin'), t('ns.forms:option.member'), t('ns.forms:option.reviewer'), t('ns.forms:option.guest')];
     table#user-table

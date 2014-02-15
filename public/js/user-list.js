@@ -42,6 +42,39 @@ jQuery(function($) {
 		loadMore(true);
 	});
 
+	$('#user-upload').submit(function(ev) {
+		ev.preventDefault();
+		var formData = new FormData(this)
+		console.log('upload', this, formData, formData.file);
+
+		var progress = $('#user-upload-progress');
+
+		formData.action = 'upload'
+
+		jqXHR = $.ajax({
+			url: '/user/list?action=upload&_csrf='+csrf,
+			type: 'POST',
+			data: formData,
+			cache: false,
+			contentType: false,
+			processData: false,
+			xhr: function() {
+				var xhr = $.ajaxSettings.xhr();
+				if (xhr.upload) {
+					xhr.upload.addEventListener('progress', function(ev) {
+						console.log('progress', ev.loaded);
+						if (ev.lengthComputable) {
+							progress.attr({value:ev.loaded,max:ev.total});
+						}
+					});
+				}
+				return xhr;
+			}
+		}).done(function(data, textStatus, jqXHR) {
+			console.log('done', data, textStatus);
+		});
+	});
+
 	$('#user-checkall').change(function() {
 		$('#user-list > tr > td > input[type=checkbox]').prop('checked', this.checked);
 	});
@@ -108,6 +141,7 @@ jQuery(function($) {
 		}
 
 		$.get('/user/list', data, function(data, textStatus) {
+			if (data._csrf) csrf = data._csrf;
 			if (reset) userList.find('> .user').remove();
 
 			var baseRow = $('#user-baserow'),
@@ -154,6 +188,7 @@ jQuery(function($) {
 		}
 
 		$.get('/user/list', data, function(data, textStatus) {
+			if (data._csrf) csrf = data._csrf;
 			var t = total;
 
 			if (t !== data.count) {
