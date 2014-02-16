@@ -508,12 +508,15 @@ listImport = (filepath, cb) ->
   paused = false
 
   finished = false
+  returned = false
 
   complete = (err) ->
-    return if finished
+    return if returned
 
     if err
       finished = true
+      returned = true
+      read.resume()
       return cb err, results
 
     num--
@@ -522,16 +525,20 @@ listImport = (filepath, cb) ->
       console.log 'resume', total
       read.resume()
 
-    if num is 0
+    if num is 0 and finished
+      returned = true
       results.total = total
       cb null, results
-      finished = true
 
   csv(read, {headers:true}).on('data', (data) ->
+    return if returned
     #console.log 'data', data
     num++
     total++
-    read.pause() if num >= max
+
+    if num >= max
+      paused = true
+      read.pause()
 
     User.findOne {email:data.email}, (err, user) ->
       if err
@@ -550,6 +557,7 @@ listImport = (filepath, cb) ->
           complete err
   ).on 'end', () ->
     # delete file after we're done.
+    finished = true
     complete()
   .parse()
 
