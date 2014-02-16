@@ -466,7 +466,7 @@ Route =
           return res.send 500, err.message || err if err
           return res.send 200 unless file
 
-          listImport file.path, (err, results) ->
+          listImport req, file.path, (err, results) ->
             async.map Object.keys(files), (key, cb) ->
               file = files[key]
               fs.unlink file.path, (err) ->
@@ -493,7 +493,7 @@ Route =
 
 listFields = 'email name surname groups active provider awaitConfirm -_id'
 
-listImport = (filepath, cb) ->
+listImport = (req, filepath, cb) ->
   read = fs.createReadStream filepath
 
   results =
@@ -522,6 +522,7 @@ listImport = (filepath, cb) ->
     num--
     if num < max and paused
       paused = false
+      req.io?.room(req.sessionID).broadcast 'resume '+total
       console.log 'resume', total
       read.resume()
 
