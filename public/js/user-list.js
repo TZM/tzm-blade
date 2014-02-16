@@ -124,13 +124,13 @@ jQuery(function($) {
 			max = 1000;
 
 		jqXHR = $.ajax({
-			url: '/user/list?action=upload',
+			url: '/user/list?action=upload&_csrf='+csrf,
 			type: 'POST',
 			data: formData,
 			cache: false,
 			contentType: false,
 			processData: false,
-			headers: {'X-CSRF-Token': csrf},
+			//headers: {'X-CSRF-Token': csrf},
 			xhr: function() {
 				var xhr = $.ajaxSettings.xhr();
 				if (xhr.upload) {
@@ -145,7 +145,7 @@ jQuery(function($) {
 				return xhr;
 			}
 		}).done(function(data, textStatus, jqXHR) {
-			console.log('done', loaded, max, data, textStatus);
+			console.log('done', data);
 			progress.attr('value', progress.attr('max'));
 			uploading = false;
 		}).fail(function(jqXHR) {

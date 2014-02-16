@@ -451,71 +451,29 @@ Route =
       else if action is 'upload'
         console.log 'upload start'
         form = new formidable.IncomingForm
-        form.uploadDir = 'uploads'
-
-        size = 0
-
-        files = []
+        form.uploadDir = config.UPLOADS
 
         form.onPart = (part) ->
-          console.log 'part', part
           # reject any unexpected file, to prevent exploit.
           return form.handlePart(part) unless part.filename and part.name isnt 'file'
 
-          ###
-          numProcessing = 0
-          maxProcessing = 1
-          paused = false
+          console.log 'rejected', part.name, part.filename
 
-          return if part.name isnt 'file'
-
-          #yearID,lgID,teamID,Half,divID,DivWin,Rank,G,W,L
-          stream = csv().from.stream(part, {columns:true}).to((data) ->
-            console.log 'data', data
-          ).transform (row, index, cb) ->
-            #console.log 'row', row
-            numProcessing++
-
-            if numProcessing >= maxProcessing and !paused
-              stream.pause()
-              paused = true
-              console.log 'pause', numProcessing
-            #stream.pause() if numProcessing >= maxProcessing
-
-            setTimeout () ->
-              numProcessing--;
-
-              cb null, row
-
-              if numProcessing < maxProcessing and paused
-                stream.resume()
-                paused = false
-                console.log 'resume', numProcessing
-              #stream.resume() if numProcessing < maxProcessing
-            , 3000
-
-          return;
-          first = true
-
-          part.addListener 'data', (data) ->
-            lines = data.toString().split("\r\n");
-            console.log 'data', lines
-            size += data.length
-          ###
         form.parse req, (err, fields, files) ->
           file = files?.file
-          delete file._writeStream if file # only delete so it doesn't clutter the log.
-          console.log 'uploaded', err, file
+          console.log 'uploaded', err, file?.name, file?.path
 
-          return res.send 500 if err
+          return res.send 500, err.message || err if err
           return res.send 200 unless file
 
           listImport file.path, (err, results) ->
             async.map Object.keys(files), (key, cb) ->
               file = files[key]
               fs.unlink file.path, (err) ->
+                console.log 'deleted', file.path
                 cb err
             , (err) ->
+                console.log 'imported', results
                 res.send results
       else
         return res.send 400, 'Invalid action type.'
@@ -565,6 +523,7 @@ listImport = (filepath, cb) ->
       read.resume()
 
     if num is 0
+      results.total = total
       cb null, results
       finished = true
 

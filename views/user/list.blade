@@ -12,7 +12,7 @@ replace block page
             button#user-search-submit.btn.btn-default(type='submit')= t('ns.forms:button.user-filter')
     #upload(style='margin:30px 40px')
         form.form-inline#user-upload(method='post', action='/user/list?action=upload', enctype='multipart/form-data', role='form')
-            input(type="hidden", name="_csrf", value="#{csrf_token}")
+            input(type="hidden", name="_csrf", value=csrf_token)
             input.form-control(name='file', type='file', required)
             button.btn.btn-default(type='submit') Upload
         progress#user-upload-progress(value='0', max='1')
