@@ -26,4 +26,5 @@ public/js/map2.js
 server.old.js
 npm-debug.log
 .idea
+uploads
 #data/chapters.json

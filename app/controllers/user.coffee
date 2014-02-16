@@ -12,6 +12,7 @@ fs = require 'fs'
 logger = require "../utils/logger"
 logCat = "USER controller"
 validationEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+csv = require 'fast-csv'
 
 
 # User model's CRUD controller.
@@ -448,33 +449,82 @@ Route =
 
           res.send result
       else if action is 'upload'
-        console.log 'upload'
+        console.log 'upload start'
         form = new formidable.IncomingForm
-
         form.uploadDir = 'uploads'
 
+        size = 0
+
+        files = []
+
         form.onPart = (part) ->
+          console.log 'part', part
           # reject any unexpected file, to prevent exploit.
           return form.handlePart(part) unless part.filename and part.name isnt 'file'
 
-        form.parse req, (err, fields, files) ->
-          delete files.file._writeStream # only delete so it doesn't clutter the log.
-          console.log 'upload', err, files.file
+          ###
+          numProcessing = 0
+          maxProcessing = 1
+          paused = false
 
-          # delete file after we're done.
-          fs.unlink files.file.path, (err) ->
-            res.end require('util').inspect {fields:fields, files:files}
+          return if part.name isnt 'file'
+
+          #yearID,lgID,teamID,Half,divID,DivWin,Rank,G,W,L
+          stream = csv().from.stream(part, {columns:true}).to((data) ->
+            console.log 'data', data
+          ).transform (row, index, cb) ->
+            #console.log 'row', row
+            numProcessing++
+
+            if numProcessing >= maxProcessing and !paused
+              stream.pause()
+              paused = true
+              console.log 'pause', numProcessing
+            #stream.pause() if numProcessing >= maxProcessing
+
+            setTimeout () ->
+              numProcessing--;
+
+              cb null, row
+
+              if numProcessing < maxProcessing and paused
+                stream.resume()
+                paused = false
+                console.log 'resume', numProcessing
+              #stream.resume() if numProcessing < maxProcessing
+            , 3000
+
+          return;
+          first = true
+
+          part.addListener 'data', (data) ->
+            lines = data.toString().split("\r\n");
+            console.log 'data', lines
+            size += data.length
+          ###
+        form.parse req, (err, fields, files) ->
+          file = files?.file
+          delete file._writeStream if file # only delete so it doesn't clutter the log.
+          console.log 'uploaded', err, file
+
+          return res.send 500 if err
+          return res.send 200 unless file
+
+          listImport file.path, (err, results) ->
+            async.map Object.keys(files), (key, cb) ->
+              file = files[key]
+              fs.unlink file.path, (err) ->
+                cb err
+            , (err) ->
+                res.send results
       else
         return res.send 400, 'Invalid action type.'
 
     else if req.method is 'GET'
-      csrf = req.csrfToken()
-      res.cookie 'X-CSRF-Token', csrf
-
       listGet req.query, (err, data) ->
         res.send 500, err.message || err if err
 
-        data._csrf = csrf
+        data._csrf = req.csrfToken()
 
         if req.xhr
           res.json data
@@ -484,6 +534,65 @@ Route =
           res.render 'user/list', data
 
 listFields = 'email name surname groups active provider awaitConfirm -_id'
+
+listImport = (filepath, cb) ->
+  read = fs.createReadStream filepath
+
+  results =
+    added:0
+    duplicates:0
+    rejected:0
+    total:0
+
+  num = 0
+  max = 100
+  total = 0
+  paused = false
+
+  finished = false
+
+  complete = (err) ->
+    return if finished
+
+    if err
+      finished = true
+      return cb err, results
+
+    num--
+    if num < max and paused
+      paused = false
+      console.log 'resume', total
+      read.resume()
+
+    if num is 0
+      cb null, results
+      finished = true
+
+  csv(read, {headers:true}).on('data', (data) ->
+    #console.log 'data', data
+    num++
+    total++
+    read.pause() if num >= max
+
+    User.findOne {email:data.email}, (err, user) ->
+      if err
+        results.rejected++
+        return complete err
+
+      if user
+        results.duplicates++
+        complete()
+      else
+        user = new User data
+        user.save (err) ->
+          if err then results.rejected++
+          else results.added++
+
+          complete err
+  ).on 'end', () ->
+    # delete file after we're done.
+    complete()
+  .parse()
 
 listGet = Route.listGet = (body, cb) ->
   q = body.q

@@ -11,10 +11,11 @@ replace block page
                 option(value='name')= t('ns.forms:option.name')
             button#user-search-submit.btn.btn-default(type='submit')= t('ns.forms:button.user-filter')
     #upload(style='margin:30px 40px')
-        form.form-inline#user-upload(method='post', action='/user/list', enctype='multipart/form-data', role='form')
-            input.form-control(name='file', type='file')
+        form.form-inline#user-upload(method='post', action='/user/list?action=upload', enctype='multipart/form-data', role='form')
+            input(type="hidden", name="_csrf", value="#{csrf_token}")
+            input.form-control(name='file', type='file', required)
             button.btn.btn-default(type='submit') Upload
-        progress#user-upload-progress
+        progress#user-upload-progress(value='0', max='1')
 
     - var groups = ['admin', 'member', 'reviewers', 'guest'];
     - var groupLabels = [t('ns.forms:option.admin'), t('ns.forms:option.member'), t('ns.forms:option.reviewer'), t('ns.forms:option.guest')];
@@ -114,4 +115,7 @@ replace block page
     #user-total(style='display:none') 0
     #user-last(style='display:none') false
     script(type='text/javascript', src='/js/vendor/engine.io.js')
+    //script(type='text/javascript', src='/js/vendor/jquery/jquery.ui.widget.js')
+    //script(type='text/javascript', src='/js/vendor/jquery/jquery.iframe-transport.js')
+    //script(type='text/javascript', src='/js/vendor/jquery/jquery.fileupload.js')
     script(type='text/javascript', src='/js/user-list.js')
