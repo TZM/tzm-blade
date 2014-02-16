@@ -1,3 +1,3 @@
-[submodule "locale/translations"]
+[submodule "locales/translations"]
 	path = locales/translations
 	url = git@github.com:TZM/tzm-translations.git

@@ -99,7 +99,7 @@ module.exports = (app) ->
             app.set "translation", require(process.cwd() + "/locales/dev/translation.json")
             app.set "chapters", require(process.cwd() + "/data/chapters.json")
             fs.readdir "./locales", (err,locales) ->
-                EXCLUDE = [ "dev", "README.md", "config.json" ]
+                EXCLUDE = [ "dev", "README.md", "config.json", "translations" ]
                 languages = []
                 results = __.reject locales, (value, index, list) ->
                     return EXCLUDE.indexOf(value) != -1
