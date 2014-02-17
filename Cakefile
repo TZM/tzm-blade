@@ -92,46 +92,69 @@ task 'spec', 'Run Mocha tests', ->
 task 'test', 'Run Mocha tests', ->
   build -> test -> log "✓ Mocha tests complete", green
 
-option '-v', '--version', "show app's version number"
-
-option '-e', '--email [EMAIL]', "add an admin email address for `cake setup`"
-option '-w', '--password [PASSWORD]', 'set the password for the specified email address'
+option '-a', '--admin', "Create a new admin account or upgrade existing one"
+option '-w', '--password', 'Flag to overwrite any existing password'
 task 'setup', 'Create a new administrator account', (options) ->
-  email = options.email
-  pass = options.password
+  console.log 'setup', options
+  return console.log 'Set the -a flag to setup a new admin' unless options.admin
 
-  console.log 'setup', email
+  prompt = require 'prompt'
 
-  if pass and pass.length < 6
-    return console.log 'Password must be at least 6 characters long'
+  pEma =
+    name:'email'
+    validator: /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+    warning: 'Must match the email@domain.tld format'
+  pPas =
+    name:'password', hidden:true
+    validator: /.{6}/
+    warning: 'Password must be at least 6 characters long'
+  args = [pEma];
+  args.push pPas if options.password
 
   dbconnect = require './app/utils/dbconnect'
-  dbconnect.init (err) ->
-    return console.log 'setup error', err if err
-    User = require './app/models/user/user'
 
-    User.findOne {email:email}, (err, user) ->
-      console.log 'failed', err if err
-      return setupFinish err if err
+  prompt.start()
+  prompt.get args, (err, result) ->
+    email = result.email.toLowerCase()
+    pass = result.pass
 
-      if user
-        console.log 'user exists', user.email, user.groups
-        return setupFinish if user.groups is 'admin' and !pass
+    dbconnect.init (err) ->
+      return console.log 'setup error', err if err
+      User = require './app/models/user/user'
 
-        user.password = pass
-        user.groups = 'admin'
+      User.findOne {email:email}, (err, user) ->
+        return setupFinish err if err
 
-        user.save setupFinish
-      else
-        console.log 'creating user'
-        return setupFinish 'Must set a password when creating a new account.' unless pass
-        User.register {email:email, password:pass, groups:'admin'}, setupFinish
+        if user
+            return setupFinish null, user if user.groups is 'admin' and user.active and !options.password
+
+            user.groups = 'admin'
+            user.password = pass if pass
+            user.active = true
+
+            return user.save setupFinish
+
+          else
+            console.log 'creating user'
+            obj = {email:email, password:pass, groups:'admin', active:true}
+            return User.register obj, setupFinish if pass
+            prompt.get [pPas], (err, result) ->
+              return setupFinish err if err
+
+              obj.password = result.password
+              User.register obj, setupFinish
+
 
   setupFinish = (err, user) ->
-    console.log 'setupFinish', err, user.email, user.groups
+    console.log 'setup error', err if err
+    dbconnect.db_mongo?.close()
     return if err
-    dbconnect.db_mongo.close()
 
+    msg = 'user '+user.email+' is '+user.groups
+    msg += ': password set' if options.password
+    console.log msg
+
+option '-v', '--version', "show app's version number"
 option '-p', '--port [PORT]', "listen on a specific port for `cake dev`"
 task 'dev', 'Creates a new instance of zmgc.', (options) ->
   console.log 'dev options', options
