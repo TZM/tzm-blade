@@ -92,7 +92,50 @@ task 'spec', 'Run Mocha tests', ->
 task 'test', 'Run Mocha tests', ->
   build -> test -> log "✓ Mocha tests complete", green
 
-task 'dev', 'start dev env', ->
+option '-v', '--version', "show app's version number"
+
+option '-e', '--email [EMAIL]', "add an admin email address for `cake setup`"
+option '-w', '--password [PASSWORD]', 'set the password for the specified email address'
+task 'setup', 'Create a new administrator account', (options) ->
+  email = options.email
+  pass = options.password
+
+  console.log 'setup', email
+
+  if pass and pass.length < 6
+    return console.log 'Password must be at least 6 characters long'
+
+  dbconnect = require './app/utils/dbconnect'
+  dbconnect.init (err) ->
+    return console.log 'setup error', err if err
+    User = require './app/models/user/user'
+
+    User.findOne {email:email}, (err, user) ->
+      console.log 'failed', err if err
+      return setupFinish err if err
+
+      if user
+        console.log 'user exists', user.email, user.groups
+        return setupFinish if user.groups is 'admin' and !pass
+
+        user.password = pass
+        user.groups = 'admin'
+
+        user.save setupFinish
+      else
+        console.log 'creating user'
+        return setupFinish 'Must set a password when creating a new account.' unless pass
+        User.register {email:email, password:pass, groups:'admin'}, setupFinish
+
+  setupFinish = (err, user) ->
+    console.log 'setupFinish', err, user.email, user.groups
+    return if err
+    dbconnect.db_mongo.close()
+
+option '-p', '--port [PORT]', "listen on a specific port for `cake dev`"
+task 'dev', 'Creates a new instance of zmgc.', (options) ->
+  console.log 'dev options', options
+  return console.log 'tzm-blade version ' + pkg.version if options.version
   # watch_coffee
   # options = ['-c', '-b', '-w', '-o', '.app', 'src']
   # cmd = which.sync 'coffee'  
@@ -101,13 +144,17 @@ task 'dev', 'start dev env', ->
   # coffee.stderr.pipe process.stderr
   log 'Watching coffee files', green
   # watch_js
+
+  process.env.EMAIL = options.email if options.email
+  process.env.PORT = options.port if options.port
+
   supervisor = spawn 'node', [
     './node_modules/supervisor/lib/cli-wrapper.js',
     '-w',
-    'app,views', 
-    '-e', 
-    'js|blade', 
-    'run'
+    'app,views',
+    '-e',
+    'js|blade',
+    'run',
   ]
   supervisor.stdout.pipe process.stdout
   supervisor.stderr.pipe process.stderr

@@ -8,6 +8,7 @@ config = require "./config/config"
 models = require "./config/models"
 apps = require "./config/apps"
 routes = require "./config/routes"
+engine = require "./config/engine"
 fs = require "fs"
 
 #Load and intitialize logger
@@ -46,6 +47,8 @@ module.exports = ->
     i18next.init(config.I18N)
     # Load Expressjs config
     apps app
+    # Init engine.io
+    engine.use app
     # Load routes config
     routes app
     #

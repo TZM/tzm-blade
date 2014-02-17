@@ -1,4 +1,48 @@
+function debounce(cb, ms) {
+	var args,
+		shouldRun = false,
+		justRan = false;
+
+	ms = ms || 100;
+
+	function go() {
+		if (shouldRun) {
+			cb.apply(null, args);
+		}
+
+		justRan = true;
+		shouldRun = false;
+	}
+
+	return function() {
+		args = Array.prototype.slice.call(arguments);
+
+		if (shouldRun) return;
+
+		if (!justRan) return go();
+
+		shouldRun = true;
+
+		window.setTimeout(go, ms);
+	}
+}
+
 jQuery(function($) {
+	var socket = new eio.Socket();
+	socket.on('open', function() {
+		console.log('open');
+	});
+	socket.on('message', function(data) {
+		console.log('message', data);
+	});
+	socket.on('close', function() {
+		console.log('close');
+
+		setTimeout(function() {
+			socket.open();
+		}, 5000);
+	});
+
 	var csrf = $('#_csrf').val(),
 		userList = $('#user-list'),
 		sort = $('#user-sort'),
@@ -18,13 +62,96 @@ jQuery(function($) {
 		loading = false;
 
 	loadMore(true);
-	resetAutoUpdate();
+	//resetAutoUpdate();
 
 	$('#user-search').submit(function(ev) {
 		ev.preventDefault();
 		q = searchQ.val();
 		f = searchF.find('option:selected').val();
 		loadMore(true);
+	});
+
+	var worker = new Worker('/js/user-upload.js');
+	worker.onmessage = function(ev) {
+		console.log('msg', ev.data);
+
+		if (ev.data === 'success') uploading = false;
+	};
+	worker.onerror = function(err) {
+		console.log('ERROR: Line ', err.lineno, ' in ', err.filename, ': ', err.message);
+	};
+
+	var uploading = false;
+
+	var progress = $('#user-upload-progress');
+	progress.attr({value:0,max:1000});
+
+	/*$('#user-upload').fileupload({
+		add: function(e, data) {
+			data.headers = {'X-CSRF-Token': csrf};
+			data.submit();
+		},
+		submit: function(e, data) {
+			console.log('submit', data);
+		},
+		progress: function(e, data) {
+			e = e.delegatedEvent;
+			progress.attr({value: e.loaded,max:e.total});
+		},
+		done: function(e, data) {
+
+		}
+	});*/
+
+	$('#user-upload').submit(function(ev) {
+		ev.preventDefault();
+
+		if (uploading) return;
+		uploading = true;
+
+		var formData = new FormData(this);
+
+		var progress = $('#user-upload-progress');
+		progress.attr({value:0,max:1000});
+
+		formData.action = 'upload';
+
+		var file = this.file.files[0];
+
+		console.log('file', file);
+
+		var loaded = 0,
+			max = 1000;
+
+		jqXHR = $.ajax({
+			url: '/user/list?action=upload&_csrf='+csrf,
+			type: 'POST',
+			data: formData,
+			cache: false,
+			contentType: false,
+			processData: false,
+			//headers: {'X-CSRF-Token': csrf},
+			xhr: function() {
+				var xhr = $.ajaxSettings.xhr();
+				if (xhr.upload) {
+					xhr.upload.addEventListener('progress', debounce(function(ev) {
+						if (ev.lengthComputable) {
+							loaded = ev.loaded;
+							max = ev.total;
+							progress.attr({value:ev.loaded,max:ev.total});
+						}
+					}));
+				}
+				return xhr;
+			}
+		}).done(function(data, textStatus, jqXHR) {
+			console.log('done', data);
+			progress.attr('value', progress.attr('max'));
+			uploading = false;
+		}).fail(function(jqXHR) {
+			console.log('fail', jqXHR);
+			uploading = false;
+		});
 	});
 
 	$('#user-checkall').change(function() {
@@ -93,6 +220,7 @@ jQuery(function($) {
 		}
 
 		$.get('/user/list', data, function(data, textStatus) {
+			//if (data._csrf) csrf = data._csrf;
 			if (reset) userList.find('> .user').remove();
 
 			var baseRow = $('#user-baserow'),
@@ -108,7 +236,7 @@ jQuery(function($) {
 
 			total = c;
 			count = skip;
-			resetAutoUpdate();
+			//resetAutoUpdate();
 			unsynced.hide();
 
 			if (count === total) {
@@ -139,6 +267,7 @@ jQuery(function($) {
 		}
 
 		$.get('/user/list', data, function(data, textStatus) {
+			//if (data._csrf) csrf = data._csrf;
 			var t = total;
 
 			if (t !== data.count) {

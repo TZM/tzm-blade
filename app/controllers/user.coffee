@@ -7,10 +7,12 @@ messages = require "../utils/messages"
 Emailer = require ("../utils/emailer")
 passport = require("passport")
 async = require('async')
-  
+formidable = require 'formidable'
+fs = require 'fs'
 logger = require "../utils/logger"
 logCat = "USER controller"
 validationEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+csv = require 'fast-csv'
 
 
 # User model's CRUD controller.
@@ -189,6 +191,7 @@ Route =
             user.password = req.body.password_new
             user.loginAttempts = 0
             user.lockUntil = 0
+            user.provider.push 'local' unless 'local' in user.provider
             delete user.awaitConfirm
             user.save (err) ->
               unless err
@@ -359,18 +362,17 @@ Route =
       res.redirect "index",
         user: req.user
       res.statusCode = 403
-  list: (req, res, next) ->
+  list: (req, res) ->
     console.log 'list', req.user && req.user.groups
     #if !req.user || req.user.groups isnt 'admin'
     #  return res.send(403)
 
     if req.method is 'POST'
-
       body = req.body
       if !body?
         return res.send 400, 'Must provide data.'
 
-      action = body.action
+      action = body.action || req.query.action
       user = body.user
       users = body.users
 
@@ -440,76 +442,175 @@ Route =
         return res.send 400, 'Must set a proper state.' unless state in ['active', 'inactive']
 
         data = email:email
-
         data.active = state is 'active'
 
         return listUpdateUser data, (err, result) ->
           return res.send 500, err.message || err if err
 
           res.send result
+      else if action is 'upload'
+        console.log 'upload start'
+        form = new formidable.IncomingForm
+        form.uploadDir = config.UPLOADS
+
+        form.onPart = (part) ->
+          # reject any unexpected file, to prevent exploit.
+          return form.handlePart(part) unless part.filename and part.name isnt 'file'
+
+          console.log 'rejected', part.name, part.filename
+
+        form.parse req, (err, fields, files) ->
+          file = files?.file
+          console.log 'uploaded', err, file?.name, file?.path
+
+          return res.send 500, err.message || err if err
+          return res.send 200 unless file
+
+          listImport req, file.path, (err, results) ->
+            async.map Object.keys(files), (key, cb) ->
+              file = files[key]
+              fs.unlink file.path, (err) ->
+                console.log 'deleted', file.path
+                cb err
+            , (err) ->
+                console.log 'imported', results
+                res.send results
       else
         return res.send 400, 'Invalid action type.'
 
     else if req.method is 'GET'
-      #if req.users.groups is 'admin'
-      q = req.query.q
-      filter = req.query.filter
-      sort = req.query.sort
-      order = req.query.order
-      count = req.query.count
+      listGet req.query, (err, data) ->
+        res.send 500, err.message || err if err
 
-      data = {}
+        data._csrf = req.csrfToken()
 
-      if q
-        if filter is 'email'
-          data.email = new RegExp('^'+q, 'i')
-        else if filter is 'name'
-          data.$or = [ {name: new RegExp('^'+q, 'i')}, {surname: new RegExp('^'+q, 'i')}]
-
-      if count
-        query = User.count data
-      else
-        limit = Math.min(req.query.limit ? 20, 200)
-        skip = req.query.skip ? 0
-
-        query = User.find(data, listFields).skip(skip).limit(limit)
-
-        if order and sort in ['email', 'name', 'surname', 'groups', 'state']
-          sortObj = {}
-
-          order = 1 if order is 'asc'
-          order = -1 if order is 'desc'
-
-          if sort is 'state'
-            query.sort({active:order, awaitConfirm:order});
-          else
-            sortObj[sort] = order
-            query.sort(sortObj)
+        if req.xhr
+          res.json data
         else
-          query.sort {_id:1}
-
-      query.exec (err, results) ->
-        return res.send 500, err.message || err if err
-
-        if count
-          return res.json {count:results}
-
-        User.count(data).exec (err, count) ->
-          return res.send 500, err.message || err if err
-
-          if req.xhr
-            res.json
-              users: results
-              count: count
-          else
-            listHelper = require('./listhelper')
-            res.render 'user/list',
-              users: results
-              count: count
-              # iconDefs: listHelper.defs.html()
-              icons: listHelper.icons
+          listHelper = require('./listhelper')
+          data.icons = listHelper.icons
+          res.render 'user/list', data
 
 listFields = 'email name surname groups active provider awaitConfirm -_id'
+
+listImport = (req, filepath, cb) ->
+  read = fs.createReadStream filepath
+
+  results =
+    added:0
+    duplicates:0
+    rejected:0
+    total:0
+
+  num = 0
+  max = 100
+  total = 0
+  paused = false
+
+  finished = false
+  returned = false
+
+  complete = (err) ->
+    return if returned
+
+    if err
+      finished = true
+      returned = true
+      read.resume()
+      return cb err, results
+
+    num--
+    if num < max and paused
+      paused = false
+      req.io?.room(req.sessionID).broadcast 'resume '+total
+      console.log 'resume', total
+      read.resume()
+
+    if num is 0 and finished
+      returned = true
+      results.total = total
+      cb null, results
+
+  csv(read, {headers:true}).on('data', (data) ->
+    return if returned
+    #console.log 'data', data
+    num++
+    total++
+
+    if num >= max
+      paused = true
+      read.pause()
+
+    User.findOne {email:data.email}, (err, user) ->
+      if err
+        results.rejected++
+        return complete err
+
+      if user
+        results.duplicates++
+        complete()
+      else
+        user = new User data
+        user.save (err) ->
+          if err then results.rejected++
+          else results.added++
+
+          complete err
+  ).on 'end', () ->
+    # delete file after we're done.
+    finished = true
+    complete()
+  .parse()
+
+listGet = Route.listGet = (body, cb) ->
+  q = body.q
+  filter = body.filter
+  sort = body.sort
+  order = body.order
+  count = body.count
+
+  data = {}
+
+  if q
+    if filter is 'email'
+      data.email = new RegExp('^'+q, 'i')
+    else if filter is 'name'
+      data.$or = [ {name: new RegExp('^'+q, 'i')}, {surname: new RegExp('^'+q, 'i')}]
+
+  if count
+    query = User.count data
+  else
+    limit = Math.min(body.limit ? 20, 200)
+    skip = body.skip ? 0
+
+    query = User.find(data, listFields).skip(skip).limit(limit)
+
+    if order and sort in ['email', 'name', 'surname', 'groups', 'state']
+      sortObj = {}
+
+      order = 1 if order is 'asc'
+      order = -1 if order is 'desc'
+
+      if sort is 'state'
+        query.sort({active:order, awaitConfirm:order});
+      else
+        sortObj[sort] = order
+        query.sort(sortObj)
+    else
+      query.sort {_id:1}
+
+  query.exec (err, results) ->
+    return cb err if err
+
+    if count
+      return cb null, {count:results}
+
+    User.count(data).exec (err, count) ->
+      return cb err if err
+
+      return cb null,
+        users: results
+        count: count
 
 listSendMail = (email, cb) ->
   User.findOneAndUpdate {email:email}, {awaitConfirm:true}, (err, user) ->

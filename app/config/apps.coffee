@@ -34,34 +34,35 @@ redisService =  process.env.REDISTOGO_URL || process.env.REDISCLOUD_URL
 rediska = (if redisService? then require("redis-url").connect(redisService) else require("redis").createClient())
 
 options =
-    unless redisService
-        hosts: [new RedisStore(
-            hostname: config.REDIS_DB.hostname
-            host: config.REDIS_DB.host
-            port: config.REDIS_DB.port
-            name: config.REDIS_DB.name
-            password: config.REDIS_DB.password
-            maxAge: config.REDIS_DB.maxAge # 30 days
-        ), new RedisStore(
-            hostname: config.REDIS_DB.hostname
-            host: config.REDIS_DB.host
-            port: config.REDIS_DB.port
-            name: config.REDIS_DB.name
-            password: config.REDIS_DB.password
-            maxAge: config.REDIS_DB.maxAge # 30 days
-        )]
-        session_secret: "f2e5a67d388ff2090dj7Q2nC53pF"
-        cookie:
-            maxAge: 86400000 * 1 # 30 days
-    else
-        hosts: [new RedisStore(
-            client: rediska
-        ),new RedisStore(
-            client: rediska
-        )]
-        session_secret: "f2e5a67d388ff2090dj7Q2nC53pF"
-        cookie:
-            maxAge: 86400000 * 1 # 30 days
+    key: "zmgc-connect.sid"
+    secret: "f2e5a67d388ff2090dj7Q2nC53pF"
+    cookie:
+        maxAge: 86400000 * 1 # 30 days
+
+options.session_secret = options.secret
+
+unless redisService
+    options.hosts = [new RedisStore(
+        hostname: config.REDIS_DB.hostname
+        host: config.REDIS_DB.host
+        port: config.REDIS_DB.port
+        name: config.REDIS_DB.name
+        password: config.REDIS_DB.password
+        maxAge: config.REDIS_DB.maxAge # 30 days
+    ), new RedisStore(
+        hostname: config.REDIS_DB.hostname
+        host: config.REDIS_DB.host
+        port: config.REDIS_DB.port
+        name: config.REDIS_DB.name
+        password: config.REDIS_DB.password
+        maxAge: config.REDIS_DB.maxAge # 30 days
+    )]
+else
+    options.hosts = [new RedisStore(
+        client: rediska
+    ),new RedisStore(
+        client: rediska
+    )]
 
 module.exports = (app) ->
     logger.info "Configure expressjs", logCategory
@@ -132,13 +133,14 @@ module.exports = (app) ->
         .use(express.methodOverride())
         .use(express.cookieParser("90dj7Q2nC53pFj2b0fa81a3f663fd64"))
         .use(multipleRedisSessions(options))
-        .use(express.session(
-            key: "zmgc-connect.sid"
-            store: options.hosts[0]
-            secret: "f2e5a67d388ff2090dj7Q2nC53pF"
-            cookie:
-                maxAge: 86400000 * 30 #90 days
-        ))
+
+        options.key = "zmgc-connect.sid"
+        options.store = options.hosts[0]
+        options.cookie.maxAge = 86400000 * 30 #90 days
+
+        @set 'sessionOptions', options
+
+        @use(express.session(options))
         .use(passport.initialize())
         .use(passport.session())
         #csrf protection

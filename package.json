@@ -29,7 +29,7 @@
     "i18next": "~1.7.1",
     "blade": "git://github.com/bminer/node-blade.git",
     "d3": "~3.4.0",
-	"topojson": "*",
+    "topojson": "*",
     "cldr": "*",
     "underscore": "*",
     "nodewatch": "~0.3.1",
@@ -67,7 +67,13 @@
     "passport-yahoo": "~0.3.0",
     "passport-persona": "~0.1.7",
     "redis-url": "~0.2.0",
-    "cors": "~2.1.1"
+    "cors": "~2.1.1",
+    "engine.io": "~0.9.0",
+    "engine.io-rooms": "~0.1.1",
+    "engine.io-client": "~0.9.0",
+    "engine.io-session": "0.0.4",
+    "formidable": "~1.0.14",
+    "fast-csv": "0.0.3"
   },
   "devDependencies": {
     "assert": "~0.4.9",

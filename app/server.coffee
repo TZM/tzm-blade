@@ -1,5 +1,7 @@
 getCards = require "./utils/getcards"
 config = require "./config/config"
+http = require 'http'
+engine = require './config/engine'
 
 
 unless process.env.NODE_ENV?
@@ -10,6 +12,7 @@ if process.env.NODE_ENV is 'test'
   init = require("./index")()
   port = init.port
   server = init.listen(port)
+  engine.attach server
 
   console.log("Server running at http://127.0.0.1: "+ port  + "\nPress CTRL-C to stop server. ")
 else  
@@ -37,6 +40,7 @@ else
     init = require("./index")()
     port = init.port
     server = init.listen(port)
+    engine.attach server
     console.log("Server running at http://127.0.0.1: "+ port  + "\nPress CTRL-C to stop server. ")
 
 

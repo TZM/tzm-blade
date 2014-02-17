@@ -12,7 +12,18 @@ exports.setEnvironment = (env) ->
     exports.EMAIL =
         registration: "gca-dev@zmgc.net"
         info: "info@zmgc.net"
-  
+
+
+    uploads = exports.UPLOADS = 'uploads'
+
+    fs = require 'fs'
+    try
+      unless fs.existsSync uploads
+        fs.mkdirSync uploads
+        console.log 'created '+uploads+' folder'
+    catch e
+      console.log 'failed to create ' + uploads + ' folder'
+
     exports.PARSE_INTERVAL = 20000
     switch(env)
         when "development"
