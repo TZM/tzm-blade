@@ -110,13 +110,14 @@ task 'setup', 'Create a new administrator account', (options) ->
     warning: 'Password must be at least 6 characters long'
   args = [pEma];
   args.push pPas if options.password
+  pass = options.password
 
   dbconnect = require './app/utils/dbconnect'
 
   prompt.start()
   prompt.get args, (err, result) ->
     email = result.email.toLowerCase()
-    pass = result.pass
+    pass = result.password
 
     dbconnect.init (err) ->
       return console.log 'setup error', err if err
@@ -126,7 +127,7 @@ task 'setup', 'Create a new administrator account', (options) ->
         return setupFinish err if err
 
         if user
-            return setupFinish null, user if user.groups is 'admin' and user.active and !options.password
+            return setupFinish null, user if user.groups is 'admin' and user.active and !pass
 
             user.groups = 'admin'
             user.password = pass if pass
@@ -138,10 +139,11 @@ task 'setup', 'Create a new administrator account', (options) ->
             console.log 'creating user'
             obj = {email:email, password:pass, groups:'admin', active:true}
             return User.register obj, setupFinish if pass
+
             prompt.get [pPas], (err, result) ->
               return setupFinish err if err
 
-              obj.password = result.password
+              pass = obj.password = result.password
               User.register obj, setupFinish
 
 
@@ -150,8 +152,8 @@ task 'setup', 'Create a new administrator account', (options) ->
     dbconnect.db_mongo?.close()
     return if err
 
-    msg = 'user '+user.email+' is '+user.groups
-    msg += ': password set' if options.password
+    msg = 'user '+user.email+' is now '+user.groups
+    msg += ': password set' if pass
     console.log msg
 
 option '-v', '--version', "show app's version number"
