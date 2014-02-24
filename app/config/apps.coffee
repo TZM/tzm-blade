@@ -165,6 +165,7 @@ module.exports = (app) ->
                 formData = req.session.formData or {}
                 code = i18n.lng().substr(0, 2)
                 countries = cldr.extractTerritoryDisplayNames(code)
+                #direction = cldr.extractDirection(code)
                 delete req.session.formData
                 res.locals
                     #for use in templates
@@ -173,6 +174,9 @@ module.exports = (app) ->
                     message: req.flash("info")
                     # needed for csrf support
                     csrf_token: req.csrfToken()
+                    #language
+                    lang: code
+                    #dir: direction
                     # list the 'Official Chapters' from the trello board
                     chapterJSON: chapters
                     # localize the country list based on user's browser locale

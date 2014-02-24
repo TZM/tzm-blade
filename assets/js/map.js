@@ -48,8 +48,8 @@
         //    // FIXME only push markers depending on the country/adm1 level
         //    self.drawMarker(message)
         //}
-          self.drawMap()
-          self.setMapStyle("bone");//see colormap.css for possible options: posneg, copper, greenwhitelila, posneg, jet
+          //self.drawMap()
+          //self.setMapStyle("bone");//see colormap.css for possible options: posneg, copper, greenwhitelila, posneg, jet
         //
         //var color_legend = d3.select("#color-legend-svg")
         //  .append("svg:svg")
@@ -179,7 +179,7 @@
             .defer(d3.json, urls.world)
             .await(self.render)
         // catch the resize
-        d3.select(window).on('resize', self.resize)
+        //d3.select(window).on('resize', self.resize)
 
       // Add a transparent rect so that zoomMap works if user clicks on SVG
       //self.map.append("rect")
@@ -246,10 +246,11 @@
       var countries = topojson.mesh(world, world.objects.countries)
       window.world = world
     }
-    this.resize = function() {
-      "use strict"
-      console.log("we resize")
-    }
+    //this.resize = function() {
+    //  "use strict"
+    //  var clientWidth = document.documentElement.clientWidth
+    //  console.log("we resize " + clientWidth)
+    //}
     this.zoomMap = function(d, b) {
       "use strict"
       // get the ratio of the ViewBox height in relation to the country bbox height

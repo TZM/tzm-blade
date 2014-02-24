@@ -1,6 +1,7 @@
 @charset "utf-8";
 @import "/css/vendor/bootstrap/bootstrap.min.css";
 @import "/css/vendor/bootstrap/bootstrap-responsive.min.css";
+/* @import "/css/vendor/bootstrap/bootstrap-rtl.min.css"; */
 @import "/css/vendor/font-awesome.min.css";
 @import "/css/vendor/font-awesome-corp.css";
 @import "/css/vendor/font-awesome-social.css";
