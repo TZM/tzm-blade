@@ -5,6 +5,19 @@ replace block page
     script( type="text/javascript", src="/js/vendor/d3/queue.v1.min.js")
     -var utilsPath = jsUrl("/js/utils.js")
     -var mapJsPath = jsUrl("/js/map.js")
+    script
+        |!
+            // resize
+            var screenWidth = resize()
+            console.log(screenWidth)
+            d3.select(window).on('resize', resize)
+            function resize() {
+                var clientWidth = document.documentElement.clientWidth
+                //screenWidth["width"] = clientWidth
+                console.log(screenWidth, clientWidth)
+                return clientWidth
+            }
+            
     #chart
         != chart
     #map

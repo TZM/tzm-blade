@@ -43,10 +43,13 @@ After installing node.js, open terminal and navigate to your sandboxes folder
 
     ☺ git clone git://github.com/TZM/tzm-blade.git
     ☺ cd tzm-blade
-    ☺ npm install                                                                                                                                                
+    ☺ npm install
+
     npm http GET https://registry.npmjs.org/express
     npm http GET https://registry.npmjs.org/blade
     ....
+    ☺ git submodule foreach git pull # to pull the translations
+    
     ☺ cake dev
     Server running at http://127.0.0.1:9080/
 

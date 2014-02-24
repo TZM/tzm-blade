@@ -13,10 +13,21 @@ margin =
   bottom: 20
   right: 20
 
-#width = parseInt(d3.select("#map").style("width"))
+#screenWidth
+##width = parseInt(d3.select("#map").style("width"))
+#console.log "+++++++++"
+#console.log screenWidth
+#console.log "+++++++++"
 #width = width - margin.left - margin.right
 #mapRatio = 0.5
 #height = width * mapRatio
+#resize = ->
+#  clientWidth = document.documentElement.clientWidth
+#  console.log "we resize "
+#  return
+#d3.select(window).on('resize')
+#screenWidth = clientWidth
+#console.log clientWidth
 
 chartDiv = d3.select("body").append("div").attr("id", "chart")
 chartSvg = chartDiv.append("svg").attr("id", "chartsvg").attr("height", 100)

@@ -27,4 +27,5 @@ server.old.js
 npm-debug.log
 .idea
 uploads
+locales/translations
 #data/chapters.json

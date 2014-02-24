@@ -1,0 +1,4 @@
+[submodule "locales/translations"]
+	path = locales/translations
+	url = https://github.com/TZM/tzm-translations.git 
+	ignore = dirty
