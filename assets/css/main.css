@@ -333,7 +333,7 @@ background-color:#FA0000}
 #page {
     height: auto;
     overflow: none;
-    padding: 38px 25px 10px;
+    padding: 38px 25px;
 }
 
 #page p {
