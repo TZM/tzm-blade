@@ -147,17 +147,10 @@ task 'setup', 'Create a new administrator account', (options) ->
             return user.save setupFinish
 
           else
+            return setupFinish new Error('Password required when creating new user') unless pass
             console.log 'creating user'
             obj = {email:email, password:pass, groups:'admin', active:true}
-            return User.register obj, setupFinish if pass
-
-            return setupFinish new Error('Password required when creating new user') unless pass
-
-            prompt.get [pPas], (err, result) ->
-              return setupFinish err if err
-
-              pass = obj.password = result.password
-              User.register obj, setupFinish
+            return User.register obj, setupFinish
 
   if args.length
     prompt = require 'prompt'
