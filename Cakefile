@@ -92,10 +92,9 @@ task 'spec', 'Run Mocha tests', ->
 task 'test', 'Run Mocha tests', ->
   build -> test -> log "✓ Mocha tests complete", green
 
-option '-a', '--admin', "Create a new admin account or upgrade existing one"
-option '-w', '--password', 'Flag to overwrite any existing password'
+option '-a', '--admin [ADMIN]', "Create a new admin account or upgrade existing one"
+option '-w', '--password [PASSWORD]', 'Flag to overwrite any existing password'
 task 'setup', 'Create a new administrator account', (options) ->
-  console.log 'setup', options
   return console.log 'Set the -a flag to setup a new admin' unless options.admin
 
   prompt = require 'prompt'
@@ -103,19 +102,31 @@ task 'setup', 'Create a new administrator account', (options) ->
   pEma =
     name:'email'
     validator: /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
-    warning: 'Must match the email@domain.tld format'
+    warning: 'Email must match the email@domain.tld format'
   pPas =
     name:'password', hidden:true
     validator: /.{6}/
     warning: 'Password must be at least 6 characters long'
-  args = [pEma];
-  args.push pPas if options.password
+
+  args = [];
   pass = options.password
+  email = options.admin
+
+  if typeof email is 'string'
+    return console.log pEma.warning unless email.match pEma.validator
+  else
+    args.push pEma;
+
+  if typeof pass is 'string'
+    return console.log pPas.warning unless pass.match pPas.validator
+  else if pass
+    args.push pPas
 
   dbconnect = require './app/utils/dbconnect'
 
-  prompt.start()
-  prompt.get args, (err, result) ->
+  prompt = false
+
+  handleInput = (err, result) ->
     email = result.email.toLowerCase()
     pass = result.password
 
@@ -140,15 +151,23 @@ task 'setup', 'Create a new administrator account', (options) ->
             obj = {email:email, password:pass, groups:'admin', active:true}
             return User.register obj, setupFinish if pass
 
+            return setupFinish new Error('Password required when creating new user') unless pass
+
             prompt.get [pPas], (err, result) ->
               return setupFinish err if err
 
               pass = obj.password = result.password
               User.register obj, setupFinish
 
+  if args.length
+    prompt = require 'prompt'
+    prompt.start()
+    prompt.get args, handleInput
+  else
+    handleInput null, email:email, password:pass
 
   setupFinish = (err, user) ->
-    console.log 'setup error', err if err
+    console.log 'setup error', err.message+err.stack || err if err
     dbconnect.db_mongo?.close()
     return if err
 
