@@ -364,8 +364,8 @@ Route =
       res.statusCode = 403
   list: (req, res) ->
     console.log 'list', req.user && req.user.groups
-    #if !req.user || req.user.groups isnt 'admin'
-    #  return res.send(403)
+    if !req.user || req.user.groups isnt 'admin'
+      return res.send 403
 
     if req.method is 'POST'
       body = req.body

@@ -70,20 +70,32 @@ handler.attach = (server) ->
       User.findById session.passport.user, (err, user) ->
         return if err
 
-        socket.user = user if !err and user
-
-        # return if user?.groups isnt 'admin'
+        if user
+          socket.user = user
+          socket.join user.groups
+        else
+          socket.join 'guest'
 
 room = (name) ->
+  s = @
   a = @.adapter()
-  rooms = []
-  rooms.push name if name
+  name = [name] if not Array.isArray(name)
+  rooms = name
 
   return {
+    room: (name) ->
+      return @ unless name
+      return room(rooms.concat name).bind s
     broadcast: (data, opts) ->
       opts = opts || {}
-      opts.rooms = opts.rooms || [name]
+      opts.rooms = opts.rooms || rooms
       a.broadcast data, opts
-    clients: () ->
-      a.clients name
+    clients: (name) ->
+      r = rooms
+      r = r.concat name if name
+
+      clients = []
+      clients.push client for client in a.clients room when not client in clients for room in r
+
+      return clients
   }
