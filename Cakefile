@@ -149,7 +149,7 @@ task 'setup', 'Create a new administrator account', (options) ->
           else
             return setupFinish new Error('Password required when creating new user') unless pass
             console.log 'creating user'
-            obj = {email:email, password:pass, groups:'admin', active:true}
+            obj = {email:email, password:pass, groups:'admin', active:true, provider:'local'}
             return User.register obj, setupFinish
 
   if args.length
