@@ -717,9 +717,10 @@ rect.icon_background { stroke:#006600; fill: green ;}
 .sort-desc .icon-arrowdown {
     fill: red;
 }
-#user-table {
+#user-table {/*
     border-collapse:separate;
-    border-spacing:10px;
+    border-spacing:10px;*/
+    background-color:white;
     clear:both;
 }
 #user-table thead th.sort {
@@ -727,6 +728,17 @@ rect.icon_background { stroke:#006600; fill: green ;}
     color:#666666;
     font-weight:normal;
     padding:5px 5px 0;
+}
+#user-list input, #user-list select {
+    margin-bottom:0;
+}
+#user-table th {
+    border-bottom:5px solid white;
+    border-right:10px solid white;
+}
+#user-table td {
+    vertical-align:middle;
+    padding:5px;
 }
 .form-inline .form-control {
     margin-right:10px;

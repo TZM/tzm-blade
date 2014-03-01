@@ -491,7 +491,23 @@ Route =
           data.icons = listHelper.icons
           res.render 'user/list', data
 
-listFields = 'email name surname groups active provider awaitConfirm -_id'
+engine = require '../config/engine'
+engine.on 'join:/user/list', (socket) ->
+  return unless socket.user?.groups is 'admin'
+
+  socket.on 'data', (data) ->
+    console.log 'data', data
+
+    try
+      parsed = JSON.parse data
+    catch e
+      return socket.send "error: #{e.message}"
+
+    if parsed.action is 'load'
+      listGet data, (err, data) ->
+        socket.send JSON.stringify data
+
+listFields = 'email name surname groups active provider awaitConfirm _id'
 
 listImport = (req, filepath, cb) ->
   read = fs.createReadStream filepath

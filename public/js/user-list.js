@@ -28,21 +28,6 @@ function debounce(cb, ms) {
 }
 
 jQuery(function($) {
-	var socket = new eio.Socket();
-	socket.on('open', function() {
-		console.log('open');
-	});
-	socket.on('message', function(data) {
-		console.log('message', data);
-	});
-	socket.on('close', function() {
-		console.log('close');
-
-		setTimeout(function() {
-			socket.open();
-		}, 5000);
-	});
-
 	var csrf = $('#_csrf').val(),
 		userList = $('#user-list'),
 		sort = $('#user-sort'),
@@ -52,7 +37,10 @@ jQuery(function($) {
 		searchQ = $('#user-search-q'),
 		searchF = $('#user-search-filter'),
 		unsynced = $('#user-unsynced'),
-		noprovider = $('#user-noprovider');
+		noprovider = $('#user-noprovider'),
+		rows = [],
+		map = {},
+		baseRow = $('#user-baserow');
 
 	var q = searchQ.val(),
 		f = searchF.find('option:selected').val();
@@ -61,7 +49,7 @@ jQuery(function($) {
 		updateId,
 		loading = false;
 
-	loadMore(true);
+	//loadMore(true);
 	//resetAutoUpdate();
 
 	$('#user-search').submit(function(ev) {
@@ -71,37 +59,10 @@ jQuery(function($) {
 		loadMore(true);
 	});
 
-	var worker = new Worker('/js/user-upload.js');
-	worker.onmessage = function(ev) {
-		console.log('msg', ev.data);
-
-		if (ev.data === 'success') uploading = false;
-	};
-	worker.onerror = function(err) {
-		console.log('ERROR: Line ', err.lineno, ' in ', err.filename, ': ', err.message);
-	};
-
 	var uploading = false;
 
 	var progress = $('#user-upload-progress');
 	progress.attr({value:0,max:1000});
-
-	/*$('#user-upload').fileupload({
-		add: function(e, data) {
-			data.headers = {'X-CSRF-Token': csrf};
-			data.submit();
-		},
-		submit: function(e, data) {
-			console.log('submit', data);
-		},
-		progress: function(e, data) {
-			e = e.delegatedEvent;
-			progress.attr({value: e.loaded,max:e.total});
-		},
-		done: function(e, data) {
-
-		}
-	});*/
 
 	$('#user-upload').submit(function(ev) {
 		ev.preventDefault();
@@ -163,17 +124,21 @@ jQuery(function($) {
 			all = sorter.find('th.sort'),
 			type = this.id.replace('head-', '');
 
+		var desc = false;
+
 		// Cycle through ascending, descending, and no sort.
 		if (th.hasClass('sort-asc')) {
 			all.removeClass('sort-asc sort-desc');
 			th.addClass('sort-desc');
 			sort.html(type);
 			order.html('desc');
+			desc = true;
 		}
 		else if (th.hasClass('sort-desc')) {
 			all.removeClass('sort-asc sort-desc');
-			sort.html('');
-			order.html('');
+			sort.html('_id');
+			order.html('asc');
+			type = '_id';
 		}
 		else {
 			all.removeClass('sort-asc sort-desc');
@@ -181,6 +146,10 @@ jQuery(function($) {
 			sort.html(type);
 			order.html('asc');
 		}
+
+		sortBy(type, desc);
+
+		return;
 
 		loadMore(true);
 	});
@@ -219,20 +188,28 @@ jQuery(function($) {
 			data.order = o;
 		}
 
+		data.action = 'load';
+
+		return socket.send(JSON.stringify(data));
+
 		$.get('/user/list', data, function(data, textStatus) {
 			//if (data._csrf) csrf = data._csrf;
 			if (reset) userList.find('> .user').remove();
 
-			var baseRow = $('#user-baserow'),
-				users = data.users || [],
+			var users = data.users || [],
 				c = data.count || 0;
 
 			for( var i= 0, len=users.length; i<len; i++ ) {
 				var row = baseRow.clone().attr('id', 'user-'+(skip++)).show();
 
+				updateRow2(users[i]);
+				continue;
+
 				updateRow(row, users[i]);
 				row.appendTo(userList);
 			}
+
+			sortBy(sort.html(), order.html() === 'desc');
 
 			total = c;
 			count = skip;
@@ -408,6 +385,8 @@ jQuery(function($) {
 			for( var i= 0, len=data.length; i<len; i++ ) {
 				var row = userList.find('.user-orig-email[value="'+data[i].origEmail+'"]').closest('tr');
 
+				updateRow2(data[i]);
+				continue;
 				updateRow(row, data[i]);
 			}
 		}, 'json').fail(handleError);
@@ -428,6 +407,8 @@ jQuery(function($) {
 		$.post('/user/list', data, function(data, textStatus) {
 			//console.log('success', data, textStatus);
 
+			updateRow2(data);
+
 			updateRow(row, data);
 		}, 'json').fail(handleError);
 	});
@@ -447,8 +428,6 @@ jQuery(function($) {
 		$.post('/user/list', data, function(data, textStatus) {
 			//console.log('success', data, textStatus);
 
-			var baseRow = $('#user-baserow');
-
 			var newRow = baseRow.clone().attr('id', 'user-'+count++).show();
 
 			updateRow(newRow, data);
@@ -465,6 +444,51 @@ jQuery(function($) {
 			total++;
 		}, 'json').fail(handleError);
 	});
+
+	var socket = new eio.Socket();
+	socket.on('open', function() {
+		console.log('open');
+		loadMore();
+	});
+	socket.on('message', function(data) {
+		console.log('message', data);
+
+		try {
+			var parsed = JSON.parse(data);
+		}
+		catch(e) {
+			console.log('error', e.message);
+		}
+
+		total = parsed.count;
+		addUsers(parsed.users);
+
+		console.log(parsed);
+	});
+	socket.on('close', function() {
+		console.log('close');
+
+		setTimeout(function() {
+			socket.open();
+		}, 5000);
+	});
+
+	function addUsers(users) {
+		for( var i= 0, len=users.length; i<len; i++ ) {
+			updateRow2(users[i]);
+		}
+
+		sortBy(sort.html(), order.html() === 'desc');
+
+		unsynced.hide();
+
+		if (rows.length === total) {
+			$('#user-loadmorerow').hide();
+		}
+		else {
+			$('#user-loadmorerow').show();
+		}
+	}
 
 	function getRowData(row) {
 		var oEmail = row.find('.user-orig-email').val(),
@@ -505,6 +529,58 @@ jQuery(function($) {
 
 		row.find('.user-orig-state, .user-new-state').val(state);
 		row.find('.user-state').attr('class', 'user-state user-state-'+state);
+	}
+
+	function updateRow2(data) {
+		var row = map[data.email];
+
+		if (!row) {
+			row = createRow(data);
+		}
+
+		var el = row.el;
+
+		el.find('.user-orig-email, .user-email').val(data.email);
+		el.find('.user-orig-name, .user-name').val(data.name);
+		el.find('.user-orig-surname, .user-surname').val(data.surname);
+		el.find('.user-orig-groups').val(data.groups);
+
+		el.find('select option').prop('selected', false);
+		el.find('select option[value="'+data.groups+'"]').prop('selected', true);
+		el.find('.user-provider').val(data.provider);
+
+		data.state = data.active ? 'active' : 'inactive';
+
+		if (data.awaitConfirm && (!data.provider || data.provider.length === 0))
+			data.state = 'email';
+
+		el.find('.user-orig-state, .user-new-state').val(data.state);
+		el.find('.user-state').attr('class', 'user-state user-state-'+data.state);
+	}
+
+	function sortBy(col, desc) {
+		desc = desc ? -1 : 1;
+
+		rows.sort(function(left, right) {
+			return (left[col] > right[col] ? 1 : left[col] < right[col] ? -1 : 0) * desc;
+		});
+
+		userList.empty();
+
+		for( var i= 0, len=rows.length; i<len; i++ ) {
+			userList.append(rows[i].el);
+		}
+	}
+
+	function createRow(data) {
+		var row = baseRow.clone().removeAttr('id').fadeIn();
+
+		data.el = row;
+
+		rows.push(data);
+		userList.append(row);
+
+		return data;
 	}
 
 	function handleError(jqXHR, textStatus, errorThrown) {

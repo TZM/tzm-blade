@@ -60,21 +60,23 @@ handler.attach = (server) ->
 
     handler.emit 'socket', socket
 
-    console.log 'join', socket.sessionID if session and socket.sessionID
-    socket.join socket.sessionID if session and socket.sessionID
-    socket.join path
-
-    handler.emit 'join:'+path, socket
-
     if session.passport?.user
       User.findById session.passport.user, (err, user) ->
-        return if err
+        console.log 'socket error finding user', err.message || err if err
 
-        if user
+        if !err and user
           socket.user = user
           socket.join user.groups
         else
           socket.join 'guest'
+
+        socket.join socket.sessionID if session and socket.sessionID
+        socket.join path
+        handler.emit 'join:'+path, socket
+    else
+      socket.join socket.sessionID if session and socket.sessionID
+      socket.join path
+      handler.emit 'join:'+path, socket
 
 room = (name) ->
   s = @
