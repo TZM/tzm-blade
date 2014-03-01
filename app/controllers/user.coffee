@@ -504,7 +504,7 @@ engine.on 'join:/user/list', (socket) ->
       return socket.send "error: #{e.message}"
 
     if parsed.action is 'load'
-      listGet data, (err, data) ->
+      listGet parsed, (err, data) ->
         socket.send JSON.stringify data
 
 listFields = 'email name surname groups active provider awaitConfirm _id'

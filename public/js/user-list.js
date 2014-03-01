@@ -42,6 +42,32 @@ jQuery(function($) {
 		map = {},
 		baseRow = $('#user-baserow');
 
+	var socket = new eio.Socket();
+	socket.on('open', function() {
+		console.log('open');
+		loadMore(true);
+	});
+	socket.on('message', function(data) {
+		console.log('message received');
+
+		try {
+			var parsed = JSON.parse(data);
+		}
+		catch(e) {
+			console.log('error', e.message);
+		}
+
+		total = parsed.count;
+		addUsers(parsed.users);
+	});
+	socket.on('close', function() {
+		console.log('close');
+
+		setTimeout(function() {
+			socket.open();
+		}, 5000);
+	});
+
 	var q = searchQ.val(),
 		f = searchF.find('option:selected').val();
 
@@ -166,6 +192,8 @@ jQuery(function($) {
 
 		if (count > 0 && count === total) return;
 
+		console.log('loadMore', count, total);
+
 		loading = true;
 
 		var skip = count,
@@ -190,7 +218,11 @@ jQuery(function($) {
 
 		data.action = 'load';
 
-		return socket.send(JSON.stringify(data));
+		console.log('sending', data);
+
+		return socket.send(JSON.stringify(data), function() {
+			console.log('send', arguments);
+		});
 
 		$.get('/user/list', data, function(data, textStatus) {
 			//if (data._csrf) csrf = data._csrf;
@@ -203,10 +235,6 @@ jQuery(function($) {
 				var row = baseRow.clone().attr('id', 'user-'+(skip++)).show();
 
 				updateRow2(users[i]);
-				continue;
-
-				updateRow(row, users[i]);
-				row.appendTo(userList);
 			}
 
 			sortBy(sort.html(), order.html() === 'desc');
@@ -386,8 +414,6 @@ jQuery(function($) {
 				var row = userList.find('.user-orig-email[value="'+data[i].origEmail+'"]').closest('tr');
 
 				updateRow2(data[i]);
-				continue;
-				updateRow(row, data[i]);
 			}
 		}, 'json').fail(handleError);
 	}
@@ -408,8 +434,6 @@ jQuery(function($) {
 			//console.log('success', data, textStatus);
 
 			updateRow2(data);
-
-			updateRow(row, data);
 		}, 'json').fail(handleError);
 	});
 
@@ -428,13 +452,7 @@ jQuery(function($) {
 		$.post('/user/list', data, function(data, textStatus) {
 			//console.log('success', data, textStatus);
 
-			var newRow = baseRow.clone().attr('id', 'user-'+count++).show();
-
-			updateRow(newRow, data);
-
-			//console.log(newRow);
-
-			newRow.appendTo(userList);
+			updateRow2(data);
 
 			row.find('input[type=text]').val('');
 			row.find('select option').prop('selected', false);
@@ -443,34 +461,6 @@ jQuery(function($) {
 			count++;
 			total++;
 		}, 'json').fail(handleError);
-	});
-
-	var socket = new eio.Socket();
-	socket.on('open', function() {
-		console.log('open');
-		loadMore();
-	});
-	socket.on('message', function(data) {
-		console.log('message', data);
-
-		try {
-			var parsed = JSON.parse(data);
-		}
-		catch(e) {
-			console.log('error', e.message);
-		}
-
-		total = parsed.count;
-		addUsers(parsed.users);
-
-		console.log(parsed);
-	});
-	socket.on('close', function() {
-		console.log('close');
-
-		setTimeout(function() {
-			socket.open();
-		}, 5000);
 	});
 
 	function addUsers(users) {
