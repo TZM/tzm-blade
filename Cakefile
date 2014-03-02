@@ -1,8 +1,10 @@
+require 'coffee-script/register'
 fs            = require 'fs'
 wrench        = require 'wrench'
 {print}       = require 'util'
 which         = require 'which'
 {spawn, exec} = require 'child_process'
+
 
 # ANSI Terminal Colors
 bold  = '\x1B[0;1m'
@@ -122,7 +124,7 @@ task 'setup', 'Create a new administrator account', (options) ->
   else if pass
     args.push pPas
 
-  dbconnect = require './app/utils/dbconnect'
+  dbconnect = require (__dirname + '/app/utils/dbconnect')
 
   prompt = false
 
@@ -132,7 +134,7 @@ task 'setup', 'Create a new administrator account', (options) ->
 
     dbconnect.init (err) ->
       return console.log 'setup error', err if err
-      User = require './app/models/user/user'
+      User = require (__dirname + '/app/models/user/user')
 
       User.findOne {email:email}, (err, user) ->
         return setupFinish err if err
