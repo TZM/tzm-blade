@@ -111,7 +111,7 @@ UserSchema.pre "save", (next) ->
   user = this
   # only hash the password if it has been modified (or is new)
   
-  # return next()  unless user.isModified("password")
+  return next() unless user.isModified("password")
   
   # generate a salt
   bcrypt.genSalt SALT_WORK_FACTOR, (err, salt) ->

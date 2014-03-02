@@ -138,19 +138,20 @@ task 'setup', 'Create a new administrator account', (options) ->
         return setupFinish err if err
 
         if user
-            return setupFinish null, user if user.groups is 'admin' and user.active and !pass
+          return setupFinish null, user if user.groups is 'admin' and user.active and !pass
 
-            user.groups = 'admin'
-            user.password = pass if pass
-            user.active = true
+          user.groups = 'admin'
+          user.password = pass if pass
+          user.active = true
+          user.provider.push 'local' if pass and !('local' in user.provider)
 
-            return user.save setupFinish
+          return user.save setupFinish
 
-          else
-            return setupFinish new Error('Password required when creating new user') unless pass
-            console.log 'creating user'
-            obj = {email:email, password:pass, groups:'admin', active:true, provider:'local'}
-            return User.register obj, setupFinish
+        else
+          return setupFinish new Error('Password required when creating new user') unless pass
+          console.log 'creating user'
+          user = new User email:email, password:pass, groups:'admin', active:true, provider:['local']
+          return user.save setupFinish
 
   if args.length
     prompt = require 'prompt'
@@ -160,7 +161,7 @@ task 'setup', 'Create a new administrator account', (options) ->
     handleInput null, email:email, password:pass
 
   setupFinish = (err, user) ->
-    console.log 'setup error', err.message+err.stack || err if err
+    console.log 'setup error', err.message || err if err
     dbconnect.db_mongo?.close()
     return if err
 
