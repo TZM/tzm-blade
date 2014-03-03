@@ -109,27 +109,35 @@ UserSchema.virtual("isLocked").get ->
 # Bcrypt middleware
 UserSchema.pre "save", (next) ->
   user = this
-  # only hash the password if it has been modified (or is new)
+
+  # Reset changepassword token.
+  user.resetToken (err) ->
+    return next err if err
+
+    # only hash the password if it has been modified (or is new)
+    return next() unless user.isModified("password")
   
-  return next() unless user.isModified("password")
-  
-  # generate a salt
-  bcrypt.genSalt SALT_WORK_FACTOR, (err, salt) ->
-    return next(err)  if err
-    
-    # hash the password along with our new salt
-    bcrypt.hash user.password, salt, (err, hash) ->
+    # generate a salt
+    bcrypt.genSalt SALT_WORK_FACTOR, (err, salt) ->
       return next(err)  if err
-      
-      # override the cleartext password with the hashed one
-      user.password = hash
-      
-      # update token
-      crypto.randomBytes 48, (ex, buf) ->
-        user.tokenString = base64url(buf)
-        user.tokenExpires = Date.now() + TOKEN_TIME
+
+      # hash the password along with our new salt
+      bcrypt.hash user.password, salt, (err, hash) ->
+        return next(err)  if err
+
+        # override the cleartext password with the hashed one
+        user.password = hash
+
         next()
 
+
+UserSchema.methods.resetToken = (next) ->
+  user = @
+  crypto.randomBytes 48, (ex, buf) ->
+    return next ex if ex
+    user.tokenString = base64url buf
+    user.tokenExpires = Date.now() + TOKEN_TIME
+    next()
 
 # Password verfication
 UserSchema.methods.comparePassword = (userPassword, cb) ->
