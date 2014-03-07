@@ -72,11 +72,11 @@ handler.attach = (server) ->
 
         socket.join socket.sessionID if session and socket.sessionID
         socket.join path
-        handler.emit 'join:'+path, socket
+        handler.emit 'join:' + path, socket
     else
       socket.join socket.sessionID if session and socket.sessionID
       socket.join path
-      handler.emit 'join:'+path, socket
+      handler.emit 'join:' + path, socket
 
 room = (name) ->
   s = @

@@ -1,4 +1,4 @@
-# # 
+# #
 # # User model
 # # zukai Model schema for riak
 # #
@@ -17,8 +17,8 @@
 # # nitive riak
 
 # riak = require('riak-js').getClient(
-#   host: config.RIAK_DB.host, 
-#   port: config.RIAK_DB.port, 
+#   host: config.RIAK_DB.host,
+#   port: config.RIAK_DB.port,
 #   debug: true)
 
 # # check, is riak start
@@ -128,14 +128,14 @@
 #     # generate a salt
 #     bcrypt.genSalt SALT_WORK_FACTOR, (err, salt) ->
 #       return next(err)  if err
-    
+
 #       # hash the password along with our new salt
 #       bcrypt.hash object.doc.password, salt, (err, hash) ->
 #         return next(err)  if err
 
 #         # override the cleartext password with the hashed one
 #         object.doc.password = hash
-        
+
 #         # update token
 #         crypto.randomBytes 48, (ex, buf) ->
 #           object.doc.tokenString = base64url(buf)

@@ -15,17 +15,17 @@ if process.env.NODE_ENV is 'test'
   engine.attach server
 
   console.log("Server running at http://127.0.0.1: "+ port  + "\nPress CTRL-C to stop server. ")
-else  
+else
   config.setEnvironment process.env.NODE_ENV
   cluster = require("cluster")
   numCPUs = require("os").cpus().length
-  
-  if cluster.isMaster 
+
+  if cluster.isMaster
     # Fork workers.
     i = 0
-  
+
     while i < numCPUs
-      console.log("NOW USING CPU: #",i);
+      console.log("NOW USING CPU: #",i)
       if i is 0
         # console.log("socket io using port: ",config.PORT+1)
         # io = ioModule.listen(parseInt(config.PORT+1), {log:false})
@@ -36,7 +36,7 @@ else
     cluster.on "exit", (worker, code, signal) ->
       console.log "worker " + worker.process.pid + " died"
   else
-    
+
     init = require("./index")()
     port = init.port
     server = init.listen(port)

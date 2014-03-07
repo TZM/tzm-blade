@@ -1,8 +1,8 @@
-# 
+#
 # User model
 # Ideas from http://blog.mongodb.org/post/32866457221/password-authentication-with-mongoose-part-1
 # and http://devsmash.com/blog/implementing-max-login-attempts-with-mongoose
-# 
+#
 
 mongoose = require "mongoose"
 bcrypt = require "bcrypt"
@@ -31,7 +31,7 @@ Schema = mongoose.Schema
 #    index:
 #      unique: true
 #    default: "guest"
-#  group: 
+#  group:
 #    type: "ObjectId"
 #)
 
@@ -41,7 +41,7 @@ UserSchema = new Schema(
     type: String
     unique: true
     # index:
-     
+
 
   password:
     type: String
@@ -50,7 +50,7 @@ UserSchema = new Schema(
 
   active:
     type: Boolean
-    
+
     default: false
   name:
     type: String
@@ -65,7 +65,7 @@ UserSchema = new Schema(
     type: String
     enum: ["guest", "member", "reviewers", "admin"]
     default: "guest"
-  
+
   loginAttempts:
     type: Number
     default: 0
@@ -76,12 +76,12 @@ UserSchema = new Schema(
 
   tokenString:
     type: String
-    
+
 
   tokenExpires:
     type: Number
-    
-  
+
+
   provider:
     type: Array
     enum: ["facebook", "google", "yahoo", "local", "github", "persona", "linkedin", "twitter"]
@@ -116,7 +116,7 @@ UserSchema.pre "save", (next) ->
 
     # only hash the password if it has been modified (or is new)
     return next() unless user.isModified("password")
-  
+
     # generate a salt
     bcrypt.genSalt SALT_WORK_FACTOR, (err, salt) ->
       return next(err)  if err
@@ -146,7 +146,7 @@ UserSchema.methods.comparePassword = (userPassword, cb) ->
     cb null, isMatch
 
 UserSchema.methods.incLoginAttempts = (cb) ->
-  
+
   #if we have a previous lock that has expired, restart at 1
   if @lockUntil and @lockUntil < Date.now()
     return @update(
@@ -166,7 +166,7 @@ UserSchema.methods.incLoginAttempts = (cb) ->
   @update updates, cb
 
 UserSchema.methods.resetLoginAttempts = (cb) ->
-  
+
   #if we have a previous lock that has expired, restart at 1
   if @lockUntil and @lockUntil < Date.now()
     return @update(
@@ -184,7 +184,7 @@ UserSchema.methods.resetLoginAttempts = (cb) ->
 # Register new user
 UserSchema.statics.register = (user, cb) ->
   self = new this(user)
-  self.awaitConfirm = true;
+  self.awaitConfirm = true
   user.email = sanitize(user.email.toLowerCase().trim()).xss()
   validator.check(user.email, messages.VALIDATE_EMAIL).isEmail()
   errors = validator.getErrors()
@@ -223,7 +223,7 @@ UserSchema.statics.register = (user, cb) ->
   #  errorString = errors.join("<br>")
   #  return cb(errorString)
   #  logger.info "Registration form failed with " + errors
-  #  
+  #
   #  #go to the signup page
   #  return cb(errorString, null)
   #
@@ -234,22 +234,22 @@ UserSchema.statics.register = (user, cb) ->
   #  if existingUser isnt null
   #    logger.info "registerUser - User:" + user.email + " already exists"
   #    if existingUser.active
-  #      
+  #
   #      #go to the login page
   #      cb messages.USER_REGISTERED_AND_ACTIVE, null
   #    else
-  #      
+  #
   #      #go to the resent activation link
   #      cb messages.USER_REGISTERED_NOT_ACTIVE, null
   #  else
-  #    
+  #
   #    # create a new user ready to save.
   #    newUser = new User()
   #    newUser.email = sanitize(user.email.toLowerCase().trim()).xss()
-  #    
+  #
   #    newUser.password = sanitize(user.password.trim()).xss()
   #    newUser.auth.activationKey = uuid()
-  #    
+  #
   #    # Save the new user and pass the cb.
   #    newUser.save (err) ->
   #      if err
@@ -267,7 +267,7 @@ UserSchema.statics.register = (user, cb) ->
   #      #  activationLink: config.domain + "/user/activate/" + newUser.auth.activationKey
   #      #
   #      #emailer.send options, data, (err, response) ->
-  #      #  
+  #      #
   #      #  #TODO: what should happen if this email fails???
   #      #  logger.error "activation mail failed with " + err  if err
   #      #
@@ -295,7 +295,7 @@ UserSchema.statics.activate = (token, cb) ->
         existingUser.save (err, user)->
           unless err
             cb null, user
-          else 
+          else
             cb "save error"
       else
         cb "token-expired"

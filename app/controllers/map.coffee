@@ -3,8 +3,8 @@ mapHelper = require("../utils/maphelper")
 d3 = require("d3")
 topojson = require("topojson")
 xy = d3.geo.mercator()
-    .translate([-600, 4800])
-    .scale(25000)
+  .translate([-600, 4800])
+  .scale(25000)
 path = d3.geo.path().projection(xy)
 
 margin =
@@ -38,24 +38,24 @@ chartSvg = chartDiv.append("svg").attr("id", "chartsvg").attr("height", 100)
 iconGroup = chartSvg.append("g").attr("class", "map-tools").attr("transform", "translate(0 0) scale(0.5)")
 
 addRect = (group) ->
-    group.append("svg:rect").attr("width", 100).attr("height", 100).attr("class", "icon_background" )
+  group.append("svg:rect").attr("width", 100).attr("height", 100).attr("class", "icon_background" )
 
 g = iconGroup.append("g").attr("class", "group-icon")
-    .attr("name", "groups")
+  .attr("name", "groups")
 
 addRect(g)
 g.append("svg:path").attr("d", mapHelper.groupIcon)
 
 g = iconGroup.append("g").attr("class", "projects-icons")
-    .attr("transform", "translate(110)")
-    .attr("name", '#{t("ns.forms:ph.user-filter")}')
+  .attr("transform", "translate(110)")
+  .attr("name", '#{t("ns.forms:ph.user-filter")}')
 
 addRect(g)
 g.append("svg:path").attr("d", mapHelper.projectsIcon)
 
 g = iconGroup.append("g").attr("class", "skill-share-icon")
-    .attr("transform", "translate(220)")
-    .attr("name", "share your skills with tzm")
+  .attr("transform", "translate(220)")
+  .attr("name", "share your skills with tzm")
 
 addRect(g)
 g.append("svg:path").attr("d", mapHelper.skillShareIcon)
@@ -69,6 +69,6 @@ worldJsonData = require('../../data/topo/world.json')
 #.attr "id", pd d
 
 exports.map = (req, res) ->
-    res.render "map"
-        user: req.user
-        chart: chartDiv.html()
+  res.render "map",
+    user: req.user
+    chart: chartDiv.html()

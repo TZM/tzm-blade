@@ -1,5 +1,5 @@
 # Just renders calendar.blade
 
 exports.calendar = (req, res) ->
-    res.render "calendar"
-      user: req.user
+  res.render "calendar",
+    user: req.user
