@@ -401,21 +401,22 @@
 	}
     // Initialise
     this.init()
-}).call(this);
-
-jQuery(function($) {
-	var socket = new eio.Socket();
+    
+  var socket = new eio.Socket();
   
-  socket.on('open', function() {
-    console.log('open');
+  function sendSize(){
     var data = {"what": "screensize", "w":window.innerWidth, "h":window.innerHeight};
     console.log (data);
     socket.send(JSON.stringify(data));
+  }
+  
+  socket.on('open', function() {
+    console.log('open');
+    sendSize();
   });
   
   socket.on('message', function(data) {
     console.log('message received');
-
       try {
       var parsed = JSON.parse(data);
       }
@@ -432,4 +433,16 @@ jQuery(function($) {
         socket.open();
       }, 5000);
   });
-});
+  
+  var screenWidth = resize()
+  console.log(screenWidth)
+  d3.select(window).on('resize', resize)
+  function resize() {
+      var clientWidth = document.documentElement.clientWidth
+      //screenWidth["width"] = clientWidth
+     //console.log(screenWidth, clientWidth)
+      //return clientWidth
+      sendSize();
+  }
+  
+}).call(this);
