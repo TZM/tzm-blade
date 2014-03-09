@@ -1,5 +1,5 @@
 # Just renders map.blade
-mapHelper = require("../utils/maphelper")
+icons = require("../utils/icons").icons
 d3 = require("d3")
 topojson = require("topojson")
 xy = d3.geo.mercator()
@@ -45,21 +45,21 @@ g = iconGroup.append("g").attr("class", "group-icon")
   .attr("name", "groups")
 
 addRect(g)
-g.append("svg:path").attr("d", mapHelper.groupIcon)
+g.append("svg:path").attr("d", icons.groupIcon)
 
 g = iconGroup.append("g").attr("class", "projects-icons")
   .attr("transform", "translate(110)")
   .attr("name", '#{t("ns.forms:ph.user-filter")}')
 
 addRect(g)
-g.append("svg:path").attr("d", mapHelper.projectsIcon)
+g.append("svg:path").attr("d", icons.projectsIcon)
 
 g = iconGroup.append("g").attr("class", "skill-share-icon")
   .attr("transform", "translate(220)")
   .attr("name", "share your skills with tzm")
 
 addRect(g)
-g.append("svg:path").attr("d", mapHelper.skillShareIcon)
+g.append("svg:path").attr("d", icons.skillShareIcon)
 
 #pd = (d) -> d.properties.name.replace (/ /g, "_")
 
