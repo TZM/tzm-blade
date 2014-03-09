@@ -8,14 +8,14 @@ _       = require("underscore")
 class Emailer
 
   options: {
-    #template: 
-    #to: 
+    #template:
+    #to:
       #name:
       #surname:
       #email:
   }
   data: {
-    #pass: 
+    #pass:
     #link:
   }
   # Define attachments here
@@ -26,7 +26,7 @@ class Emailer
   ]
 
   constructor: (@options, @data)->
-  
+
   send: (callback)->
     # console.log @data
     html = "follow this link: <a href=#{@data.link}>#{@data.link}</a><br> to reset your password<img class='cid:logo@zmgc.net'></img>" if @options.template is 'reset'

@@ -43,10 +43,13 @@ After installing node.js, open terminal and navigate to your sandboxes folder
 
     ☺ git clone git://github.com/TZM/tzm-blade.git
     ☺ cd tzm-blade
-    ☺ npm install                                                                                                                                                
+    ☺ npm install
+
     npm http GET https://registry.npmjs.org/express
     npm http GET https://registry.npmjs.org/blade
     ....
+    ☺ git submodule foreach git pull # to pull the translations
+    
     ☺ cake dev
     Server running at http://127.0.0.1:9080/
 
@@ -54,19 +57,56 @@ Now you can navigate to http://127.0.0.1:9080/ and see the website.
 (actually, on :3000)
 
 #Deployment
-The application can be deployed anywhere where you have Nodejs installed, meaning that you can run this on your local machine and setup P2P; For now, this application is running on AppFog at zero cost, as AppFog provides you with a decent enough server to run this application.
+The application can be deployed anywhere where you have Nodejs installed, meaning that you can run this on your local machine and setup P2P; For now, this application is running on Heroku at zero cost, as Heroku provides you with a decent enough server to run this application.
 
-To deploy on AppFog, you will need to first create an account and then setup your machine to talk to AppFog, see the [Documentation][9]
+To deploy on Heroku, you will need to first create an account and then setup your machine to talk to Heroku, see the [Documentation][9], you will need to ensure to set the [Environmental Variables][23] as listed in the [Setup][#Setup] section.
 
-    ☺  npm install
+Then from your console, you do this:
 
-    > zmgc@0.0.1 install /Users/khinester/Documents/Tutorials/Node/Blade
-    > node node_modules/coffee-script/bin/cake build
-
-    :)
+    ☺  git push heroku master
+    Fetching repository, done.
+    Counting objects: 5, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (3/3), done.
+    Writing objects: 100% (3/3), 499 bytes, done.
+    Total 3 (delta 2), reused 0 (delta 0)
     
-    ☺ npm start
-    Server running at http://127.0.0.1:9080/
+    -----> Git submodules detected, installing
+           Submodule 'locales/translations' (https://github.com/TZM/tzm-translations.git) registered for path     'locales/translations'
+           Initialized empty Git repository in /tmp/build_512b4c08-b55a-4348-a891-934c9d565b14/locales/translations/.   git/
+           Submodule path 'locales/translations': checked out 'ed50028edad99e5fe920e5791eb622efe49df266'
+    -----> Node.js app detected
+            ...
+
+           > node node_modules/coffee-script/bin/cake build
+    
+           ✓ Build complete, now run `cake dev`
+           blade@3.3.0 node_modules/blade
+           ├── commander@2.1.0
+           └── uglify-js@2.4.12 (uglify-to-browserify@1.0.2, source-map@0.1.33, optimist@0.3.7)
+    -----> Caching node_modules directory for future builds
+    -----> Cleaning up node-gyp and npm artifacts
+    -----> Building runtime environment
+    -----> Discovering process types
+           Procfile declares types -> web
+    
+    -----> Compressing... done, 45.7MB
+    -----> Launching... done, v91
+           http://serene-depths-3284.herokuapp.com deployed to Heroku
+    
+    To git@heroku.com:serene-depths-3284.git
+     + 0b13fdc...cfacabe master -> master
+
+Once you have pushed to the remote heroku repository, you will need to create an admin user, you do this by executing the following command:
+
+    ☺  heroku run cake --admin name@domain.tld --password P4SSWorD setup
+    Running `cake --admin name@domain.tld --password P4SSWorD setup` attached to terminal... up, run.1918
+    null
+    created uploads folder
+    mongodb://heroku_app:....mongolab.com:37358/heroku_app
+    creating user
+    user name@domain.tld is now admin: password set
+
 
 #Start databases
 Currently we employ mongoDB to store the user data and Redis for sessions. We are currently working on migrating this to Riak, please follow the [documentation](#) for the secure deployment.
@@ -221,7 +261,7 @@ For more information on SemVer, visit [http://semver.org][10].
     - `[ ]` Riak backup
  - `[ ]` [DocPad integration](https://github.com/TZM/tzm-blade/issues/12) - [DocPad][11]
  - `[ ]` [AppFog Manifest][12] for appfog deployment
- - `[✓]` <del>Heroku Procfile and instructions for heroku deployments</del>
+ - `[✓]` <del>Heroku Procfile and instructions for [heroku deployment][https://github.com/TZM/tzm-blade#deployment]</del>
  - `[ ]` [Vagrant][13] - create a dev environment with Riak cluster and and use the Chef provisioning tool to:
     - `[ ]` install packages, [riak][14], zmgc (node.js, express etc...) through npm
     - `[ ]` create user accounts, as specified in included JSON config files
@@ -249,6 +289,11 @@ We need javascript developers, specifically members who know Node.js, Express. H
   - Development - html5, javascript template development - see [views/](views/) and [assets/](assets/) directory
   - Localization/Translation - we use the i18next library to localize and internationalize this application - see README.md in [locales/](locales/README.md) directory
 
+#Donate
+
+[![Donate weekly to this project using Gittip][19]][20]
+[![Flattr donate button][21]][22]
+
 [1]: https://api.travis-ci.org/TZM/tzm-blade.png
 [2]: https://travis-ci.org/TZM/tzm-blade
 [3]: https://david-dm.org/TZM/tzm-blade.png
@@ -257,7 +302,7 @@ We need javascript developers, specifically members who know Node.js, Express. H
 [6]: https://github.com/bminer/node-blade
 [7]: https://github.com/TZM/tzm-blade/wiki
 [8]: https://trello.com/zmgc
-[9]: https://docs.appfog.com/getting-started/af-cli
+[9]: https://devcenter.heroku.com/categories/nodejs
 [10]: http://semver.org/
 [11]: https://github.com/bevry/docpad
 [12]: https://docs.appfog.com/getting-started/af-cli/manifests
@@ -267,3 +312,8 @@ We need javascript developers, specifically members who know Node.js, Express. H
 [16]: https://bitdeli.com/free
 [17]: http://ci.testling.com/TZM/tzm-blade.png
 [18]: http://ci.testling.com/TZM/tzm-blade
+[19]: http://img.shields.io/gittip/zmgc.png
+[20]: https://www.gittip.com/zmgc/
+[21]: http://api.flattr.com/button/flattr-badge-large.png
+[22]: https://flattr.com/submit/auto?user_id=zmgc&url=https%3A%2F%2Fgithub.com%2FTZM%2Ftzm-blade
+[23]: https://devcenter.heroku.com/articles/config-vars

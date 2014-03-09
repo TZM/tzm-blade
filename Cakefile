@@ -1,8 +1,10 @@
+require 'coffee-script/register'
 fs            = require 'fs'
 wrench        = require 'wrench'
 {print}       = require 'util'
 which         = require 'which'
 {spawn, exec} = require 'child_process'
+
 
 # ANSI Terminal Colors
 bold  = '\x1B[0;1m'
@@ -92,7 +94,88 @@ task 'spec', 'Run Mocha tests', ->
 task 'test', 'Run Mocha tests', ->
   build -> test -> log "✓ Mocha tests complete", green
 
-task 'dev', 'start dev env', ->
+option '-a', '--admin [ADMIN]', "Create a new admin account or upgrade existing one"
+option '-w', '--password [PASSWORD]', 'Flag to overwrite any existing password'
+task 'setup', 'Create a new administrator account', (options) ->
+  return console.log 'Set the -a flag to setup a new admin' unless options.admin
+
+  prompt = require 'prompt'
+
+  pEma =
+    name:'email'
+    validator: /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+    warning: 'Email must match the email@domain.tld format'
+  pPas =
+    name:'password', hidden:true
+    validator: /.{6}/
+    warning: 'Password must be at least 6 characters long'
+
+  args = [];
+  pass = options.password
+  email = options.admin
+
+  if typeof email is 'string'
+    return console.log pEma.warning unless email.match pEma.validator
+  else
+    args.push pEma;
+
+  if typeof pass is 'string'
+    return console.log pPas.warning unless pass.match pPas.validator
+  else if pass
+    args.push pPas
+
+  dbconnect = require (__dirname + '/app/utils/dbconnect')
+
+  prompt = false
+
+  handleInput = (err, result) ->
+    email = result.email.toLowerCase()
+    pass = result.password
+
+    dbconnect.init (err) ->
+      return console.log 'setup error', err if err
+      User = require (__dirname + '/app/models/user/user')
+
+      User.findOne {email:email}, (err, user) ->
+        return setupFinish err if err
+
+        if user
+          return setupFinish null, user if user.groups is 'admin' and user.active and !pass
+
+          user.groups = 'admin'
+          user.password = pass if pass
+          user.active = true
+          user.provider.push 'local' if pass and !('local' in user.provider)
+
+          return user.save setupFinish
+
+        else
+          return setupFinish new Error('Password required when creating new user') unless pass
+          console.log 'creating user'
+          user = new User email:email, password:pass, groups:'admin', active:true, provider:['local']
+          return user.save setupFinish
+
+  if args.length
+    prompt = require 'prompt'
+    prompt.start()
+    prompt.get args, handleInput
+  else
+    handleInput null, email:email, password:pass
+
+  setupFinish = (err, user) ->
+    console.log 'setup error', err.message || err if err
+    dbconnect.db_mongo?.close()
+    return if err
+
+    msg = 'user '+user.email+' is now '+user.groups
+    msg += ': password set' if pass
+    console.log msg
+
+option '-v', '--version', "show app's version number"
+option '-p', '--port [PORT]', "listen on a specific port for `cake dev`"
+task 'dev', 'Creates a new instance of zmgc.', (options) ->
+  console.log 'dev options', options
+  return console.log 'tzm-blade version ' + pkg.version if options.version
   # watch_coffee
   # options = ['-c', '-b', '-w', '-o', '.app', 'src']
   # cmd = which.sync 'coffee'  
@@ -101,13 +184,17 @@ task 'dev', 'start dev env', ->
   # coffee.stderr.pipe process.stderr
   log 'Watching coffee files', green
   # watch_js
+
+  process.env.EMAIL = options.email if options.email
+  process.env.PORT = options.port if options.port
+
   supervisor = spawn 'node', [
     './node_modules/supervisor/lib/cli-wrapper.js',
     '-w',
-    'app,views', 
-    '-e', 
-    'js|blade', 
-    'run'
+    'app,views',
+    '-e',
+    'js|blade',
+    'run',
   ]
   supervisor.stdout.pipe process.stdout
   supervisor.stderr.pipe process.stderr

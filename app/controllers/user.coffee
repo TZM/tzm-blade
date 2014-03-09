@@ -7,14 +7,16 @@ messages = require "../utils/messages"
 Emailer = require ("../utils/emailer")
 passport = require("passport")
 async = require('async')
-  
+formidable = require 'formidable'
+fs = require 'fs'
 logger = require "../utils/logger"
 logCat = "USER controller"
 validationEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+csv = require 'fast-csv'
 
 
 # User model's CRUD controller.
-Route = 
+Route =
   # Lists all users
   index: (req, res) ->
     # FIXME set permissions to see this - only admins
@@ -23,26 +25,26 @@ Route =
         res.send users
 
   _sendMail: (req, res, options, data, linkinfo) ->
-    console.log("sending message to: ", options.to.email);
-    mailer = new Emailer(options, data);
+    console.log("sending message to: ", options.to.email)
+    mailer = new Emailer(options, data)
     mailer.send (err,message)->
       unless err
         res.statusCode = 201
         req.flash('info', linkinfo)
         res.redirect "index"
-          
+
       else
         console.log err
         res.statusCode = 400
-        req.flash('info', req.i18n.t('ns.msg:flash.sendererror')+".")
+        req.flash('info', req.i18n.t('ns.msg:flash.sendererror') + ".")
         res.redirect "index"
-  
+
   # Creates new user with data from `req.body`
   # Or reset his password and send link to email
   create: (req, res, next) ->
     # FIXME - have a better error page
     delete req.body.remember_me
-    console.log("server csrf: "+ req.csrfToken());
+    console.log("server csrf: " +  req.csrfToken())
     if req.body?
       req.body.email = req.body.email.toLowerCase()
       if validationEmail.test(req.body.email)
@@ -51,81 +53,81 @@ Route =
           unless err
             if user
               # setting up flash message about link info.
-              linkinfo = req.i18n.t('ns.msg:flash.resetlink')+"."
-              options = 
+              linkinfo = req.i18n.t('ns.msg:flash.resetlink') + "."
+              options =
                 template: "reset"
                 subject: "reseting your password"
-                to: 
+                to:
                   name: user.name
                   surname: user.surname
                   email: user.email
               #check if user is already active then reset password if not then send activation link again
               if user.active is true
-                console.log("user exist and activeted");
+                console.log("user exist and activeted")
                 action = '/user/resetpassword/'
               else
-                console.log("user exist but not activated");
-                linkinfo = req.i18n.t('ns.msg:flash.activationlink')+"."
+                console.log("user exist but not activated")
+                linkinfo = req.i18n.t('ns.msg:flash.activationlink') + "."
                 action = '/user/activate/'
                 options.template = "activation"
                 options.subject = "account activation"
-              
+
               if config.APP.hostname is 'localhost'
-                console.log("is locals host");
-                data = 
-                  link: "http://"+config.APP.hostname+":"+config.PORT+action+user.tokenString
+                console.log("is locals host")
+                data =
+                  link: "http://" + config.APP.hostname + ":" + config.PORT + action + user.tokenString
               else
-                console.log("isnt localhost");
-                data = 
-                  link: config.APP.hostname+action+user.tokenString
+                console.log("isnt localhost")
+                data =
+                  link: config.APP.hostname + action + user.tokenString
               user.resetLoginAttempts (cb) ->
-                console.log("wrong login attempts reseted to 0");
-              Route._sendMail(req, res, options, data, linkinfo);
+                console.log("wrong login attempts reseted to 0")
+              Route._sendMail(req, res, options, data, linkinfo)
             else
               User.register req.body, (err,user)->
                 unless err
-                  linkinfo = req.i18n.t('ns.msg:flash.activationlink')+"." 
-                  options = 
+                  linkinfo = req.i18n.t('ns.msg:flash.activationlink') + "."
+                  options =
                     template: "activation"
                     subject: "account activation"
-                    to: 
+                    to:
                       name: user.name
                       surname: user.surname
                       email: user.email
                   if config.APP.hostname is 'localhost'
-                    console.log("is localhost");
-                    data = 
-                      link: "http://"+config.APP.hostname+":"+config.PORT+"/user/activate/"+user.tokenString
+                    console.log("is localhost")
+                    data =
+                      link: "http://" + config.APP.hostname + ":" + config.PORT + "/user/activate/" + user.tokenString
                   else
-                    console.log("isnt localhost");
-                    data = 
-                      link: config.APP.hostname+"/user/activate/"+user.tokenString
-                  
-                  Route._sendMail(req, res, options, data, linkinfo);
+                    console.log("isnt localhost")
+                    data =
+                      link: config.APP.hostname + "/user/activate/" + user.tokenString
+
+                  Route._sendMail(req, res, options, data, linkinfo)
                 else
-                  console.log("user register error");
-                  req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err.message)
+                  console.log("user register error")
+                  req.flash('info', req.i18n.t('ns.msg:flash.dberr') + err.message)
                   res.statusCode = 500
                   res.redirect("index")
           else
-            console.log("user find error");
-            req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err.message)
+            console.log("user find error")
+            req.flash('info', req.i18n.t('ns.msg:flash.dberr') + err.message)
             res.statusCode = 500
             res.redirect("index")
-            
+
       else
-        console.log("email is not valid");
+        console.log("email is not valid")
         res.statusCode = 400
         res.redirect("index")
         req.flash('info', req.i18n.t('ns.msg:flash.validemail'))
     else
-      console.log("req.body is empty");
+      console.log("req.body is empty")
       res.statusCode = 400
       res.redirect("index")
   activate: (req, res, next) ->
     console.log "activate"
     User.activate req.params.id, (err, user) ->
-      console.log('end of activate');
+      console.log('end of activate')
       unless err
         if user
           console.log 'activate. user', user
@@ -134,7 +136,7 @@ Route =
               console.log('login err') if err
               next(err)  if err
               req.flash('info', 'Activation success')
-              res.redirect "user/resetpassword/"+user.tokenString
+              res.redirect "user/resetpassword/" + user.tokenString
           else
             res.statusCode = 400
             req.flash('info', req.i18n.t('ns.msg:flash.alreadyactivated'))
@@ -144,13 +146,13 @@ Route =
           req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
           res.redirect "index"
       else if err is "token-expired-or-user-active"
-        console.log "token-expired-or-user-active" 
+        console.log "token-expired-or-user-active"
         res.statusCode = 403
         req.flash('info', req.i18n.t('ns.msg:flash.tokenexpires'))
         res.redirect "index"
   resetpassword: (req, res) ->
     console.log 'resetpass'
-    console.log(req.params.id);
+    console.log(req.params.id)
     if req.params.id?
 
       User.findOne {tokenString: req.params.id}, (err,user)->
@@ -180,15 +182,16 @@ Route =
       res.redirect "index"
   changepassword: (req, res,next) ->
     console.log 'changepassword'
-    console.log(req.body);
-    if req.body.password_new is req.body.password_confirm and req.body.password_new.length >=6
+    console.log(req.body)
+    if req.body.password_new is req.body.password_confirm and req.body.password_new.length >= 6
       User.findOne { tokenString: req.body.token },  (err, user) ->
         unless err
-          console.log('user',user);
+          console.log('user',user)
           if user
             user.password = req.body.password_new
             user.loginAttempts = 0
             user.lockUntil = 0
+            user.provider.push 'local' unless 'local' in user.provider
             delete user.awaitConfirm
             user.save (err) ->
               unless err
@@ -198,7 +201,7 @@ Route =
                   res.redirect "/user/get"
               else
                 res.statusCode = 400
-                req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err.message)
+                req.flash('info', req.i18n.t('ns.msg:flash.dberr') + err.message)
                 res.redirect "/"
           else
             res.statusCode = 400
@@ -234,7 +237,7 @@ Route =
             res.redirect "index"
         else
           res.statusCode = 400
-          req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err)
+          req.flash('info', req.i18n.t('ns.msg:flash.dberr') + err)
           res.redirect "index"
     else
       res.statusCode = 403
@@ -243,70 +246,70 @@ Route =
   # Updates user with data from `req.body`
   update: (req, res) ->
     if req.body.name.length >= 3 or req.body.password_old.length >= 6 or req.body.surname.length >= 3
-      console.log('update');
-      console.log('body', req.body);
+      console.log('update')
+      console.log('body', req.body)
       User.findById req.user.id, (err, user) ->
         unless err
-            if user
-              if req.body.password_old.length >= 6
-                if req.body.password_new is req.body.password_confirm
-                  user.comparePassword req.body.password_old, (err,isMatch)->
-                    unless err
-                      if isMatch
-                        user.password = req.body.password_new
-                        user.name = req.body.name if req.body.name
-                        user.surname = req.body.surname if req.body.surname
-                        user.save (err) ->
-                          unless err
-                            req.flash('info', req.i18n.t('ns.msg:flash.profilesaved'))
-                            res.redirect '/user/get'
-                          else
-                            #res.statusCode = 500
-                            req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err)
-                            res.redirect '/user/get'
-                      else
-                        console.log('1');
-                        req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
-                        res.redirect "/user/get"
-                        #res.statusCode = 400
+          if user
+            if req.body.password_old.length >= 6
+              if req.body.password_new is req.body.password_confirm
+                user.comparePassword req.body.password_old, (err,isMatch)->
+                  unless err
+                    if isMatch
+                      user.password = req.body.password_new
+                      user.name = req.body.name if req.body.name
+                      user.surname = req.body.surname if req.body.surname
+                      user.save (err) ->
+                        unless err
+                          req.flash('info', req.i18n.t('ns.msg:flash.profilesaved'))
+                          res.redirect '/user/get'
+                        else
+                          #res.statusCode = 500
+                          req.flash('info', req.i18n.t('ns.msg:flash.dberr') + err)
+                          res.redirect '/user/get'
                     else
-                      console.log('2');
+                      console.log('1')
                       req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
                       res.redirect "/user/get"
                       #res.statusCode = 400
-                else
-                  console.log('3');
-                  req.flash('info', req.i18n.t('ns.msg:flash.invalidconfirmpass'))
-                  #res.statusCode = 400
-                  res.redirect "/user/get"
-              else if req.body.name isnt '' or req.body.surname isnt ''
-                user.name = req.body.name if req.body.name
-                user.surname = req.body.surname if req.body.surname
-                user.save (err) ->
-                  unless err
-                    console.log('4');
-                    req.flash('info', req.i18n.t('ns.msg:flash.profilesaved'))
-                    res.redirect '/user/get'
-                  else 
-                    #res.statusCode = 500
-                    req.flash('info', req.i18n.t('ns.msg:flash.dberr')+err)
-                    res.redirect '/user/get'
+                  else
+                    console.log('2')
+                    req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
+                    res.redirect "/user/get"
+                    #res.statusCode = 400
               else
-                console.log('5');
-                req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
-                res.redirect '/user/get'
+                console.log('3')
+                req.flash('info', req.i18n.t('ns.msg:flash.invalidconfirmpass'))
                 #res.statusCode = 400
+                res.redirect "/user/get"
+            else if req.body.name isnt '' or req.body.surname isnt ''
+              user.name = req.body.name if req.body.name
+              user.surname = req.body.surname if req.body.surname
+              user.save (err) ->
+                unless err
+                  console.log('4')
+                  req.flash('info', req.i18n.t('ns.msg:flash.profilesaved'))
+                  res.redirect '/user/get'
+                else
+                  #res.statusCode = 500
+                  req.flash('info', req.i18n.t('ns.msg:flash.dberr') + err)
+                  res.redirect '/user/get'
+            else
+              console.log('5')
+              req.flash('info', req.i18n.t('ns.msg:flash.invalidoldpass'))
+              res.redirect '/user/get'
+              #res.statusCode = 400
         else
-          console.log('6');
+          console.log('6')
           req.flash('info', err)
           res.redirect "index"
           #res.statusCode = 400
     else
-      console.log('7');
+      console.log('7')
       req.flash('info', req.i18n.t('ns.msg:flash.saveerr'))
       res.redirect '/user/get'
       #res.statusCode = 400
-      console.log("body is not valid");
+      console.log("body is not valid")
   # Deletes user by id
   delete: (req, res) ->
     User.remove {_id: req.params.id}, (err, ok) ->
@@ -320,57 +323,56 @@ Route =
       req.flash('info', req.i18n.t('ns.msg:flash.alreadyauthorized'))
       res.redirect "index"
     else if req.body.email?
-      console.log('not logged in. authenticate');
+      console.log('not logged in. authenticate')
       req.body.email = req.body.email.toLowerCase()
-      console.log(req.body);
+      console.log(req.body)
       if validationEmail.test(req.body.email)
         passport.authenticate("local", (err, user, info) ->
           unless err
             if user
               req.logIn user, (err) ->
                 unless err
-                  req.flash('info', req.i18n.t('ns.msg:flash.'+info.message)+info.data+" "+req.i18n.t('ns.msg:flash.'+info.message2))
+                  req.flash('info', req.i18n.t('ns.msg:flash.' + info.message) + info.data + " " + req.i18n.t('ns.msg:flash.' + info.message2))
                   res.statusCode = 201
                   res.redirect '/user/get'
 
                 else
-                  console.log(5);
-                  console.log("inactiveuser");
+                  console.log(5)
+                  console.log("inactiveuser")
                   req.flash('info', req.i18n.t('ns.msg:flash.authorizationfailed'))
                   res.redirect "index"
                   res.statusCode = 403
             else
-              console.log(4);
-              req.flash('info', req.i18n.t('ns.msg:flash.'+info.message)+info.data+" "+req.i18n.t('ns.msg:flash.'+info.message2))
+              console.log(4)
+              req.flash('info', req.i18n.t('ns.msg:flash.' + info.message) + info.data + " " + req.i18n.t('ns.msg:flash.' + info.message2))
               res.statusCode = 403
               res.redirect "index"
-              
+
           else
-            console.log(3);
+            console.log(3)
             next(err)
         ) req, res, next
       else
-        console.log('email is not valid');
-        req.flash('info', req.i18n.t('ns.msg:flash.'+info.message)+info.data+" "+req.i18n.t('ns.msg:flash.'+info.message2))
+        console.log('email is not valid')
+        req.flash('info', req.i18n.t('ns.msg:flash.' + info.message) + info.data + " " + req.i18n.t('ns.msg:flash.' + info.message2))
         res.redirect "index"
         res.statusCode = 403
     else
-      console.log(1);
+      console.log(1)
       res.redirect "index",
         user: req.user
       res.statusCode = 403
-  list: (req, res, next) ->
+  list: (req, res) ->
     console.log 'list', req.user && req.user.groups
-    #if !req.user || req.user.groups isnt 'admin'
-    #  return res.send(403)
+    if !req.user || req.user.groups isnt 'admin'
+      return res.send 403
 
     if req.method is 'POST'
-
       body = req.body
       if !body?
         return res.send 400, 'Must provide data.'
 
-      action = body.action
+      action = body.action || req.query.action
       user = body.user
       users = body.users
 
@@ -407,10 +409,15 @@ Route =
         return res.send 400, 'Missing user data.' unless user
         return res.send 400, 'Invalid email address.' unless user.email
 
-        listCreateUser user, (err, result) ->
+        user.email = user.email.toLowerCase()
+
+        listCreateUser user, (err, result1) ->
           return res.send 500, err.message || err if err
 
-          res.send result
+          listSendMail user.email, (err, result2) ->
+            return res.send 500, err.message || err if err
+
+            res.send result1
       else if action is 'resendall'
         emails = body.emails
 
@@ -426,7 +433,7 @@ Route =
 
         return res.send 400, 'Must provide valid email address.' unless email
 
-        if state is email
+        if state is 'email'
           return listSendMail email, (err, result) ->
             return res.send 500, err.message || err if err
 
@@ -435,76 +442,191 @@ Route =
         return res.send 400, 'Must set a proper state.' unless state in ['active', 'inactive']
 
         data = email:email
-
         data.active = state is 'active'
 
         return listUpdateUser data, (err, result) ->
           return res.send 500, err.message || err if err
 
           res.send result
+      else if action is 'upload'
+        console.log 'upload start'
+        form = new formidable.IncomingForm
+        form.uploadDir = config.UPLOADS
+
+        form.onPart = (part) ->
+          # reject any unexpected file, to prevent exploit.
+          return form.handlePart(part) unless part.filename and part.name isnt 'file'
+
+          console.log 'rejected', part.name, part.filename
+
+        form.parse req, (err, fields, files) ->
+          file = files?.file
+          console.log 'uploaded', err, file?.name, file?.path
+
+          return res.send 500, err.message || err if err
+          return res.send 200 unless file
+
+          listImport req, file.path, (err, results) ->
+            async.map Object.keys(files), (key, cb) ->
+              file = files[key]
+              fs.unlink file.path, (err) ->
+                console.log 'deleted', file.path
+                cb err
+            , (err) ->
+              console.log 'imported', results
+              res.send results
       else
         return res.send 400, 'Invalid action type.'
 
     else if req.method is 'GET'
-      #if req.users.groups is 'admin'
-      q = req.query.q
-      filter = req.query.filter
-      sort = req.query.sort
-      order = req.query.order
-      count = req.query.count
+      listGet req.query, (err, data) ->
+        res.send 500, err.message || err if err
 
-      data = {}
+        data._csrf = req.csrfToken()
 
-      if q
-        if filter is 'email'
-          data.email = new RegExp('^'+q, 'i')
-        else if filter is 'name'
-          data.$or = [ {name: new RegExp('^'+q, 'i')}, {surname: new RegExp('^'+q, 'i')}]
-
-      if count
-        query = User.count data
-      else
-        limit = Math.min(req.query.limit ? 20, 200)
-        skip = req.query.skip ? 0
-
-        query = User.find(data, listFields).skip(skip).limit(limit)
-
-        if order and sort in ['email', 'name', 'surname', 'groups', 'state']
-          sortObj = {}
-
-          order = 1 if order is 'asc'
-          order = -1 if order is 'desc'
-
-          if sort is 'state'
-            query.sort({active:order, awaitConfirm:order});
-          else
-            sortObj[sort] = order
-            query.sort(sortObj)
+        if req.xhr
+          res.json data
         else
-          query.sort {_id:1}
+          listHelper = require('./listhelper')
+          data.icons = listHelper.icons
+          res.render 'user/list', data
 
-      query.exec (err, results) ->
-        return res.send 500, err.message || err if err
+engine = require '../config/engine'
+engine.on 'join:/user/list', (socket) ->
+  return unless socket.user?.groups is 'admin'
 
-        if count
-          return res.json {count:results}
+  socket.on 'data', (data) ->
+    console.log 'data', data
 
-        User.count(data).exec (err, count) ->
-          return res.send 500, err.message || err if err
+    try
+      parsed = JSON.parse data
+    catch e
+      return socket.send "error: #{e.message}"
 
-          if req.xhr
-            res.json
-              users: results
-              count: count
-          else
-            listHelper = require('./listhelper')
-            res.render 'user/list',
-              users: results
-              count: count
-              iconDefs: listHelper.defs.html()
-              icons: listHelper.icons
+    if parsed.action is 'load'
+      listGet parsed, (err, data) ->
+        socket.send JSON.stringify data
 
-listFields = 'email name surname groups active provider awaitConfirm -_id'
+listFields = 'email name surname groups active provider awaitConfirm _id'
+
+listImport = (req, filepath, cb) ->
+  read = fs.createReadStream filepath
+
+  results =
+    added:0
+    duplicates:0
+    rejected:0
+    total:0
+
+  num = 0
+  max = 100
+  total = 0
+  paused = false
+
+  finished = false
+  returned = false
+
+  complete = (err) ->
+    return if returned
+
+    if err
+      finished = true
+      returned = true
+      read.resume()
+      return cb err, results
+
+    num--
+    if num < max and paused
+      paused = false
+      req.io?.room(req.sessionID).broadcast 'resume ' + total
+      console.log 'resume', total
+      read.resume()
+
+    if num is 0 and finished
+      returned = true
+      results.total = total
+      cb null, results
+
+  csv(read, {headers:true}).on('data', (data) ->
+    return if returned
+    #console.log 'data', data
+    num++
+    total++
+
+    if num >= max
+      paused = true
+      read.pause()
+
+    User.findOne {email:data.email}, (err, user) ->
+      if err
+        results.rejected++
+        return complete err
+
+      if user
+        results.duplicates++
+        complete()
+      else
+        user = new User data
+        user.save (err) ->
+          if err then results.rejected++
+          else results.added++
+
+          complete err
+  ).on 'end', () ->
+    # delete file after we're done.
+    finished = true
+    complete()
+  .parse()
+
+listGet = Route.listGet = (body, cb) ->
+  q = body.q
+  filter = body.filter
+  sort = body.sort
+  order = body.order
+  count = body.count
+
+  data = {}
+
+  if q
+    if filter is 'email'
+      data.email = new RegExp('^'+q, 'i')
+    else if filter is 'name'
+      data.$or = [ {name: new RegExp('^'+q, 'i')}, {surname: new RegExp('^'+q, 'i')}]
+
+  if count
+    query = User.count data
+  else
+    limit = Math.min(body.limit ? 20, 200)
+    skip = body.skip ? 0
+
+    query = User.find(data, listFields).skip(skip).limit(limit)
+
+    if order and sort in ['email', 'name', 'surname', 'groups', 'state']
+      sortObj = {}
+
+      order = 1 if order is 'asc'
+      order = -1 if order is 'desc'
+
+      if sort is 'state'
+        query.sort({active:order, awaitConfirm:order})
+      else
+        sortObj[sort] = order
+        query.sort(sortObj)
+    else
+      query.sort {_id:1}
+
+  query.exec (err, results) ->
+    return cb err if err
+
+    if count
+      return cb null, {count:results}
+
+    User.count(data).exec (err, count) ->
+      return cb err if err
+
+      return cb null,
+        users: results
+        count: count
 
 listSendMail = (email, cb) ->
   User.findOneAndUpdate {email:email}, {awaitConfirm:true}, (err, user) ->
@@ -528,15 +650,15 @@ listSendMail = (email, cb) ->
 
     if config.APP.hostname is 'localhost'
       data =
-        link: "http://"+config.APP.hostname+":"+config.PORT+action+user.tokenString
+        link: "http://" + config.APP.hostname + ":" + config.PORT + action + user.tokenString
     else
       data =
-        link: config.APP.hostname+action+user.tokenString
+        link: config.APP.hostname + action + user.tokenString
     user.resetLoginAttempts (cb) ->
-      console.log("login attempts reset to 0");
+      console.log("login attempts reset to 0")
 
-    console.log("sending message to: ", options.to.email);
-    mailer = new Emailer(options, data);
+    console.log("sending message to: ", options.to.email)
+    mailer = new Emailer(options, data)
     mailer.send (err,message)->
       return cb err if err
 
@@ -552,11 +674,11 @@ listCreateUser = (data, cb) ->
 listUpdateUser = (data, cb) ->
   email = data?.email
   if !email
-    return cb(new Error('Must provide valid email address to update.'));
+    return cb(new Error('Must provide valid email address to update.'))
 
   validator.check(email, messages.VALIDATE_EMAIL).isEmail()
 
-  where = {email: email};
+  where = {email: email}
   update = {}
 
   if data.newEmail?
@@ -571,13 +693,13 @@ listUpdateUser = (data, cb) ->
   update.surname = data.surname if data.surname?
   update.groups = data.groups if data.groups?
   update.awaitConfirm = true if data.state is 'email'
+  update.active = data.active if data.active?
 
-  if data.state is 'active'
-    update.active = true
-  else if data.state is 'inactive'
-    update.active = false
-
-  console.log 'pre update', where, update
+  if !update.active?
+    if data.state is 'active'
+      update.active = true
+    else if data.state is 'inactive'
+      update.active = false
 
   User.findOneAndUpdate where, update, {select: listFields}, (err, user) ->
     return cb(err) if err

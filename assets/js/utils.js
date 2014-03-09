@@ -11,4 +11,3 @@ function formatLongitude(lon) {
     }
     return Math.abs(lon).toFixed(1) + "\u00B0\u2009" + (lon < 0 ? "(W)" : "(E)");
 }
-

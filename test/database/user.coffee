@@ -263,8 +263,8 @@ describe '/user/changepassword', ->
       session:
         _csrf: csrf_token
     request req, (error, res) ->
-      console.log("error: ", error);
-      console.log("statuscode: ", res.statusCode);
+      #console.log("error: ", error);
+      #console.log("statuscode: ", res.statusCode);
       assert res.statusCode is 200 or 302, res.statusCode
       done()
 
@@ -282,8 +282,8 @@ describe '/user/login', ->
       session:
         _csrf: csrf_token
     request req, (error, res, body) ->
-      console.log("ok") if !error
-      console.log("error") if error
+      #console.log("ok") if !error
+      #console.log("error") if error
       assert res.statusCode isnt 403, res.statusCode
       done()
 
@@ -304,6 +304,6 @@ describe '/user/delete', ->
       method: 'GET'
       json: true
     request req, (error, res) ->
-      console.log(res.statusCode);
+      #console.log(res.statusCode);
       assert res.statusCode is 400, res.statusCode
       done()

@@ -42,8 +42,8 @@ logger.info "MONGO DB URL: " + config.MONGO_DB_URL, logCategory
 db_connect_mongo = init: (callback) ->
   self = this
   mongo_options = db:
-      safe: true
-      #auto_reconnect: true
+    safe: true
+    #auto_reconnect: true
   mongoose.connect mongourl, mongo_options
   db = self.db_mongo = mongoose.connection
 

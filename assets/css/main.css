@@ -1,6 +1,7 @@
 @charset "utf-8";
 @import "/css/vendor/bootstrap/bootstrap.min.css";
 @import "/css/vendor/bootstrap/bootstrap-responsive.min.css";
+/* @import "/css/vendor/bootstrap/bootstrap-rtl.min.css"; */
 @import "/css/vendor/font-awesome.min.css";
 @import "/css/vendor/font-awesome-corp.css";
 @import "/css/vendor/font-awesome-social.css";
@@ -333,7 +334,7 @@ background-color:#FA0000}
 #page {
     height: auto;
     overflow: none;
-    padding: 38px 25px 10px;
+    padding: 38px 25px;
 }
 
 #page p {
@@ -716,9 +717,10 @@ rect.icon_background { stroke:#006600; fill: green ;}
 .sort-desc .icon-arrowdown {
     fill: red;
 }
-#user-table {
+#user-table {/*
     border-collapse:separate;
-    border-spacing:10px;
+    border-spacing:10px;*/
+    background-color:white;
     clear:both;
 }
 #user-table thead th.sort {
@@ -726,6 +728,17 @@ rect.icon_background { stroke:#006600; fill: green ;}
     color:#666666;
     font-weight:normal;
     padding:5px 5px 0;
+}
+#user-list input, #user-list select {
+    margin-bottom:0;
+}
+#user-table th {
+    border-bottom:5px solid white;
+    border-right:10px solid white;
+}
+#user-table td {
+    vertical-align:middle;
+    padding:5px;
 }
 .form-inline .form-control {
     margin-right:10px;

@@ -1,35 +1,35 @@
 {
-  "tzm": "Branches - Le Mouvement Zeitgeist"
-  ,"welcome": [
-    "<p>Fondé en 2008, le Mouvement Zeitgeist est une organisation qui plaide pour la construction d'un monde durable et véhicule un activisme local et des actions de sensibilisation par le biais d’un réseau de branches nationales et régionales, d’équipes de projets, d’évènements annuels, de médias et d’œuvres caritatives.</p>"
-    ,"<p>Les principes fondamentaux du Mouvement incluent la reconnaissance que la majorité des problèmes sociaux qui gangrènent actuellement l’espèce humaine ne sont pas uniquement le fruit d’une corruption institutionnelle, de la rareté, de manœuvres politiques, d’un défaut de « la nature humaine » ou d’autres causes communément évoquées au sein de la communauté activiste. Le Mouvement reconnaît en revanche que les problèmes tels que la pauvreté, la corruption, l’effondrement économique, l’accès au logement, la guerre, la famine, etc. sont autant de « symptômes » provenant d’une structure sociale dépassée.</p>"
-  ]
-  ,"projects": {
-    "media-project": {
-        "title": "Media Project"
-        ,"description": ""
+    "tzm": "Branches - Le Mouvement Zeitgeist",
+    "welcome": [
+        "<p>Fondé en 2008, le Mouvement Zeitgeist est une organisation qui plaide pour la construction d'un monde durable et véhicule un activisme local et des actions de sensibilisation par le biais d’un réseau de branches nationales et régionales, d’équipes de projets, d’évènements annuels, de médias et d’œuvres caritatives.</p>",
+        "<p>Les principes fondamentaux du Mouvement incluent la reconnaissance que la majorité des problèmes sociaux qui gangrènent actuellement l’espèce humaine ne sont pas uniquement le fruit d’une corruption institutionnelle, de la rareté, de manœuvres politiques, d’un défaut de « la nature humaine » ou d’autres causes communément évoquées au sein de la communauté activiste. Le Mouvement reconnaît en revanche que les problèmes tels que la pauvreté, la corruption, l’effondrement économique, l’accès au logement, la guerre, la famine, etc. sont autant de « symptômes » provenant d’une structure sociale dépassée.</p>"
+    ],
+    "projects": {
+        "media-project": {
+            "title": "Media Project",
+            "description": ""
+        },
+        "zeitgesit-day": {
+            "title": "Zeitgeist Day",
+            "description": "This site becomes active annually to facilitate our “Zday” Global Event, which occurs in March of each year."
+        },
+        "global-redesign-institute": {
+            "title": "Global Redesign Institute",
+            "description": "Virtual interface “Think Tank” project using map/data models to express direct technical changes in line with TZM's train of thought."
+        },
+        "zeitgeist-movement-global-connect": {
+            "title": "Zeitgeist Movement Global Connect",
+            "description": "Vise à créer un système d'éco-on-line dans laquelle les idées de ressources Économie Basée peuvent être galvaniser en actions."
+        },
+        "media-festival": {
+            "title": "Media Festival",
+            "description": ""
+        }
+    },
+    "chapters": {
+        "international": "Branches Internationales",
+        "country": "Branches Française",
+        "regional": "Regional Chapters",
+        "local": "Local Chapters"
     }
-    ,"zeitgesit-day": {
-        "title": "Zeitgeist Day"
-        ,"description": "This site becomes active annually to facilitate our “Zday” Global Event, which occurs in March of each year."
-    }
-    ,"global-redesign-institute": {
-    "title": "Global Redesign Institute"
-    ,"description": "Virtual interface “Think Tank” project using map/data models to express direct technical changes in line with TZM's train of thought."
-    }
-    ,"zeitgeist-movement-global-connect": {
-      "title": "Zeitgeist Movement Global Connect"
-      ,"description": "Aims to create an on-line eco-system within which the ideas of Resource Based Economy can be galvanise into actions."
-    }
-    ,"media-festival": {
-      "title": "Media Festival"
-      ,"description": ""
-    }
-  }
-  ,"chapters": {
-    "international": "Branches Internationales"
-    ,"country": "Branches Française"
-    ,"regional": "Regional Chapters"
-    ,"local": "Local Chapters"
-  }
 }

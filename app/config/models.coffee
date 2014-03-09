@@ -3,4 +3,4 @@ require "express-mongoose"
 
 #Exports
 module.exports = ->
-    mongoose.model "User", require "../models/user/user"
+  mongoose.model "User", require "../models/user/user"

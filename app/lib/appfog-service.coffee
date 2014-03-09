@@ -17,9 +17,9 @@ doOnce = (f, label) ->
       callback err, result
     else
       f (e, r) ->
-        err = e
-        result = r
-        callback err, result
+      err = e
+      result = r
+      callback err, result
 
 exports.redisConnect = (callback) ->
   if process.env.VCAP_SERVICES
@@ -43,15 +43,15 @@ exports.mongoURL = ->
   # Connecting to dexies database on mongodb
   boundServices = if process.env.VCAP_SERVICES then JSON.parse(process.env.VCAP_SERVICES) else null
   unless boundServices
-      if DB_USER and DB_PASS
-          DB_URL = "mongodb://#{config.DB_USER}:#{config.DB_PASS}@#{config.DB_HOST}:#{config.DB_PORT}/#{config.DB_NAME}"
-      else
-          DB_URL = "mongodb://#{config.DB_HOST}:#{config.DB_PORT}/#{config.DB_NAME}"
+    if DB_USER and DB_PASS
+      DB_URL = "mongodb://#{config.DB_USER}:#{config.DB_PASS}@#{config.DB_HOST}:#{config.DB_PORT}/#{config.DB_NAME}"
+    else
+      DB_URL = "mongodb://#{config.DB_HOST}:#{config.DB_PORT}/#{config.DB_NAME}"
 
   else
-      service_type = "mongodb-1.8"
-      credentials = getCredentials(service_type)
-      DB_URL = "mongodb://" + credentials["username"] + ":" + credentials["password"] + "@" + credentials["hostname"] + ":" + credentials["port"] + "/" + credentials["db"]
+    service_type = "mongodb-1.8"
+    credentials = getCredentials(service_type)
+    DB_URL = "mongodb://" + credentials["username"] + ":" + credentials["password"] + "@" + credentials["hostname"] + ":" + credentials["port"] + "/" + credentials["db"]
 
 #exports.mongoConnect = (callback) ->
 #  self = this
@@ -73,4 +73,4 @@ exports.mongoURL = ->
 #    logger.info "DISCONNECTED from the database: " + db_url, logCategory
 #
 #exports.mongo = ->
-#  getConnection = doOnce(exports.mongoConnect, "mongo")  
+#  getConnection = doOnce(exports.mongoConnect, "mongo")
