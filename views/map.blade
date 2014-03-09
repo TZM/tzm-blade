@@ -1,26 +1,26 @@
 include "../layout/layout.blade"
 replace block page
-    script( type="text/javascript", src="/js/vendor/d3/d3.v3.min.js")
-    script( type="text/javascript", src="/js/vendor/d3/topojson.v0.min.js")
-    script( type="text/javascript", src="/js/vendor/d3/queue.v1.min.js")
+    script(type="text/javascript", src="/js/vendor/d3/d3.v3.min.js")
+    script(type="text/javascript", src="/js/vendor/d3/topojson.v0.min.js")
+    script(type="text/javascript", src="/js/vendor/d3/queue.v1.min.js")
     -var utilsPath = jsUrl("/js/utils.js")
     -var mapJsPath = jsUrl("/js/map.js")
     script
         |!
-            // resize
-            var screenWidth = resize()
-            console.log(screenWidth)
             d3.select(window).on('resize', resize)
             function resize() {
-                var clientWidth = document.documentElement.clientWidth
-                //screenWidth["width"] = clientWidth
-                console.log(screenWidth, clientWidth)
-                return clientWidth
+                //Define a model
+                var model = new blade.Model({
+                    "width": 0
+                });
+                blade.Runtime.renderTo(document.getElementById("map"), "map/svg_map.blade", model, function(err) {
+                    if (err) console.log(err);
+                });
             }
-            
     #chart
-        != chart
+        !=chart
     #map
+        p the width is #{width}
         #zoom_level(style="visibility: hidden")
             button#zoom_out.btn="Zoom Out"
                 i.icon-minus

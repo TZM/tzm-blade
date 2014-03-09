@@ -13,28 +13,18 @@ margin =
   bottom: 20
   right: 20
 
-#screenWidth
-##width = parseInt(d3.select("#map").style("width"))
-#console.log "+++++++++"
-#console.log screenWidth
-#console.log "+++++++++"
-#width = width - margin.left - margin.right
-#mapRatio = 0.5
-#height = width * mapRatio
-#resize = ->
-#  clientWidth = document.documentElement.clientWidth
-#  console.log "we resize "
-#  return
-#d3.select(window).on('resize')
-#screenWidth = clientWidth
-#console.log clientWidth
+width = 1024 #FIXME make this responsive based on client
+width = width - margin.left - margin.right
+mapRatio = 0.5
+height = width * mapRatio
+console.log "+++++++++", width, height
 
 chartDiv = d3.select("body").append("div").attr("id", "chart")
 chartSvg = chartDiv.append("svg").attr("id", "chartsvg").attr("height", 100)
-#mapSvg = chartDiv.append("svg").attr("width", "100%")
-#        .attr("height", "88%")
-#        .attr("viewBox", "0 0 " + width + "  "+ height)
-#        .attr("preserveAspectRatio", "xMidYMid")
+mapSvg = chartDiv.append("svg").attr("width", "100%")
+        .attr("height", "88%")
+        .attr("viewBox", "0 0 " + width + "  "+ height)
+        .attr("preserveAspectRatio", "xMidYMid")
 iconGroup = chartSvg.append("g").attr("class", "map-tools").attr("transform", "translate(0 0) scale(0.5)")
 
 addRect = (group) ->
@@ -71,4 +61,5 @@ worldJsonData = require('../../data/topo/world.json')
 exports.map = (req, res) ->
   res.render "map",
     user: req.user
+    width: width
     chart: chartDiv.html()
