@@ -59,7 +59,7 @@ parser = (cb)->
                 __text = _text.substring(index1,_text.length)
                 index2 = __text.indexOf('>')
                 link = __text.substring(0,index2)
-                console.log(link.toString());
+                #console.log(link.toString());
                 a1 = link.split('/')
                 a1length = a1.length
                 str = a1[a1length-1]
@@ -84,10 +84,10 @@ parser = (cb)->
               console.log "Finished message no. " + msg.seqno
           
           fetch.on "end", ->
-           console.log("fetch end"); 
+           #console.log("fetch end"); 
         , (err) ->
           cb err if err
-          console.log "Done fetching all messages!"
+          #console.log "Done fetching all messages!"
           
     else
       setTimeout(parser, 1000)
@@ -95,12 +95,12 @@ parser = (cb)->
 before (done)->
   this.timeout(10000)
   server.connect (err) ->
-    console.log('connect err:',err) if err     
+    #console.log('connect err:',err) if err     
     server.openBox "INBOX", false, (err,_box) ->
-      console.log('0box',_box);
+      #console.log('0box',_box);
       box = _box
-      console.log('openbox err:',err) if err
-      console.log "You have #{box.messages.total} messages in your INBOX"
+      #console.log('openbox err:',err) if err
+      #console.log "You have #{box.messages.total} messages in your INBOX"
       server.on 'error',(err)->
         console.log(err);
       done()

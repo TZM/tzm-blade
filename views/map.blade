@@ -7,16 +7,17 @@ replace block page
     -var mapJsPath = jsUrl("/js/map.js")
     script
         |!
+            // resize
+            var screenWidth = resize()
+            console.log(screenWidth)
             d3.select(window).on('resize', resize)
             function resize() {
-                //Define a model
-                var model = new blade.Model({
-                    "width": 0
-                });
-                blade.Runtime.renderTo(document.getElementById("map"), "map/svg_map.blade", model, function(err) {
-                    if (err) console.log(err);
-                });
+                var clientWidth = document.documentElement.clientWidth
+                //screenWidth["width"] = clientWidth
+                console.log(screenWidth, clientWidth)
+                return clientWidth
             }
+
     #chart
         !=chart
     #map

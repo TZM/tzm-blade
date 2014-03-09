@@ -58,6 +58,24 @@ worldJsonData = require('../../data/topo/world.json')
 #.enter().append("path").attr("d", self.path)
 #.attr "id", pd d
 
+engine = require '../config/engine'
+engine.on 'join:/map', (socket) ->
+
+  socket.on 'message', (data) ->
+    console.log 'data', data    
+    try
+      parsed = JSON.parse data
+    catch e
+      return socket.send "error: #{e.message}"
+    if parsed.what == "screensize"
+      mapSvg = chartDiv.append("svg").attr("width", "100%")
+       .attr("height", "88%")
+       .attr("viewBox", "0 0 " + parsed.w + "  "+ parsed.h)
+       .attr("preserveAspectRatio", "xMidYMid")
+      console.log chartDiv.html() + "OLOLO"
+      socket.send JSON.stringify {data: chartDiv.html()}
+      
+
 exports.map = (req, res) ->
   res.render "map",
     user: req.user

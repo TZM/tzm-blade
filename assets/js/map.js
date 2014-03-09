@@ -48,16 +48,9 @@
         //    // FIXME only push markers depending on the country/adm1 level
         //    self.drawMarker(message)
         //}
-          //self.drawMap()
-          //self.setMapStyle("bone");//see colormap.css for possible options: posneg, copper, greenwhitelila, posneg, jet
-        //
-        //var color_legend = d3.select("#color-legend-svg")
-        //  .append("svg:svg")
-        //  .attr("width", 225)
-        //  .attr("height", 180);
-        //color_legend.append("svg:rect")
-        //  .attr("width", 80)
-        //  .attr("height", 160)
+
+            self.drawMap()
+			self.setMapStyle("bone");//see colormap.css for possible options: posneg, copper, greenwhitelila, posneg, jet
     }
 
     self.tooltip = undefined
@@ -408,4 +401,48 @@
 	}
     // Initialise
     this.init()
+    
+  var socket = new eio.Socket();
+  
+  function sendSize(){
+    var data = {"what": "screensize", "w":window.innerWidth, "h":window.innerHeight};
+    console.log (data);
+    socket.send(JSON.stringify(data));
+  }
+  
+  socket.on('open', function() {
+    console.log('open');
+    sendSize();
+  });
+  
+  socket.on('message', function(data) {
+    console.log('message received');
+      try {
+      var parsed = JSON.parse(data);
+      }
+      catch(e) {
+      console.log('error', e.message);
+      }
+      console.log(parsed);
+  });
+  
+  socket.on('close', function() {
+      console.log('close');
+
+      setTimeout(function() {
+        socket.open();
+      }, 5000);
+  });
+  
+  var screenWidth = resize()
+  console.log(screenWidth)
+  d3.select(window).on('resize', resize)
+  function resize() {
+      var clientWidth = document.documentElement.clientWidth
+      //screenWidth["width"] = clientWidth
+     //console.log(screenWidth, clientWidth)
+      //return clientWidth
+      sendSize();
+  }
+  
 }).call(this);
