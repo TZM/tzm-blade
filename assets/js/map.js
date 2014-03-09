@@ -409,3 +409,36 @@
     // Initialise
     this.init()
 }).call(this);
+
+jQuery(function($) {
+	var socket = new eio.Socket();
+  
+  socket.on('open', function() {
+    console.log('open');
+    var data = {"what": "screensize", "w":window.innerWidth, "h":window.innerHeight};
+    console.log (data);
+    socket.send(JSON.stringify(data));
+  });
+  
+  /*socket.on('message', function(data) {
+    console.log('message received');
+
+      try {
+      var parsed = JSON.parse(data);
+      }
+      catch(e) {
+      console.log('error', e.message);
+      }
+
+      total = parsed.count;
+      addUsers(parsed.users);
+  });*/
+  
+  socket.on('close', function() {
+      console.log('close');
+
+      setTimeout(function() {
+        socket.open();
+      }, 5000);
+  });
+});

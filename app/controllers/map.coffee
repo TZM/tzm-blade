@@ -68,6 +68,19 @@ worldJsonData = require('../../data/topo/world.json')
 #.enter().append("path").attr("d", self.path)
 #.attr "id", pd d
 
+engine = require '../config/engine'
+engine.on 'join:/map', (socket) ->
+
+  socket.on 'message', (data) ->
+    console.log 'data', data    
+    try
+      parsed = JSON.parse data
+    catch e
+      return socket.send "error: #{e.message}"
+    console.log parsed
+    console.log parsed.what
+    
+
 exports.map = (req, res) ->
   res.render "map",
     user: req.user
