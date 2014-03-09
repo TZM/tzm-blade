@@ -74,7 +74,8 @@
     "engine.io-session": "0.0.4",
     "formidable": "~1.0.14",
     "fast-csv": "0.0.3",
-    "prompt": "~0.2.12"
+    "prompt": "~0.2.12",
+    "queue-async": "~1.0.7"
   },
   "devDependencies": {
     "assert": "~0.4.9",
