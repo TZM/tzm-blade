@@ -420,7 +420,7 @@ jQuery(function($) {
     socket.send(JSON.stringify(data));
   });
   
-  /*socket.on('message', function(data) {
+  socket.on('message', function(data) {
     console.log('message received');
 
       try {
@@ -429,10 +429,8 @@ jQuery(function($) {
       catch(e) {
       console.log('error', e.message);
       }
-
-      total = parsed.count;
-      addUsers(parsed.users);
-  });*/
+      console.log(parsed);
+  });
   
   socket.on('close', function() {
       console.log('close');

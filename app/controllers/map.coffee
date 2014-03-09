@@ -77,9 +77,14 @@ engine.on 'join:/map', (socket) ->
       parsed = JSON.parse data
     catch e
       return socket.send "error: #{e.message}"
-    console.log parsed
-    console.log parsed.what
-    
+    if parsed.what == "screensize"
+      mapSvg = chartDiv.append("svg").attr("width", "100%")
+       .attr("height", "88%")
+       .attr("viewBox", "0 0 " + parsed.w + "  "+ parsed.h)
+       .attr("preserveAspectRatio", "xMidYMid")
+      console.log chartDiv.html() + "OLOLO"
+      socket.send JSON.stringify {data: chartDiv.html()}
+      
 
 exports.map = (req, res) ->
   res.render "map",
