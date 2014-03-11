@@ -51,10 +51,14 @@ After installing node.js, open terminal and navigate to your sandboxes folder
     ☺ git submodule foreach git pull # to pull the translations
     
     ☺ cake dev
-    Server running at http://127.0.0.1:9080/
+    Server running at http://127.0.0.1:3000/
 
-Now you can navigate to http://127.0.0.1:9080/ and see the website.
+Now you can navigate to http://127.0.0.1:3000/ and see the website.
 (actually, on :3000)
+
+#Installation Screencast
+
+<script type="text/javascript" src="https://asciinema.org/a/8105.js" id="asciicast-8105" async data-speed="3" data-size="medium"></script>
 
 #Deployment
 The application can be deployed anywhere where you have Nodejs installed, meaning that you can run this on your local machine and setup P2P; For now, this application is running on Heroku at zero cost, as Heroku provides you with a decent enough server to run this application.
